@@ -2,7 +2,10 @@
   "type": "commonjs",
   "name": "@integrationos/node",
   "version": "0.0.1",
-  "author": "IntegrationOS",
+  "author": "@integrationos",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./index.js",
   "sideEffects": false,
   "scripts": {
