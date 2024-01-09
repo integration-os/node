@@ -1,0 +1,14 @@
+# GetNotesCountResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `status`                                                                                   | *string*                                                                                   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `statusCode`                                                                               | [operations.GetNotesCountStatusCode](../../models/operations/getnotescountstatuscode.md)   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `unified`                                                                                  | [operations.GetNotesCountUnified](../../models/operations/getnotescountunified.md)         | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `passthrough`                                                                              | [operations.GetNotesCountPassthrough](../../models/operations/getnotescountpassthrough.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `meta`                                                                                     | [operations.GetNotesCountMeta](../../models/operations/getnotescountmeta.md)               | :heavy_minus_sign:                                                                         | N/A                                                                                        |

@@ -5,23 +5,78 @@
 import { SDKOptions, serverURLFromOptions } from "../lib/config";
 import { HTTPClient } from "../lib/http";
 import { ClientSDK } from "../lib/sdks";
-import { Pets } from "./pets";
+import { Companies } from "./companies";
+import { Contacts } from "./contacts";
+import { Customers } from "./customers";
+import { Leads } from "./leads";
+import { Notes } from "./notes";
+import { Opportunities } from "./opportunities";
+import { Orders } from "./orders";
+import { Products } from "./products";
+import { Tasks } from "./tasks";
+import { Users } from "./users";
 
-export class SDK extends ClientSDK {
+export class IntegrationOS extends ClientSDK {
     private readonly options$: SDKOptions;
 
-    constructor(options: SDKOptions = {}) {
+    constructor(client: string, options: Omit<SDKOptions, "client"> = {}) {
         super({
             client: options.httpClient || new HTTPClient(),
             baseURL: serverURLFromOptions(options),
         });
 
         this.options$ = options;
+        this.options$.client = client;
         void this.options$;
     }
 
-    private _pets?: Pets;
-    get pets() {
-        return (this._pets ??= new Pets(this.options$));
+    private _customers?: Customers;
+    get customers() {
+        return (this._customers ??= new Customers(this.options$));
+    }
+
+    private _companies?: Companies;
+    get companies() {
+        return (this._companies ??= new Companies(this.options$));
+    }
+
+    private _leads?: Leads;
+    get leads() {
+        return (this._leads ??= new Leads(this.options$));
+    }
+
+    private _notes?: Notes;
+    get notes() {
+        return (this._notes ??= new Notes(this.options$));
+    }
+
+    private _users?: Users;
+    get users() {
+        return (this._users ??= new Users(this.options$));
+    }
+
+    private _opportunities?: Opportunities;
+    get opportunities() {
+        return (this._opportunities ??= new Opportunities(this.options$));
+    }
+
+    private _orders?: Orders;
+    get orders() {
+        return (this._orders ??= new Orders(this.options$));
+    }
+
+    private _products?: Products;
+    get products() {
+        return (this._products ??= new Products(this.options$));
+    }
+
+    private _tasks?: Tasks;
+    get tasks() {
+        return (this._tasks ??= new Tasks(this.options$));
+    }
+
+    private _contacts?: Contacts;
+    get contacts() {
+        return (this._contacts ??= new Contacts(this.options$));
     }
 }

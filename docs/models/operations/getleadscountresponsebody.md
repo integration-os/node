@@ -1,0 +1,14 @@
+# GetLeadsCountResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `status`                                                                                   | *string*                                                                                   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `statusCode`                                                                               | [operations.GetLeadsCountStatusCode](../../models/operations/getleadscountstatuscode.md)   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `unified`                                                                                  | [operations.GetLeadsCountUnified](../../models/operations/getleadscountunified.md)         | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `passthrough`                                                                              | [operations.GetLeadsCountPassthrough](../../models/operations/getleadscountpassthrough.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `meta`                                                                                     | [operations.GetLeadsCountMeta](../../models/operations/getleadscountmeta.md)               | :heavy_minus_sign:                                                                         | N/A                                                                                        |

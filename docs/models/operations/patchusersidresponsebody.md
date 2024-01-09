@@ -1,0 +1,14 @@
+# PatchUsersIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `status`                                                                                 | *string*                                                                                 | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `statusCode`                                                                             | [operations.PatchUsersIdStatusCode](../../models/operations/patchusersidstatuscode.md)   | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `unified`                                                                                | [operations.PatchUsersIdUnified](../../models/operations/patchusersidunified.md)         | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `passthrough`                                                                            | [operations.PatchUsersIdPassthrough](../../models/operations/patchusersidpassthrough.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `meta`                                                                                   | [operations.PatchUsersIdMeta](../../models/operations/patchusersidmeta.md)               | :heavy_minus_sign:                                                                       | N/A                                                                                      |

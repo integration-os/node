@@ -1,0 +1,14 @@
+# PatchProductsIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                          | Type                                                                                           | Required                                                                                       | Description                                                                                    |
+| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `status`                                                                                       | *string*                                                                                       | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `statusCode`                                                                                   | [operations.PatchProductsIdStatusCode](../../models/operations/patchproductsidstatuscode.md)   | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `unified`                                                                                      | [operations.PatchProductsIdUnified](../../models/operations/patchproductsidunified.md)         | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `passthrough`                                                                                  | [operations.PatchProductsIdPassthrough](../../models/operations/patchproductsidpassthrough.md) | :heavy_minus_sign:                                                                             | N/A                                                                                            |
+| `meta`                                                                                         | [operations.PatchProductsIdMeta](../../models/operations/patchproductsidmeta.md)               | :heavy_minus_sign:                                                                             | N/A                                                                                            |

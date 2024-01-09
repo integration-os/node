@@ -1,0 +1,11 @@
+# PatchTasksIdRequest
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `id`                                                                                     | *string*                                                                                 | :heavy_check_mark:                                                                       | The id of the model                                                                      |
+| `xIntegrationosSecret`                                                                   | *string*                                                                                 | :heavy_check_mark:                                                                       | IntegrationOS API key                                                                    |
+| `xIntegrationosConnectionKey`                                                            | *string*                                                                                 | :heavy_check_mark:                                                                       | The unique identifier of a Connected Account                                             |
+| `requestBody`                                                                            | [operations.PatchTasksIdRequestBody](../../models/operations/patchtasksidrequestbody.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |

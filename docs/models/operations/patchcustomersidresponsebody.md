@@ -1,0 +1,14 @@
+# PatchCustomersIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `status`                                                                                         | *string*                                                                                         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `statusCode`                                                                                     | [operations.PatchCustomersIdStatusCode](../../models/operations/patchcustomersidstatuscode.md)   | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `unified`                                                                                        | [operations.PatchCustomersIdUnified](../../models/operations/patchcustomersidunified.md)         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `passthrough`                                                                                    | [operations.PatchCustomersIdPassthrough](../../models/operations/patchcustomersidpassthrough.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `meta`                                                                                           | [operations.PatchCustomersIdMeta](../../models/operations/patchcustomersidmeta.md)               | :heavy_minus_sign:                                                                               | N/A                                                                                              |

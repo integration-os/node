@@ -1,0 +1,14 @@
+# DeleteLeadsIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `status`                                                                                   | *string*                                                                                   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `statusCode`                                                                               | [operations.DeleteLeadsIdStatusCode](../../models/operations/deleteleadsidstatuscode.md)   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `unified`                                                                                  | [operations.DeleteLeadsIdUnified](../../models/operations/deleteleadsidunified.md)         | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `passthrough`                                                                              | [operations.DeleteLeadsIdPassthrough](../../models/operations/deleteleadsidpassthrough.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `meta`                                                                                     | [operations.DeleteLeadsIdMeta](../../models/operations/deleteleadsidmeta.md)               | :heavy_minus_sign:                                                                         | N/A                                                                                        |

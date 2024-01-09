@@ -1,0 +1,14 @@
+# DeleteProductsIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `status`                                                                                         | *string*                                                                                         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `statusCode`                                                                                     | [operations.DeleteProductsIdStatusCode](../../models/operations/deleteproductsidstatuscode.md)   | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `unified`                                                                                        | [operations.DeleteProductsIdUnified](../../models/operations/deleteproductsidunified.md)         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `passthrough`                                                                                    | [operations.DeleteProductsIdPassthrough](../../models/operations/deleteproductsidpassthrough.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `meta`                                                                                           | [operations.DeleteProductsIdMeta](../../models/operations/deleteproductsidmeta.md)               | :heavy_minus_sign:                                                                               | N/A                                                                                              |

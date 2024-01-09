@@ -1,0 +1,11 @@
+# GetNotesPaymentMethods
+
+
+## Fields
+
+| Field                                                                                        | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `id`                                                                                         | *string*                                                                                     | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `type`                                                                                       | [operations.GetNotesNotesResponseType](../../models/operations/getnotesnotesresponsetype.md) | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `details`                                                                                    | *string*                                                                                     | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `isDefault`                                                                                  | *boolean*                                                                                    | :heavy_minus_sign:                                                                           | N/A                                                                                          |

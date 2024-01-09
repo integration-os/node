@@ -1,0 +1,14 @@
+# DeleteContactsIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `status`                                                                                         | *string*                                                                                         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `statusCode`                                                                                     | [operations.DeleteContactsIdStatusCode](../../models/operations/deletecontactsidstatuscode.md)   | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `unified`                                                                                        | [operations.DeleteContactsIdUnified](../../models/operations/deletecontactsidunified.md)         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `passthrough`                                                                                    | [operations.DeleteContactsIdPassthrough](../../models/operations/deletecontactsidpassthrough.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `meta`                                                                                           | [operations.DeleteContactsIdMeta](../../models/operations/deletecontactsidmeta.md)               | :heavy_minus_sign:                                                                               | N/A                                                                                              |

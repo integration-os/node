@@ -1,0 +1,14 @@
+# GetProductsIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `status`                                                                                   | *string*                                                                                   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `statusCode`                                                                               | [operations.GetProductsIdStatusCode](../../models/operations/getproductsidstatuscode.md)   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `unified`                                                                                  | [operations.GetProductsIdUnified](../../models/operations/getproductsidunified.md)         | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `passthrough`                                                                              | [operations.GetProductsIdPassthrough](../../models/operations/getproductsidpassthrough.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `meta`                                                                                     | [operations.GetProductsIdMeta](../../models/operations/getproductsidmeta.md)               | :heavy_minus_sign:                                                                         | N/A                                                                                        |

@@ -7,8 +7,6 @@ export type Fetcher = (
   init?: RequestInit,
 ) => Promise<Response>;
 
-const DEFAULT_FETCHER: Fetcher = (input, init) => fetch(input, init);
-
 export interface HTTPClientOptions {
   fetcher?: Fetcher;
 }
@@ -24,7 +22,7 @@ export class HTTPClient {
   private responseHooks: ResponseHook[] = [];
 
   constructor(private options: HTTPClientOptions = {}) {
-    this.fetcher = options.fetcher || DEFAULT_FETCHER;
+    this.fetcher = options.fetcher || fetch;
   }
 
   async request(request: Request): Promise<Response> {

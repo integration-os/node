@@ -1,0 +1,14 @@
+# PatchCompaniesIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `status`                                                                                         | *string*                                                                                         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `statusCode`                                                                                     | [operations.PatchCompaniesIdStatusCode](../../models/operations/patchcompaniesidstatuscode.md)   | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `unified`                                                                                        | [operations.PatchCompaniesIdUnified](../../models/operations/patchcompaniesidunified.md)         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `passthrough`                                                                                    | [operations.PatchCompaniesIdPassthrough](../../models/operations/patchcompaniesidpassthrough.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `meta`                                                                                           | [operations.PatchCompaniesIdMeta](../../models/operations/patchcompaniesidmeta.md)               | :heavy_minus_sign:                                                                               | N/A                                                                                              |

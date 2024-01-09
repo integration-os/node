@@ -1,0 +1,14 @@
+# GetCustomersCountResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `status`                                                                                           | *string*                                                                                           | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `statusCode`                                                                                       | [operations.GetCustomersCountStatusCode](../../models/operations/getcustomerscountstatuscode.md)   | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `unified`                                                                                          | [operations.GetCustomersCountUnified](../../models/operations/getcustomerscountunified.md)         | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `passthrough`                                                                                      | [operations.GetCustomersCountPassthrough](../../models/operations/getcustomerscountpassthrough.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `meta`                                                                                             | [operations.GetCustomersCountMeta](../../models/operations/getcustomerscountmeta.md)               | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

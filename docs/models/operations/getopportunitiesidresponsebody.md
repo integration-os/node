@@ -1,0 +1,14 @@
+# GetOpportunitiesIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `status`                                                                                             | *string*                                                                                             | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `statusCode`                                                                                         | [operations.GetOpportunitiesIdStatusCode](../../models/operations/getopportunitiesidstatuscode.md)   | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `unified`                                                                                            | [operations.GetOpportunitiesIdUnified](../../models/operations/getopportunitiesidunified.md)         | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `passthrough`                                                                                        | [operations.GetOpportunitiesIdPassthrough](../../models/operations/getopportunitiesidpassthrough.md) | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |
+| `meta`                                                                                               | [operations.GetOpportunitiesIdMeta](../../models/operations/getopportunitiesidmeta.md)               | :heavy_minus_sign:                                                                                   | N/A                                                                                                  |

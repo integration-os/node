@@ -5,5 +5,4 @@
 export { Decimal } from "./decimal";
 export { RFCDate } from "./rfcdate";
 export { blobLikeSchema, isBlobLike } from "./blobs";
-export type { Paginator, PageIterator } from "./operations";
-export { createPageIterator } from "./operations";
+export type { Paginated, Paginator } from "./operations";

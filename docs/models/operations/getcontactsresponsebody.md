@@ -1,0 +1,15 @@
+# GetContactsResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `status`                                                                               | *string*                                                                               | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `statusCode`                                                                           | [operations.GetContactsStatusCode](../../models/operations/getcontactsstatuscode.md)   | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `unified`                                                                              | [operations.GetContactsUnified](../../models/operations/getcontactsunified.md)[]       | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `passthrough`                                                                          | [operations.GetContactsPassthrough](../../models/operations/getcontactspassthrough.md) | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `meta`                                                                                 | [operations.GetContactsMeta](../../models/operations/getcontactsmeta.md)               | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `pagination`                                                                           | [operations.GetContactsPagination](../../models/operations/getcontactspagination.md)   | :heavy_minus_sign:                                                                     | N/A                                                                                    |

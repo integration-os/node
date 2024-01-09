@@ -1,0 +1,14 @@
+# PatchOrdersIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `status`                                                                                   | *string*                                                                                   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `statusCode`                                                                               | [operations.PatchOrdersIdStatusCode](../../models/operations/patchordersidstatuscode.md)   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `unified`                                                                                  | [operations.PatchOrdersIdUnified](../../models/operations/patchordersidunified.md)         | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `passthrough`                                                                              | [operations.PatchOrdersIdPassthrough](../../models/operations/patchordersidpassthrough.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `meta`                                                                                     | [operations.PatchOrdersIdMeta](../../models/operations/patchordersidmeta.md)               | :heavy_minus_sign:                                                                         | N/A                                                                                        |

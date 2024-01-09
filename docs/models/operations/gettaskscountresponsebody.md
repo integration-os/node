@@ -1,0 +1,14 @@
+# GetTasksCountResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `status`                                                                                   | *string*                                                                                   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `statusCode`                                                                               | [operations.GetTasksCountStatusCode](../../models/operations/gettaskscountstatuscode.md)   | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `unified`                                                                                  | [operations.GetTasksCountUnified](../../models/operations/gettaskscountunified.md)         | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `passthrough`                                                                              | [operations.GetTasksCountPassthrough](../../models/operations/gettaskscountpassthrough.md) | :heavy_minus_sign:                                                                         | N/A                                                                                        |
+| `meta`                                                                                     | [operations.GetTasksCountMeta](../../models/operations/gettaskscountmeta.md)               | :heavy_minus_sign:                                                                         | N/A                                                                                        |

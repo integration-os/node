@@ -9,7 +9,7 @@ import { RetryConfig } from "./retries";
 /**
  * Contains the list of servers available to the SDK
  */
-export const ServerList = ["http://petstore.swagger.io/v1"] as const;
+export const ServerList = ["https://api.integrationos.com/v1/unified"] as const;
 
 export type SDKOptions = {
     httpClient?: HTTPClient;
@@ -25,6 +25,7 @@ export type SDKOptions = {
      * Allows overriding the default retry config used by the SDK
      */
     retryConfig?: RetryConfig;
+    client?: string;
 };
 
 export function serverURLFromOptions(options: SDKOptions): URL {
@@ -43,8 +44,8 @@ export function serverURLFromOptions(options: SDKOptions): URL {
 
 export const SDK_METADATA = Object.freeze({
     language: "typescript",
-    openapiDocVersion: "1.0.0",
+    openapiDocVersion: "1.0.1",
     sdkVersion: "0.0.1",
-    genVersion: "2.230.1",
-    userAgent: "speakeasy-sdk/typescript 0.0.1 2.230.1 1.0.0 openapi",
+    genVersion: "2.223.3",
+    userAgent: "speakeasy-sdk/typescript 0.0.1 2.223.3 1.0.1 @integrationos/node",
 });

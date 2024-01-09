@@ -1,15 +1,10 @@
 {
   "type": "commonjs",
-  "name": "openapi",
+  "name": "@integrationos/node",
   "version": "0.0.1",
-  "author": "Speakeasy",
+  "author": "IntegrationOS",
   "main": "./index.js",
   "sideEffects": false,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/speakeasy-sdks/node.git",
-    "directory": "."
-  },
   "scripts": {
     "lint": "eslint --max-warnings=0 src",
     "build": "tsc",

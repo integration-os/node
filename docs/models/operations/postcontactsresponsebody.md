@@ -1,0 +1,14 @@
+# PostContactsResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `status`                                                                                 | *string*                                                                                 | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `statusCode`                                                                             | [operations.PostContactsStatusCode](../../models/operations/postcontactsstatuscode.md)   | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `unified`                                                                                | [operations.PostContactsUnified](../../models/operations/postcontactsunified.md)         | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `passthrough`                                                                            | [operations.PostContactsPassthrough](../../models/operations/postcontactspassthrough.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `meta`                                                                                   | [operations.PostContactsMeta](../../models/operations/postcontactsmeta.md)               | :heavy_minus_sign:                                                                       | N/A                                                                                      |

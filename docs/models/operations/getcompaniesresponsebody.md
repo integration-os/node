@@ -1,0 +1,15 @@
+# GetCompaniesResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `status`                                                                                 | *string*                                                                                 | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `statusCode`                                                                             | [operations.GetCompaniesStatusCode](../../models/operations/getcompaniesstatuscode.md)   | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `unified`                                                                                | [operations.GetCompaniesUnified](../../models/operations/getcompaniesunified.md)[]       | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `passthrough`                                                                            | [operations.GetCompaniesPassthrough](../../models/operations/getcompaniespassthrough.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `meta`                                                                                   | [operations.GetCompaniesMeta](../../models/operations/getcompaniesmeta.md)               | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `pagination`                                                                             | [operations.GetCompaniesPagination](../../models/operations/getcompaniespagination.md)   | :heavy_minus_sign:                                                                       | N/A                                                                                      |

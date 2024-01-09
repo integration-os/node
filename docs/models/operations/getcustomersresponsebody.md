@@ -1,0 +1,15 @@
+# GetCustomersResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `status`                                                                                 | *string*                                                                                 | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `statusCode`                                                                             | [operations.GetCustomersStatusCode](../../models/operations/getcustomersstatuscode.md)   | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `unified`                                                                                | [operations.GetCustomersUnified](../../models/operations/getcustomersunified.md)[]       | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `passthrough`                                                                            | [operations.GetCustomersPassthrough](../../models/operations/getcustomerspassthrough.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `meta`                                                                                   | [operations.GetCustomersMeta](../../models/operations/getcustomersmeta.md)               | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `pagination`                                                                             | [operations.Pagination](../../models/operations/pagination.md)                           | :heavy_minus_sign:                                                                       | N/A                                                                                      |

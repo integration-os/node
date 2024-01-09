@@ -1,0 +1,14 @@
+# PatchTasksIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                    | Type                                                                                     | Required                                                                                 | Description                                                                              |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `status`                                                                                 | *string*                                                                                 | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `statusCode`                                                                             | [operations.PatchTasksIdStatusCode](../../models/operations/patchtasksidstatuscode.md)   | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `unified`                                                                                | [operations.PatchTasksIdUnified](../../models/operations/patchtasksidunified.md)         | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `passthrough`                                                                            | [operations.PatchTasksIdPassthrough](../../models/operations/patchtasksidpassthrough.md) | :heavy_minus_sign:                                                                       | N/A                                                                                      |
+| `meta`                                                                                   | [operations.PatchTasksIdMeta](../../models/operations/patchtasksidmeta.md)               | :heavy_minus_sign:                                                                       | N/A                                                                                      |

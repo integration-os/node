@@ -1,0 +1,15 @@
+# GetProductsResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `status`                                                                               | *string*                                                                               | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `statusCode`                                                                           | [operations.GetProductsStatusCode](../../models/operations/getproductsstatuscode.md)   | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `unified`                                                                              | [operations.GetProductsUnified](../../models/operations/getproductsunified.md)[]       | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `passthrough`                                                                          | [operations.GetProductsPassthrough](../../models/operations/getproductspassthrough.md) | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `meta`                                                                                 | [operations.GetProductsMeta](../../models/operations/getproductsmeta.md)               | :heavy_minus_sign:                                                                     | N/A                                                                                    |
+| `pagination`                                                                           | [operations.GetProductsPagination](../../models/operations/getproductspagination.md)   | :heavy_minus_sign:                                                                     | N/A                                                                                    |

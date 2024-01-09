@@ -1,0 +1,14 @@
+# PostOpportunitiesResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `status`                                                                                           | *string*                                                                                           | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `statusCode`                                                                                       | [operations.PostOpportunitiesStatusCode](../../models/operations/postopportunitiesstatuscode.md)   | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `unified`                                                                                          | [operations.PostOpportunitiesUnified](../../models/operations/postopportunitiesunified.md)         | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `passthrough`                                                                                      | [operations.PostOpportunitiesPassthrough](../../models/operations/postopportunitiespassthrough.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `meta`                                                                                             | [operations.PostOpportunitiesMeta](../../models/operations/postopportunitiesmeta.md)               | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

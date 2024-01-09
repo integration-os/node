@@ -1,13 +1,15 @@
 <!-- Start SDK Example Usage [usage] -->
 ```typescript
-import { SDK } from "openapi";
+import { IntegrationOS } from "@integrationos/node";
 
 async function run() {
-    const sdk = new SDK();
+    const sdk = new IntegrationOS();
 
-    const limit = 21453;
+    const id = "string";
+    const xIntegrationosSecret = "string";
+    const xIntegrationosConnectionKey = "string";
 
-    const res = await sdk.pets.listPets(limit);
+    const res = await sdk.customers.get(id, xIntegrationosSecret, xIntegrationosConnectionKey);
 
     if (res?.statusCode !== 200) {
         throw new Error("Unexpected status code: " + res?.statusCode || "-");

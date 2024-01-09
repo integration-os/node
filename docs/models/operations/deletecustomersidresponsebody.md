@@ -1,0 +1,14 @@
+# DeleteCustomersIdResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                              | Type                                                                                               | Required                                                                                           | Description                                                                                        |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `status`                                                                                           | *string*                                                                                           | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `statusCode`                                                                                       | [operations.DeleteCustomersIdStatusCode](../../models/operations/deletecustomersidstatuscode.md)   | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `unified`                                                                                          | [operations.DeleteCustomersIdUnified](../../models/operations/deletecustomersidunified.md)         | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `passthrough`                                                                                      | [operations.DeleteCustomersIdPassthrough](../../models/operations/deletecustomersidpassthrough.md) | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
+| `meta`                                                                                             | [operations.DeleteCustomersIdMeta](../../models/operations/deletecustomersidmeta.md)               | :heavy_minus_sign:                                                                                 | N/A                                                                                                |

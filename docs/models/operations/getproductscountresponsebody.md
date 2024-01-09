@@ -1,0 +1,14 @@
+# GetProductsCountResponseBody
+
+Successful response
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `status`                                                                                         | *string*                                                                                         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `statusCode`                                                                                     | [operations.GetProductsCountStatusCode](../../models/operations/getproductscountstatuscode.md)   | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `unified`                                                                                        | [operations.GetProductsCountUnified](../../models/operations/getproductscountunified.md)         | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `passthrough`                                                                                    | [operations.GetProductsCountPassthrough](../../models/operations/getproductscountpassthrough.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |
+| `meta`                                                                                           | [operations.GetProductsCountMeta](../../models/operations/getproductscountmeta.md)               | :heavy_minus_sign:                                                                               | N/A                                                                                              |
