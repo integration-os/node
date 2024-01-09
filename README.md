@@ -22,13 +22,13 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 ### NPM
 
 ```bash
-npm add https://github.com/speakeasy-sdks/node
+npm add <UNSET>
 ```
 
 ### Yarn
 
 ```bash
-yarn add https://github.com/speakeasy-sdks/node
+yarn add <UNSET>
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -38,14 +38,16 @@ yarn add https://github.com/speakeasy-sdks/node
 ### Example
 
 ```typescript
-import { SDK } from "openapi";
+import { IntegrationOS } from "@integrationos/node";
 
 async function run() {
-    const sdk = new SDK();
+    const sdk = new IntegrationOS();
 
-    const limit = 21453;
+    const id = "string";
+    const xIntegrationosSecret = "string";
+    const xIntegrationosConnectionKey = "string";
 
-    const res = await sdk.pets.listPets(limit);
+    const res = await sdk.customers.get(id, xIntegrationosSecret, xIntegrationosConnectionKey);
 
     if (res?.statusCode !== 200) {
         throw new Error("Unexpected status code: " + res?.statusCode || "-");
@@ -62,11 +64,95 @@ run();
 <!-- Start Available Resources and Operations [operations] -->
 ## Available Resources and Operations
 
-### [pets](docs/sdks/pets/README.md)
+### [customers](docs/sdks/customers/README.md)
 
-* [listPets](docs/sdks/pets/README.md#listpets) - List all pets
-* [createPets](docs/sdks/pets/README.md#createpets) - Create a pet
-* [showPetById](docs/sdks/pets/README.md#showpetbyid) - Info for a specific pet
+* [get](docs/sdks/customers/README.md#get) - Get customers
+* [delete](docs/sdks/customers/README.md#delete) - Delete customers
+* [update](docs/sdks/customers/README.md#update) - Update customers
+* [list](docs/sdks/customers/README.md#list) - List customers
+* [create](docs/sdks/customers/README.md#create) - Create customers
+* [count](docs/sdks/customers/README.md#count) - Get customers count
+
+### [companies](docs/sdks/companies/README.md)
+
+* [get](docs/sdks/companies/README.md#get) - Get companies
+* [delete](docs/sdks/companies/README.md#delete) - Delete companies
+* [update](docs/sdks/companies/README.md#update) - Update companies
+* [list](docs/sdks/companies/README.md#list) - List companies
+* [create](docs/sdks/companies/README.md#create) - Create companies
+* [count](docs/sdks/companies/README.md#count) - Get companies count
+
+### [leads](docs/sdks/leads/README.md)
+
+* [get](docs/sdks/leads/README.md#get) - Get leads
+* [delete](docs/sdks/leads/README.md#delete) - Delete leads
+* [update](docs/sdks/leads/README.md#update) - Update leads
+* [list](docs/sdks/leads/README.md#list) - List leads
+* [create](docs/sdks/leads/README.md#create) - Create leads
+* [count](docs/sdks/leads/README.md#count) - Get leads count
+
+### [notes](docs/sdks/notes/README.md)
+
+* [get](docs/sdks/notes/README.md#get) - Get notes
+* [delete](docs/sdks/notes/README.md#delete) - Delete notes
+* [update](docs/sdks/notes/README.md#update) - Update notes
+* [list](docs/sdks/notes/README.md#list) - List notes
+* [create](docs/sdks/notes/README.md#create) - Create notes
+* [count](docs/sdks/notes/README.md#count) - Get notes count
+
+### [users](docs/sdks/users/README.md)
+
+* [get](docs/sdks/users/README.md#get) - Get users
+* [delete](docs/sdks/users/README.md#delete) - Delete users
+* [update](docs/sdks/users/README.md#update) - Update users
+* [list](docs/sdks/users/README.md#list) - List users
+* [create](docs/sdks/users/README.md#create) - Create users
+* [count](docs/sdks/users/README.md#count) - Get users count
+
+### [opportunities](docs/sdks/opportunities/README.md)
+
+* [get](docs/sdks/opportunities/README.md#get) - Get opportunities
+* [delete](docs/sdks/opportunities/README.md#delete) - Delete opportunities
+* [update](docs/sdks/opportunities/README.md#update) - Update opportunities
+* [list](docs/sdks/opportunities/README.md#list) - List opportunities
+* [create](docs/sdks/opportunities/README.md#create) - Create opportunities
+* [count](docs/sdks/opportunities/README.md#count) - Get opportunities count
+
+### [orders](docs/sdks/orders/README.md)
+
+* [get](docs/sdks/orders/README.md#get) - Get orders
+* [delete](docs/sdks/orders/README.md#delete) - Delete orders
+* [update](docs/sdks/orders/README.md#update) - Update orders
+* [list](docs/sdks/orders/README.md#list) - List orders
+* [create](docs/sdks/orders/README.md#create) - Create orders
+* [count](docs/sdks/orders/README.md#count) - Get orders count
+
+### [products](docs/sdks/products/README.md)
+
+* [get](docs/sdks/products/README.md#get) - Get products
+* [delete](docs/sdks/products/README.md#delete) - Delete products
+* [update](docs/sdks/products/README.md#update) - Update products
+* [list](docs/sdks/products/README.md#list) - List products
+* [create](docs/sdks/products/README.md#create) - Create products
+* [count](docs/sdks/products/README.md#count) - Get products count
+
+### [tasks](docs/sdks/tasks/README.md)
+
+* [get](docs/sdks/tasks/README.md#get) - Get tasks
+* [delete](docs/sdks/tasks/README.md#delete) - Delete tasks
+* [update](docs/sdks/tasks/README.md#update) - Update tasks
+* [list](docs/sdks/tasks/README.md#list) - List tasks
+* [create](docs/sdks/tasks/README.md#create) - Create tasks
+* [count](docs/sdks/tasks/README.md#count) - Get tasks count
+
+### [contacts](docs/sdks/contacts/README.md)
+
+* [get](docs/sdks/contacts/README.md#get) - Get contacts
+* [delete](docs/sdks/contacts/README.md#delete) - Delete contacts
+* [update](docs/sdks/contacts/README.md#update) - Update contacts
+* [list](docs/sdks/contacts/README.md#list) - List contacts
+* [create](docs/sdks/contacts/README.md#create) - Create contacts
+* [count](docs/sdks/contacts/README.md#count) - Get contacts count
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
@@ -81,17 +167,21 @@ All SDK methods return a response object or throw an error. If Error objects are
 Example
 
 ```typescript
-import { SDK } from "openapi";
-import * as errors from "openapi/models/errors";
+import { IntegrationOS } from "@integrationos/node";
+import * as errors from "@integrationos/node/models/errors";
 
 async function run() {
-    const sdk = new SDK();
+    const sdk = new IntegrationOS();
 
-    const limit = 21453;
+    const id = "string";
+    const xIntegrationosSecret = "string";
+    const xIntegrationosConnectionKey = "string";
 
-    const res = await sdk.pets.listPets(limit).catch((err) => {
-        throw err;
-    });
+    const res = await sdk.customers
+        .get(id, xIntegrationosSecret, xIntegrationosConnectionKey)
+        .catch((err) => {
+            throw err;
+        });
 
     if (res?.statusCode !== 200) {
         throw new Error("Unexpected status code: " + res?.statusCode || "-");
@@ -114,7 +204,7 @@ You can override the default server globally by passing a server index to the `s
 
 | # | Server | Variables |
 | - | ------ | --------- |
-| 0 | `http://petstore.swagger.io/v1` | None |
+| 0 | `https://api.integrationos.com/v1/unified` | None |
 
 
 
@@ -142,8 +232,8 @@ custom header and a timeout to requests and how to use the `"requestError"` hook
 to log errors:
 
 ```typescript
-import { SDK } from "openapi";
-import { HTTPClient } from "openapi/lib/http";
+import { IntegrationOS } from "@integrationos/node";
+import { HTTPClient } from "@integrationos/node/lib/http";
 
 const httpClient = new HTTPClient({
   // fetcher takes a function that has the same signature as native `fetch`.
@@ -169,7 +259,7 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new SDK({ httpClient });
+const sdk = new IntegrationOS({ httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -189,3 +279,4 @@ While we value open-source contributions to this SDK, this library is generated 
 Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release!
 
 ### SDK Created by [Speakeasy](https://docs.speakeasyapi.dev/docs/using-speakeasy/client-sdks)
+# node
