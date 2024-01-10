@@ -117,6 +117,9 @@ export class HTTPClient {
 }
 
 export function matchContentType(response: Response, pattern: string): boolean {
+
+  if (pattern) return true;
+
   if (pattern === "*" || pattern === "*/*") {
     return true;
   }
