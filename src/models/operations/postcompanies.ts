@@ -122,31 +122,31 @@ export type PostCompaniesAdditionalContacts = {
 };
 
 export type PostCompaniesRequestBody = {
-    id: number;
-    name: string;
-    legalName: string;
-    type: string;
-    industry: string;
-    address: PostCompaniesAddress;
-    phone: string;
-    email: string;
-    website: string;
-    foundedDate: number;
-    numberOfEmployees: number;
-    revenue: number;
-    revenueCurrency: string;
-    tags: Array<string>;
-    socialProfiles: Array<PostCompaniesSocialProfiles>;
-    logo: string;
-    description: string;
-    stockSymbol: string;
-    parentCompanyId: string;
-    additionalContacts: Array<PostCompaniesAdditionalContacts>;
-    incorporationCountry: string;
-    incorporationDate: number;
-    taxId: string;
-    regulatoryStatus: string;
-    dunsNumber: string;
+    id?: number | undefined;
+    name?: string | undefined;
+    legalName?: string | undefined;
+    type?: string | undefined;
+    industry?: string | undefined;
+    address?: PostCompaniesAddress | undefined;
+    phone?: string | undefined;
+    email?: string | undefined;
+    website?: string | undefined;
+    foundedDate?: number | undefined;
+    numberOfEmployees?: number | undefined;
+    revenue?: number | undefined;
+    revenueCurrency?: string | undefined;
+    tags?: Array<string> | undefined;
+    socialProfiles?: Array<PostCompaniesSocialProfiles> | undefined;
+    logo?: string | undefined;
+    description?: string | undefined;
+    stockSymbol?: string | undefined;
+    parentCompanyId?: string | undefined;
+    additionalContacts?: Array<PostCompaniesAdditionalContacts> | undefined;
+    incorporationCountry?: string | undefined;
+    incorporationDate?: number | undefined;
+    taxId?: string | undefined;
+    regulatoryStatus?: string | undefined;
+    dunsNumber?: string | undefined;
 };
 
 export type PostCompaniesRequest = {
@@ -1007,178 +1007,210 @@ export namespace PostCompaniesAdditionalContacts$ {
 /** @internal */
 export namespace PostCompaniesRequestBody$ {
     export type Inbound = {
-        id: number;
-        name: string;
-        legalName: string;
-        type: string;
-        industry: string;
-        address: PostCompaniesAddress$.Inbound;
-        phone: string;
-        email: string;
-        website: string;
-        foundedDate: number;
-        numberOfEmployees: number;
-        revenue: number;
-        revenueCurrency: string;
-        tags: Array<string>;
-        socialProfiles: Array<PostCompaniesSocialProfiles$.Inbound>;
-        logo: string;
-        description: string;
-        stockSymbol: string;
-        parentCompanyId: string;
-        additionalContacts: Array<PostCompaniesAdditionalContacts$.Inbound>;
-        incorporationCountry: string;
-        incorporationDate: number;
-        taxId: string;
-        regulatoryStatus: string;
-        dunsNumber: string;
+        id?: number | undefined;
+        name?: string | undefined;
+        legalName?: string | undefined;
+        type?: string | undefined;
+        industry?: string | undefined;
+        address?: PostCompaniesAddress$.Inbound | undefined;
+        phone?: string | undefined;
+        email?: string | undefined;
+        website?: string | undefined;
+        foundedDate?: number | undefined;
+        numberOfEmployees?: number | undefined;
+        revenue?: number | undefined;
+        revenueCurrency?: string | undefined;
+        tags?: Array<string> | undefined;
+        socialProfiles?: Array<PostCompaniesSocialProfiles$.Inbound> | undefined;
+        logo?: string | undefined;
+        description?: string | undefined;
+        stockSymbol?: string | undefined;
+        parentCompanyId?: string | undefined;
+        additionalContacts?: Array<PostCompaniesAdditionalContacts$.Inbound> | undefined;
+        incorporationCountry?: string | undefined;
+        incorporationDate?: number | undefined;
+        taxId?: string | undefined;
+        regulatoryStatus?: string | undefined;
+        dunsNumber?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCompaniesRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.number(),
-            name: z.string(),
-            legalName: z.string(),
-            type: z.string(),
-            industry: z.string(),
-            address: z.lazy(() => PostCompaniesAddress$.inboundSchema),
-            phone: z.string(),
-            email: z.string(),
-            website: z.string(),
-            foundedDate: z.number(),
-            numberOfEmployees: z.number(),
-            revenue: z.number(),
-            revenueCurrency: z.string(),
-            tags: z.array(z.string()),
-            socialProfiles: z.array(z.lazy(() => PostCompaniesSocialProfiles$.inboundSchema)),
-            logo: z.string(),
-            description: z.string(),
-            stockSymbol: z.string(),
-            parentCompanyId: z.string(),
-            additionalContacts: z.array(
-                z.lazy(() => PostCompaniesAdditionalContacts$.inboundSchema)
-            ),
-            incorporationCountry: z.string(),
-            incorporationDate: z.number(),
-            taxId: z.string(),
-            regulatoryStatus: z.string(),
-            dunsNumber: z.string(),
+            id: z.number().optional(),
+            name: z.string().optional(),
+            legalName: z.string().optional(),
+            type: z.string().optional(),
+            industry: z.string().optional(),
+            address: z.lazy(() => PostCompaniesAddress$.inboundSchema).optional(),
+            phone: z.string().optional(),
+            email: z.string().optional(),
+            website: z.string().optional(),
+            foundedDate: z.number().optional(),
+            numberOfEmployees: z.number().optional(),
+            revenue: z.number().optional(),
+            revenueCurrency: z.string().optional(),
+            tags: z.array(z.string()).optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostCompaniesSocialProfiles$.inboundSchema))
+                .optional(),
+            logo: z.string().optional(),
+            description: z.string().optional(),
+            stockSymbol: z.string().optional(),
+            parentCompanyId: z.string().optional(),
+            additionalContacts: z
+                .array(z.lazy(() => PostCompaniesAdditionalContacts$.inboundSchema))
+                .optional(),
+            incorporationCountry: z.string().optional(),
+            incorporationDate: z.number().optional(),
+            taxId: z.string().optional(),
+            regulatoryStatus: z.string().optional(),
+            dunsNumber: z.string().optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                name: v.name,
-                legalName: v.legalName,
-                type: v.type,
-                industry: v.industry,
-                address: v.address,
-                phone: v.phone,
-                email: v.email,
-                website: v.website,
-                foundedDate: v.foundedDate,
-                numberOfEmployees: v.numberOfEmployees,
-                revenue: v.revenue,
-                revenueCurrency: v.revenueCurrency,
-                tags: v.tags,
-                socialProfiles: v.socialProfiles,
-                logo: v.logo,
-                description: v.description,
-                stockSymbol: v.stockSymbol,
-                parentCompanyId: v.parentCompanyId,
-                additionalContacts: v.additionalContacts,
-                incorporationCountry: v.incorporationCountry,
-                incorporationDate: v.incorporationDate,
-                taxId: v.taxId,
-                regulatoryStatus: v.regulatoryStatus,
-                dunsNumber: v.dunsNumber,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.name === undefined ? null : { name: v.name }),
+                ...(v.legalName === undefined ? null : { legalName: v.legalName }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.address === undefined ? null : { address: v.address }),
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
+                ...(v.numberOfEmployees === undefined
+                    ? null
+                    : { numberOfEmployees: v.numberOfEmployees }),
+                ...(v.revenue === undefined ? null : { revenue: v.revenue }),
+                ...(v.revenueCurrency === undefined
+                    ? null
+                    : { revenueCurrency: v.revenueCurrency }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.logo === undefined ? null : { logo: v.logo }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.stockSymbol === undefined ? null : { stockSymbol: v.stockSymbol }),
+                ...(v.parentCompanyId === undefined
+                    ? null
+                    : { parentCompanyId: v.parentCompanyId }),
+                ...(v.additionalContacts === undefined
+                    ? null
+                    : { additionalContacts: v.additionalContacts }),
+                ...(v.incorporationCountry === undefined
+                    ? null
+                    : { incorporationCountry: v.incorporationCountry }),
+                ...(v.incorporationDate === undefined
+                    ? null
+                    : { incorporationDate: v.incorporationDate }),
+                ...(v.taxId === undefined ? null : { taxId: v.taxId }),
+                ...(v.regulatoryStatus === undefined
+                    ? null
+                    : { regulatoryStatus: v.regulatoryStatus }),
+                ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
             };
         });
 
     export type Outbound = {
-        id: number;
-        name: string;
-        legalName: string;
-        type: string;
-        industry: string;
-        address: PostCompaniesAddress$.Outbound;
-        phone: string;
-        email: string;
-        website: string;
-        foundedDate: number;
-        numberOfEmployees: number;
-        revenue: number;
-        revenueCurrency: string;
-        tags: Array<string>;
-        socialProfiles: Array<PostCompaniesSocialProfiles$.Outbound>;
-        logo: string;
-        description: string;
-        stockSymbol: string;
-        parentCompanyId: string;
-        additionalContacts: Array<PostCompaniesAdditionalContacts$.Outbound>;
-        incorporationCountry: string;
-        incorporationDate: number;
-        taxId: string;
-        regulatoryStatus: string;
-        dunsNumber: string;
+        id?: number | undefined;
+        name?: string | undefined;
+        legalName?: string | undefined;
+        type?: string | undefined;
+        industry?: string | undefined;
+        address?: PostCompaniesAddress$.Outbound | undefined;
+        phone?: string | undefined;
+        email?: string | undefined;
+        website?: string | undefined;
+        foundedDate?: number | undefined;
+        numberOfEmployees?: number | undefined;
+        revenue?: number | undefined;
+        revenueCurrency?: string | undefined;
+        tags?: Array<string> | undefined;
+        socialProfiles?: Array<PostCompaniesSocialProfiles$.Outbound> | undefined;
+        logo?: string | undefined;
+        description?: string | undefined;
+        stockSymbol?: string | undefined;
+        parentCompanyId?: string | undefined;
+        additionalContacts?: Array<PostCompaniesAdditionalContacts$.Outbound> | undefined;
+        incorporationCountry?: string | undefined;
+        incorporationDate?: number | undefined;
+        taxId?: string | undefined;
+        regulatoryStatus?: string | undefined;
+        dunsNumber?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesRequestBody> = z
         .object({
-            id: z.number(),
-            name: z.string(),
-            legalName: z.string(),
-            type: z.string(),
-            industry: z.string(),
-            address: z.lazy(() => PostCompaniesAddress$.outboundSchema),
-            phone: z.string(),
-            email: z.string(),
-            website: z.string(),
-            foundedDate: z.number(),
-            numberOfEmployees: z.number(),
-            revenue: z.number(),
-            revenueCurrency: z.string(),
-            tags: z.array(z.string()),
-            socialProfiles: z.array(z.lazy(() => PostCompaniesSocialProfiles$.outboundSchema)),
-            logo: z.string(),
-            description: z.string(),
-            stockSymbol: z.string(),
-            parentCompanyId: z.string(),
-            additionalContacts: z.array(
-                z.lazy(() => PostCompaniesAdditionalContacts$.outboundSchema)
-            ),
-            incorporationCountry: z.string(),
-            incorporationDate: z.number(),
-            taxId: z.string(),
-            regulatoryStatus: z.string(),
-            dunsNumber: z.string(),
+            id: z.number().optional(),
+            name: z.string().optional(),
+            legalName: z.string().optional(),
+            type: z.string().optional(),
+            industry: z.string().optional(),
+            address: z.lazy(() => PostCompaniesAddress$.outboundSchema).optional(),
+            phone: z.string().optional(),
+            email: z.string().optional(),
+            website: z.string().optional(),
+            foundedDate: z.number().optional(),
+            numberOfEmployees: z.number().optional(),
+            revenue: z.number().optional(),
+            revenueCurrency: z.string().optional(),
+            tags: z.array(z.string()).optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostCompaniesSocialProfiles$.outboundSchema))
+                .optional(),
+            logo: z.string().optional(),
+            description: z.string().optional(),
+            stockSymbol: z.string().optional(),
+            parentCompanyId: z.string().optional(),
+            additionalContacts: z
+                .array(z.lazy(() => PostCompaniesAdditionalContacts$.outboundSchema))
+                .optional(),
+            incorporationCountry: z.string().optional(),
+            incorporationDate: z.number().optional(),
+            taxId: z.string().optional(),
+            regulatoryStatus: z.string().optional(),
+            dunsNumber: z.string().optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                name: v.name,
-                legalName: v.legalName,
-                type: v.type,
-                industry: v.industry,
-                address: v.address,
-                phone: v.phone,
-                email: v.email,
-                website: v.website,
-                foundedDate: v.foundedDate,
-                numberOfEmployees: v.numberOfEmployees,
-                revenue: v.revenue,
-                revenueCurrency: v.revenueCurrency,
-                tags: v.tags,
-                socialProfiles: v.socialProfiles,
-                logo: v.logo,
-                description: v.description,
-                stockSymbol: v.stockSymbol,
-                parentCompanyId: v.parentCompanyId,
-                additionalContacts: v.additionalContacts,
-                incorporationCountry: v.incorporationCountry,
-                incorporationDate: v.incorporationDate,
-                taxId: v.taxId,
-                regulatoryStatus: v.regulatoryStatus,
-                dunsNumber: v.dunsNumber,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.name === undefined ? null : { name: v.name }),
+                ...(v.legalName === undefined ? null : { legalName: v.legalName }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.address === undefined ? null : { address: v.address }),
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
+                ...(v.numberOfEmployees === undefined
+                    ? null
+                    : { numberOfEmployees: v.numberOfEmployees }),
+                ...(v.revenue === undefined ? null : { revenue: v.revenue }),
+                ...(v.revenueCurrency === undefined
+                    ? null
+                    : { revenueCurrency: v.revenueCurrency }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.logo === undefined ? null : { logo: v.logo }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.stockSymbol === undefined ? null : { stockSymbol: v.stockSymbol }),
+                ...(v.parentCompanyId === undefined
+                    ? null
+                    : { parentCompanyId: v.parentCompanyId }),
+                ...(v.additionalContacts === undefined
+                    ? null
+                    : { additionalContacts: v.additionalContacts }),
+                ...(v.incorporationCountry === undefined
+                    ? null
+                    : { incorporationCountry: v.incorporationCountry }),
+                ...(v.incorporationDate === undefined
+                    ? null
+                    : { incorporationDate: v.incorporationDate }),
+                ...(v.taxId === undefined ? null : { taxId: v.taxId }),
+                ...(v.regulatoryStatus === undefined
+                    ? null
+                    : { regulatoryStatus: v.regulatoryStatus }),
+                ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
             };
         });
 }

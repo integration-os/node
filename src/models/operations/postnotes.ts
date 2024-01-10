@@ -338,22 +338,22 @@ export enum PostNotesNotesRequestStatus {
 }
 
 export type PostNotesRequestBody = {
-    id: string;
-    title: string;
-    content: string;
-    createdAt: number;
-    updatedAt: number;
-    lastAccessed: number;
-    reminder: number;
-    color: string;
-    priority: PostNotesPriority;
-    author: PostNotesAuthor;
-    tags: Array<string>;
-    attachments: Array<PostNotesAttachments>;
-    sharedWith: Array<PostNotesSharedWith>;
-    visibility: PostNotesVisibility;
-    status: PostNotesNotesRequestStatus;
-    metadata: Array<string>;
+    id?: string | undefined;
+    title?: string | undefined;
+    content?: string | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    lastAccessed?: number | undefined;
+    reminder?: number | undefined;
+    color?: string | undefined;
+    priority?: PostNotesPriority | undefined;
+    author?: PostNotesAuthor | undefined;
+    tags?: Array<string> | undefined;
+    attachments?: Array<PostNotesAttachments> | undefined;
+    sharedWith?: Array<PostNotesSharedWith> | undefined;
+    visibility?: PostNotesVisibility | undefined;
+    status?: PostNotesNotesRequestStatus | undefined;
+    metadata?: Array<string> | undefined;
 };
 
 export type PostNotesRequest = {
@@ -2208,120 +2208,120 @@ export const PostNotesNotesRequestStatus$ = z.nativeEnum(PostNotesNotesRequestSt
 /** @internal */
 export namespace PostNotesRequestBody$ {
     export type Inbound = {
-        id: string;
-        title: string;
-        content: string;
-        createdAt: number;
-        updatedAt: number;
-        lastAccessed: number;
-        reminder: number;
-        color: string;
-        priority: PostNotesPriority;
-        author: PostNotesAuthor$.Inbound;
-        tags: Array<string>;
-        attachments: Array<PostNotesAttachments$.Inbound>;
-        sharedWith: Array<PostNotesSharedWith$.Inbound>;
-        visibility: PostNotesVisibility;
-        status: PostNotesNotesRequestStatus;
-        metadata: Array<string>;
+        id?: string | undefined;
+        title?: string | undefined;
+        content?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        lastAccessed?: number | undefined;
+        reminder?: number | undefined;
+        color?: string | undefined;
+        priority?: PostNotesPriority | undefined;
+        author?: PostNotesAuthor$.Inbound | undefined;
+        tags?: Array<string> | undefined;
+        attachments?: Array<PostNotesAttachments$.Inbound> | undefined;
+        sharedWith?: Array<PostNotesSharedWith$.Inbound> | undefined;
+        visibility?: PostNotesVisibility | undefined;
+        status?: PostNotesNotesRequestStatus | undefined;
+        metadata?: Array<string> | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostNotesRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            content: z.string(),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            lastAccessed: z.number(),
-            reminder: z.number(),
-            color: z.string(),
-            priority: PostNotesPriority$,
-            author: z.lazy(() => PostNotesAuthor$.inboundSchema),
-            tags: z.array(z.string()),
-            attachments: z.array(z.lazy(() => PostNotesAttachments$.inboundSchema)),
-            sharedWith: z.array(z.lazy(() => PostNotesSharedWith$.inboundSchema)),
-            visibility: PostNotesVisibility$,
-            status: PostNotesNotesRequestStatus$,
-            metadata: z.array(z.string()),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            content: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            lastAccessed: z.number().optional(),
+            reminder: z.number().optional(),
+            color: z.string().optional(),
+            priority: PostNotesPriority$.optional(),
+            author: z.lazy(() => PostNotesAuthor$.inboundSchema).optional(),
+            tags: z.array(z.string()).optional(),
+            attachments: z.array(z.lazy(() => PostNotesAttachments$.inboundSchema)).optional(),
+            sharedWith: z.array(z.lazy(() => PostNotesSharedWith$.inboundSchema)).optional(),
+            visibility: PostNotesVisibility$.optional(),
+            status: PostNotesNotesRequestStatus$.optional(),
+            metadata: z.array(z.string()).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                content: v.content,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                lastAccessed: v.lastAccessed,
-                reminder: v.reminder,
-                color: v.color,
-                priority: v.priority,
-                author: v.author,
-                tags: v.tags,
-                attachments: v.attachments,
-                sharedWith: v.sharedWith,
-                visibility: v.visibility,
-                status: v.status,
-                metadata: v.metadata,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.content === undefined ? null : { content: v.content }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.lastAccessed === undefined ? null : { lastAccessed: v.lastAccessed }),
+                ...(v.reminder === undefined ? null : { reminder: v.reminder }),
+                ...(v.color === undefined ? null : { color: v.color }),
+                ...(v.priority === undefined ? null : { priority: v.priority }),
+                ...(v.author === undefined ? null : { author: v.author }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.sharedWith === undefined ? null : { sharedWith: v.sharedWith }),
+                ...(v.visibility === undefined ? null : { visibility: v.visibility }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        title: string;
-        content: string;
-        createdAt: number;
-        updatedAt: number;
-        lastAccessed: number;
-        reminder: number;
-        color: string;
-        priority: PostNotesPriority;
-        author: PostNotesAuthor$.Outbound;
-        tags: Array<string>;
-        attachments: Array<PostNotesAttachments$.Outbound>;
-        sharedWith: Array<PostNotesSharedWith$.Outbound>;
-        visibility: PostNotesVisibility;
-        status: PostNotesNotesRequestStatus;
-        metadata: Array<string>;
+        id?: string | undefined;
+        title?: string | undefined;
+        content?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        lastAccessed?: number | undefined;
+        reminder?: number | undefined;
+        color?: string | undefined;
+        priority?: PostNotesPriority | undefined;
+        author?: PostNotesAuthor$.Outbound | undefined;
+        tags?: Array<string> | undefined;
+        attachments?: Array<PostNotesAttachments$.Outbound> | undefined;
+        sharedWith?: Array<PostNotesSharedWith$.Outbound> | undefined;
+        visibility?: PostNotesVisibility | undefined;
+        status?: PostNotesNotesRequestStatus | undefined;
+        metadata?: Array<string> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostNotesRequestBody> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            content: z.string(),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            lastAccessed: z.number(),
-            reminder: z.number(),
-            color: z.string(),
-            priority: PostNotesPriority$,
-            author: z.lazy(() => PostNotesAuthor$.outboundSchema),
-            tags: z.array(z.string()),
-            attachments: z.array(z.lazy(() => PostNotesAttachments$.outboundSchema)),
-            sharedWith: z.array(z.lazy(() => PostNotesSharedWith$.outboundSchema)),
-            visibility: PostNotesVisibility$,
-            status: PostNotesNotesRequestStatus$,
-            metadata: z.array(z.string()),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            content: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            lastAccessed: z.number().optional(),
+            reminder: z.number().optional(),
+            color: z.string().optional(),
+            priority: PostNotesPriority$.optional(),
+            author: z.lazy(() => PostNotesAuthor$.outboundSchema).optional(),
+            tags: z.array(z.string()).optional(),
+            attachments: z.array(z.lazy(() => PostNotesAttachments$.outboundSchema)).optional(),
+            sharedWith: z.array(z.lazy(() => PostNotesSharedWith$.outboundSchema)).optional(),
+            visibility: PostNotesVisibility$.optional(),
+            status: PostNotesNotesRequestStatus$.optional(),
+            metadata: z.array(z.string()).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                content: v.content,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                lastAccessed: v.lastAccessed,
-                reminder: v.reminder,
-                color: v.color,
-                priority: v.priority,
-                author: v.author,
-                tags: v.tags,
-                attachments: v.attachments,
-                sharedWith: v.sharedWith,
-                visibility: v.visibility,
-                status: v.status,
-                metadata: v.metadata,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.content === undefined ? null : { content: v.content }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.lastAccessed === undefined ? null : { lastAccessed: v.lastAccessed }),
+                ...(v.reminder === undefined ? null : { reminder: v.reminder }),
+                ...(v.color === undefined ? null : { color: v.color }),
+                ...(v.priority === undefined ? null : { priority: v.priority }),
+                ...(v.author === undefined ? null : { author: v.author }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.sharedWith === undefined ? null : { sharedWith: v.sharedWith }),
+                ...(v.visibility === undefined ? null : { visibility: v.visibility }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
             };
         });
 }

@@ -617,29 +617,29 @@ export type PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1 = {
 };
 
 export type PostOpportunitiesRequestBody = {
-    id: string;
-    title: string;
-    description: string;
-    amount: number;
-    currency: string;
-    stage: string;
-    probability: number;
-    closeDate: number;
-    type: string;
-    nextStep: string;
-    leadSource: string;
-    isClosed: boolean;
-    isWon: boolean;
-    createdDate: number;
-    lastModifiedDate: number;
-    lostReason: string;
-    campaign: PostOpportunitiesCampaign;
-    account: PostOpportunitiesAccount;
-    contacts: Array<PostOpportunitiesContacts>;
-    owner: PostOpportunitiesOwner;
-    attachments: Array<PostOpportunitiesAttachments>;
-    notes: Array<string>;
-    customFields: Array<PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1>;
+    id?: string | undefined;
+    title?: string | undefined;
+    description?: string | undefined;
+    amount?: number | undefined;
+    currency?: string | undefined;
+    stage?: string | undefined;
+    probability?: number | undefined;
+    closeDate?: number | undefined;
+    type?: string | undefined;
+    nextStep?: string | undefined;
+    leadSource?: string | undefined;
+    isClosed?: boolean | undefined;
+    isWon?: boolean | undefined;
+    createdDate?: number | undefined;
+    lastModifiedDate?: number | undefined;
+    lostReason?: string | undefined;
+    campaign?: PostOpportunitiesCampaign | undefined;
+    account?: PostOpportunitiesAccount | undefined;
+    contacts?: Array<PostOpportunitiesContacts> | undefined;
+    owner?: PostOpportunitiesOwner | undefined;
+    attachments?: Array<PostOpportunitiesAttachments> | undefined;
+    notes?: Array<string> | undefined;
+    customFields?: Array<PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1> | undefined;
 };
 
 export type PostOpportunitiesRequest = {
@@ -4392,172 +4392,188 @@ export namespace PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$ 
 /** @internal */
 export namespace PostOpportunitiesRequestBody$ {
     export type Inbound = {
-        id: string;
-        title: string;
-        description: string;
-        amount: number;
-        currency: string;
-        stage: string;
-        probability: number;
-        closeDate: number;
-        type: string;
-        nextStep: string;
-        leadSource: string;
-        isClosed: boolean;
-        isWon: boolean;
-        createdDate: number;
-        lastModifiedDate: number;
-        lostReason: string;
-        campaign: PostOpportunitiesCampaign$.Inbound;
-        account: PostOpportunitiesAccount$.Inbound;
-        contacts: Array<PostOpportunitiesContacts$.Inbound>;
-        owner: PostOpportunitiesOwner$.Inbound;
-        attachments: Array<PostOpportunitiesAttachments$.Inbound>;
-        notes: Array<string>;
-        customFields: Array<PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.Inbound>;
+        id?: string | undefined;
+        title?: string | undefined;
+        description?: string | undefined;
+        amount?: number | undefined;
+        currency?: string | undefined;
+        stage?: string | undefined;
+        probability?: number | undefined;
+        closeDate?: number | undefined;
+        type?: string | undefined;
+        nextStep?: string | undefined;
+        leadSource?: string | undefined;
+        isClosed?: boolean | undefined;
+        isWon?: boolean | undefined;
+        createdDate?: number | undefined;
+        lastModifiedDate?: number | undefined;
+        lostReason?: string | undefined;
+        campaign?: PostOpportunitiesCampaign$.Inbound | undefined;
+        account?: PostOpportunitiesAccount$.Inbound | undefined;
+        contacts?: Array<PostOpportunitiesContacts$.Inbound> | undefined;
+        owner?: PostOpportunitiesOwner$.Inbound | undefined;
+        attachments?: Array<PostOpportunitiesAttachments$.Inbound> | undefined;
+        notes?: Array<string> | undefined;
+        customFields?:
+            | Array<PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.Inbound>
+            | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostOpportunitiesRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            description: z.string(),
-            amount: z.number(),
-            currency: z.string(),
-            stage: z.string(),
-            probability: z.number(),
-            closeDate: z.number(),
-            type: z.string(),
-            nextStep: z.string(),
-            leadSource: z.string(),
-            isClosed: z.boolean(),
-            isWon: z.boolean(),
-            createdDate: z.number(),
-            lastModifiedDate: z.number(),
-            lostReason: z.string(),
-            campaign: z.lazy(() => PostOpportunitiesCampaign$.inboundSchema),
-            account: z.lazy(() => PostOpportunitiesAccount$.inboundSchema),
-            contacts: z.array(z.lazy(() => PostOpportunitiesContacts$.inboundSchema)),
-            owner: z.lazy(() => PostOpportunitiesOwner$.inboundSchema),
-            attachments: z.array(z.lazy(() => PostOpportunitiesAttachments$.inboundSchema)),
-            notes: z.array(z.string()),
-            customFields: z.array(
-                z.lazy(
-                    () =>
-                        PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.inboundSchema
+            id: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            amount: z.number().optional(),
+            currency: z.string().optional(),
+            stage: z.string().optional(),
+            probability: z.number().optional(),
+            closeDate: z.number().optional(),
+            type: z.string().optional(),
+            nextStep: z.string().optional(),
+            leadSource: z.string().optional(),
+            isClosed: z.boolean().optional(),
+            isWon: z.boolean().optional(),
+            createdDate: z.number().optional(),
+            lastModifiedDate: z.number().optional(),
+            lostReason: z.string().optional(),
+            campaign: z.lazy(() => PostOpportunitiesCampaign$.inboundSchema).optional(),
+            account: z.lazy(() => PostOpportunitiesAccount$.inboundSchema).optional(),
+            contacts: z.array(z.lazy(() => PostOpportunitiesContacts$.inboundSchema)).optional(),
+            owner: z.lazy(() => PostOpportunitiesOwner$.inboundSchema).optional(),
+            attachments: z
+                .array(z.lazy(() => PostOpportunitiesAttachments$.inboundSchema))
+                .optional(),
+            notes: z.array(z.string()).optional(),
+            customFields: z
+                .array(
+                    z.lazy(
+                        () =>
+                            PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.inboundSchema
+                    )
                 )
-            ),
+                .optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                description: v.description,
-                amount: v.amount,
-                currency: v.currency,
-                stage: v.stage,
-                probability: v.probability,
-                closeDate: v.closeDate,
-                type: v.type,
-                nextStep: v.nextStep,
-                leadSource: v.leadSource,
-                isClosed: v.isClosed,
-                isWon: v.isWon,
-                createdDate: v.createdDate,
-                lastModifiedDate: v.lastModifiedDate,
-                lostReason: v.lostReason,
-                campaign: v.campaign,
-                account: v.account,
-                contacts: v.contacts,
-                owner: v.owner,
-                attachments: v.attachments,
-                notes: v.notes,
-                customFields: v.customFields,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.amount === undefined ? null : { amount: v.amount }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.stage === undefined ? null : { stage: v.stage }),
+                ...(v.probability === undefined ? null : { probability: v.probability }),
+                ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
+                ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
+                ...(v.isWon === undefined ? null : { isWon: v.isWon }),
+                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
+                ...(v.lastModifiedDate === undefined
+                    ? null
+                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
+                ...(v.campaign === undefined ? null : { campaign: v.campaign }),
+                ...(v.account === undefined ? null : { account: v.account }),
+                ...(v.contacts === undefined ? null : { contacts: v.contacts }),
+                ...(v.owner === undefined ? null : { owner: v.owner }),
+                ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        title: string;
-        description: string;
-        amount: number;
-        currency: string;
-        stage: string;
-        probability: number;
-        closeDate: number;
-        type: string;
-        nextStep: string;
-        leadSource: string;
-        isClosed: boolean;
-        isWon: boolean;
-        createdDate: number;
-        lastModifiedDate: number;
-        lostReason: string;
-        campaign: PostOpportunitiesCampaign$.Outbound;
-        account: PostOpportunitiesAccount$.Outbound;
-        contacts: Array<PostOpportunitiesContacts$.Outbound>;
-        owner: PostOpportunitiesOwner$.Outbound;
-        attachments: Array<PostOpportunitiesAttachments$.Outbound>;
-        notes: Array<string>;
-        customFields: Array<PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.Outbound>;
+        id?: string | undefined;
+        title?: string | undefined;
+        description?: string | undefined;
+        amount?: number | undefined;
+        currency?: string | undefined;
+        stage?: string | undefined;
+        probability?: number | undefined;
+        closeDate?: number | undefined;
+        type?: string | undefined;
+        nextStep?: string | undefined;
+        leadSource?: string | undefined;
+        isClosed?: boolean | undefined;
+        isWon?: boolean | undefined;
+        createdDate?: number | undefined;
+        lastModifiedDate?: number | undefined;
+        lostReason?: string | undefined;
+        campaign?: PostOpportunitiesCampaign$.Outbound | undefined;
+        account?: PostOpportunitiesAccount$.Outbound | undefined;
+        contacts?: Array<PostOpportunitiesContacts$.Outbound> | undefined;
+        owner?: PostOpportunitiesOwner$.Outbound | undefined;
+        attachments?: Array<PostOpportunitiesAttachments$.Outbound> | undefined;
+        notes?: Array<string> | undefined;
+        customFields?:
+            | Array<PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.Outbound>
+            | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostOpportunitiesRequestBody> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            description: z.string(),
-            amount: z.number(),
-            currency: z.string(),
-            stage: z.string(),
-            probability: z.number(),
-            closeDate: z.number(),
-            type: z.string(),
-            nextStep: z.string(),
-            leadSource: z.string(),
-            isClosed: z.boolean(),
-            isWon: z.boolean(),
-            createdDate: z.number(),
-            lastModifiedDate: z.number(),
-            lostReason: z.string(),
-            campaign: z.lazy(() => PostOpportunitiesCampaign$.outboundSchema),
-            account: z.lazy(() => PostOpportunitiesAccount$.outboundSchema),
-            contacts: z.array(z.lazy(() => PostOpportunitiesContacts$.outboundSchema)),
-            owner: z.lazy(() => PostOpportunitiesOwner$.outboundSchema),
-            attachments: z.array(z.lazy(() => PostOpportunitiesAttachments$.outboundSchema)),
-            notes: z.array(z.string()),
-            customFields: z.array(
-                z.lazy(
-                    () =>
-                        PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.outboundSchema
+            id: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            amount: z.number().optional(),
+            currency: z.string().optional(),
+            stage: z.string().optional(),
+            probability: z.number().optional(),
+            closeDate: z.number().optional(),
+            type: z.string().optional(),
+            nextStep: z.string().optional(),
+            leadSource: z.string().optional(),
+            isClosed: z.boolean().optional(),
+            isWon: z.boolean().optional(),
+            createdDate: z.number().optional(),
+            lastModifiedDate: z.number().optional(),
+            lostReason: z.string().optional(),
+            campaign: z.lazy(() => PostOpportunitiesCampaign$.outboundSchema).optional(),
+            account: z.lazy(() => PostOpportunitiesAccount$.outboundSchema).optional(),
+            contacts: z.array(z.lazy(() => PostOpportunitiesContacts$.outboundSchema)).optional(),
+            owner: z.lazy(() => PostOpportunitiesOwner$.outboundSchema).optional(),
+            attachments: z
+                .array(z.lazy(() => PostOpportunitiesAttachments$.outboundSchema))
+                .optional(),
+            notes: z.array(z.string()).optional(),
+            customFields: z
+                .array(
+                    z.lazy(
+                        () =>
+                            PostOpportunitiesOpportunitiesRequestRequestBodyCustomFields1$.outboundSchema
+                    )
                 )
-            ),
+                .optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                description: v.description,
-                amount: v.amount,
-                currency: v.currency,
-                stage: v.stage,
-                probability: v.probability,
-                closeDate: v.closeDate,
-                type: v.type,
-                nextStep: v.nextStep,
-                leadSource: v.leadSource,
-                isClosed: v.isClosed,
-                isWon: v.isWon,
-                createdDate: v.createdDate,
-                lastModifiedDate: v.lastModifiedDate,
-                lostReason: v.lostReason,
-                campaign: v.campaign,
-                account: v.account,
-                contacts: v.contacts,
-                owner: v.owner,
-                attachments: v.attachments,
-                notes: v.notes,
-                customFields: v.customFields,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.amount === undefined ? null : { amount: v.amount }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.stage === undefined ? null : { stage: v.stage }),
+                ...(v.probability === undefined ? null : { probability: v.probability }),
+                ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
+                ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
+                ...(v.isWon === undefined ? null : { isWon: v.isWon }),
+                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
+                ...(v.lastModifiedDate === undefined
+                    ? null
+                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
+                ...(v.campaign === undefined ? null : { campaign: v.campaign }),
+                ...(v.account === undefined ? null : { account: v.account }),
+                ...(v.contacts === undefined ? null : { contacts: v.contacts }),
+                ...(v.owner === undefined ? null : { owner: v.owner }),
+                ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
             };
         });
 }

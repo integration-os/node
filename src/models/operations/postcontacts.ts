@@ -495,24 +495,24 @@ export type PostContactsContactsRequestRequestBodyCustomFields = {
 };
 
 export type PostContactsRequestBody = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    company: string;
-    email: string;
-    emails: Array<string>;
-    phone: string;
-    phones: Array<string>;
-    address: PostContactsAddress;
-    addresses: Array<PostContactsAddresses>;
-    birthday: number;
-    relationship: string;
-    note: string;
-    notes: PostContactsNotes;
-    tags: Array<string>;
-    websites: Array<string>;
-    socialProfiles: Array<PostContactsSocialProfiles>;
-    customFields: Array<PostContactsContactsRequestRequestBodyCustomFields>;
+    id?: string | undefined;
+    firstName?: string | undefined;
+    lastName?: string | undefined;
+    company?: string | undefined;
+    email?: string | undefined;
+    emails?: Array<string> | undefined;
+    phone?: string | undefined;
+    phones?: Array<string> | undefined;
+    address?: PostContactsAddress | undefined;
+    addresses?: Array<PostContactsAddresses> | undefined;
+    birthday?: number | undefined;
+    relationship?: string | undefined;
+    note?: string | undefined;
+    notes?: PostContactsNotes | undefined;
+    tags?: Array<string> | undefined;
+    websites?: Array<string> | undefined;
+    socialProfiles?: Array<PostContactsSocialProfiles> | undefined;
+    customFields?: Array<PostContactsContactsRequestRequestBodyCustomFields> | undefined;
 };
 
 export type PostContactsRequest = {
@@ -3395,136 +3395,148 @@ export namespace PostContactsContactsRequestRequestBodyCustomFields$ {
 /** @internal */
 export namespace PostContactsRequestBody$ {
     export type Inbound = {
-        id: string;
-        firstName: string;
-        lastName: string;
-        company: string;
-        email: string;
-        emails: Array<string>;
-        phone: string;
-        phones: Array<string>;
-        address: PostContactsAddress$.Inbound;
-        addresses: Array<PostContactsAddresses$.Inbound>;
-        birthday: number;
-        relationship: string;
-        note: string;
-        notes: PostContactsNotes$.Inbound;
-        tags: Array<string>;
-        websites: Array<string>;
-        socialProfiles: Array<PostContactsSocialProfiles$.Inbound>;
-        customFields: Array<PostContactsContactsRequestRequestBodyCustomFields$.Inbound>;
+        id?: string | undefined;
+        firstName?: string | undefined;
+        lastName?: string | undefined;
+        company?: string | undefined;
+        email?: string | undefined;
+        emails?: Array<string> | undefined;
+        phone?: string | undefined;
+        phones?: Array<string> | undefined;
+        address?: PostContactsAddress$.Inbound | undefined;
+        addresses?: Array<PostContactsAddresses$.Inbound> | undefined;
+        birthday?: number | undefined;
+        relationship?: string | undefined;
+        note?: string | undefined;
+        notes?: PostContactsNotes$.Inbound | undefined;
+        tags?: Array<string> | undefined;
+        websites?: Array<string> | undefined;
+        socialProfiles?: Array<PostContactsSocialProfiles$.Inbound> | undefined;
+        customFields?:
+            | Array<PostContactsContactsRequestRequestBodyCustomFields$.Inbound>
+            | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostContactsRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            firstName: z.string(),
-            lastName: z.string(),
-            company: z.string(),
-            email: z.string(),
-            emails: z.array(z.string()),
-            phone: z.string(),
-            phones: z.array(z.string()),
-            address: z.lazy(() => PostContactsAddress$.inboundSchema),
-            addresses: z.array(z.lazy(() => PostContactsAddresses$.inboundSchema)),
-            birthday: z.number(),
-            relationship: z.string(),
-            note: z.string(),
-            notes: z.lazy(() => PostContactsNotes$.inboundSchema),
-            tags: z.array(z.string()),
-            websites: z.array(z.string()),
-            socialProfiles: z.array(z.lazy(() => PostContactsSocialProfiles$.inboundSchema)),
-            customFields: z.array(
-                z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.inboundSchema)
-            ),
+            id: z.string().optional(),
+            firstName: z.string().optional(),
+            lastName: z.string().optional(),
+            company: z.string().optional(),
+            email: z.string().optional(),
+            emails: z.array(z.string()).optional(),
+            phone: z.string().optional(),
+            phones: z.array(z.string()).optional(),
+            address: z.lazy(() => PostContactsAddress$.inboundSchema).optional(),
+            addresses: z.array(z.lazy(() => PostContactsAddresses$.inboundSchema)).optional(),
+            birthday: z.number().optional(),
+            relationship: z.string().optional(),
+            note: z.string().optional(),
+            notes: z.lazy(() => PostContactsNotes$.inboundSchema).optional(),
+            tags: z.array(z.string()).optional(),
+            websites: z.array(z.string()).optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostContactsSocialProfiles$.inboundSchema))
+                .optional(),
+            customFields: z
+                .array(
+                    z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.inboundSchema)
+                )
+                .optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                firstName: v.firstName,
-                lastName: v.lastName,
-                company: v.company,
-                email: v.email,
-                emails: v.emails,
-                phone: v.phone,
-                phones: v.phones,
-                address: v.address,
-                addresses: v.addresses,
-                birthday: v.birthday,
-                relationship: v.relationship,
-                note: v.note,
-                notes: v.notes,
-                tags: v.tags,
-                websites: v.websites,
-                socialProfiles: v.socialProfiles,
-                customFields: v.customFields,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
+                ...(v.address === undefined ? null : { address: v.address }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.birthday === undefined ? null : { birthday: v.birthday }),
+                ...(v.relationship === undefined ? null : { relationship: v.relationship }),
+                ...(v.note === undefined ? null : { note: v.note }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.websites === undefined ? null : { websites: v.websites }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        firstName: string;
-        lastName: string;
-        company: string;
-        email: string;
-        emails: Array<string>;
-        phone: string;
-        phones: Array<string>;
-        address: PostContactsAddress$.Outbound;
-        addresses: Array<PostContactsAddresses$.Outbound>;
-        birthday: number;
-        relationship: string;
-        note: string;
-        notes: PostContactsNotes$.Outbound;
-        tags: Array<string>;
-        websites: Array<string>;
-        socialProfiles: Array<PostContactsSocialProfiles$.Outbound>;
-        customFields: Array<PostContactsContactsRequestRequestBodyCustomFields$.Outbound>;
+        id?: string | undefined;
+        firstName?: string | undefined;
+        lastName?: string | undefined;
+        company?: string | undefined;
+        email?: string | undefined;
+        emails?: Array<string> | undefined;
+        phone?: string | undefined;
+        phones?: Array<string> | undefined;
+        address?: PostContactsAddress$.Outbound | undefined;
+        addresses?: Array<PostContactsAddresses$.Outbound> | undefined;
+        birthday?: number | undefined;
+        relationship?: string | undefined;
+        note?: string | undefined;
+        notes?: PostContactsNotes$.Outbound | undefined;
+        tags?: Array<string> | undefined;
+        websites?: Array<string> | undefined;
+        socialProfiles?: Array<PostContactsSocialProfiles$.Outbound> | undefined;
+        customFields?:
+            | Array<PostContactsContactsRequestRequestBodyCustomFields$.Outbound>
+            | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsRequestBody> = z
         .object({
-            id: z.string(),
-            firstName: z.string(),
-            lastName: z.string(),
-            company: z.string(),
-            email: z.string(),
-            emails: z.array(z.string()),
-            phone: z.string(),
-            phones: z.array(z.string()),
-            address: z.lazy(() => PostContactsAddress$.outboundSchema),
-            addresses: z.array(z.lazy(() => PostContactsAddresses$.outboundSchema)),
-            birthday: z.number(),
-            relationship: z.string(),
-            note: z.string(),
-            notes: z.lazy(() => PostContactsNotes$.outboundSchema),
-            tags: z.array(z.string()),
-            websites: z.array(z.string()),
-            socialProfiles: z.array(z.lazy(() => PostContactsSocialProfiles$.outboundSchema)),
-            customFields: z.array(
-                z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.outboundSchema)
-            ),
+            id: z.string().optional(),
+            firstName: z.string().optional(),
+            lastName: z.string().optional(),
+            company: z.string().optional(),
+            email: z.string().optional(),
+            emails: z.array(z.string()).optional(),
+            phone: z.string().optional(),
+            phones: z.array(z.string()).optional(),
+            address: z.lazy(() => PostContactsAddress$.outboundSchema).optional(),
+            addresses: z.array(z.lazy(() => PostContactsAddresses$.outboundSchema)).optional(),
+            birthday: z.number().optional(),
+            relationship: z.string().optional(),
+            note: z.string().optional(),
+            notes: z.lazy(() => PostContactsNotes$.outboundSchema).optional(),
+            tags: z.array(z.string()).optional(),
+            websites: z.array(z.string()).optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostContactsSocialProfiles$.outboundSchema))
+                .optional(),
+            customFields: z
+                .array(
+                    z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.outboundSchema)
+                )
+                .optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                firstName: v.firstName,
-                lastName: v.lastName,
-                company: v.company,
-                email: v.email,
-                emails: v.emails,
-                phone: v.phone,
-                phones: v.phones,
-                address: v.address,
-                addresses: v.addresses,
-                birthday: v.birthday,
-                relationship: v.relationship,
-                note: v.note,
-                notes: v.notes,
-                tags: v.tags,
-                websites: v.websites,
-                socialProfiles: v.socialProfiles,
-                customFields: v.customFields,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
+                ...(v.address === undefined ? null : { address: v.address }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.birthday === undefined ? null : { birthday: v.birthday }),
+                ...(v.relationship === undefined ? null : { relationship: v.relationship }),
+                ...(v.note === undefined ? null : { note: v.note }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.websites === undefined ? null : { websites: v.websites }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
             };
         });
 }

@@ -202,31 +202,31 @@ export type PostLeadsNotes = {
 };
 
 export type PostLeadsRequestBody = {
-    id: string;
-    name: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    opportunities: Array<PostLeadsOpportunities>;
-    emailType: PostLeadsEmailType;
-    phone: string;
-    phoneType: PostLeadsPhoneType;
-    companyName: string;
-    jobTitle: string;
-    website: string;
-    leadSource: PostLeadsLeadSource;
-    leadStatus: PostLeadsLeadStatus;
-    industry: string;
-    numberOfEmployees: number;
-    annualRevenue: number;
-    addresses: Array<PostLeadsAddresses>;
-    createdAt: number;
-    updatedAt: number;
-    preferredContactMethod: PostLeadsPreferredContactMethod;
-    socialProfiles: Array<PostLeadsSocialProfiles>;
-    customFields: Array<PostLeadsLeadsRequestCustomFields>;
-    notes: Array<PostLeadsNotes>;
+    id?: string | undefined;
+    name?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    email?: string | undefined;
+    opportunities?: Array<PostLeadsOpportunities> | undefined;
+    emailType?: PostLeadsEmailType | undefined;
+    phone?: string | undefined;
+    phoneType?: PostLeadsPhoneType | undefined;
+    companyName?: string | undefined;
+    jobTitle?: string | undefined;
+    website?: string | undefined;
+    leadSource?: PostLeadsLeadSource | undefined;
+    leadStatus?: PostLeadsLeadStatus | undefined;
+    industry?: string | undefined;
+    numberOfEmployees?: number | undefined;
+    annualRevenue?: number | undefined;
+    addresses?: Array<PostLeadsAddresses> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    preferredContactMethod?: PostLeadsPreferredContactMethod | undefined;
+    socialProfiles?: Array<PostLeadsSocialProfiles> | undefined;
+    customFields?: Array<PostLeadsLeadsRequestCustomFields> | undefined;
+    notes?: Array<PostLeadsNotes> | undefined;
 };
 
 export type PostLeadsRequest = {
@@ -1370,174 +1370,190 @@ export namespace PostLeadsNotes$ {
 /** @internal */
 export namespace PostLeadsRequestBody$ {
     export type Inbound = {
-        id: string;
-        name: string;
-        firstName: string;
-        middleName: string;
-        lastName: string;
-        email: string;
-        opportunities: Array<PostLeadsOpportunities$.Inbound>;
-        emailType: PostLeadsEmailType;
-        phone: string;
-        phoneType: PostLeadsPhoneType;
-        companyName: string;
-        jobTitle: string;
-        website: string;
-        leadSource: PostLeadsLeadSource$.Inbound;
-        leadStatus: PostLeadsLeadStatus;
-        industry: string;
-        numberOfEmployees: number;
-        annualRevenue: number;
-        addresses: Array<PostLeadsAddresses$.Inbound>;
-        createdAt: number;
-        updatedAt: number;
-        preferredContactMethod: PostLeadsPreferredContactMethod;
-        socialProfiles: Array<PostLeadsSocialProfiles$.Inbound>;
-        customFields: Array<PostLeadsLeadsRequestCustomFields$.Inbound>;
-        notes: Array<PostLeadsNotes$.Inbound>;
+        id?: string | undefined;
+        name?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        opportunities?: Array<PostLeadsOpportunities$.Inbound> | undefined;
+        emailType?: PostLeadsEmailType | undefined;
+        phone?: string | undefined;
+        phoneType?: PostLeadsPhoneType | undefined;
+        companyName?: string | undefined;
+        jobTitle?: string | undefined;
+        website?: string | undefined;
+        leadSource?: PostLeadsLeadSource$.Inbound | undefined;
+        leadStatus?: PostLeadsLeadStatus | undefined;
+        industry?: string | undefined;
+        numberOfEmployees?: number | undefined;
+        annualRevenue?: number | undefined;
+        addresses?: Array<PostLeadsAddresses$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        preferredContactMethod?: PostLeadsPreferredContactMethod | undefined;
+        socialProfiles?: Array<PostLeadsSocialProfiles$.Inbound> | undefined;
+        customFields?: Array<PostLeadsLeadsRequestCustomFields$.Inbound> | undefined;
+        notes?: Array<PostLeadsNotes$.Inbound> | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostLeadsRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            name: z.string(),
-            firstName: z.string(),
-            middleName: z.string(),
-            lastName: z.string(),
-            email: z.string(),
-            opportunities: z.array(z.lazy(() => PostLeadsOpportunities$.inboundSchema)),
-            emailType: PostLeadsEmailType$,
-            phone: z.string(),
-            phoneType: PostLeadsPhoneType$,
-            companyName: z.string(),
-            jobTitle: z.string(),
-            website: z.string(),
-            leadSource: z.lazy(() => PostLeadsLeadSource$.inboundSchema),
-            leadStatus: PostLeadsLeadStatus$,
-            industry: z.string(),
-            numberOfEmployees: z.number(),
-            annualRevenue: z.number(),
-            addresses: z.array(z.lazy(() => PostLeadsAddresses$.inboundSchema)),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            preferredContactMethod: PostLeadsPreferredContactMethod$,
-            socialProfiles: z.array(z.lazy(() => PostLeadsSocialProfiles$.inboundSchema)),
-            customFields: z.array(z.lazy(() => PostLeadsLeadsRequestCustomFields$.inboundSchema)),
-            notes: z.array(z.lazy(() => PostLeadsNotes$.inboundSchema)),
+            id: z.string().optional(),
+            name: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            opportunities: z.array(z.lazy(() => PostLeadsOpportunities$.inboundSchema)).optional(),
+            emailType: PostLeadsEmailType$.optional(),
+            phone: z.string().optional(),
+            phoneType: PostLeadsPhoneType$.optional(),
+            companyName: z.string().optional(),
+            jobTitle: z.string().optional(),
+            website: z.string().optional(),
+            leadSource: z.lazy(() => PostLeadsLeadSource$.inboundSchema).optional(),
+            leadStatus: PostLeadsLeadStatus$.optional(),
+            industry: z.string().optional(),
+            numberOfEmployees: z.number().optional(),
+            annualRevenue: z.number().optional(),
+            addresses: z.array(z.lazy(() => PostLeadsAddresses$.inboundSchema)).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            preferredContactMethod: PostLeadsPreferredContactMethod$.optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostLeadsSocialProfiles$.inboundSchema))
+                .optional(),
+            customFields: z
+                .array(z.lazy(() => PostLeadsLeadsRequestCustomFields$.inboundSchema))
+                .optional(),
+            notes: z.array(z.lazy(() => PostLeadsNotes$.inboundSchema)).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                name: v.name,
-                firstName: v.firstName,
-                middleName: v.middleName,
-                lastName: v.lastName,
-                email: v.email,
-                opportunities: v.opportunities,
-                emailType: v.emailType,
-                phone: v.phone,
-                phoneType: v.phoneType,
-                companyName: v.companyName,
-                jobTitle: v.jobTitle,
-                website: v.website,
-                leadSource: v.leadSource,
-                leadStatus: v.leadStatus,
-                industry: v.industry,
-                numberOfEmployees: v.numberOfEmployees,
-                annualRevenue: v.annualRevenue,
-                addresses: v.addresses,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                preferredContactMethod: v.preferredContactMethod,
-                socialProfiles: v.socialProfiles,
-                customFields: v.customFields,
-                notes: v.notes,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.name === undefined ? null : { name: v.name }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
+                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.companyName === undefined ? null : { companyName: v.companyName }),
+                ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
+                ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
+                ...(v.leadStatus === undefined ? null : { leadStatus: v.leadStatus }),
+                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.numberOfEmployees === undefined
+                    ? null
+                    : { numberOfEmployees: v.numberOfEmployees }),
+                ...(v.annualRevenue === undefined ? null : { annualRevenue: v.annualRevenue }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        name: string;
-        firstName: string;
-        middleName: string;
-        lastName: string;
-        email: string;
-        opportunities: Array<PostLeadsOpportunities$.Outbound>;
-        emailType: PostLeadsEmailType;
-        phone: string;
-        phoneType: PostLeadsPhoneType;
-        companyName: string;
-        jobTitle: string;
-        website: string;
-        leadSource: PostLeadsLeadSource$.Outbound;
-        leadStatus: PostLeadsLeadStatus;
-        industry: string;
-        numberOfEmployees: number;
-        annualRevenue: number;
-        addresses: Array<PostLeadsAddresses$.Outbound>;
-        createdAt: number;
-        updatedAt: number;
-        preferredContactMethod: PostLeadsPreferredContactMethod;
-        socialProfiles: Array<PostLeadsSocialProfiles$.Outbound>;
-        customFields: Array<PostLeadsLeadsRequestCustomFields$.Outbound>;
-        notes: Array<PostLeadsNotes$.Outbound>;
+        id?: string | undefined;
+        name?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        opportunities?: Array<PostLeadsOpportunities$.Outbound> | undefined;
+        emailType?: PostLeadsEmailType | undefined;
+        phone?: string | undefined;
+        phoneType?: PostLeadsPhoneType | undefined;
+        companyName?: string | undefined;
+        jobTitle?: string | undefined;
+        website?: string | undefined;
+        leadSource?: PostLeadsLeadSource$.Outbound | undefined;
+        leadStatus?: PostLeadsLeadStatus | undefined;
+        industry?: string | undefined;
+        numberOfEmployees?: number | undefined;
+        annualRevenue?: number | undefined;
+        addresses?: Array<PostLeadsAddresses$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        preferredContactMethod?: PostLeadsPreferredContactMethod | undefined;
+        socialProfiles?: Array<PostLeadsSocialProfiles$.Outbound> | undefined;
+        customFields?: Array<PostLeadsLeadsRequestCustomFields$.Outbound> | undefined;
+        notes?: Array<PostLeadsNotes$.Outbound> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsRequestBody> = z
         .object({
-            id: z.string(),
-            name: z.string(),
-            firstName: z.string(),
-            middleName: z.string(),
-            lastName: z.string(),
-            email: z.string(),
-            opportunities: z.array(z.lazy(() => PostLeadsOpportunities$.outboundSchema)),
-            emailType: PostLeadsEmailType$,
-            phone: z.string(),
-            phoneType: PostLeadsPhoneType$,
-            companyName: z.string(),
-            jobTitle: z.string(),
-            website: z.string(),
-            leadSource: z.lazy(() => PostLeadsLeadSource$.outboundSchema),
-            leadStatus: PostLeadsLeadStatus$,
-            industry: z.string(),
-            numberOfEmployees: z.number(),
-            annualRevenue: z.number(),
-            addresses: z.array(z.lazy(() => PostLeadsAddresses$.outboundSchema)),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            preferredContactMethod: PostLeadsPreferredContactMethod$,
-            socialProfiles: z.array(z.lazy(() => PostLeadsSocialProfiles$.outboundSchema)),
-            customFields: z.array(z.lazy(() => PostLeadsLeadsRequestCustomFields$.outboundSchema)),
-            notes: z.array(z.lazy(() => PostLeadsNotes$.outboundSchema)),
+            id: z.string().optional(),
+            name: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            opportunities: z.array(z.lazy(() => PostLeadsOpportunities$.outboundSchema)).optional(),
+            emailType: PostLeadsEmailType$.optional(),
+            phone: z.string().optional(),
+            phoneType: PostLeadsPhoneType$.optional(),
+            companyName: z.string().optional(),
+            jobTitle: z.string().optional(),
+            website: z.string().optional(),
+            leadSource: z.lazy(() => PostLeadsLeadSource$.outboundSchema).optional(),
+            leadStatus: PostLeadsLeadStatus$.optional(),
+            industry: z.string().optional(),
+            numberOfEmployees: z.number().optional(),
+            annualRevenue: z.number().optional(),
+            addresses: z.array(z.lazy(() => PostLeadsAddresses$.outboundSchema)).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            preferredContactMethod: PostLeadsPreferredContactMethod$.optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostLeadsSocialProfiles$.outboundSchema))
+                .optional(),
+            customFields: z
+                .array(z.lazy(() => PostLeadsLeadsRequestCustomFields$.outboundSchema))
+                .optional(),
+            notes: z.array(z.lazy(() => PostLeadsNotes$.outboundSchema)).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                name: v.name,
-                firstName: v.firstName,
-                middleName: v.middleName,
-                lastName: v.lastName,
-                email: v.email,
-                opportunities: v.opportunities,
-                emailType: v.emailType,
-                phone: v.phone,
-                phoneType: v.phoneType,
-                companyName: v.companyName,
-                jobTitle: v.jobTitle,
-                website: v.website,
-                leadSource: v.leadSource,
-                leadStatus: v.leadStatus,
-                industry: v.industry,
-                numberOfEmployees: v.numberOfEmployees,
-                annualRevenue: v.annualRevenue,
-                addresses: v.addresses,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                preferredContactMethod: v.preferredContactMethod,
-                socialProfiles: v.socialProfiles,
-                customFields: v.customFields,
-                notes: v.notes,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.name === undefined ? null : { name: v.name }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
+                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.companyName === undefined ? null : { companyName: v.companyName }),
+                ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
+                ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
+                ...(v.leadStatus === undefined ? null : { leadStatus: v.leadStatus }),
+                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.numberOfEmployees === undefined
+                    ? null
+                    : { numberOfEmployees: v.numberOfEmployees }),
+                ...(v.annualRevenue === undefined ? null : { annualRevenue: v.annualRevenue }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
             };
         });
 }

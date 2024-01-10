@@ -209,31 +209,31 @@ export type PostUsersPaymentMethods = {
 };
 
 export type PostUsersRequestBody = {
-    id: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    username: string;
-    password: string;
-    profilePicture: PostUsersProfilePicture;
-    coverPhoto: PostUsersCoverPhoto;
-    gender: PostUsersGender;
-    dateOfBirth: number;
-    phoneNumber: string;
-    isActive: boolean;
-    lastLogin: number;
-    createdAt: number;
-    updatedAt: number;
-    addresses: Array<PostUsersAddresses>;
-    roles: Array<PostUsersRoles>;
-    preferences: PostUsersPreferences;
-    bio: string;
-    website: string;
-    socialLinks: PostUsersSocialLinks;
-    status: PostUsersStatus;
-    sso: Array<PostUsersSso>;
-    paymentMethods: PostUsersPaymentMethods;
+    id?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    email?: string | undefined;
+    username?: string | undefined;
+    password?: string | undefined;
+    profilePicture?: PostUsersProfilePicture | undefined;
+    coverPhoto?: PostUsersCoverPhoto | undefined;
+    gender?: PostUsersGender | undefined;
+    dateOfBirth?: number | undefined;
+    phoneNumber?: string | undefined;
+    isActive?: boolean | undefined;
+    lastLogin?: number | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    addresses?: Array<PostUsersAddresses> | undefined;
+    roles?: Array<PostUsersRoles> | undefined;
+    preferences?: PostUsersPreferences | undefined;
+    bio?: string | undefined;
+    website?: string | undefined;
+    socialLinks?: PostUsersSocialLinks | undefined;
+    status?: PostUsersStatus | undefined;
+    sso?: Array<PostUsersSso> | undefined;
+    paymentMethods?: PostUsersPaymentMethods | undefined;
 };
 
 export type PostUsersRequest = {
@@ -1365,174 +1365,174 @@ export namespace PostUsersPaymentMethods$ {
 /** @internal */
 export namespace PostUsersRequestBody$ {
     export type Inbound = {
-        id: string;
-        firstName: string;
-        middleName: string;
-        lastName: string;
-        email: string;
-        username: string;
-        password: string;
-        profilePicture: PostUsersProfilePicture$.Inbound;
-        coverPhoto: PostUsersCoverPhoto$.Inbound;
-        gender: PostUsersGender;
-        dateOfBirth: number;
-        phoneNumber: string;
-        isActive: boolean;
-        lastLogin: number;
-        createdAt: number;
-        updatedAt: number;
-        addresses: Array<PostUsersAddresses$.Inbound>;
-        roles: Array<PostUsersRoles>;
-        preferences: PostUsersPreferences$.Inbound;
-        bio: string;
-        website: string;
-        socialLinks: PostUsersSocialLinks$.Inbound;
-        status: PostUsersStatus;
-        sso: Array<PostUsersSso$.Inbound>;
-        paymentMethods: PostUsersPaymentMethods$.Inbound;
+        id?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        username?: string | undefined;
+        password?: string | undefined;
+        profilePicture?: PostUsersProfilePicture$.Inbound | undefined;
+        coverPhoto?: PostUsersCoverPhoto$.Inbound | undefined;
+        gender?: PostUsersGender | undefined;
+        dateOfBirth?: number | undefined;
+        phoneNumber?: string | undefined;
+        isActive?: boolean | undefined;
+        lastLogin?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        addresses?: Array<PostUsersAddresses$.Inbound> | undefined;
+        roles?: Array<PostUsersRoles> | undefined;
+        preferences?: PostUsersPreferences$.Inbound | undefined;
+        bio?: string | undefined;
+        website?: string | undefined;
+        socialLinks?: PostUsersSocialLinks$.Inbound | undefined;
+        status?: PostUsersStatus | undefined;
+        sso?: Array<PostUsersSso$.Inbound> | undefined;
+        paymentMethods?: PostUsersPaymentMethods$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostUsersRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            firstName: z.string(),
-            middleName: z.string(),
-            lastName: z.string(),
-            email: z.string(),
-            username: z.string(),
-            password: z.string(),
-            profilePicture: z.lazy(() => PostUsersProfilePicture$.inboundSchema),
-            coverPhoto: z.lazy(() => PostUsersCoverPhoto$.inboundSchema),
-            gender: PostUsersGender$,
-            dateOfBirth: z.number(),
-            phoneNumber: z.string(),
-            isActive: z.boolean(),
-            lastLogin: z.number(),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            addresses: z.array(z.lazy(() => PostUsersAddresses$.inboundSchema)),
-            roles: z.array(PostUsersRoles$),
-            preferences: z.lazy(() => PostUsersPreferences$.inboundSchema),
-            bio: z.string(),
-            website: z.string(),
-            socialLinks: z.lazy(() => PostUsersSocialLinks$.inboundSchema),
-            status: PostUsersStatus$,
-            sso: z.array(z.lazy(() => PostUsersSso$.inboundSchema)),
-            paymentMethods: z.lazy(() => PostUsersPaymentMethods$.inboundSchema),
+            id: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            username: z.string().optional(),
+            password: z.string().optional(),
+            profilePicture: z.lazy(() => PostUsersProfilePicture$.inboundSchema).optional(),
+            coverPhoto: z.lazy(() => PostUsersCoverPhoto$.inboundSchema).optional(),
+            gender: PostUsersGender$.optional(),
+            dateOfBirth: z.number().optional(),
+            phoneNumber: z.string().optional(),
+            isActive: z.boolean().optional(),
+            lastLogin: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            addresses: z.array(z.lazy(() => PostUsersAddresses$.inboundSchema)).optional(),
+            roles: z.array(PostUsersRoles$).optional(),
+            preferences: z.lazy(() => PostUsersPreferences$.inboundSchema).optional(),
+            bio: z.string().optional(),
+            website: z.string().optional(),
+            socialLinks: z.lazy(() => PostUsersSocialLinks$.inboundSchema).optional(),
+            status: PostUsersStatus$.optional(),
+            sso: z.array(z.lazy(() => PostUsersSso$.inboundSchema)).optional(),
+            paymentMethods: z.lazy(() => PostUsersPaymentMethods$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                firstName: v.firstName,
-                middleName: v.middleName,
-                lastName: v.lastName,
-                email: v.email,
-                username: v.username,
-                password: v.password,
-                profilePicture: v.profilePicture,
-                coverPhoto: v.coverPhoto,
-                gender: v.gender,
-                dateOfBirth: v.dateOfBirth,
-                phoneNumber: v.phoneNumber,
-                isActive: v.isActive,
-                lastLogin: v.lastLogin,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                addresses: v.addresses,
-                roles: v.roles,
-                preferences: v.preferences,
-                bio: v.bio,
-                website: v.website,
-                socialLinks: v.socialLinks,
-                status: v.status,
-                sso: v.sso,
-                paymentMethods: v.paymentMethods,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.username === undefined ? null : { username: v.username }),
+                ...(v.password === undefined ? null : { password: v.password }),
+                ...(v.profilePicture === undefined ? null : { profilePicture: v.profilePicture }),
+                ...(v.coverPhoto === undefined ? null : { coverPhoto: v.coverPhoto }),
+                ...(v.gender === undefined ? null : { gender: v.gender }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
+                ...(v.lastLogin === undefined ? null : { lastLogin: v.lastLogin }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.roles === undefined ? null : { roles: v.roles }),
+                ...(v.preferences === undefined ? null : { preferences: v.preferences }),
+                ...(v.bio === undefined ? null : { bio: v.bio }),
+                ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.socialLinks === undefined ? null : { socialLinks: v.socialLinks }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.sso === undefined ? null : { sso: v.sso }),
+                ...(v.paymentMethods === undefined ? null : { paymentMethods: v.paymentMethods }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        firstName: string;
-        middleName: string;
-        lastName: string;
-        email: string;
-        username: string;
-        password: string;
-        profilePicture: PostUsersProfilePicture$.Outbound;
-        coverPhoto: PostUsersCoverPhoto$.Outbound;
-        gender: PostUsersGender;
-        dateOfBirth: number;
-        phoneNumber: string;
-        isActive: boolean;
-        lastLogin: number;
-        createdAt: number;
-        updatedAt: number;
-        addresses: Array<PostUsersAddresses$.Outbound>;
-        roles: Array<PostUsersRoles>;
-        preferences: PostUsersPreferences$.Outbound;
-        bio: string;
-        website: string;
-        socialLinks: PostUsersSocialLinks$.Outbound;
-        status: PostUsersStatus;
-        sso: Array<PostUsersSso$.Outbound>;
-        paymentMethods: PostUsersPaymentMethods$.Outbound;
+        id?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        username?: string | undefined;
+        password?: string | undefined;
+        profilePicture?: PostUsersProfilePicture$.Outbound | undefined;
+        coverPhoto?: PostUsersCoverPhoto$.Outbound | undefined;
+        gender?: PostUsersGender | undefined;
+        dateOfBirth?: number | undefined;
+        phoneNumber?: string | undefined;
+        isActive?: boolean | undefined;
+        lastLogin?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        addresses?: Array<PostUsersAddresses$.Outbound> | undefined;
+        roles?: Array<PostUsersRoles> | undefined;
+        preferences?: PostUsersPreferences$.Outbound | undefined;
+        bio?: string | undefined;
+        website?: string | undefined;
+        socialLinks?: PostUsersSocialLinks$.Outbound | undefined;
+        status?: PostUsersStatus | undefined;
+        sso?: Array<PostUsersSso$.Outbound> | undefined;
+        paymentMethods?: PostUsersPaymentMethods$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostUsersRequestBody> = z
         .object({
-            id: z.string(),
-            firstName: z.string(),
-            middleName: z.string(),
-            lastName: z.string(),
-            email: z.string(),
-            username: z.string(),
-            password: z.string(),
-            profilePicture: z.lazy(() => PostUsersProfilePicture$.outboundSchema),
-            coverPhoto: z.lazy(() => PostUsersCoverPhoto$.outboundSchema),
-            gender: PostUsersGender$,
-            dateOfBirth: z.number(),
-            phoneNumber: z.string(),
-            isActive: z.boolean(),
-            lastLogin: z.number(),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            addresses: z.array(z.lazy(() => PostUsersAddresses$.outboundSchema)),
-            roles: z.array(PostUsersRoles$),
-            preferences: z.lazy(() => PostUsersPreferences$.outboundSchema),
-            bio: z.string(),
-            website: z.string(),
-            socialLinks: z.lazy(() => PostUsersSocialLinks$.outboundSchema),
-            status: PostUsersStatus$,
-            sso: z.array(z.lazy(() => PostUsersSso$.outboundSchema)),
-            paymentMethods: z.lazy(() => PostUsersPaymentMethods$.outboundSchema),
+            id: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            username: z.string().optional(),
+            password: z.string().optional(),
+            profilePicture: z.lazy(() => PostUsersProfilePicture$.outboundSchema).optional(),
+            coverPhoto: z.lazy(() => PostUsersCoverPhoto$.outboundSchema).optional(),
+            gender: PostUsersGender$.optional(),
+            dateOfBirth: z.number().optional(),
+            phoneNumber: z.string().optional(),
+            isActive: z.boolean().optional(),
+            lastLogin: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            addresses: z.array(z.lazy(() => PostUsersAddresses$.outboundSchema)).optional(),
+            roles: z.array(PostUsersRoles$).optional(),
+            preferences: z.lazy(() => PostUsersPreferences$.outboundSchema).optional(),
+            bio: z.string().optional(),
+            website: z.string().optional(),
+            socialLinks: z.lazy(() => PostUsersSocialLinks$.outboundSchema).optional(),
+            status: PostUsersStatus$.optional(),
+            sso: z.array(z.lazy(() => PostUsersSso$.outboundSchema)).optional(),
+            paymentMethods: z.lazy(() => PostUsersPaymentMethods$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                firstName: v.firstName,
-                middleName: v.middleName,
-                lastName: v.lastName,
-                email: v.email,
-                username: v.username,
-                password: v.password,
-                profilePicture: v.profilePicture,
-                coverPhoto: v.coverPhoto,
-                gender: v.gender,
-                dateOfBirth: v.dateOfBirth,
-                phoneNumber: v.phoneNumber,
-                isActive: v.isActive,
-                lastLogin: v.lastLogin,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                addresses: v.addresses,
-                roles: v.roles,
-                preferences: v.preferences,
-                bio: v.bio,
-                website: v.website,
-                socialLinks: v.socialLinks,
-                status: v.status,
-                sso: v.sso,
-                paymentMethods: v.paymentMethods,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.username === undefined ? null : { username: v.username }),
+                ...(v.password === undefined ? null : { password: v.password }),
+                ...(v.profilePicture === undefined ? null : { profilePicture: v.profilePicture }),
+                ...(v.coverPhoto === undefined ? null : { coverPhoto: v.coverPhoto }),
+                ...(v.gender === undefined ? null : { gender: v.gender }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
+                ...(v.lastLogin === undefined ? null : { lastLogin: v.lastLogin }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.roles === undefined ? null : { roles: v.roles }),
+                ...(v.preferences === undefined ? null : { preferences: v.preferences }),
+                ...(v.bio === undefined ? null : { bio: v.bio }),
+                ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.socialLinks === undefined ? null : { socialLinks: v.socialLinks }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.sso === undefined ? null : { sso: v.sso }),
+                ...(v.paymentMethods === undefined ? null : { paymentMethods: v.paymentMethods }),
             };
         });
 }

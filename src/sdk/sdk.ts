@@ -19,9 +19,9 @@ import { Users } from "./users";
 export class IntegrationOS extends ClientSDK {
     private readonly options$: SDKOptions;
 
-    constructor(client: string, options: Omit<SDKOptions, "client"> = {}) {
+    constructor(client: string, options: Omit<SDKOptions, "client" | "httpClient" | "serverIdx" | "retryConfig"> = {}) {
         super({
-            client: options.httpClient || new HTTPClient(),
+            client: new HTTPClient(),
             baseURL: serverURLFromOptions(options),
         });
 

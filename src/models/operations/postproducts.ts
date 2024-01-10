@@ -289,39 +289,39 @@ export type PostProductsLocalizations = {
 };
 
 export type PostProductsRequestBody = {
-    id: string;
-    title: string;
-    description: string;
-    prices: Array<PostProductsPrices>;
-    sku: string;
-    skuValidation: PostProductsSkuValidation;
-    images: Array<PostProductsImages>;
-    variants: Array<PostProductsVariants>;
-    options: Array<PostProductsOptions>;
-    categories: Array<string>;
-    tags: Array<string>;
-    vendor: string;
-    inventoryQuantity: number;
-    inventoryLocation: PostProductsInventoryLocation;
-    availableForSale: boolean;
-    dimensions: PostProductsProductsDimensions;
-    weight: number;
-    weightUnit: string;
-    type: string;
-    metaTitle: string;
-    metaDescription: string;
-    seoKeywords: Array<string>;
-    slug: string;
-    customFields: Array<PostProductsProductsRequestCustomFields>;
-    isDownloadable: boolean;
-    downloadFiles: Array<PostProductsDownloadFiles>;
-    relatedProducts: Array<string>;
-    createdAt: number;
-    updatedAt: number;
-    publishedAt: number;
-    status: PostProductsProductsStatus;
-    tax: PostProductsTax;
-    localizations: Array<PostProductsLocalizations>;
+    id?: string | undefined;
+    title?: string | undefined;
+    description?: string | undefined;
+    prices?: Array<PostProductsPrices> | undefined;
+    sku?: string | undefined;
+    skuValidation?: PostProductsSkuValidation | undefined;
+    images?: Array<PostProductsImages> | undefined;
+    variants?: Array<PostProductsVariants> | undefined;
+    options?: Array<PostProductsOptions> | undefined;
+    categories?: Array<string> | undefined;
+    tags?: Array<string> | undefined;
+    vendor?: string | undefined;
+    inventoryQuantity?: number | undefined;
+    inventoryLocation?: PostProductsInventoryLocation | undefined;
+    availableForSale?: boolean | undefined;
+    dimensions?: PostProductsProductsDimensions | undefined;
+    weight?: number | undefined;
+    weightUnit?: string | undefined;
+    type?: string | undefined;
+    metaTitle?: string | undefined;
+    metaDescription?: string | undefined;
+    seoKeywords?: Array<string> | undefined;
+    slug?: string | undefined;
+    customFields?: Array<PostProductsProductsRequestCustomFields> | undefined;
+    isDownloadable?: boolean | undefined;
+    downloadFiles?: Array<PostProductsDownloadFiles> | undefined;
+    relatedProducts?: Array<string> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    publishedAt?: number | undefined;
+    status?: PostProductsProductsStatus | undefined;
+    tax?: PostProductsTax | undefined;
+    localizations?: Array<PostProductsLocalizations> | undefined;
 };
 
 export type PostProductsRequest = {
@@ -2228,226 +2228,258 @@ export namespace PostProductsLocalizations$ {
 /** @internal */
 export namespace PostProductsRequestBody$ {
     export type Inbound = {
-        id: string;
-        title: string;
-        description: string;
-        prices: Array<PostProductsPrices$.Inbound>;
-        sku: string;
-        skuValidation: PostProductsSkuValidation;
-        images: Array<PostProductsImages$.Inbound>;
-        variants: Array<PostProductsVariants$.Inbound>;
-        options: Array<PostProductsOptions$.Inbound>;
-        categories: Array<string>;
-        tags: Array<string>;
-        vendor: string;
-        inventoryQuantity: number;
-        inventoryLocation: PostProductsInventoryLocation$.Inbound;
-        availableForSale: boolean;
-        dimensions: PostProductsProductsDimensions$.Inbound;
-        weight: number;
-        weightUnit: string;
-        type: string;
-        metaTitle: string;
-        metaDescription: string;
-        seoKeywords: Array<string>;
-        slug: string;
-        customFields: Array<PostProductsProductsRequestCustomFields$.Inbound>;
-        isDownloadable: boolean;
-        downloadFiles: Array<PostProductsDownloadFiles$.Inbound>;
-        relatedProducts: Array<string>;
-        createdAt: number;
-        updatedAt: number;
-        publishedAt: number;
-        status: PostProductsProductsStatus;
-        tax: PostProductsTax$.Inbound;
-        localizations: Array<PostProductsLocalizations$.Inbound>;
+        id?: string | undefined;
+        title?: string | undefined;
+        description?: string | undefined;
+        prices?: Array<PostProductsPrices$.Inbound> | undefined;
+        sku?: string | undefined;
+        skuValidation?: PostProductsSkuValidation | undefined;
+        images?: Array<PostProductsImages$.Inbound> | undefined;
+        variants?: Array<PostProductsVariants$.Inbound> | undefined;
+        options?: Array<PostProductsOptions$.Inbound> | undefined;
+        categories?: Array<string> | undefined;
+        tags?: Array<string> | undefined;
+        vendor?: string | undefined;
+        inventoryQuantity?: number | undefined;
+        inventoryLocation?: PostProductsInventoryLocation$.Inbound | undefined;
+        availableForSale?: boolean | undefined;
+        dimensions?: PostProductsProductsDimensions$.Inbound | undefined;
+        weight?: number | undefined;
+        weightUnit?: string | undefined;
+        type?: string | undefined;
+        metaTitle?: string | undefined;
+        metaDescription?: string | undefined;
+        seoKeywords?: Array<string> | undefined;
+        slug?: string | undefined;
+        customFields?: Array<PostProductsProductsRequestCustomFields$.Inbound> | undefined;
+        isDownloadable?: boolean | undefined;
+        downloadFiles?: Array<PostProductsDownloadFiles$.Inbound> | undefined;
+        relatedProducts?: Array<string> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        publishedAt?: number | undefined;
+        status?: PostProductsProductsStatus | undefined;
+        tax?: PostProductsTax$.Inbound | undefined;
+        localizations?: Array<PostProductsLocalizations$.Inbound> | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostProductsRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            description: z.string(),
-            prices: z.array(z.lazy(() => PostProductsPrices$.inboundSchema)),
-            sku: z.string(),
-            skuValidation: PostProductsSkuValidation$,
-            images: z.array(z.lazy(() => PostProductsImages$.inboundSchema)),
-            variants: z.array(z.lazy(() => PostProductsVariants$.inboundSchema)),
-            options: z.array(z.lazy(() => PostProductsOptions$.inboundSchema)),
-            categories: z.array(z.string()),
-            tags: z.array(z.string()),
-            vendor: z.string(),
-            inventoryQuantity: z.number(),
-            inventoryLocation: z.lazy(() => PostProductsInventoryLocation$.inboundSchema),
-            availableForSale: z.boolean(),
-            dimensions: z.lazy(() => PostProductsProductsDimensions$.inboundSchema),
-            weight: z.number(),
-            weightUnit: z.string(),
-            type: z.string(),
-            metaTitle: z.string(),
-            metaDescription: z.string(),
-            seoKeywords: z.array(z.string()),
-            slug: z.string(),
-            customFields: z.array(
-                z.lazy(() => PostProductsProductsRequestCustomFields$.inboundSchema)
-            ),
-            isDownloadable: z.boolean(),
-            downloadFiles: z.array(z.lazy(() => PostProductsDownloadFiles$.inboundSchema)),
-            relatedProducts: z.array(z.string()),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            publishedAt: z.number(),
-            status: PostProductsProductsStatus$,
-            tax: z.lazy(() => PostProductsTax$.inboundSchema),
-            localizations: z.array(z.lazy(() => PostProductsLocalizations$.inboundSchema)),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            prices: z.array(z.lazy(() => PostProductsPrices$.inboundSchema)).optional(),
+            sku: z.string().optional(),
+            skuValidation: PostProductsSkuValidation$.optional(),
+            images: z.array(z.lazy(() => PostProductsImages$.inboundSchema)).optional(),
+            variants: z.array(z.lazy(() => PostProductsVariants$.inboundSchema)).optional(),
+            options: z.array(z.lazy(() => PostProductsOptions$.inboundSchema)).optional(),
+            categories: z.array(z.string()).optional(),
+            tags: z.array(z.string()).optional(),
+            vendor: z.string().optional(),
+            inventoryQuantity: z.number().optional(),
+            inventoryLocation: z
+                .lazy(() => PostProductsInventoryLocation$.inboundSchema)
+                .optional(),
+            availableForSale: z.boolean().optional(),
+            dimensions: z.lazy(() => PostProductsProductsDimensions$.inboundSchema).optional(),
+            weight: z.number().optional(),
+            weightUnit: z.string().optional(),
+            type: z.string().optional(),
+            metaTitle: z.string().optional(),
+            metaDescription: z.string().optional(),
+            seoKeywords: z.array(z.string()).optional(),
+            slug: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostProductsProductsRequestCustomFields$.inboundSchema))
+                .optional(),
+            isDownloadable: z.boolean().optional(),
+            downloadFiles: z
+                .array(z.lazy(() => PostProductsDownloadFiles$.inboundSchema))
+                .optional(),
+            relatedProducts: z.array(z.string()).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            publishedAt: z.number().optional(),
+            status: PostProductsProductsStatus$.optional(),
+            tax: z.lazy(() => PostProductsTax$.inboundSchema).optional(),
+            localizations: z
+                .array(z.lazy(() => PostProductsLocalizations$.inboundSchema))
+                .optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                description: v.description,
-                prices: v.prices,
-                sku: v.sku,
-                skuValidation: v.skuValidation,
-                images: v.images,
-                variants: v.variants,
-                options: v.options,
-                categories: v.categories,
-                tags: v.tags,
-                vendor: v.vendor,
-                inventoryQuantity: v.inventoryQuantity,
-                inventoryLocation: v.inventoryLocation,
-                availableForSale: v.availableForSale,
-                dimensions: v.dimensions,
-                weight: v.weight,
-                weightUnit: v.weightUnit,
-                type: v.type,
-                metaTitle: v.metaTitle,
-                metaDescription: v.metaDescription,
-                seoKeywords: v.seoKeywords,
-                slug: v.slug,
-                customFields: v.customFields,
-                isDownloadable: v.isDownloadable,
-                downloadFiles: v.downloadFiles,
-                relatedProducts: v.relatedProducts,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                publishedAt: v.publishedAt,
-                status: v.status,
-                tax: v.tax,
-                localizations: v.localizations,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.prices === undefined ? null : { prices: v.prices }),
+                ...(v.sku === undefined ? null : { sku: v.sku }),
+                ...(v.skuValidation === undefined ? null : { skuValidation: v.skuValidation }),
+                ...(v.images === undefined ? null : { images: v.images }),
+                ...(v.variants === undefined ? null : { variants: v.variants }),
+                ...(v.options === undefined ? null : { options: v.options }),
+                ...(v.categories === undefined ? null : { categories: v.categories }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.vendor === undefined ? null : { vendor: v.vendor }),
+                ...(v.inventoryQuantity === undefined
+                    ? null
+                    : { inventoryQuantity: v.inventoryQuantity }),
+                ...(v.inventoryLocation === undefined
+                    ? null
+                    : { inventoryLocation: v.inventoryLocation }),
+                ...(v.availableForSale === undefined
+                    ? null
+                    : { availableForSale: v.availableForSale }),
+                ...(v.dimensions === undefined ? null : { dimensions: v.dimensions }),
+                ...(v.weight === undefined ? null : { weight: v.weight }),
+                ...(v.weightUnit === undefined ? null : { weightUnit: v.weightUnit }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.metaTitle === undefined ? null : { metaTitle: v.metaTitle }),
+                ...(v.metaDescription === undefined
+                    ? null
+                    : { metaDescription: v.metaDescription }),
+                ...(v.seoKeywords === undefined ? null : { seoKeywords: v.seoKeywords }),
+                ...(v.slug === undefined ? null : { slug: v.slug }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.isDownloadable === undefined ? null : { isDownloadable: v.isDownloadable }),
+                ...(v.downloadFiles === undefined ? null : { downloadFiles: v.downloadFiles }),
+                ...(v.relatedProducts === undefined
+                    ? null
+                    : { relatedProducts: v.relatedProducts }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.publishedAt === undefined ? null : { publishedAt: v.publishedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.tax === undefined ? null : { tax: v.tax }),
+                ...(v.localizations === undefined ? null : { localizations: v.localizations }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        title: string;
-        description: string;
-        prices: Array<PostProductsPrices$.Outbound>;
-        sku: string;
-        skuValidation: PostProductsSkuValidation;
-        images: Array<PostProductsImages$.Outbound>;
-        variants: Array<PostProductsVariants$.Outbound>;
-        options: Array<PostProductsOptions$.Outbound>;
-        categories: Array<string>;
-        tags: Array<string>;
-        vendor: string;
-        inventoryQuantity: number;
-        inventoryLocation: PostProductsInventoryLocation$.Outbound;
-        availableForSale: boolean;
-        dimensions: PostProductsProductsDimensions$.Outbound;
-        weight: number;
-        weightUnit: string;
-        type: string;
-        metaTitle: string;
-        metaDescription: string;
-        seoKeywords: Array<string>;
-        slug: string;
-        customFields: Array<PostProductsProductsRequestCustomFields$.Outbound>;
-        isDownloadable: boolean;
-        downloadFiles: Array<PostProductsDownloadFiles$.Outbound>;
-        relatedProducts: Array<string>;
-        createdAt: number;
-        updatedAt: number;
-        publishedAt: number;
-        status: PostProductsProductsStatus;
-        tax: PostProductsTax$.Outbound;
-        localizations: Array<PostProductsLocalizations$.Outbound>;
+        id?: string | undefined;
+        title?: string | undefined;
+        description?: string | undefined;
+        prices?: Array<PostProductsPrices$.Outbound> | undefined;
+        sku?: string | undefined;
+        skuValidation?: PostProductsSkuValidation | undefined;
+        images?: Array<PostProductsImages$.Outbound> | undefined;
+        variants?: Array<PostProductsVariants$.Outbound> | undefined;
+        options?: Array<PostProductsOptions$.Outbound> | undefined;
+        categories?: Array<string> | undefined;
+        tags?: Array<string> | undefined;
+        vendor?: string | undefined;
+        inventoryQuantity?: number | undefined;
+        inventoryLocation?: PostProductsInventoryLocation$.Outbound | undefined;
+        availableForSale?: boolean | undefined;
+        dimensions?: PostProductsProductsDimensions$.Outbound | undefined;
+        weight?: number | undefined;
+        weightUnit?: string | undefined;
+        type?: string | undefined;
+        metaTitle?: string | undefined;
+        metaDescription?: string | undefined;
+        seoKeywords?: Array<string> | undefined;
+        slug?: string | undefined;
+        customFields?: Array<PostProductsProductsRequestCustomFields$.Outbound> | undefined;
+        isDownloadable?: boolean | undefined;
+        downloadFiles?: Array<PostProductsDownloadFiles$.Outbound> | undefined;
+        relatedProducts?: Array<string> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        publishedAt?: number | undefined;
+        status?: PostProductsProductsStatus | undefined;
+        tax?: PostProductsTax$.Outbound | undefined;
+        localizations?: Array<PostProductsLocalizations$.Outbound> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostProductsRequestBody> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            description: z.string(),
-            prices: z.array(z.lazy(() => PostProductsPrices$.outboundSchema)),
-            sku: z.string(),
-            skuValidation: PostProductsSkuValidation$,
-            images: z.array(z.lazy(() => PostProductsImages$.outboundSchema)),
-            variants: z.array(z.lazy(() => PostProductsVariants$.outboundSchema)),
-            options: z.array(z.lazy(() => PostProductsOptions$.outboundSchema)),
-            categories: z.array(z.string()),
-            tags: z.array(z.string()),
-            vendor: z.string(),
-            inventoryQuantity: z.number(),
-            inventoryLocation: z.lazy(() => PostProductsInventoryLocation$.outboundSchema),
-            availableForSale: z.boolean(),
-            dimensions: z.lazy(() => PostProductsProductsDimensions$.outboundSchema),
-            weight: z.number(),
-            weightUnit: z.string(),
-            type: z.string(),
-            metaTitle: z.string(),
-            metaDescription: z.string(),
-            seoKeywords: z.array(z.string()),
-            slug: z.string(),
-            customFields: z.array(
-                z.lazy(() => PostProductsProductsRequestCustomFields$.outboundSchema)
-            ),
-            isDownloadable: z.boolean(),
-            downloadFiles: z.array(z.lazy(() => PostProductsDownloadFiles$.outboundSchema)),
-            relatedProducts: z.array(z.string()),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            publishedAt: z.number(),
-            status: PostProductsProductsStatus$,
-            tax: z.lazy(() => PostProductsTax$.outboundSchema),
-            localizations: z.array(z.lazy(() => PostProductsLocalizations$.outboundSchema)),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            prices: z.array(z.lazy(() => PostProductsPrices$.outboundSchema)).optional(),
+            sku: z.string().optional(),
+            skuValidation: PostProductsSkuValidation$.optional(),
+            images: z.array(z.lazy(() => PostProductsImages$.outboundSchema)).optional(),
+            variants: z.array(z.lazy(() => PostProductsVariants$.outboundSchema)).optional(),
+            options: z.array(z.lazy(() => PostProductsOptions$.outboundSchema)).optional(),
+            categories: z.array(z.string()).optional(),
+            tags: z.array(z.string()).optional(),
+            vendor: z.string().optional(),
+            inventoryQuantity: z.number().optional(),
+            inventoryLocation: z
+                .lazy(() => PostProductsInventoryLocation$.outboundSchema)
+                .optional(),
+            availableForSale: z.boolean().optional(),
+            dimensions: z.lazy(() => PostProductsProductsDimensions$.outboundSchema).optional(),
+            weight: z.number().optional(),
+            weightUnit: z.string().optional(),
+            type: z.string().optional(),
+            metaTitle: z.string().optional(),
+            metaDescription: z.string().optional(),
+            seoKeywords: z.array(z.string()).optional(),
+            slug: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostProductsProductsRequestCustomFields$.outboundSchema))
+                .optional(),
+            isDownloadable: z.boolean().optional(),
+            downloadFiles: z
+                .array(z.lazy(() => PostProductsDownloadFiles$.outboundSchema))
+                .optional(),
+            relatedProducts: z.array(z.string()).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            publishedAt: z.number().optional(),
+            status: PostProductsProductsStatus$.optional(),
+            tax: z.lazy(() => PostProductsTax$.outboundSchema).optional(),
+            localizations: z
+                .array(z.lazy(() => PostProductsLocalizations$.outboundSchema))
+                .optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                description: v.description,
-                prices: v.prices,
-                sku: v.sku,
-                skuValidation: v.skuValidation,
-                images: v.images,
-                variants: v.variants,
-                options: v.options,
-                categories: v.categories,
-                tags: v.tags,
-                vendor: v.vendor,
-                inventoryQuantity: v.inventoryQuantity,
-                inventoryLocation: v.inventoryLocation,
-                availableForSale: v.availableForSale,
-                dimensions: v.dimensions,
-                weight: v.weight,
-                weightUnit: v.weightUnit,
-                type: v.type,
-                metaTitle: v.metaTitle,
-                metaDescription: v.metaDescription,
-                seoKeywords: v.seoKeywords,
-                slug: v.slug,
-                customFields: v.customFields,
-                isDownloadable: v.isDownloadable,
-                downloadFiles: v.downloadFiles,
-                relatedProducts: v.relatedProducts,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                publishedAt: v.publishedAt,
-                status: v.status,
-                tax: v.tax,
-                localizations: v.localizations,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.prices === undefined ? null : { prices: v.prices }),
+                ...(v.sku === undefined ? null : { sku: v.sku }),
+                ...(v.skuValidation === undefined ? null : { skuValidation: v.skuValidation }),
+                ...(v.images === undefined ? null : { images: v.images }),
+                ...(v.variants === undefined ? null : { variants: v.variants }),
+                ...(v.options === undefined ? null : { options: v.options }),
+                ...(v.categories === undefined ? null : { categories: v.categories }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.vendor === undefined ? null : { vendor: v.vendor }),
+                ...(v.inventoryQuantity === undefined
+                    ? null
+                    : { inventoryQuantity: v.inventoryQuantity }),
+                ...(v.inventoryLocation === undefined
+                    ? null
+                    : { inventoryLocation: v.inventoryLocation }),
+                ...(v.availableForSale === undefined
+                    ? null
+                    : { availableForSale: v.availableForSale }),
+                ...(v.dimensions === undefined ? null : { dimensions: v.dimensions }),
+                ...(v.weight === undefined ? null : { weight: v.weight }),
+                ...(v.weightUnit === undefined ? null : { weightUnit: v.weightUnit }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.metaTitle === undefined ? null : { metaTitle: v.metaTitle }),
+                ...(v.metaDescription === undefined
+                    ? null
+                    : { metaDescription: v.metaDescription }),
+                ...(v.seoKeywords === undefined ? null : { seoKeywords: v.seoKeywords }),
+                ...(v.slug === undefined ? null : { slug: v.slug }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.isDownloadable === undefined ? null : { isDownloadable: v.isDownloadable }),
+                ...(v.downloadFiles === undefined ? null : { downloadFiles: v.downloadFiles }),
+                ...(v.relatedProducts === undefined
+                    ? null
+                    : { relatedProducts: v.relatedProducts }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.publishedAt === undefined ? null : { publishedAt: v.publishedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.tax === undefined ? null : { tax: v.tax }),
+                ...(v.localizations === undefined ? null : { localizations: v.localizations }),
             };
         });
 }

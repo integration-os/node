@@ -144,32 +144,32 @@ export type PostCustomersSocialProfiles = {
 };
 
 export type PostCustomersRequestBody = {
-    id: string;
-    title: string;
-    fullName: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    dateOfBirth: number;
-    addresses: Array<PostCustomersAddresses>;
-    defaultAddress: PostCustomersDefaultAddress;
-    company: string;
-    companyId: string;
-    currency: string;
-    notes: string;
-    createdAt: number;
-    updatedAt: number;
-    status: PostCustomersStatus;
-    customerSegment: string;
-    customerType: PostCustomersCustomerType;
-    loyaltyProgramMembership: string;
-    preferredContactMethod: PostCustomersPreferredContactMethod;
-    tags: Array<string>;
-    metadata: string;
-    socialProfiles: Array<PostCustomersSocialProfiles>;
-    source: string;
+    id?: string | undefined;
+    title?: string | undefined;
+    fullName?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    email?: string | undefined;
+    phoneNumber?: string | undefined;
+    dateOfBirth?: number | undefined;
+    addresses?: Array<PostCustomersAddresses> | undefined;
+    defaultAddress?: PostCustomersDefaultAddress | undefined;
+    company?: string | undefined;
+    companyId?: string | undefined;
+    currency?: string | undefined;
+    notes?: string | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    status?: PostCustomersStatus | undefined;
+    customerSegment?: string | undefined;
+    customerType?: PostCustomersCustomerType | undefined;
+    loyaltyProgramMembership?: string | undefined;
+    preferredContactMethod?: PostCustomersPreferredContactMethod | undefined;
+    tags?: Array<string> | undefined;
+    metadata?: string | undefined;
+    socialProfiles?: Array<PostCustomersSocialProfiles> | undefined;
+    source?: string | undefined;
 };
 
 export type PostCustomersRequest = {
@@ -405,11 +405,11 @@ export type PostCustomersResponse = {
     /**
      * HTTP response status code for this operation
      */
-    statusCode: number;
+    statusCode: number | undefined;
     /**
      * Raw HTTP response; suitable for custom response parsing
      */
-    rawResponse: Response;
+    // rawResponse: Response;
     /**
      * Successful response
      */
@@ -1052,180 +1052,196 @@ export namespace PostCustomersSocialProfiles$ {
 /** @internal */
 export namespace PostCustomersRequestBody$ {
     export type Inbound = {
-        id: string;
-        title: string;
-        fullName: string;
-        firstName: string;
-        middleName: string;
-        lastName: string;
-        email: string;
-        phoneNumber: string;
-        dateOfBirth: number;
-        addresses: Array<PostCustomersAddresses$.Inbound>;
-        defaultAddress: PostCustomersDefaultAddress$.Inbound;
-        company: string;
-        companyId: string;
-        currency: string;
-        notes: string;
-        createdAt: number;
-        updatedAt: number;
-        status: PostCustomersStatus;
-        customerSegment: string;
-        customerType: PostCustomersCustomerType;
-        loyaltyProgramMembership: string;
-        preferredContactMethod: PostCustomersPreferredContactMethod;
-        tags: Array<string>;
-        metadata: string;
-        socialProfiles: Array<PostCustomersSocialProfiles$.Inbound>;
-        source: string;
+        id?: string | undefined;
+        title?: string | undefined;
+        fullName?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        phoneNumber?: string | undefined;
+        dateOfBirth?: number | undefined;
+        addresses?: Array<PostCustomersAddresses$.Inbound> | undefined;
+        defaultAddress?: PostCustomersDefaultAddress$.Inbound | undefined;
+        company?: string | undefined;
+        companyId?: string | undefined;
+        currency?: string | undefined;
+        notes?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        status?: PostCustomersStatus | undefined;
+        customerSegment?: string | undefined;
+        customerType?: PostCustomersCustomerType | undefined;
+        loyaltyProgramMembership?: string | undefined;
+        preferredContactMethod?: PostCustomersPreferredContactMethod | undefined;
+        tags?: Array<string> | undefined;
+        metadata?: string | undefined;
+        socialProfiles?: Array<PostCustomersSocialProfiles$.Inbound> | undefined;
+        source?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCustomersRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            fullName: z.string(),
-            firstName: z.string(),
-            middleName: z.string(),
-            lastName: z.string(),
-            email: z.string(),
-            phoneNumber: z.string(),
-            dateOfBirth: z.number(),
-            addresses: z.array(z.lazy(() => PostCustomersAddresses$.inboundSchema)),
-            defaultAddress: z.lazy(() => PostCustomersDefaultAddress$.inboundSchema),
-            company: z.string(),
-            companyId: z.string(),
-            currency: z.string(),
-            notes: z.string(),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            status: PostCustomersStatus$,
-            customerSegment: z.string(),
-            customerType: PostCustomersCustomerType$,
-            loyaltyProgramMembership: z.string(),
-            preferredContactMethod: PostCustomersPreferredContactMethod$,
-            tags: z.array(z.string()),
-            metadata: z.string(),
-            socialProfiles: z.array(z.lazy(() => PostCustomersSocialProfiles$.inboundSchema)),
-            source: z.string(),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            fullName: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            phoneNumber: z.string().optional(),
+            dateOfBirth: z.number().optional(),
+            addresses: z.array(z.lazy(() => PostCustomersAddresses$.inboundSchema)).optional(),
+            defaultAddress: z.lazy(() => PostCustomersDefaultAddress$.inboundSchema).optional(),
+            company: z.string().optional(),
+            companyId: z.string().optional(),
+            currency: z.string().optional(),
+            notes: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            status: PostCustomersStatus$.optional(),
+            customerSegment: z.string().optional(),
+            customerType: PostCustomersCustomerType$.optional(),
+            loyaltyProgramMembership: z.string().optional(),
+            preferredContactMethod: PostCustomersPreferredContactMethod$.optional(),
+            tags: z.array(z.string()).optional(),
+            metadata: z.string().optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostCustomersSocialProfiles$.inboundSchema))
+                .optional(),
+            source: z.string().optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                fullName: v.fullName,
-                firstName: v.firstName,
-                middleName: v.middleName,
-                lastName: v.lastName,
-                email: v.email,
-                phoneNumber: v.phoneNumber,
-                dateOfBirth: v.dateOfBirth,
-                addresses: v.addresses,
-                defaultAddress: v.defaultAddress,
-                company: v.company,
-                companyId: v.companyId,
-                currency: v.currency,
-                notes: v.notes,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                status: v.status,
-                customerSegment: v.customerSegment,
-                customerType: v.customerType,
-                loyaltyProgramMembership: v.loyaltyProgramMembership,
-                preferredContactMethod: v.preferredContactMethod,
-                tags: v.tags,
-                metadata: v.metadata,
-                socialProfiles: v.socialProfiles,
-                source: v.source,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.fullName === undefined ? null : { fullName: v.fullName }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.defaultAddress === undefined ? null : { defaultAddress: v.defaultAddress }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.companyId === undefined ? null : { companyId: v.companyId }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.customerSegment === undefined
+                    ? null
+                    : { customerSegment: v.customerSegment }),
+                ...(v.customerType === undefined ? null : { customerType: v.customerType }),
+                ...(v.loyaltyProgramMembership === undefined
+                    ? null
+                    : { loyaltyProgramMembership: v.loyaltyProgramMembership }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.source === undefined ? null : { source: v.source }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        title: string;
-        fullName: string;
-        firstName: string;
-        middleName: string;
-        lastName: string;
-        email: string;
-        phoneNumber: string;
-        dateOfBirth: number;
-        addresses: Array<PostCustomersAddresses$.Outbound>;
-        defaultAddress: PostCustomersDefaultAddress$.Outbound;
-        company: string;
-        companyId: string;
-        currency: string;
-        notes: string;
-        createdAt: number;
-        updatedAt: number;
-        status: PostCustomersStatus;
-        customerSegment: string;
-        customerType: PostCustomersCustomerType;
-        loyaltyProgramMembership: string;
-        preferredContactMethod: PostCustomersPreferredContactMethod;
-        tags: Array<string>;
-        metadata: string;
-        socialProfiles: Array<PostCustomersSocialProfiles$.Outbound>;
-        source: string;
+        id?: string | undefined;
+        title?: string | undefined;
+        fullName?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        phoneNumber?: string | undefined;
+        dateOfBirth?: number | undefined;
+        addresses?: Array<PostCustomersAddresses$.Outbound> | undefined;
+        defaultAddress?: PostCustomersDefaultAddress$.Outbound | undefined;
+        company?: string | undefined;
+        companyId?: string | undefined;
+        currency?: string | undefined;
+        notes?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        status?: PostCustomersStatus | undefined;
+        customerSegment?: string | undefined;
+        customerType?: PostCustomersCustomerType | undefined;
+        loyaltyProgramMembership?: string | undefined;
+        preferredContactMethod?: PostCustomersPreferredContactMethod | undefined;
+        tags?: Array<string> | undefined;
+        metadata?: string | undefined;
+        socialProfiles?: Array<PostCustomersSocialProfiles$.Outbound> | undefined;
+        source?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCustomersRequestBody> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            fullName: z.string(),
-            firstName: z.string(),
-            middleName: z.string(),
-            lastName: z.string(),
-            email: z.string(),
-            phoneNumber: z.string(),
-            dateOfBirth: z.number(),
-            addresses: z.array(z.lazy(() => PostCustomersAddresses$.outboundSchema)),
-            defaultAddress: z.lazy(() => PostCustomersDefaultAddress$.outboundSchema),
-            company: z.string(),
-            companyId: z.string(),
-            currency: z.string(),
-            notes: z.string(),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            status: PostCustomersStatus$,
-            customerSegment: z.string(),
-            customerType: PostCustomersCustomerType$,
-            loyaltyProgramMembership: z.string(),
-            preferredContactMethod: PostCustomersPreferredContactMethod$,
-            tags: z.array(z.string()),
-            metadata: z.string(),
-            socialProfiles: z.array(z.lazy(() => PostCustomersSocialProfiles$.outboundSchema)),
-            source: z.string(),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            fullName: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            phoneNumber: z.string().optional(),
+            dateOfBirth: z.number().optional(),
+            addresses: z.array(z.lazy(() => PostCustomersAddresses$.outboundSchema)).optional(),
+            defaultAddress: z.lazy(() => PostCustomersDefaultAddress$.outboundSchema).optional(),
+            company: z.string().optional(),
+            companyId: z.string().optional(),
+            currency: z.string().optional(),
+            notes: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            status: PostCustomersStatus$.optional(),
+            customerSegment: z.string().optional(),
+            customerType: PostCustomersCustomerType$.optional(),
+            loyaltyProgramMembership: z.string().optional(),
+            preferredContactMethod: PostCustomersPreferredContactMethod$.optional(),
+            tags: z.array(z.string()).optional(),
+            metadata: z.string().optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PostCustomersSocialProfiles$.outboundSchema))
+                .optional(),
+            source: z.string().optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                fullName: v.fullName,
-                firstName: v.firstName,
-                middleName: v.middleName,
-                lastName: v.lastName,
-                email: v.email,
-                phoneNumber: v.phoneNumber,
-                dateOfBirth: v.dateOfBirth,
-                addresses: v.addresses,
-                defaultAddress: v.defaultAddress,
-                company: v.company,
-                companyId: v.companyId,
-                currency: v.currency,
-                notes: v.notes,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                status: v.status,
-                customerSegment: v.customerSegment,
-                customerType: v.customerType,
-                loyaltyProgramMembership: v.loyaltyProgramMembership,
-                preferredContactMethod: v.preferredContactMethod,
-                tags: v.tags,
-                metadata: v.metadata,
-                socialProfiles: v.socialProfiles,
-                source: v.source,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.fullName === undefined ? null : { fullName: v.fullName }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.defaultAddress === undefined ? null : { defaultAddress: v.defaultAddress }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.companyId === undefined ? null : { companyId: v.companyId }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.customerSegment === undefined
+                    ? null
+                    : { customerSegment: v.customerSegment }),
+                ...(v.customerType === undefined ? null : { customerType: v.customerType }),
+                ...(v.loyaltyProgramMembership === undefined
+                    ? null
+                    : { loyaltyProgramMembership: v.loyaltyProgramMembership }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.source === undefined ? null : { source: v.source }),
             };
         });
 }

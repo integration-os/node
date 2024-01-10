@@ -632,31 +632,31 @@ export type PostTasksNotifications = {
 };
 
 export type PostTasksRequestBody = {
-    id: string;
-    title: string;
-    description: string;
-    status: PostTasksStatus;
-    priority: PostTasksPriority;
-    dueDate: number;
-    dueTimezone: string;
-    assignee: PostTasksAssignee;
-    createdBy: PostTasksCreatedBy;
-    createdAt: number;
-    updatedAt: number;
-    labels: Array<string>;
-    comments: Array<PostTasksComments>;
-    attachments: Array<PostTasksAttachments>;
-    timeEstimate: string;
-    timeLogged: string;
-    subTaskIds: Array<string>;
-    parentTaskId: string;
-    dependOnTaskIds: Array<string>;
-    relatedToTaskId: Array<string>;
-    repeat: string;
-    customFields: Array<PostTasksTasksRequestCustomFields>;
-    watchers: Array<PostTasksWatchers>;
-    completionPercentage: number;
-    notifications: Array<PostTasksNotifications>;
+    id?: string | undefined;
+    title?: string | undefined;
+    description?: string | undefined;
+    status?: PostTasksStatus | undefined;
+    priority?: PostTasksPriority | undefined;
+    dueDate?: number | undefined;
+    dueTimezone?: string | undefined;
+    assignee?: PostTasksAssignee | undefined;
+    createdBy?: PostTasksCreatedBy | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    labels?: Array<string> | undefined;
+    comments?: Array<PostTasksComments> | undefined;
+    attachments?: Array<PostTasksAttachments> | undefined;
+    timeEstimate?: string | undefined;
+    timeLogged?: string | undefined;
+    subTaskIds?: Array<string> | undefined;
+    parentTaskId?: string | undefined;
+    dependOnTaskIds?: Array<string> | undefined;
+    relatedToTaskId?: Array<string> | undefined;
+    repeat?: string | undefined;
+    customFields?: Array<PostTasksTasksRequestCustomFields> | undefined;
+    watchers?: Array<PostTasksWatchers> | undefined;
+    completionPercentage?: number | undefined;
+    notifications?: Array<PostTasksNotifications> | undefined;
 };
 
 export type PostTasksRequest = {
@@ -4191,174 +4191,190 @@ export namespace PostTasksNotifications$ {
 /** @internal */
 export namespace PostTasksRequestBody$ {
     export type Inbound = {
-        id: string;
-        title: string;
-        description: string;
-        status: PostTasksStatus;
-        priority: PostTasksPriority;
-        dueDate: number;
-        dueTimezone: string;
-        assignee: PostTasksAssignee$.Inbound;
-        createdBy: PostTasksCreatedBy$.Inbound;
-        createdAt: number;
-        updatedAt: number;
-        labels: Array<string>;
-        comments: Array<PostTasksComments$.Inbound>;
-        attachments: Array<PostTasksAttachments$.Inbound>;
-        timeEstimate: string;
-        timeLogged: string;
-        subTaskIds: Array<string>;
-        parentTaskId: string;
-        dependOnTaskIds: Array<string>;
-        relatedToTaskId: Array<string>;
-        repeat: string;
-        customFields: Array<PostTasksTasksRequestCustomFields$.Inbound>;
-        watchers: Array<PostTasksWatchers$.Inbound>;
-        completionPercentage: number;
-        notifications: Array<PostTasksNotifications$.Inbound>;
+        id?: string | undefined;
+        title?: string | undefined;
+        description?: string | undefined;
+        status?: PostTasksStatus | undefined;
+        priority?: PostTasksPriority | undefined;
+        dueDate?: number | undefined;
+        dueTimezone?: string | undefined;
+        assignee?: PostTasksAssignee$.Inbound | undefined;
+        createdBy?: PostTasksCreatedBy$.Inbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        labels?: Array<string> | undefined;
+        comments?: Array<PostTasksComments$.Inbound> | undefined;
+        attachments?: Array<PostTasksAttachments$.Inbound> | undefined;
+        timeEstimate?: string | undefined;
+        timeLogged?: string | undefined;
+        subTaskIds?: Array<string> | undefined;
+        parentTaskId?: string | undefined;
+        dependOnTaskIds?: Array<string> | undefined;
+        relatedToTaskId?: Array<string> | undefined;
+        repeat?: string | undefined;
+        customFields?: Array<PostTasksTasksRequestCustomFields$.Inbound> | undefined;
+        watchers?: Array<PostTasksWatchers$.Inbound> | undefined;
+        completionPercentage?: number | undefined;
+        notifications?: Array<PostTasksNotifications$.Inbound> | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostTasksRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            description: z.string(),
-            status: PostTasksStatus$,
-            priority: PostTasksPriority$,
-            dueDate: z.number(),
-            dueTimezone: z.string(),
-            assignee: z.lazy(() => PostTasksAssignee$.inboundSchema),
-            createdBy: z.lazy(() => PostTasksCreatedBy$.inboundSchema),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            labels: z.array(z.string()),
-            comments: z.array(z.lazy(() => PostTasksComments$.inboundSchema)),
-            attachments: z.array(z.lazy(() => PostTasksAttachments$.inboundSchema)),
-            timeEstimate: z.string(),
-            timeLogged: z.string(),
-            subTaskIds: z.array(z.string()),
-            parentTaskId: z.string(),
-            dependOnTaskIds: z.array(z.string()),
-            relatedToTaskId: z.array(z.string()),
-            repeat: z.string(),
-            customFields: z.array(z.lazy(() => PostTasksTasksRequestCustomFields$.inboundSchema)),
-            watchers: z.array(z.lazy(() => PostTasksWatchers$.inboundSchema)),
-            completionPercentage: z.number(),
-            notifications: z.array(z.lazy(() => PostTasksNotifications$.inboundSchema)),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            status: PostTasksStatus$.optional(),
+            priority: PostTasksPriority$.optional(),
+            dueDate: z.number().optional(),
+            dueTimezone: z.string().optional(),
+            assignee: z.lazy(() => PostTasksAssignee$.inboundSchema).optional(),
+            createdBy: z.lazy(() => PostTasksCreatedBy$.inboundSchema).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            labels: z.array(z.string()).optional(),
+            comments: z.array(z.lazy(() => PostTasksComments$.inboundSchema)).optional(),
+            attachments: z.array(z.lazy(() => PostTasksAttachments$.inboundSchema)).optional(),
+            timeEstimate: z.string().optional(),
+            timeLogged: z.string().optional(),
+            subTaskIds: z.array(z.string()).optional(),
+            parentTaskId: z.string().optional(),
+            dependOnTaskIds: z.array(z.string()).optional(),
+            relatedToTaskId: z.array(z.string()).optional(),
+            repeat: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostTasksTasksRequestCustomFields$.inboundSchema))
+                .optional(),
+            watchers: z.array(z.lazy(() => PostTasksWatchers$.inboundSchema)).optional(),
+            completionPercentage: z.number().optional(),
+            notifications: z.array(z.lazy(() => PostTasksNotifications$.inboundSchema)).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                description: v.description,
-                status: v.status,
-                priority: v.priority,
-                dueDate: v.dueDate,
-                dueTimezone: v.dueTimezone,
-                assignee: v.assignee,
-                createdBy: v.createdBy,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                labels: v.labels,
-                comments: v.comments,
-                attachments: v.attachments,
-                timeEstimate: v.timeEstimate,
-                timeLogged: v.timeLogged,
-                subTaskIds: v.subTaskIds,
-                parentTaskId: v.parentTaskId,
-                dependOnTaskIds: v.dependOnTaskIds,
-                relatedToTaskId: v.relatedToTaskId,
-                repeat: v.repeat,
-                customFields: v.customFields,
-                watchers: v.watchers,
-                completionPercentage: v.completionPercentage,
-                notifications: v.notifications,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.priority === undefined ? null : { priority: v.priority }),
+                ...(v.dueDate === undefined ? null : { dueDate: v.dueDate }),
+                ...(v.dueTimezone === undefined ? null : { dueTimezone: v.dueTimezone }),
+                ...(v.assignee === undefined ? null : { assignee: v.assignee }),
+                ...(v.createdBy === undefined ? null : { createdBy: v.createdBy }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.labels === undefined ? null : { labels: v.labels }),
+                ...(v.comments === undefined ? null : { comments: v.comments }),
+                ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.timeEstimate === undefined ? null : { timeEstimate: v.timeEstimate }),
+                ...(v.timeLogged === undefined ? null : { timeLogged: v.timeLogged }),
+                ...(v.subTaskIds === undefined ? null : { subTaskIds: v.subTaskIds }),
+                ...(v.parentTaskId === undefined ? null : { parentTaskId: v.parentTaskId }),
+                ...(v.dependOnTaskIds === undefined
+                    ? null
+                    : { dependOnTaskIds: v.dependOnTaskIds }),
+                ...(v.relatedToTaskId === undefined
+                    ? null
+                    : { relatedToTaskId: v.relatedToTaskId }),
+                ...(v.repeat === undefined ? null : { repeat: v.repeat }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.watchers === undefined ? null : { watchers: v.watchers }),
+                ...(v.completionPercentage === undefined
+                    ? null
+                    : { completionPercentage: v.completionPercentage }),
+                ...(v.notifications === undefined ? null : { notifications: v.notifications }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        title: string;
-        description: string;
-        status: PostTasksStatus;
-        priority: PostTasksPriority;
-        dueDate: number;
-        dueTimezone: string;
-        assignee: PostTasksAssignee$.Outbound;
-        createdBy: PostTasksCreatedBy$.Outbound;
-        createdAt: number;
-        updatedAt: number;
-        labels: Array<string>;
-        comments: Array<PostTasksComments$.Outbound>;
-        attachments: Array<PostTasksAttachments$.Outbound>;
-        timeEstimate: string;
-        timeLogged: string;
-        subTaskIds: Array<string>;
-        parentTaskId: string;
-        dependOnTaskIds: Array<string>;
-        relatedToTaskId: Array<string>;
-        repeat: string;
-        customFields: Array<PostTasksTasksRequestCustomFields$.Outbound>;
-        watchers: Array<PostTasksWatchers$.Outbound>;
-        completionPercentage: number;
-        notifications: Array<PostTasksNotifications$.Outbound>;
+        id?: string | undefined;
+        title?: string | undefined;
+        description?: string | undefined;
+        status?: PostTasksStatus | undefined;
+        priority?: PostTasksPriority | undefined;
+        dueDate?: number | undefined;
+        dueTimezone?: string | undefined;
+        assignee?: PostTasksAssignee$.Outbound | undefined;
+        createdBy?: PostTasksCreatedBy$.Outbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        labels?: Array<string> | undefined;
+        comments?: Array<PostTasksComments$.Outbound> | undefined;
+        attachments?: Array<PostTasksAttachments$.Outbound> | undefined;
+        timeEstimate?: string | undefined;
+        timeLogged?: string | undefined;
+        subTaskIds?: Array<string> | undefined;
+        parentTaskId?: string | undefined;
+        dependOnTaskIds?: Array<string> | undefined;
+        relatedToTaskId?: Array<string> | undefined;
+        repeat?: string | undefined;
+        customFields?: Array<PostTasksTasksRequestCustomFields$.Outbound> | undefined;
+        watchers?: Array<PostTasksWatchers$.Outbound> | undefined;
+        completionPercentage?: number | undefined;
+        notifications?: Array<PostTasksNotifications$.Outbound> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostTasksRequestBody> = z
         .object({
-            id: z.string(),
-            title: z.string(),
-            description: z.string(),
-            status: PostTasksStatus$,
-            priority: PostTasksPriority$,
-            dueDate: z.number(),
-            dueTimezone: z.string(),
-            assignee: z.lazy(() => PostTasksAssignee$.outboundSchema),
-            createdBy: z.lazy(() => PostTasksCreatedBy$.outboundSchema),
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            labels: z.array(z.string()),
-            comments: z.array(z.lazy(() => PostTasksComments$.outboundSchema)),
-            attachments: z.array(z.lazy(() => PostTasksAttachments$.outboundSchema)),
-            timeEstimate: z.string(),
-            timeLogged: z.string(),
-            subTaskIds: z.array(z.string()),
-            parentTaskId: z.string(),
-            dependOnTaskIds: z.array(z.string()),
-            relatedToTaskId: z.array(z.string()),
-            repeat: z.string(),
-            customFields: z.array(z.lazy(() => PostTasksTasksRequestCustomFields$.outboundSchema)),
-            watchers: z.array(z.lazy(() => PostTasksWatchers$.outboundSchema)),
-            completionPercentage: z.number(),
-            notifications: z.array(z.lazy(() => PostTasksNotifications$.outboundSchema)),
+            id: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            status: PostTasksStatus$.optional(),
+            priority: PostTasksPriority$.optional(),
+            dueDate: z.number().optional(),
+            dueTimezone: z.string().optional(),
+            assignee: z.lazy(() => PostTasksAssignee$.outboundSchema).optional(),
+            createdBy: z.lazy(() => PostTasksCreatedBy$.outboundSchema).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            labels: z.array(z.string()).optional(),
+            comments: z.array(z.lazy(() => PostTasksComments$.outboundSchema)).optional(),
+            attachments: z.array(z.lazy(() => PostTasksAttachments$.outboundSchema)).optional(),
+            timeEstimate: z.string().optional(),
+            timeLogged: z.string().optional(),
+            subTaskIds: z.array(z.string()).optional(),
+            parentTaskId: z.string().optional(),
+            dependOnTaskIds: z.array(z.string()).optional(),
+            relatedToTaskId: z.array(z.string()).optional(),
+            repeat: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostTasksTasksRequestCustomFields$.outboundSchema))
+                .optional(),
+            watchers: z.array(z.lazy(() => PostTasksWatchers$.outboundSchema)).optional(),
+            completionPercentage: z.number().optional(),
+            notifications: z.array(z.lazy(() => PostTasksNotifications$.outboundSchema)).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                title: v.title,
-                description: v.description,
-                status: v.status,
-                priority: v.priority,
-                dueDate: v.dueDate,
-                dueTimezone: v.dueTimezone,
-                assignee: v.assignee,
-                createdBy: v.createdBy,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                labels: v.labels,
-                comments: v.comments,
-                attachments: v.attachments,
-                timeEstimate: v.timeEstimate,
-                timeLogged: v.timeLogged,
-                subTaskIds: v.subTaskIds,
-                parentTaskId: v.parentTaskId,
-                dependOnTaskIds: v.dependOnTaskIds,
-                relatedToTaskId: v.relatedToTaskId,
-                repeat: v.repeat,
-                customFields: v.customFields,
-                watchers: v.watchers,
-                completionPercentage: v.completionPercentage,
-                notifications: v.notifications,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.priority === undefined ? null : { priority: v.priority }),
+                ...(v.dueDate === undefined ? null : { dueDate: v.dueDate }),
+                ...(v.dueTimezone === undefined ? null : { dueTimezone: v.dueTimezone }),
+                ...(v.assignee === undefined ? null : { assignee: v.assignee }),
+                ...(v.createdBy === undefined ? null : { createdBy: v.createdBy }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.labels === undefined ? null : { labels: v.labels }),
+                ...(v.comments === undefined ? null : { comments: v.comments }),
+                ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.timeEstimate === undefined ? null : { timeEstimate: v.timeEstimate }),
+                ...(v.timeLogged === undefined ? null : { timeLogged: v.timeLogged }),
+                ...(v.subTaskIds === undefined ? null : { subTaskIds: v.subTaskIds }),
+                ...(v.parentTaskId === undefined ? null : { parentTaskId: v.parentTaskId }),
+                ...(v.dependOnTaskIds === undefined
+                    ? null
+                    : { dependOnTaskIds: v.dependOnTaskIds }),
+                ...(v.relatedToTaskId === undefined
+                    ? null
+                    : { relatedToTaskId: v.relatedToTaskId }),
+                ...(v.repeat === undefined ? null : { repeat: v.repeat }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.watchers === undefined ? null : { watchers: v.watchers }),
+                ...(v.completionPercentage === undefined
+                    ? null
+                    : { completionPercentage: v.completionPercentage }),
+                ...(v.notifications === undefined ? null : { notifications: v.notifications }),
             };
         });
 }

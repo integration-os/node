@@ -184,27 +184,27 @@ export type PostOrdersItems = {
 };
 
 export type PostOrdersRequestBody = {
-    id: string;
-    customerID: string;
-    orderNumber: string;
-    status: PostOrdersStatus;
-    createdAt: number;
-    updatedAt: number;
-    total: number;
-    subTotal: number;
-    tax: number;
-    shippingCost: number;
-    currency: string;
-    paymentStatus: PostOrdersPaymentStatus;
-    paymentMethods: Array<string>;
-    shippingMethod: string;
-    shippingAddress: PostOrdersShippingAddress;
-    billingAddress: PostOrdersBillingAddress;
-    note: string;
-    discounts: Array<number>;
-    trackingInfo: string;
-    items: Array<PostOrdersItems>;
-    tags: Array<string>;
+    id?: string | undefined;
+    customerID?: string | undefined;
+    orderNumber?: string | undefined;
+    status?: PostOrdersStatus | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    total?: number | undefined;
+    subTotal?: number | undefined;
+    tax?: number | undefined;
+    shippingCost?: number | undefined;
+    currency?: string | undefined;
+    paymentStatus?: PostOrdersPaymentStatus | undefined;
+    paymentMethods?: Array<string> | undefined;
+    shippingMethod?: string | undefined;
+    shippingAddress?: PostOrdersShippingAddress | undefined;
+    billingAddress?: PostOrdersBillingAddress | undefined;
+    note?: string | undefined;
+    discounts?: Array<number> | undefined;
+    trackingInfo?: string | undefined;
+    items?: Array<PostOrdersItems> | undefined;
+    tags?: Array<string> | undefined;
 };
 
 export type PostOrdersRequest = {
@@ -1317,150 +1317,154 @@ export namespace PostOrdersItems$ {
 /** @internal */
 export namespace PostOrdersRequestBody$ {
     export type Inbound = {
-        id: string;
-        customerID: string;
-        orderNumber: string;
-        status: PostOrdersStatus;
-        createdAt: number;
-        updatedAt: number;
-        total: number;
-        subTotal: number;
-        tax: number;
-        shippingCost: number;
-        currency: string;
-        paymentStatus: PostOrdersPaymentStatus;
-        paymentMethods: Array<string>;
-        shippingMethod: string;
-        shippingAddress: PostOrdersShippingAddress$.Inbound;
-        billingAddress: PostOrdersBillingAddress$.Inbound;
-        note: string;
-        discounts: Array<number>;
-        trackingInfo: string;
-        items: Array<PostOrdersItems$.Inbound>;
-        tags: Array<string>;
+        id?: string | undefined;
+        customerID?: string | undefined;
+        orderNumber?: string | undefined;
+        status?: PostOrdersStatus | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        total?: number | undefined;
+        subTotal?: number | undefined;
+        tax?: number | undefined;
+        shippingCost?: number | undefined;
+        currency?: string | undefined;
+        paymentStatus?: PostOrdersPaymentStatus | undefined;
+        paymentMethods?: Array<string> | undefined;
+        shippingMethod?: string | undefined;
+        shippingAddress?: PostOrdersShippingAddress$.Inbound | undefined;
+        billingAddress?: PostOrdersBillingAddress$.Inbound | undefined;
+        note?: string | undefined;
+        discounts?: Array<number> | undefined;
+        trackingInfo?: string | undefined;
+        items?: Array<PostOrdersItems$.Inbound> | undefined;
+        tags?: Array<string> | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostOrdersRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.string(),
-            customerID: z.string(),
-            orderNumber: z.string(),
-            status: PostOrdersStatus$,
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            total: z.number(),
-            subTotal: z.number(),
-            tax: z.number(),
-            shippingCost: z.number(),
-            currency: z.string(),
-            paymentStatus: PostOrdersPaymentStatus$,
-            paymentMethods: z.array(z.string()),
-            shippingMethod: z.string(),
-            shippingAddress: z.lazy(() => PostOrdersShippingAddress$.inboundSchema),
-            billingAddress: z.lazy(() => PostOrdersBillingAddress$.inboundSchema),
-            note: z.string(),
-            discounts: z.array(z.number()),
-            trackingInfo: z.string(),
-            items: z.array(z.lazy(() => PostOrdersItems$.inboundSchema)),
-            tags: z.array(z.string()),
+            id: z.string().optional(),
+            customerID: z.string().optional(),
+            orderNumber: z.string().optional(),
+            status: PostOrdersStatus$.optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            total: z.number().optional(),
+            subTotal: z.number().optional(),
+            tax: z.number().optional(),
+            shippingCost: z.number().optional(),
+            currency: z.string().optional(),
+            paymentStatus: PostOrdersPaymentStatus$.optional(),
+            paymentMethods: z.array(z.string()).optional(),
+            shippingMethod: z.string().optional(),
+            shippingAddress: z.lazy(() => PostOrdersShippingAddress$.inboundSchema).optional(),
+            billingAddress: z.lazy(() => PostOrdersBillingAddress$.inboundSchema).optional(),
+            note: z.string().optional(),
+            discounts: z.array(z.number()).optional(),
+            trackingInfo: z.string().optional(),
+            items: z.array(z.lazy(() => PostOrdersItems$.inboundSchema)).optional(),
+            tags: z.array(z.string()).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                customerID: v.customerID,
-                orderNumber: v.orderNumber,
-                status: v.status,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                total: v.total,
-                subTotal: v.subTotal,
-                tax: v.tax,
-                shippingCost: v.shippingCost,
-                currency: v.currency,
-                paymentStatus: v.paymentStatus,
-                paymentMethods: v.paymentMethods,
-                shippingMethod: v.shippingMethod,
-                shippingAddress: v.shippingAddress,
-                billingAddress: v.billingAddress,
-                note: v.note,
-                discounts: v.discounts,
-                trackingInfo: v.trackingInfo,
-                items: v.items,
-                tags: v.tags,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.customerID === undefined ? null : { customerID: v.customerID }),
+                ...(v.orderNumber === undefined ? null : { orderNumber: v.orderNumber }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.total === undefined ? null : { total: v.total }),
+                ...(v.subTotal === undefined ? null : { subTotal: v.subTotal }),
+                ...(v.tax === undefined ? null : { tax: v.tax }),
+                ...(v.shippingCost === undefined ? null : { shippingCost: v.shippingCost }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.paymentStatus === undefined ? null : { paymentStatus: v.paymentStatus }),
+                ...(v.paymentMethods === undefined ? null : { paymentMethods: v.paymentMethods }),
+                ...(v.shippingMethod === undefined ? null : { shippingMethod: v.shippingMethod }),
+                ...(v.shippingAddress === undefined
+                    ? null
+                    : { shippingAddress: v.shippingAddress }),
+                ...(v.billingAddress === undefined ? null : { billingAddress: v.billingAddress }),
+                ...(v.note === undefined ? null : { note: v.note }),
+                ...(v.discounts === undefined ? null : { discounts: v.discounts }),
+                ...(v.trackingInfo === undefined ? null : { trackingInfo: v.trackingInfo }),
+                ...(v.items === undefined ? null : { items: v.items }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
             };
         });
 
     export type Outbound = {
-        id: string;
-        customerID: string;
-        orderNumber: string;
-        status: PostOrdersStatus;
-        createdAt: number;
-        updatedAt: number;
-        total: number;
-        subTotal: number;
-        tax: number;
-        shippingCost: number;
-        currency: string;
-        paymentStatus: PostOrdersPaymentStatus;
-        paymentMethods: Array<string>;
-        shippingMethod: string;
-        shippingAddress: PostOrdersShippingAddress$.Outbound;
-        billingAddress: PostOrdersBillingAddress$.Outbound;
-        note: string;
-        discounts: Array<number>;
-        trackingInfo: string;
-        items: Array<PostOrdersItems$.Outbound>;
-        tags: Array<string>;
+        id?: string | undefined;
+        customerID?: string | undefined;
+        orderNumber?: string | undefined;
+        status?: PostOrdersStatus | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        total?: number | undefined;
+        subTotal?: number | undefined;
+        tax?: number | undefined;
+        shippingCost?: number | undefined;
+        currency?: string | undefined;
+        paymentStatus?: PostOrdersPaymentStatus | undefined;
+        paymentMethods?: Array<string> | undefined;
+        shippingMethod?: string | undefined;
+        shippingAddress?: PostOrdersShippingAddress$.Outbound | undefined;
+        billingAddress?: PostOrdersBillingAddress$.Outbound | undefined;
+        note?: string | undefined;
+        discounts?: Array<number> | undefined;
+        trackingInfo?: string | undefined;
+        items?: Array<PostOrdersItems$.Outbound> | undefined;
+        tags?: Array<string> | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostOrdersRequestBody> = z
         .object({
-            id: z.string(),
-            customerID: z.string(),
-            orderNumber: z.string(),
-            status: PostOrdersStatus$,
-            createdAt: z.number(),
-            updatedAt: z.number(),
-            total: z.number(),
-            subTotal: z.number(),
-            tax: z.number(),
-            shippingCost: z.number(),
-            currency: z.string(),
-            paymentStatus: PostOrdersPaymentStatus$,
-            paymentMethods: z.array(z.string()),
-            shippingMethod: z.string(),
-            shippingAddress: z.lazy(() => PostOrdersShippingAddress$.outboundSchema),
-            billingAddress: z.lazy(() => PostOrdersBillingAddress$.outboundSchema),
-            note: z.string(),
-            discounts: z.array(z.number()),
-            trackingInfo: z.string(),
-            items: z.array(z.lazy(() => PostOrdersItems$.outboundSchema)),
-            tags: z.array(z.string()),
+            id: z.string().optional(),
+            customerID: z.string().optional(),
+            orderNumber: z.string().optional(),
+            status: PostOrdersStatus$.optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            total: z.number().optional(),
+            subTotal: z.number().optional(),
+            tax: z.number().optional(),
+            shippingCost: z.number().optional(),
+            currency: z.string().optional(),
+            paymentStatus: PostOrdersPaymentStatus$.optional(),
+            paymentMethods: z.array(z.string()).optional(),
+            shippingMethod: z.string().optional(),
+            shippingAddress: z.lazy(() => PostOrdersShippingAddress$.outboundSchema).optional(),
+            billingAddress: z.lazy(() => PostOrdersBillingAddress$.outboundSchema).optional(),
+            note: z.string().optional(),
+            discounts: z.array(z.number()).optional(),
+            trackingInfo: z.string().optional(),
+            items: z.array(z.lazy(() => PostOrdersItems$.outboundSchema)).optional(),
+            tags: z.array(z.string()).optional(),
         })
         .transform((v) => {
             return {
-                id: v.id,
-                customerID: v.customerID,
-                orderNumber: v.orderNumber,
-                status: v.status,
-                createdAt: v.createdAt,
-                updatedAt: v.updatedAt,
-                total: v.total,
-                subTotal: v.subTotal,
-                tax: v.tax,
-                shippingCost: v.shippingCost,
-                currency: v.currency,
-                paymentStatus: v.paymentStatus,
-                paymentMethods: v.paymentMethods,
-                shippingMethod: v.shippingMethod,
-                shippingAddress: v.shippingAddress,
-                billingAddress: v.billingAddress,
-                note: v.note,
-                discounts: v.discounts,
-                trackingInfo: v.trackingInfo,
-                items: v.items,
-                tags: v.tags,
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.customerID === undefined ? null : { customerID: v.customerID }),
+                ...(v.orderNumber === undefined ? null : { orderNumber: v.orderNumber }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.total === undefined ? null : { total: v.total }),
+                ...(v.subTotal === undefined ? null : { subTotal: v.subTotal }),
+                ...(v.tax === undefined ? null : { tax: v.tax }),
+                ...(v.shippingCost === undefined ? null : { shippingCost: v.shippingCost }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.paymentStatus === undefined ? null : { paymentStatus: v.paymentStatus }),
+                ...(v.paymentMethods === undefined ? null : { paymentMethods: v.paymentMethods }),
+                ...(v.shippingMethod === undefined ? null : { shippingMethod: v.shippingMethod }),
+                ...(v.shippingAddress === undefined
+                    ? null
+                    : { shippingAddress: v.shippingAddress }),
+                ...(v.billingAddress === undefined ? null : { billingAddress: v.billingAddress }),
+                ...(v.note === undefined ? null : { note: v.note }),
+                ...(v.discounts === undefined ? null : { discounts: v.discounts }),
+                ...(v.trackingInfo === undefined ? null : { trackingInfo: v.trackingInfo }),
+                ...(v.items === undefined ? null : { items: v.items }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
             };
         });
 }
