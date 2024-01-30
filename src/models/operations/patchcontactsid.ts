@@ -5,6 +5,30 @@
 import { z } from "zod";
 
 export enum PatchContactsIdType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PatchContactsIdEmails = {
+    email?: string | undefined;
+    type?: PatchContactsIdType | undefined;
+};
+
+export enum PatchContactsIdContactsType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PatchContactsIdPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PatchContactsIdContactsType | undefined;
+};
+
+export enum PatchContactsIdContactsRequestType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -57,13 +81,13 @@ export type PatchContactsIdAddress = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PatchContactsIdType | undefined;
+    type?: PatchContactsIdContactsRequestType | undefined;
     geoLocation?: PatchContactsIdGeoLocation | undefined;
     customFields?: Array<PatchContactsIdCustomFields> | undefined;
     subdivisionCode?: string | undefined;
 };
 
-export enum PatchContactsIdContactsType {
+export enum PatchContactsIdContactsRequestRequestBodyType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -92,7 +116,7 @@ export type PatchContactsIdAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PatchContactsIdContactsType | undefined;
+    type?: PatchContactsIdContactsRequestRequestBodyType | undefined;
     geoLocation?: PatchContactsIdContactsGeoLocation | undefined;
     customFields?: Array<PatchContactsIdContactsCustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -161,7 +185,7 @@ export enum PatchContactsIdGender {
     PreferNotToSay = "Prefer not to say",
 }
 
-export enum PatchContactsIdContactsRequestType {
+export enum PatchContactsIdContactsRequestRequestBodyNotesType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -190,7 +214,7 @@ export type PatchContactsIdContactsAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PatchContactsIdContactsRequestType | undefined;
+    type?: PatchContactsIdContactsRequestRequestBodyNotesType | undefined;
     geoLocation?: PatchContactsIdContactsRequestGeoLocation | undefined;
     customFields?: Array<PatchContactsIdContactsRequestCustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -216,7 +240,7 @@ export type PatchContactsIdPreferences = {
     communications?: PatchContactsIdCommunications | undefined;
 };
 
-export enum PatchContactsIdContactsRequestRequestBodyType {
+export enum PatchContactsIdContactsRequestRequestBodyNotesAuthorType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -227,7 +251,7 @@ export enum PatchContactsIdContactsRequestRequestBodyType {
     Other = "other",
 }
 
-export enum PatchContactsIdContactsRequestRequestBodyNotesType {
+export enum PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType {
     String = "String",
     Number = "Number",
     Boolean = "Boolean",
@@ -240,7 +264,7 @@ export type PatchContactsIdAdditionalInfo = {
     id?: string | undefined;
     key?: string | undefined;
     value?: string | undefined;
-    type?: PatchContactsIdContactsRequestRequestBodyNotesType | undefined;
+    type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
     entityId?: string | undefined;
@@ -248,7 +272,7 @@ export type PatchContactsIdAdditionalInfo = {
 };
 
 export type PatchContactsIdSocialLinks = {
-    type?: PatchContactsIdContactsRequestRequestBodyType | undefined;
+    type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -294,7 +318,7 @@ export type PatchContactsIdSso = {
     deleted?: boolean | undefined;
 };
 
-export enum PatchContactsIdContactsRequestRequestBodyNotesAuthorType {
+export enum PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType {
     CreditCard = "CreditCard",
     PayPal = "PayPal",
     BankTransfer = "BankTransfer",
@@ -303,7 +327,7 @@ export enum PatchContactsIdContactsRequestRequestBodyNotesAuthorType {
 
 export type PatchContactsIdPaymentMethods = {
     id?: string | undefined;
-    type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorType | undefined;
+    type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType | undefined;
     details?: string | undefined;
     isDefault?: boolean | undefined;
 };
@@ -498,11 +522,12 @@ export type PatchContactsIdRequestBody = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PatchContactsIdEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PatchContactsIdPhones> | undefined;
     address?: PatchContactsIdAddress | undefined;
     addresses?: Array<PatchContactsIdAddresses> | undefined;
     birthday?: number | undefined;
@@ -512,7 +537,10 @@ export type PatchContactsIdRequestBody = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<PatchContactsIdSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<PatchContactsIdContactsRequestRequestBodyCustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
 };
 
 export type PatchContactsIdRequest = {
@@ -520,10 +548,6 @@ export type PatchContactsIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -601,6 +625,98 @@ export type PatchContactsIdResponse = {
 
 /** @internal */
 export const PatchContactsIdType$ = z.nativeEnum(PatchContactsIdType);
+
+/** @internal */
+export namespace PatchContactsIdEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PatchContactsIdType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PatchContactsIdEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: PatchContactsIdType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PatchContactsIdType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchContactsIdEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: PatchContactsIdType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PatchContactsIdContactsType$ = z.nativeEnum(PatchContactsIdContactsType);
+
+/** @internal */
+export namespace PatchContactsIdPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PatchContactsIdContactsType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PatchContactsIdPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PatchContactsIdContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PatchContactsIdContactsType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchContactsIdPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PatchContactsIdContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PatchContactsIdContactsRequestType$ = z.nativeEnum(PatchContactsIdContactsRequestType);
 
 /** @internal */
 export namespace PatchContactsIdGeoLocation$ {
@@ -752,7 +868,7 @@ export namespace PatchContactsIdAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PatchContactsIdType | undefined;
+        type?: PatchContactsIdContactsRequestType | undefined;
         geoLocation?: PatchContactsIdGeoLocation$.Inbound | undefined;
         customFields?: Array<PatchContactsIdCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -778,7 +894,7 @@ export namespace PatchContactsIdAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PatchContactsIdType$.optional(),
+            type: PatchContactsIdContactsRequestType$.optional(),
             geoLocation: z.lazy(() => PatchContactsIdGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PatchContactsIdCustomFields$.inboundSchema))
@@ -835,7 +951,7 @@ export namespace PatchContactsIdAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PatchContactsIdType | undefined;
+        type?: PatchContactsIdContactsRequestType | undefined;
         geoLocation?: PatchContactsIdGeoLocation$.Outbound | undefined;
         customFields?: Array<PatchContactsIdCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -861,7 +977,7 @@ export namespace PatchContactsIdAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PatchContactsIdType$.optional(),
+            type: PatchContactsIdContactsRequestType$.optional(),
             geoLocation: z.lazy(() => PatchContactsIdGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PatchContactsIdCustomFields$.outboundSchema))
@@ -901,7 +1017,9 @@ export namespace PatchContactsIdAddress$ {
 }
 
 /** @internal */
-export const PatchContactsIdContactsType$ = z.nativeEnum(PatchContactsIdContactsType);
+export const PatchContactsIdContactsRequestRequestBodyType$ = z.nativeEnum(
+    PatchContactsIdContactsRequestRequestBodyType
+);
 
 /** @internal */
 export namespace PatchContactsIdContactsGeoLocation$ {
@@ -962,7 +1080,7 @@ export namespace PatchContactsIdAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PatchContactsIdContactsType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyType | undefined;
         geoLocation?: PatchContactsIdContactsGeoLocation$.Inbound | undefined;
         customFields?: Array<PatchContactsIdContactsCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -988,7 +1106,7 @@ export namespace PatchContactsIdAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PatchContactsIdContactsType$.optional(),
+            type: PatchContactsIdContactsRequestRequestBodyType$.optional(),
             geoLocation: z.lazy(() => PatchContactsIdContactsGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PatchContactsIdContactsCustomFields$.inboundSchema))
@@ -1045,7 +1163,7 @@ export namespace PatchContactsIdAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PatchContactsIdContactsType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyType | undefined;
         geoLocation?: PatchContactsIdContactsGeoLocation$.Outbound | undefined;
         customFields?: Array<PatchContactsIdContactsCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1071,7 +1189,7 @@ export namespace PatchContactsIdAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PatchContactsIdContactsType$.optional(),
+            type: PatchContactsIdContactsRequestRequestBodyType$.optional(),
             geoLocation: z
                 .lazy(() => PatchContactsIdContactsGeoLocation$.outboundSchema)
                 .optional(),
@@ -1344,7 +1462,9 @@ export namespace PatchContactsIdCoverPhoto$ {
 export const PatchContactsIdGender$ = z.nativeEnum(PatchContactsIdGender);
 
 /** @internal */
-export const PatchContactsIdContactsRequestType$ = z.nativeEnum(PatchContactsIdContactsRequestType);
+export const PatchContactsIdContactsRequestRequestBodyNotesType$ = z.nativeEnum(
+    PatchContactsIdContactsRequestRequestBodyNotesType
+);
 
 /** @internal */
 export namespace PatchContactsIdContactsRequestGeoLocation$ {
@@ -1405,7 +1525,7 @@ export namespace PatchContactsIdContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PatchContactsIdContactsRequestType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesType | undefined;
         geoLocation?: PatchContactsIdContactsRequestGeoLocation$.Inbound | undefined;
         customFields?: Array<PatchContactsIdContactsRequestCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1432,7 +1552,7 @@ export namespace PatchContactsIdContactsAddresses$ {
                 postalCodeExtension: z.string().optional(),
                 country: z.string().optional(),
                 countryCode: z.string().optional(),
-                type: PatchContactsIdContactsRequestType$.optional(),
+                type: PatchContactsIdContactsRequestRequestBodyNotesType$.optional(),
                 geoLocation: z
                     .lazy(() => PatchContactsIdContactsRequestGeoLocation$.inboundSchema)
                     .optional(),
@@ -1491,7 +1611,7 @@ export namespace PatchContactsIdContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PatchContactsIdContactsRequestType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesType | undefined;
         geoLocation?: PatchContactsIdContactsRequestGeoLocation$.Outbound | undefined;
         customFields?: Array<PatchContactsIdContactsRequestCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1521,7 +1641,7 @@ export namespace PatchContactsIdContactsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PatchContactsIdContactsRequestType$.optional(),
+            type: PatchContactsIdContactsRequestRequestBodyNotesType$.optional(),
             geoLocation: z
                 .lazy(() => PatchContactsIdContactsRequestGeoLocation$.outboundSchema)
                 .optional(),
@@ -1624,13 +1744,13 @@ export namespace PatchContactsIdPreferences$ {
 }
 
 /** @internal */
-export const PatchContactsIdContactsRequestRequestBodyType$ = z.nativeEnum(
-    PatchContactsIdContactsRequestRequestBodyType
+export const PatchContactsIdContactsRequestRequestBodyNotesAuthorType$ = z.nativeEnum(
+    PatchContactsIdContactsRequestRequestBodyNotesAuthorType
 );
 
 /** @internal */
-export const PatchContactsIdContactsRequestRequestBodyNotesType$ = z.nativeEnum(
-    PatchContactsIdContactsRequestRequestBodyNotesType
+export const PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType$ = z.nativeEnum(
+    PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType
 );
 
 /** @internal */
@@ -1639,7 +1759,7 @@ export namespace PatchContactsIdAdditionalInfo$ {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?: PatchContactsIdContactsRequestRequestBodyNotesType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -1651,7 +1771,7 @@ export namespace PatchContactsIdAdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: PatchContactsIdContactsRequestRequestBodyNotesType$.optional(),
+            type: PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -1674,7 +1794,7 @@ export namespace PatchContactsIdAdditionalInfo$ {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?: PatchContactsIdContactsRequestRequestBodyNotesType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -1687,7 +1807,7 @@ export namespace PatchContactsIdAdditionalInfo$ {
                 id: z.string().optional(),
                 key: z.string().optional(),
                 value: z.string().optional(),
-                type: PatchContactsIdContactsRequestRequestBodyNotesType$.optional(),
+                type: PatchContactsIdContactsRequestRequestBodyNotesAuthorSocialLinksType$.optional(),
                 createdAt: z.number().optional(),
                 updatedAt: z.number().optional(),
                 entityId: z.string().optional(),
@@ -1710,7 +1830,7 @@ export namespace PatchContactsIdAdditionalInfo$ {
 /** @internal */
 export namespace PatchContactsIdSocialLinks$ {
     export type Inbound = {
-        type?: PatchContactsIdContactsRequestRequestBodyType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1725,7 +1845,7 @@ export namespace PatchContactsIdSocialLinks$ {
 
     export const inboundSchema: z.ZodType<PatchContactsIdSocialLinks, z.ZodTypeDef, Inbound> = z
         .object({
-            type: PatchContactsIdContactsRequestRequestBodyType$.optional(),
+            type: PatchContactsIdContactsRequestRequestBodyNotesAuthorType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1754,7 +1874,7 @@ export namespace PatchContactsIdSocialLinks$ {
         });
 
     export type Outbound = {
-        type?: PatchContactsIdContactsRequestRequestBodyType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1769,7 +1889,7 @@ export namespace PatchContactsIdSocialLinks$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchContactsIdSocialLinks> = z
         .object({
-            type: PatchContactsIdContactsRequestRequestBodyType$.optional(),
+            type: PatchContactsIdContactsRequestRequestBodyNotesAuthorType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1908,15 +2028,15 @@ export namespace PatchContactsIdSso$ {
 }
 
 /** @internal */
-export const PatchContactsIdContactsRequestRequestBodyNotesAuthorType$ = z.nativeEnum(
-    PatchContactsIdContactsRequestRequestBodyNotesAuthorType
+export const PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType$ = z.nativeEnum(
+    PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType
 );
 
 /** @internal */
 export namespace PatchContactsIdPaymentMethods$ {
     export type Inbound = {
         id?: string | undefined;
-        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -1924,7 +2044,7 @@ export namespace PatchContactsIdPaymentMethods$ {
     export const inboundSchema: z.ZodType<PatchContactsIdPaymentMethods, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            type: PatchContactsIdContactsRequestRequestBodyNotesAuthorType$.optional(),
+            type: PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -1939,7 +2059,7 @@ export namespace PatchContactsIdPaymentMethods$ {
 
     export type Outbound = {
         id?: string | undefined;
-        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorType | undefined;
+        type?: PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -1948,7 +2068,7 @@ export namespace PatchContactsIdPaymentMethods$ {
         z
             .object({
                 id: z.string().optional(),
-                type: PatchContactsIdContactsRequestRequestBodyNotesAuthorType$.optional(),
+                type: PatchContactsIdContactsRequestRequestBodyNotesAuthorPaymentMethodsType$.optional(),
                 details: z.string().optional(),
                 isDefault: z.boolean().optional(),
             })
@@ -2931,11 +3051,12 @@ export namespace PatchContactsIdRequestBody$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PatchContactsIdEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PatchContactsIdPhones$.Inbound> | undefined;
         address?: PatchContactsIdAddress$.Inbound | undefined;
         addresses?: Array<PatchContactsIdAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -2945,9 +3066,12 @@ export namespace PatchContactsIdRequestBody$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PatchContactsIdSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?:
             | Array<PatchContactsIdContactsRequestRequestBodyCustomFields$.Inbound>
             | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<PatchContactsIdRequestBody, z.ZodTypeDef, Inbound> = z
@@ -2955,11 +3079,12 @@ export namespace PatchContactsIdRequestBody$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PatchContactsIdEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PatchContactsIdPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PatchContactsIdAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchContactsIdAddresses$.inboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -2971,6 +3096,7 @@ export namespace PatchContactsIdRequestBody$ {
             socialProfiles: z
                 .array(z.lazy(() => PatchContactsIdSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(
                     z.lazy(
@@ -2978,16 +3104,19 @@ export namespace PatchContactsIdRequestBody$ {
                     )
                 )
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -2998,7 +3127,10 @@ export namespace PatchContactsIdRequestBody$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -3006,11 +3138,12 @@ export namespace PatchContactsIdRequestBody$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PatchContactsIdEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PatchContactsIdPhones$.Outbound> | undefined;
         address?: PatchContactsIdAddress$.Outbound | undefined;
         addresses?: Array<PatchContactsIdAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -3020,9 +3153,12 @@ export namespace PatchContactsIdRequestBody$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PatchContactsIdSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?:
             | Array<PatchContactsIdContactsRequestRequestBodyCustomFields$.Outbound>
             | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchContactsIdRequestBody> = z
@@ -3030,11 +3166,12 @@ export namespace PatchContactsIdRequestBody$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PatchContactsIdEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PatchContactsIdPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PatchContactsIdAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchContactsIdAddresses$.outboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -3046,6 +3183,7 @@ export namespace PatchContactsIdRequestBody$ {
             socialProfiles: z
                 .array(z.lazy(() => PatchContactsIdSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(
                     z.lazy(
@@ -3053,16 +3191,19 @@ export namespace PatchContactsIdRequestBody$ {
                     )
                 )
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -3073,7 +3214,10 @@ export namespace PatchContactsIdRequestBody$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }
@@ -3082,7 +3226,6 @@ export namespace PatchContactsIdRequestBody$ {
 export namespace PatchContactsIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchContactsIdRequestBody$.Inbound | undefined;
     };
@@ -3090,14 +3233,12 @@ export namespace PatchContactsIdRequest$ {
     export const inboundSchema: z.ZodType<PatchContactsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchContactsIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -3105,7 +3246,6 @@ export namespace PatchContactsIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchContactsIdRequestBody$.Outbound | undefined;
     };
@@ -3113,14 +3253,12 @@ export namespace PatchContactsIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchContactsIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchContactsIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

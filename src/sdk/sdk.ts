@@ -5,28 +5,30 @@
 import { SDKOptions, serverURLFromOptions } from "../lib/config";
 import { HTTPClient } from "../lib/http";
 import { ClientSDK } from "../lib/sdks";
+import { Candidates } from "./candidates";
 import { Companies } from "./companies";
 import { Contacts } from "./contacts";
 import { Customers } from "./customers";
+import { Jobs } from "./jobs";
 import { Leads } from "./leads";
 import { Notes } from "./notes";
 import { Opportunities } from "./opportunities";
 import { Orders } from "./orders";
 import { Products } from "./products";
 import { Tasks } from "./tasks";
+import { Tickets } from "./tickets";
 import { Users } from "./users";
 
 export class IntegrationOS extends ClientSDK {
     private readonly options$: SDKOptions;
 
-    constructor(client: string, options: Omit<SDKOptions, "client" | "httpClient" | "serverIdx" | "retryConfig"> = {}) {
+    constructor(options: SDKOptions = {}) {
         super({
-            client: new HTTPClient(),
+            client: options.httpClient || new HTTPClient(),
             baseURL: serverURLFromOptions(options),
         });
 
         this.options$ = options;
-        this.options$.client = client;
         void this.options$;
     }
 
@@ -75,8 +77,23 @@ export class IntegrationOS extends ClientSDK {
         return (this._tasks ??= new Tasks(this.options$));
     }
 
+    private _jobs?: Jobs;
+    get jobs() {
+        return (this._jobs ??= new Jobs(this.options$));
+    }
+
     private _contacts?: Contacts;
     get contacts() {
         return (this._contacts ??= new Contacts(this.options$));
+    }
+
+    private _candidates?: Candidates;
+    get candidates() {
+        return (this._candidates ??= new Candidates(this.options$));
+    }
+
+    private _tickets?: Tickets;
+    get tickets() {
+        return (this._tickets ??= new Tickets(this.options$));
     }
 }

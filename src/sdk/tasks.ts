@@ -10,488 +10,466 @@ import * as errors from "../models/errors";
 import * as operations from "../models/operations";
 
 export class Tasks extends ClientSDK {
-  private readonly options$: SDKOptions;
+    private readonly options$: SDKOptions;
 
-  constructor(options: SDKOptions = {}) {
-    super({
-      client: options.httpClient || new HTTPClient(),
-      baseURL: serverURLFromOptions(options),
-    });
+    constructor(options: SDKOptions = {}) {
+        super({
+            client: options.httpClient || new HTTPClient(),
+            baseURL: serverURLFromOptions(options),
+        });
 
-    this.options$ = options;
-    void this.options$;
-  }
-  /**
-   * Get tasks
-   *
-   * @remarks
-   * Get a single tasks record
-   */
-  async get(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.GetTasksIdResponse> {
-    const input$: operations.GetTasksIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
-
-    const payload$ = operations.GetTasksIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/tasks/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
-        }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetTasksIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        this.options$ = options;
+        void this.options$;
     }
-  }
+    /**
+     * Get tasks
+     *
+     * @remarks
+     * Get a single tasks record
+     */
+    async get(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetTasksIdResponse> {
+        const input$: operations.GetTasksIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-  /**
-   * Delete tasks
-   *
-   * @remarks
-   * Delete a single tasks record
-   */
-  async delete(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.DeleteTasksIdResponse> {
-    const input$: operations.DeleteTasksIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+        const payload$ = operations.GetTasksIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const payload$ =
-      operations.DeleteTasksIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
+        const path$ = this.templateURLComponent("/tasks/{id}")(pathParams$);
 
-    const path$ = this.templateURLComponent("/tasks/{id}")(pathParams$);
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "delete", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "get",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.DeleteTasksIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Update tasks
-   *
-   * @remarks
-   * Update a single tasks record
-   */
-  async update(
-    connectionKey: string,
-    { id }: { id: string },
-    requestBody?: operations.PatchTasksIdRequestBody | undefined,
-    options?: RequestOptions
-  ): Promise<operations.PatchTasksIdResponse> {
-    const input$: operations.PatchTasksIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.PatchTasksIdRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/tasks/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetTasksIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "patch", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PatchTasksIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * List tasks
-   *
-   * @remarks
-   * Get all tasks records
-   */
-  async list(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetTasksResponse> {
-    const input$: operations.GetTasksRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Delete tasks
+     *
+     * @remarks
+     * Delete a single tasks record
+     */
+    async delete(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.DeleteTasksIdResponse> {
+        const input$: operations.DeleteTasksIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-    const payload$ = operations.GetTasksRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.DeleteTasksIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const path$ = this.templateURLComponent("/tasks")();
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const path$ = this.templateURLComponent("/tasks/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "delete",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetTasksResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Create tasks
-   *
-   * @remarks
-   * Create a single tasks record
-   */
-  async create(
-    connectionKey: string,
-    requestBody: operations.PostTasksRequestBody,
-    options?: RequestOptions
-  ): Promise<operations.PostTasksResponse> {
-    const input$: operations.PostTasksRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ = operations.PostTasksRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const path$ = this.templateURLComponent("/tasks")();
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.DeleteTasksIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "post", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PostTasksResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * Get tasks count
-   *
-   * @remarks
-   * Get the count of tasks records
-   */
-  async count(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetTasksCountResponse> {
-    const input$: operations.GetTasksCountRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Update tasks
+     *
+     * @remarks
+     * Update a single tasks record
+     */
+    async update(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        requestBody?: operations.PatchTasksIdRequestBody | undefined,
+        options?: RequestOptions
+    ): Promise<operations.PatchTasksIdResponse> {
+        const input$: operations.PatchTasksIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
 
-    const payload$ =
-      operations.GetTasksCountRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.PatchTasksIdRequest$.outboundSchema.parse(input$);
 
-    const path$ = this.templateURLComponent("/tasks/count")();
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
+
+        const path$ = this.templateURLComponent("/tasks/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "patch",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetTasksCountResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PatchTasksIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
     }
-  }
+
+    /**
+     * List tasks
+     *
+     * @remarks
+     * Get all tasks records
+     */
+    async list(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetTasksResponse> {
+        const input$: operations.GetTasksRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetTasksRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/tasks")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "get",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetTasksResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Create tasks
+     *
+     * @remarks
+     * Create a single tasks record
+     */
+    async create(
+        xIntegrationosConnectionKey: string,
+        requestBody: operations.PostTasksRequestBody,
+        options?: RequestOptions
+    ): Promise<operations.PostTasksResponse> {
+        const input$: operations.PostTasksRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.PostTasksRequest$.outboundSchema.parse(input$);
+
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+
+        const path$ = this.templateURLComponent("/tasks")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "post",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PostTasksResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Get tasks count
+     *
+     * @remarks
+     * Get the count of tasks records
+     */
+    async count(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetTasksCountResponse> {
+        const input$: operations.GetTasksCountRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetTasksCountRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/tasks/count")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "get",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetTasksCountResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
 }

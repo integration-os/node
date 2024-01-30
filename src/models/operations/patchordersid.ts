@@ -27,7 +27,7 @@ export enum PaymentStatus {
     Paid = "paid",
     Pending = "pending",
     Refunded = "refunded",
-    PartiallyRefunded = "partially_refunded",
+    PartiallyRefunded = "partially-refunded",
     Failed = "failed",
 }
 
@@ -212,10 +212,6 @@ export type PatchOrdersIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -1284,7 +1280,6 @@ export namespace PatchOrdersIdRequestBody$ {
 export namespace PatchOrdersIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchOrdersIdRequestBody$.Inbound | undefined;
     };
@@ -1292,14 +1287,12 @@ export namespace PatchOrdersIdRequest$ {
     export const inboundSchema: z.ZodType<PatchOrdersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchOrdersIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -1307,7 +1300,6 @@ export namespace PatchOrdersIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchOrdersIdRequestBody$.Outbound | undefined;
     };
@@ -1315,14 +1307,12 @@ export namespace PatchOrdersIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOrdersIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchOrdersIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

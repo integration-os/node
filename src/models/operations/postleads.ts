@@ -27,11 +27,12 @@ export type PostLeadsOpportunities = {
     closeDate?: number | undefined;
     type?: string | undefined;
     nextStep?: string | undefined;
+    leadId?: string | undefined;
     leadSource?: string | undefined;
     isClosed?: boolean | undefined;
     isWon?: boolean | undefined;
-    createdDate?: number | undefined;
-    lastModifiedDate?: number | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
     lostReason?: string | undefined;
     campaign?: PostLeadsCampaign | undefined;
     account?: PostLeadsAccount | undefined;
@@ -42,18 +43,29 @@ export type PostLeadsOpportunities = {
     customFields?: Array<PostLeadsCustomFields> | undefined;
 };
 
-export enum PostLeadsEmailType {
-    Work = "Work",
-    Personal = "Personal",
-    Other = "Other",
+export enum PostLeadsType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
 }
 
-export enum PostLeadsPhoneType {
-    Work = "Work",
-    Mobile = "Mobile",
-    Home = "Home",
-    Other = "Other",
+export type PostLeadsEmails = {
+    email?: string | undefined;
+    type?: PostLeadsType | undefined;
+};
+
+export enum PostLeadsLeadsType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
 }
+
+export type PostLeadsPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PostLeadsLeadsType | undefined;
+};
 
 export type PostLeadsLeadSource = {
     sourceId?: string | undefined;
@@ -72,7 +84,7 @@ export enum PostLeadsLeadStatus {
     BadTiming = "BadTiming",
 }
 
-export enum PostLeadsType {
+export enum PostLeadsLeadsRequestType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -101,7 +113,7 @@ export type PostLeadsAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostLeadsType | undefined;
+    type?: PostLeadsLeadsRequestType | undefined;
     geoLocation?: PostLeadsGeoLocation | undefined;
     customFields?: Array<PostLeadsLeadsCustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -115,7 +127,7 @@ export enum PostLeadsPreferredContactMethod {
     InPerson = "InPerson",
 }
 
-export enum PostLeadsLeadsType {
+export enum PostLeadsLeadsRequestRequestBodyType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -129,7 +141,7 @@ export enum PostLeadsLeadsType {
 export type PostLeadsAdditionalInfo = {};
 
 export type PostLeadsSocialProfiles = {
-    type?: PostLeadsLeadsType | undefined;
+    type?: PostLeadsLeadsRequestRequestBodyType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -207,11 +219,11 @@ export type PostLeadsRequestBody = {
     firstName?: string | undefined;
     middleName?: string | undefined;
     lastName?: string | undefined;
-    email?: string | undefined;
     opportunities?: Array<PostLeadsOpportunities> | undefined;
-    emailType?: PostLeadsEmailType | undefined;
-    phone?: string | undefined;
-    phoneType?: PostLeadsPhoneType | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostLeadsEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostLeadsPhones> | undefined;
     companyName?: string | undefined;
     jobTitle?: string | undefined;
     website?: string | undefined;
@@ -230,10 +242,6 @@ export type PostLeadsRequestBody = {
 };
 
 export type PostLeadsRequest = {
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -270,11 +278,12 @@ export type PostLeadsLeadsOpportunities = {
     closeDate?: number | undefined;
     type?: string | undefined;
     nextStep?: string | undefined;
+    leadId?: string | undefined;
     leadSource?: string | undefined;
     isClosed?: boolean | undefined;
     isWon?: boolean | undefined;
-    createdDate?: number | undefined;
-    lastModifiedDate?: number | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
     lostReason?: string | undefined;
     campaign?: PostLeadsLeadsCampaign | undefined;
     account?: PostLeadsLeadsAccount | undefined;
@@ -285,18 +294,29 @@ export type PostLeadsLeadsOpportunities = {
     customFields?: Array<PostLeadsLeadsResponse200ApplicationJSONCustomFields> | undefined;
 };
 
-export enum PostLeadsLeadsEmailType {
-    Work = "Work",
-    Personal = "Personal",
-    Other = "Other",
+export enum PostLeadsLeadsResponseType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
 }
 
-export enum PostLeadsLeadsPhoneType {
-    Work = "Work",
-    Mobile = "Mobile",
-    Home = "Home",
-    Other = "Other",
+export type PostLeadsLeadsEmails = {
+    email?: string | undefined;
+    type?: PostLeadsLeadsResponseType | undefined;
+};
+
+export enum PostLeadsLeadsResponse200Type {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
 }
+
+export type PostLeadsLeadsPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PostLeadsLeadsResponse200Type | undefined;
+};
 
 export type PostLeadsLeadsLeadSource = {
     sourceId?: string | undefined;
@@ -315,7 +335,7 @@ export enum PostLeadsLeadsLeadStatus {
     BadTiming = "BadTiming",
 }
 
-export enum PostLeadsLeadsResponseType {
+export enum PostLeadsLeadsResponse200ApplicationJSONType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -344,7 +364,7 @@ export type PostLeadsLeadsAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostLeadsLeadsResponseType | undefined;
+    type?: PostLeadsLeadsResponse200ApplicationJSONType | undefined;
     geoLocation?: PostLeadsLeadsGeoLocation | undefined;
     customFields?: Array<PostLeadsLeadsResponse200CustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -358,7 +378,7 @@ export enum PostLeadsLeadsPreferredContactMethod {
     InPerson = "InPerson",
 }
 
-export enum PostLeadsLeadsResponse200Type {
+export enum PostLeadsLeadsResponse200ApplicationJSONResponseBodyType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -372,7 +392,7 @@ export enum PostLeadsLeadsResponse200Type {
 export type PostLeadsLeadsAdditionalInfo = {};
 
 export type PostLeadsLeadsSocialProfiles = {
-    type?: PostLeadsLeadsResponse200Type | undefined;
+    type?: PostLeadsLeadsResponse200ApplicationJSONResponseBodyType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -450,11 +470,11 @@ export type PostLeadsUnified = {
     firstName?: string | undefined;
     middleName?: string | undefined;
     lastName?: string | undefined;
-    email?: string | undefined;
     opportunities?: Array<PostLeadsLeadsOpportunities> | undefined;
-    emailType?: PostLeadsLeadsEmailType | undefined;
-    phone?: string | undefined;
-    phoneType?: PostLeadsLeadsPhoneType | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostLeadsLeadsEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostLeadsLeadsPhones> | undefined;
     companyName?: string | undefined;
     jobTitle?: string | undefined;
     website?: string | undefined;
@@ -620,11 +640,12 @@ export namespace PostLeadsOpportunities$ {
         closeDate?: number | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
         lostReason?: string | undefined;
         campaign?: PostLeadsCampaign$.Inbound | undefined;
         account?: PostLeadsAccount$.Inbound | undefined;
@@ -647,11 +668,12 @@ export namespace PostLeadsOpportunities$ {
             closeDate: z.number().optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => PostLeadsCampaign$.inboundSchema).optional(),
             account: z.lazy(() => PostLeadsAccount$.inboundSchema).optional(),
@@ -673,13 +695,12 @@ export namespace PostLeadsOpportunities$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),
@@ -702,11 +723,12 @@ export namespace PostLeadsOpportunities$ {
         closeDate?: number | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
         lostReason?: string | undefined;
         campaign?: PostLeadsCampaign$.Outbound | undefined;
         account?: PostLeadsAccount$.Outbound | undefined;
@@ -729,11 +751,12 @@ export namespace PostLeadsOpportunities$ {
             closeDate: z.number().optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => PostLeadsCampaign$.outboundSchema).optional(),
             account: z.lazy(() => PostLeadsAccount$.outboundSchema).optional(),
@@ -755,13 +778,12 @@ export namespace PostLeadsOpportunities$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),
@@ -775,10 +797,96 @@ export namespace PostLeadsOpportunities$ {
 }
 
 /** @internal */
-export const PostLeadsEmailType$ = z.nativeEnum(PostLeadsEmailType);
+export const PostLeadsType$ = z.nativeEnum(PostLeadsType);
 
 /** @internal */
-export const PostLeadsPhoneType$ = z.nativeEnum(PostLeadsPhoneType);
+export namespace PostLeadsEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PostLeadsType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostLeadsEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: PostLeadsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PostLeadsType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: PostLeadsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostLeadsLeadsType$ = z.nativeEnum(PostLeadsLeadsType);
+
+/** @internal */
+export namespace PostLeadsPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostLeadsLeadsType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostLeadsPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostLeadsLeadsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostLeadsLeadsType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostLeadsLeadsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
 
 /** @internal */
 export namespace PostLeadsLeadSource$ {
@@ -827,7 +935,7 @@ export namespace PostLeadsLeadSource$ {
 export const PostLeadsLeadStatus$ = z.nativeEnum(PostLeadsLeadStatus);
 
 /** @internal */
-export const PostLeadsType$ = z.nativeEnum(PostLeadsType);
+export const PostLeadsLeadsRequestType$ = z.nativeEnum(PostLeadsLeadsRequestType);
 
 /** @internal */
 export namespace PostLeadsGeoLocation$ {
@@ -878,7 +986,7 @@ export namespace PostLeadsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostLeadsType | undefined;
+        type?: PostLeadsLeadsRequestType | undefined;
         geoLocation?: PostLeadsGeoLocation$.Inbound | undefined;
         customFields?: Array<PostLeadsLeadsCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -904,7 +1012,7 @@ export namespace PostLeadsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostLeadsType$.optional(),
+            type: PostLeadsLeadsRequestType$.optional(),
             geoLocation: z.lazy(() => PostLeadsGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PostLeadsLeadsCustomFields$.inboundSchema))
@@ -961,7 +1069,7 @@ export namespace PostLeadsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostLeadsType | undefined;
+        type?: PostLeadsLeadsRequestType | undefined;
         geoLocation?: PostLeadsGeoLocation$.Outbound | undefined;
         customFields?: Array<PostLeadsLeadsCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -987,7 +1095,7 @@ export namespace PostLeadsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostLeadsType$.optional(),
+            type: PostLeadsLeadsRequestType$.optional(),
             geoLocation: z.lazy(() => PostLeadsGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PostLeadsLeadsCustomFields$.outboundSchema))
@@ -1030,7 +1138,9 @@ export namespace PostLeadsAddresses$ {
 export const PostLeadsPreferredContactMethod$ = z.nativeEnum(PostLeadsPreferredContactMethod);
 
 /** @internal */
-export const PostLeadsLeadsType$ = z.nativeEnum(PostLeadsLeadsType);
+export const PostLeadsLeadsRequestRequestBodyType$ = z.nativeEnum(
+    PostLeadsLeadsRequestRequestBodyType
+);
 
 /** @internal */
 export namespace PostLeadsAdditionalInfo$ {
@@ -1048,7 +1158,7 @@ export namespace PostLeadsAdditionalInfo$ {
 /** @internal */
 export namespace PostLeadsSocialProfiles$ {
     export type Inbound = {
-        type?: PostLeadsLeadsType | undefined;
+        type?: PostLeadsLeadsRequestRequestBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1063,7 +1173,7 @@ export namespace PostLeadsSocialProfiles$ {
 
     export const inboundSchema: z.ZodType<PostLeadsSocialProfiles, z.ZodTypeDef, Inbound> = z
         .object({
-            type: PostLeadsLeadsType$.optional(),
+            type: PostLeadsLeadsRequestRequestBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1092,7 +1202,7 @@ export namespace PostLeadsSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: PostLeadsLeadsType | undefined;
+        type?: PostLeadsLeadsRequestRequestBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1107,7 +1217,7 @@ export namespace PostLeadsSocialProfiles$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsSocialProfiles> = z
         .object({
-            type: PostLeadsLeadsType$.optional(),
+            type: PostLeadsLeadsRequestRequestBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1375,11 +1485,11 @@ export namespace PostLeadsRequestBody$ {
         firstName?: string | undefined;
         middleName?: string | undefined;
         lastName?: string | undefined;
-        email?: string | undefined;
         opportunities?: Array<PostLeadsOpportunities$.Inbound> | undefined;
-        emailType?: PostLeadsEmailType | undefined;
-        phone?: string | undefined;
-        phoneType?: PostLeadsPhoneType | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostLeadsEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostLeadsPhones$.Inbound> | undefined;
         companyName?: string | undefined;
         jobTitle?: string | undefined;
         website?: string | undefined;
@@ -1404,11 +1514,11 @@ export namespace PostLeadsRequestBody$ {
             firstName: z.string().optional(),
             middleName: z.string().optional(),
             lastName: z.string().optional(),
-            email: z.string().optional(),
             opportunities: z.array(z.lazy(() => PostLeadsOpportunities$.inboundSchema)).optional(),
-            emailType: PostLeadsEmailType$.optional(),
-            phone: z.string().optional(),
-            phoneType: PostLeadsPhoneType$.optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostLeadsEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostLeadsPhones$.inboundSchema)).optional(),
             companyName: z.string().optional(),
             jobTitle: z.string().optional(),
             website: z.string().optional(),
@@ -1436,11 +1546,11 @@ export namespace PostLeadsRequestBody$ {
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.middleName === undefined ? null : { middleName: v.middleName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
-                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.companyName === undefined ? null : { companyName: v.companyName }),
                 ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
                 ...(v.website === undefined ? null : { website: v.website }),
@@ -1469,11 +1579,11 @@ export namespace PostLeadsRequestBody$ {
         firstName?: string | undefined;
         middleName?: string | undefined;
         lastName?: string | undefined;
-        email?: string | undefined;
         opportunities?: Array<PostLeadsOpportunities$.Outbound> | undefined;
-        emailType?: PostLeadsEmailType | undefined;
-        phone?: string | undefined;
-        phoneType?: PostLeadsPhoneType | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostLeadsEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostLeadsPhones$.Outbound> | undefined;
         companyName?: string | undefined;
         jobTitle?: string | undefined;
         website?: string | undefined;
@@ -1498,11 +1608,11 @@ export namespace PostLeadsRequestBody$ {
             firstName: z.string().optional(),
             middleName: z.string().optional(),
             lastName: z.string().optional(),
-            email: z.string().optional(),
             opportunities: z.array(z.lazy(() => PostLeadsOpportunities$.outboundSchema)).optional(),
-            emailType: PostLeadsEmailType$.optional(),
-            phone: z.string().optional(),
-            phoneType: PostLeadsPhoneType$.optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostLeadsEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostLeadsPhones$.outboundSchema)).optional(),
             companyName: z.string().optional(),
             jobTitle: z.string().optional(),
             website: z.string().optional(),
@@ -1530,11 +1640,11 @@ export namespace PostLeadsRequestBody$ {
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.middleName === undefined ? null : { middleName: v.middleName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
-                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.companyName === undefined ? null : { companyName: v.companyName }),
                 ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
                 ...(v.website === undefined ? null : { website: v.website }),
@@ -1561,40 +1671,34 @@ export namespace PostLeadsRequestBody$ {
 /** @internal */
 export namespace PostLeadsRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostLeadsRequestBody$.Inbound;
     };
 
     export const inboundSchema: z.ZodType<PostLeadsRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PostLeadsRequestBody$.inboundSchema),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 requestBody: v.RequestBody,
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostLeadsRequestBody$.Outbound;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PostLeadsRequestBody$.outboundSchema),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 RequestBody: v.requestBody,
             };
@@ -1712,11 +1816,12 @@ export namespace PostLeadsLeadsOpportunities$ {
         closeDate?: number | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
         lostReason?: string | undefined;
         campaign?: PostLeadsLeadsCampaign$.Inbound | undefined;
         account?: PostLeadsLeadsAccount$.Inbound | undefined;
@@ -1741,11 +1846,12 @@ export namespace PostLeadsLeadsOpportunities$ {
             closeDate: z.number().optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => PostLeadsLeadsCampaign$.inboundSchema).optional(),
             account: z.lazy(() => PostLeadsLeadsAccount$.inboundSchema).optional(),
@@ -1775,13 +1881,12 @@ export namespace PostLeadsLeadsOpportunities$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),
@@ -1804,11 +1909,12 @@ export namespace PostLeadsLeadsOpportunities$ {
         closeDate?: number | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
         lostReason?: string | undefined;
         campaign?: PostLeadsLeadsCampaign$.Outbound | undefined;
         account?: PostLeadsLeadsAccount$.Outbound | undefined;
@@ -1833,11 +1939,12 @@ export namespace PostLeadsLeadsOpportunities$ {
             closeDate: z.number().optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => PostLeadsLeadsCampaign$.outboundSchema).optional(),
             account: z.lazy(() => PostLeadsLeadsAccount$.outboundSchema).optional(),
@@ -1867,13 +1974,12 @@ export namespace PostLeadsLeadsOpportunities$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),
@@ -1887,10 +1993,96 @@ export namespace PostLeadsLeadsOpportunities$ {
 }
 
 /** @internal */
-export const PostLeadsLeadsEmailType$ = z.nativeEnum(PostLeadsLeadsEmailType);
+export const PostLeadsLeadsResponseType$ = z.nativeEnum(PostLeadsLeadsResponseType);
 
 /** @internal */
-export const PostLeadsLeadsPhoneType$ = z.nativeEnum(PostLeadsLeadsPhoneType);
+export namespace PostLeadsLeadsEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PostLeadsLeadsResponseType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostLeadsLeadsEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: PostLeadsLeadsResponseType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PostLeadsLeadsResponseType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsLeadsEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: PostLeadsLeadsResponseType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostLeadsLeadsResponse200Type$ = z.nativeEnum(PostLeadsLeadsResponse200Type);
+
+/** @internal */
+export namespace PostLeadsLeadsPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostLeadsLeadsResponse200Type | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostLeadsLeadsPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostLeadsLeadsResponse200Type$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostLeadsLeadsResponse200Type | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsLeadsPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostLeadsLeadsResponse200Type$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
 
 /** @internal */
 export namespace PostLeadsLeadsLeadSource$ {
@@ -1939,7 +2131,9 @@ export namespace PostLeadsLeadsLeadSource$ {
 export const PostLeadsLeadsLeadStatus$ = z.nativeEnum(PostLeadsLeadsLeadStatus);
 
 /** @internal */
-export const PostLeadsLeadsResponseType$ = z.nativeEnum(PostLeadsLeadsResponseType);
+export const PostLeadsLeadsResponse200ApplicationJSONType$ = z.nativeEnum(
+    PostLeadsLeadsResponse200ApplicationJSONType
+);
 
 /** @internal */
 export namespace PostLeadsLeadsGeoLocation$ {
@@ -1994,7 +2188,7 @@ export namespace PostLeadsLeadsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostLeadsLeadsResponseType | undefined;
+        type?: PostLeadsLeadsResponse200ApplicationJSONType | undefined;
         geoLocation?: PostLeadsLeadsGeoLocation$.Inbound | undefined;
         customFields?: Array<PostLeadsLeadsResponse200CustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -2020,7 +2214,7 @@ export namespace PostLeadsLeadsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostLeadsLeadsResponseType$.optional(),
+            type: PostLeadsLeadsResponse200ApplicationJSONType$.optional(),
             geoLocation: z.lazy(() => PostLeadsLeadsGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PostLeadsLeadsResponse200CustomFields$.inboundSchema))
@@ -2077,7 +2271,7 @@ export namespace PostLeadsLeadsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostLeadsLeadsResponseType | undefined;
+        type?: PostLeadsLeadsResponse200ApplicationJSONType | undefined;
         geoLocation?: PostLeadsLeadsGeoLocation$.Outbound | undefined;
         customFields?: Array<PostLeadsLeadsResponse200CustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -2103,7 +2297,7 @@ export namespace PostLeadsLeadsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostLeadsLeadsResponseType$.optional(),
+            type: PostLeadsLeadsResponse200ApplicationJSONType$.optional(),
             geoLocation: z.lazy(() => PostLeadsLeadsGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PostLeadsLeadsResponse200CustomFields$.outboundSchema))
@@ -2148,7 +2342,9 @@ export const PostLeadsLeadsPreferredContactMethod$ = z.nativeEnum(
 );
 
 /** @internal */
-export const PostLeadsLeadsResponse200Type$ = z.nativeEnum(PostLeadsLeadsResponse200Type);
+export const PostLeadsLeadsResponse200ApplicationJSONResponseBodyType$ = z.nativeEnum(
+    PostLeadsLeadsResponse200ApplicationJSONResponseBodyType
+);
 
 /** @internal */
 export namespace PostLeadsLeadsAdditionalInfo$ {
@@ -2166,7 +2362,7 @@ export namespace PostLeadsLeadsAdditionalInfo$ {
 /** @internal */
 export namespace PostLeadsLeadsSocialProfiles$ {
     export type Inbound = {
-        type?: PostLeadsLeadsResponse200Type | undefined;
+        type?: PostLeadsLeadsResponse200ApplicationJSONResponseBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -2181,7 +2377,7 @@ export namespace PostLeadsLeadsSocialProfiles$ {
 
     export const inboundSchema: z.ZodType<PostLeadsLeadsSocialProfiles, z.ZodTypeDef, Inbound> = z
         .object({
-            type: PostLeadsLeadsResponse200Type$.optional(),
+            type: PostLeadsLeadsResponse200ApplicationJSONResponseBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -2210,7 +2406,7 @@ export namespace PostLeadsLeadsSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: PostLeadsLeadsResponse200Type | undefined;
+        type?: PostLeadsLeadsResponse200ApplicationJSONResponseBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -2225,7 +2421,7 @@ export namespace PostLeadsLeadsSocialProfiles$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostLeadsLeadsSocialProfiles> = z
         .object({
-            type: PostLeadsLeadsResponse200Type$.optional(),
+            type: PostLeadsLeadsResponse200ApplicationJSONResponseBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -2503,11 +2699,11 @@ export namespace PostLeadsUnified$ {
         firstName?: string | undefined;
         middleName?: string | undefined;
         lastName?: string | undefined;
-        email?: string | undefined;
         opportunities?: Array<PostLeadsLeadsOpportunities$.Inbound> | undefined;
-        emailType?: PostLeadsLeadsEmailType | undefined;
-        phone?: string | undefined;
-        phoneType?: PostLeadsLeadsPhoneType | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostLeadsLeadsEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostLeadsLeadsPhones$.Inbound> | undefined;
         companyName?: string | undefined;
         jobTitle?: string | undefined;
         website?: string | undefined;
@@ -2532,13 +2728,13 @@ export namespace PostLeadsUnified$ {
             firstName: z.string().optional(),
             middleName: z.string().optional(),
             lastName: z.string().optional(),
-            email: z.string().optional(),
             opportunities: z
                 .array(z.lazy(() => PostLeadsLeadsOpportunities$.inboundSchema))
                 .optional(),
-            emailType: PostLeadsLeadsEmailType$.optional(),
-            phone: z.string().optional(),
-            phoneType: PostLeadsLeadsPhoneType$.optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostLeadsLeadsEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostLeadsLeadsPhones$.inboundSchema)).optional(),
             companyName: z.string().optional(),
             jobTitle: z.string().optional(),
             website: z.string().optional(),
@@ -2566,11 +2762,11 @@ export namespace PostLeadsUnified$ {
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.middleName === undefined ? null : { middleName: v.middleName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
-                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.companyName === undefined ? null : { companyName: v.companyName }),
                 ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
                 ...(v.website === undefined ? null : { website: v.website }),
@@ -2599,11 +2795,11 @@ export namespace PostLeadsUnified$ {
         firstName?: string | undefined;
         middleName?: string | undefined;
         lastName?: string | undefined;
-        email?: string | undefined;
         opportunities?: Array<PostLeadsLeadsOpportunities$.Outbound> | undefined;
-        emailType?: PostLeadsLeadsEmailType | undefined;
-        phone?: string | undefined;
-        phoneType?: PostLeadsLeadsPhoneType | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostLeadsLeadsEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostLeadsLeadsPhones$.Outbound> | undefined;
         companyName?: string | undefined;
         jobTitle?: string | undefined;
         website?: string | undefined;
@@ -2628,13 +2824,13 @@ export namespace PostLeadsUnified$ {
             firstName: z.string().optional(),
             middleName: z.string().optional(),
             lastName: z.string().optional(),
-            email: z.string().optional(),
             opportunities: z
                 .array(z.lazy(() => PostLeadsLeadsOpportunities$.outboundSchema))
                 .optional(),
-            emailType: PostLeadsLeadsEmailType$.optional(),
-            phone: z.string().optional(),
-            phoneType: PostLeadsLeadsPhoneType$.optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostLeadsLeadsEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostLeadsLeadsPhones$.outboundSchema)).optional(),
             companyName: z.string().optional(),
             jobTitle: z.string().optional(),
             website: z.string().optional(),
@@ -2662,11 +2858,11 @@ export namespace PostLeadsUnified$ {
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.middleName === undefined ? null : { middleName: v.middleName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
-                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.companyName === undefined ? null : { companyName: v.companyName }),
                 ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
                 ...(v.website === undefined ? null : { website: v.website }),

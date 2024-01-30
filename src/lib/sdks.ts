@@ -3,7 +3,7 @@
  */
 
 import { HTTPClient, matchResponse, matchStatusCode, unpackHeaders } from "./http";
-import { SecurityState, resolveSecurity } from "./security";
+import { SecurityState, resolveSecurity, resolveGlobalSecurity } from "./security";
 import { pathToFunc } from "./url";
 import { encodeForm } from "./encodings";
 import { stringToBase64 } from "./base64";
@@ -103,4 +103,5 @@ export class ClientSDK {
     protected templateURLComponent = pathToFunc;
 
     protected resolveSecurity = resolveSecurity;
+    protected resolveGlobalSecurity = resolveGlobalSecurity;
 }

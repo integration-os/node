@@ -12,6 +12,8 @@ import { RetryConfig } from "./retries";
 export const ServerList = ["https://api.integrationos.com/v1/unified"] as const;
 
 export type SDKOptions = {
+    apiKey?: string | (() => Promise<string>);
+
     httpClient?: HTTPClient;
     /**
      * Allows overriding the default server used by the SDK
@@ -25,7 +27,6 @@ export type SDKOptions = {
      * Allows overriding the default retry config used by the SDK
      */
     retryConfig?: RetryConfig;
-    client?: string;
 };
 
 export function serverURLFromOptions(options: SDKOptions): URL {

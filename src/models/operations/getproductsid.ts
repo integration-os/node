@@ -10,10 +10,6 @@ export type GetProductsIdRequest = {
      */
     id: string;
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -160,6 +156,10 @@ export type GetProductsIdAddress = {
     subdivisionCode?: string | undefined;
 };
 
+export type GetProductsIdEmails = {};
+
+export type GetProductsIdPhones = {};
+
 export type GetProductsIdProductsAddress = {};
 
 export type GetProductsIdAddresses = {};
@@ -174,11 +174,12 @@ export type GetProductsIdContactInformation = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<GetProductsIdEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<GetProductsIdPhones> | undefined;
     address?: GetProductsIdProductsAddress | undefined;
     addresses?: Array<GetProductsIdAddresses> | undefined;
     birthday?: number | undefined;
@@ -188,7 +189,10 @@ export type GetProductsIdContactInformation = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<GetProductsIdSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<GetProductsIdProductsResponse200CustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
 };
 
 export enum GetProductsIdType {
@@ -261,6 +265,7 @@ export type GetProductsIdDownloadFiles = {
 export enum GetProductsIdStatus {
     Active = "active",
     Archived = "archived",
+    Preorder = "preorder",
     Draft = "draft",
     Deleted = "deleted",
 }
@@ -407,40 +412,34 @@ export type GetProductsIdResponse = {
 export namespace GetProductsIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetProductsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetProductsIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -1140,6 +1139,36 @@ export namespace GetProductsIdAddress$ {
 }
 
 /** @internal */
+export namespace GetProductsIdEmails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetProductsIdEmails, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetProductsIdEmails> = z.object(
+        {}
+    );
+}
+
+/** @internal */
+export namespace GetProductsIdPhones$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetProductsIdPhones, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetProductsIdPhones> = z.object(
+        {}
+    );
+}
+
+/** @internal */
 export namespace GetProductsIdProductsAddress$ {
     export type Inbound = {};
 
@@ -1217,11 +1246,12 @@ export namespace GetProductsIdContactInformation$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetProductsIdEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetProductsIdPhones$.Inbound> | undefined;
         address?: GetProductsIdProductsAddress$.Inbound | undefined;
         addresses?: Array<GetProductsIdAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -1231,7 +1261,10 @@ export namespace GetProductsIdContactInformation$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetProductsIdSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetProductsIdProductsResponse200CustomFields$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetProductsIdContactInformation, z.ZodTypeDef, Inbound> =
@@ -1240,11 +1273,12 @@ export namespace GetProductsIdContactInformation$ {
                 id: z.string().optional(),
                 firstName: z.string().optional(),
                 lastName: z.string().optional(),
+                leadId: z.string().optional(),
                 company: z.string().optional(),
-                email: z.string().optional(),
-                emails: z.array(z.string()).optional(),
-                phone: z.string().optional(),
-                phones: z.array(z.string()).optional(),
+                defaultEmail: z.string().optional(),
+                emails: z.array(z.lazy(() => GetProductsIdEmails$.inboundSchema)).optional(),
+                defaultPhone: z.string().optional(),
+                phones: z.array(z.lazy(() => GetProductsIdPhones$.inboundSchema)).optional(),
                 address: z.lazy(() => GetProductsIdProductsAddress$.inboundSchema).optional(),
                 addresses: z.array(z.lazy(() => GetProductsIdAddresses$.inboundSchema)).optional(),
                 birthday: z.number().optional(),
@@ -1256,21 +1290,25 @@ export namespace GetProductsIdContactInformation$ {
                 socialProfiles: z
                     .array(z.lazy(() => GetProductsIdSocialProfiles$.inboundSchema))
                     .optional(),
+                isActive: z.boolean().optional(),
                 customFields: z
                     .array(
                         z.lazy(() => GetProductsIdProductsResponse200CustomFields$.inboundSchema)
                     )
                     .optional(),
+                createdAt: z.number().optional(),
+                updatedAt: z.number().optional(),
             })
             .transform((v) => {
                 return {
                     ...(v.id === undefined ? null : { id: v.id }),
                     ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                     ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                    ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                     ...(v.company === undefined ? null : { company: v.company }),
-                    ...(v.email === undefined ? null : { email: v.email }),
+                    ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                     ...(v.emails === undefined ? null : { emails: v.emails }),
-                    ...(v.phone === undefined ? null : { phone: v.phone }),
+                    ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                     ...(v.phones === undefined ? null : { phones: v.phones }),
                     ...(v.address === undefined ? null : { address: v.address }),
                     ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1283,7 +1321,10 @@ export namespace GetProductsIdContactInformation$ {
                     ...(v.socialProfiles === undefined
                         ? null
                         : { socialProfiles: v.socialProfiles }),
+                    ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                     ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                    ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                    ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 };
             });
 
@@ -1291,11 +1332,12 @@ export namespace GetProductsIdContactInformation$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetProductsIdEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetProductsIdPhones$.Outbound> | undefined;
         address?: GetProductsIdProductsAddress$.Outbound | undefined;
         addresses?: Array<GetProductsIdAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -1305,7 +1347,10 @@ export namespace GetProductsIdContactInformation$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetProductsIdSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetProductsIdProductsResponse200CustomFields$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<
@@ -1317,11 +1362,12 @@ export namespace GetProductsIdContactInformation$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetProductsIdEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetProductsIdPhones$.outboundSchema)).optional(),
             address: z.lazy(() => GetProductsIdProductsAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetProductsIdAddresses$.outboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -1333,19 +1379,23 @@ export namespace GetProductsIdContactInformation$ {
             socialProfiles: z
                 .array(z.lazy(() => GetProductsIdSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => GetProductsIdProductsResponse200CustomFields$.outboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1356,7 +1406,10 @@ export namespace GetProductsIdContactInformation$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }

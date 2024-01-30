@@ -10,491 +10,466 @@ import * as errors from "../models/errors";
 import * as operations from "../models/operations";
 
 export class Products extends ClientSDK {
-  private readonly options$: SDKOptions;
+    private readonly options$: SDKOptions;
 
-  constructor(options: SDKOptions = {}) {
-    super({
-      client: options.httpClient || new HTTPClient(),
-      baseURL: serverURLFromOptions(options),
-    });
+    constructor(options: SDKOptions = {}) {
+        super({
+            client: options.httpClient || new HTTPClient(),
+            baseURL: serverURLFromOptions(options),
+        });
 
-    this.options$ = options;
-    void this.options$;
-  }
-  /**
-   * Get products
-   *
-   * @remarks
-   * Get a single products record
-   */
-  async get(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.GetProductsIdResponse> {
-    const input$: operations.GetProductsIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.GetProductsIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/products/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
-        }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetProductsIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        this.options$ = options;
+        void this.options$;
     }
-  }
+    /**
+     * Get products
+     *
+     * @remarks
+     * Get a single products record
+     */
+    async get(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetProductsIdResponse> {
+        const input$: operations.GetProductsIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-  /**
-   * Delete products
-   *
-   * @remarks
-   * Delete a single products record
-   */
-  async delete(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.DeleteProductsIdResponse> {
-    const input$: operations.DeleteProductsIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+        const payload$ = operations.GetProductsIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const payload$ =
-      operations.DeleteProductsIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
+        const path$ = this.templateURLComponent("/products/{id}")(pathParams$);
 
-    const path$ = this.templateURLComponent("/products/{id}")(pathParams$);
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "delete", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "get",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.DeleteProductsIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Update products
-   *
-   * @remarks
-   * Update a single products record
-   */
-  async update(
-    connectionKey: string,
-    { id }: { id: string },
-    requestBody?: operations.PatchProductsIdRequestBody | undefined,
-    options?: RequestOptions
-  ): Promise<operations.PatchProductsIdResponse> {
-    const input$: operations.PatchProductsIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.PatchProductsIdRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/products/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetProductsIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "patch", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PatchProductsIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * List products
-   *
-   * @remarks
-   * Get all products records
-   */
-  async list(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetProductsResponse> {
-    const input$: operations.GetProductsRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Delete products
+     *
+     * @remarks
+     * Delete a single products record
+     */
+    async delete(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.DeleteProductsIdResponse> {
+        const input$: operations.DeleteProductsIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-    const payload$ =
-      operations.GetProductsRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.DeleteProductsIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const path$ = this.templateURLComponent("/products")();
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const path$ = this.templateURLComponent("/products/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "delete",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetProductsResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Create products
-   *
-   * @remarks
-   * Create a single products record
-   */
-  async create(
-    connectionKey: string,
-    requestBody: operations.PostProductsRequestBody,
-    options?: RequestOptions
-  ): Promise<operations.PostProductsResponse> {
-    const input$: operations.PostProductsRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.PostProductsRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const path$ = this.templateURLComponent("/products")();
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.DeleteProductsIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "post", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PostProductsResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * Get products count
-   *
-   * @remarks
-   * Get the count of products records
-   */
-  async count(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetProductsCountResponse> {
-    const input$: operations.GetProductsCountRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Update products
+     *
+     * @remarks
+     * Update a single products record
+     */
+    async update(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        requestBody?: operations.PatchProductsIdRequestBody | undefined,
+        options?: RequestOptions
+    ): Promise<operations.PatchProductsIdResponse> {
+        const input$: operations.PatchProductsIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
 
-    const payload$ =
-      operations.GetProductsCountRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.PatchProductsIdRequest$.outboundSchema.parse(input$);
 
-    const path$ = this.templateURLComponent("/products/count")();
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
+
+        const path$ = this.templateURLComponent("/products/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "patch",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetProductsCountResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PatchProductsIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
     }
-  }
+
+    /**
+     * List products
+     *
+     * @remarks
+     * Get all products records
+     */
+    async list(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetProductsResponse> {
+        const input$: operations.GetProductsRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetProductsRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/products")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "get",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetProductsResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Create products
+     *
+     * @remarks
+     * Create a single products record
+     */
+    async create(
+        xIntegrationosConnectionKey: string,
+        requestBody: operations.PostProductsRequestBody,
+        options?: RequestOptions
+    ): Promise<operations.PostProductsResponse> {
+        const input$: operations.PostProductsRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.PostProductsRequest$.outboundSchema.parse(input$);
+
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+
+        const path$ = this.templateURLComponent("/products")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "post",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PostProductsResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Get products count
+     *
+     * @remarks
+     * Get the count of products records
+     */
+    async count(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetProductsCountResponse> {
+        const input$: operations.GetProductsCountRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetProductsCountRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/products/count")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.apiKey === "function") {
+            security$ = { apiKey: await this.options$.apiKey() };
+        } else if (this.options$.apiKey) {
+            security$ = { apiKey: this.options$.apiKey };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "get",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetProductsCountResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return result;
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
 }
