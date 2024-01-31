@@ -12,6 +12,8 @@ import { RetryConfig } from "./retries";
 export const ServerList = ["https://api.integrationos.com/v1/unified"] as const;
 
 export type SDKOptions = {
+    secret?: string | (() => Promise<string>);
+
     httpClient?: HTTPClient;
     /**
      * Allows overriding the default server used by the SDK
@@ -25,7 +27,6 @@ export type SDKOptions = {
      * Allows overriding the default retry config used by the SDK
      */
     retryConfig?: RetryConfig;
-    client?: string;
 };
 
 export function serverURLFromOptions(options: SDKOptions): URL {
@@ -45,7 +46,7 @@ export function serverURLFromOptions(options: SDKOptions): URL {
 export const SDK_METADATA = Object.freeze({
     language: "typescript",
     openapiDocVersion: "1.0.0",
-    sdkVersion: "0.0.1",
-    genVersion: "2.223.3",
-    userAgent: "speakeasy-sdk/typescript 0.0.1 2.223.3 1.0.0 @integrationos/node",
+    sdkVersion: "0.0.2",
+    genVersion: "2.239.4",
+    userAgent: "speakeasy-sdk/typescript 0.0.2 2.239.4 1.0.0 openapi",
 });

@@ -219,12 +219,12 @@ export type PostUsersRequestBody = {
     profilePicture?: PostUsersProfilePicture | undefined;
     coverPhoto?: PostUsersCoverPhoto | undefined;
     gender?: PostUsersGender | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     phoneNumber?: string | undefined;
     isActive?: boolean | undefined;
-    lastLogin?: number | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    lastLogin?: Date | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     addresses?: Array<PostUsersAddresses> | undefined;
     roles?: Array<PostUsersRoles> | undefined;
     preferences?: PostUsersPreferences | undefined;
@@ -237,10 +237,6 @@ export type PostUsersRequestBody = {
 };
 
 export type PostUsersRequest = {
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -469,12 +465,12 @@ export type PostUsersUnified = {
     profilePicture?: PostUsersUsersProfilePicture | undefined;
     coverPhoto?: PostUsersUsersCoverPhoto | undefined;
     gender?: PostUsersUsersGender | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     phoneNumber?: string | undefined;
     isActive?: boolean | undefined;
-    lastLogin?: number | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    lastLogin?: Date | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     addresses?: Array<PostUsersUsersAddresses> | undefined;
     roles?: Array<PostUsersUsersRoles> | undefined;
     preferences?: PostUsersUsersPreferences | undefined;
@@ -1375,12 +1371,12 @@ export namespace PostUsersRequestBody$ {
         profilePicture?: PostUsersProfilePicture$.Inbound | undefined;
         coverPhoto?: PostUsersCoverPhoto$.Inbound | undefined;
         gender?: PostUsersGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<PostUsersAddresses$.Inbound> | undefined;
         roles?: Array<PostUsersRoles> | undefined;
         preferences?: PostUsersPreferences$.Inbound | undefined;
@@ -1404,12 +1400,28 @@ export namespace PostUsersRequestBody$ {
             profilePicture: z.lazy(() => PostUsersProfilePicture$.inboundSchema).optional(),
             coverPhoto: z.lazy(() => PostUsersCoverPhoto$.inboundSchema).optional(),
             gender: PostUsersGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => PostUsersAddresses$.inboundSchema)).optional(),
             roles: z.array(PostUsersRoles$).optional(),
             preferences: z.lazy(() => PostUsersPreferences$.inboundSchema).optional(),
@@ -1461,12 +1473,12 @@ export namespace PostUsersRequestBody$ {
         profilePicture?: PostUsersProfilePicture$.Outbound | undefined;
         coverPhoto?: PostUsersCoverPhoto$.Outbound | undefined;
         gender?: PostUsersGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<PostUsersAddresses$.Outbound> | undefined;
         roles?: Array<PostUsersRoles> | undefined;
         preferences?: PostUsersPreferences$.Outbound | undefined;
@@ -1490,12 +1502,24 @@ export namespace PostUsersRequestBody$ {
             profilePicture: z.lazy(() => PostUsersProfilePicture$.outboundSchema).optional(),
             coverPhoto: z.lazy(() => PostUsersCoverPhoto$.outboundSchema).optional(),
             gender: PostUsersGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => PostUsersAddresses$.outboundSchema)).optional(),
             roles: z.array(PostUsersRoles$).optional(),
             preferences: z.lazy(() => PostUsersPreferences$.outboundSchema).optional(),
@@ -1540,40 +1564,34 @@ export namespace PostUsersRequestBody$ {
 /** @internal */
 export namespace PostUsersRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostUsersRequestBody$.Inbound;
     };
 
     export const inboundSchema: z.ZodType<PostUsersRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PostUsersRequestBody$.inboundSchema),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 requestBody: v.RequestBody,
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostUsersRequestBody$.Outbound;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostUsersRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PostUsersRequestBody$.outboundSchema),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 RequestBody: v.requestBody,
             };
@@ -2417,12 +2435,12 @@ export namespace PostUsersUnified$ {
         profilePicture?: PostUsersUsersProfilePicture$.Inbound | undefined;
         coverPhoto?: PostUsersUsersCoverPhoto$.Inbound | undefined;
         gender?: PostUsersUsersGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<PostUsersUsersAddresses$.Inbound> | undefined;
         roles?: Array<PostUsersUsersRoles> | undefined;
         preferences?: PostUsersUsersPreferences$.Inbound | undefined;
@@ -2446,12 +2464,28 @@ export namespace PostUsersUnified$ {
             profilePicture: z.lazy(() => PostUsersUsersProfilePicture$.inboundSchema).optional(),
             coverPhoto: z.lazy(() => PostUsersUsersCoverPhoto$.inboundSchema).optional(),
             gender: PostUsersUsersGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => PostUsersUsersAddresses$.inboundSchema)).optional(),
             roles: z.array(PostUsersUsersRoles$).optional(),
             preferences: z.lazy(() => PostUsersUsersPreferences$.inboundSchema).optional(),
@@ -2503,12 +2537,12 @@ export namespace PostUsersUnified$ {
         profilePicture?: PostUsersUsersProfilePicture$.Outbound | undefined;
         coverPhoto?: PostUsersUsersCoverPhoto$.Outbound | undefined;
         gender?: PostUsersUsersGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<PostUsersUsersAddresses$.Outbound> | undefined;
         roles?: Array<PostUsersUsersRoles> | undefined;
         preferences?: PostUsersUsersPreferences$.Outbound | undefined;
@@ -2532,12 +2566,24 @@ export namespace PostUsersUnified$ {
             profilePicture: z.lazy(() => PostUsersUsersProfilePicture$.outboundSchema).optional(),
             coverPhoto: z.lazy(() => PostUsersUsersCoverPhoto$.outboundSchema).optional(),
             gender: PostUsersUsersGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => PostUsersUsersAddresses$.outboundSchema)).optional(),
             roles: z.array(PostUsersUsersRoles$).optional(),
             preferences: z.lazy(() => PostUsersUsersPreferences$.outboundSchema).optional(),

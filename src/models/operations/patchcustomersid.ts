@@ -152,15 +152,15 @@ export type PatchCustomersIdRequestBody = {
     lastName?: string | undefined;
     email?: string | undefined;
     phoneNumber?: string | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     addresses?: Array<Addresses> | undefined;
     defaultAddress?: DefaultAddress | undefined;
     company?: string | undefined;
     companyId?: string | undefined;
     currency?: string | undefined;
     notes?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     status?: Status | undefined;
     customerSegment?: string | undefined;
     customerType?: CustomerType | undefined;
@@ -177,10 +177,6 @@ export type PatchCustomersIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -872,15 +868,15 @@ export namespace PatchCustomersIdRequestBody$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<Addresses$.Inbound> | undefined;
         defaultAddress?: DefaultAddress$.Inbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: Status | undefined;
         customerSegment?: string | undefined;
         customerType?: CustomerType | undefined;
@@ -902,15 +898,27 @@ export namespace PatchCustomersIdRequestBody$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => Addresses$.inboundSchema)).optional(),
             defaultAddress: z.lazy(() => DefaultAddress$.inboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: Status$.optional(),
             customerSegment: z.string().optional(),
             customerType: CustomerType$.optional(),
@@ -967,15 +975,15 @@ export namespace PatchCustomersIdRequestBody$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<Addresses$.Outbound> | undefined;
         defaultAddress?: DefaultAddress$.Outbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: Status | undefined;
         customerSegment?: string | undefined;
         customerType?: CustomerType | undefined;
@@ -997,15 +1005,24 @@ export namespace PatchCustomersIdRequestBody$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => Addresses$.outboundSchema)).optional(),
             defaultAddress: z.lazy(() => DefaultAddress$.outboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: Status$.optional(),
             customerSegment: z.string().optional(),
             customerType: CustomerType$.optional(),
@@ -1058,7 +1075,6 @@ export namespace PatchCustomersIdRequestBody$ {
 export namespace PatchCustomersIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchCustomersIdRequestBody$.Inbound | undefined;
     };
@@ -1066,14 +1082,12 @@ export namespace PatchCustomersIdRequest$ {
     export const inboundSchema: z.ZodType<PatchCustomersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchCustomersIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -1081,7 +1095,6 @@ export namespace PatchCustomersIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchCustomersIdRequestBody$.Outbound | undefined;
     };
@@ -1089,14 +1102,12 @@ export namespace PatchCustomersIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCustomersIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchCustomersIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

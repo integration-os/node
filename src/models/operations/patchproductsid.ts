@@ -139,6 +139,10 @@ export type PatchProductsIdAddress = {
     subdivisionCode?: string | undefined;
 };
 
+export type PatchProductsIdEmails = {};
+
+export type PatchProductsIdPhones = {};
+
 export type PatchProductsIdProductsAddress = {};
 
 export type PatchProductsIdAddresses = {};
@@ -153,11 +157,12 @@ export type ContactInformation = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PatchProductsIdEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PatchProductsIdPhones> | undefined;
     address?: PatchProductsIdProductsAddress | undefined;
     addresses?: Array<PatchProductsIdAddresses> | undefined;
     birthday?: number | undefined;
@@ -167,7 +172,10 @@ export type ContactInformation = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<PatchProductsIdSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<PatchProductsIdProductsCustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
 };
 
 export enum PatchProductsIdProductsType {
@@ -240,6 +248,7 @@ export type DownloadFiles = {
 export enum PatchProductsIdProductsStatus {
     Active = "active",
     Archived = "archived",
+    Preorder = "preorder",
     Draft = "draft",
     Deleted = "deleted",
 }
@@ -316,9 +325,9 @@ export type PatchProductsIdRequestBody = {
     isDownloadable?: boolean | undefined;
     downloadFiles?: Array<DownloadFiles> | undefined;
     relatedProducts?: Array<string> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    publishedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    publishedAt?: Date | undefined;
     status?: PatchProductsIdProductsStatus | undefined;
     tax?: Tax | undefined;
     localizations?: Array<Localizations> | undefined;
@@ -329,10 +338,6 @@ export type PatchProductsIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -1084,6 +1089,34 @@ export namespace PatchProductsIdAddress$ {
 }
 
 /** @internal */
+export namespace PatchProductsIdEmails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<PatchProductsIdEmails, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchProductsIdEmails> =
+        z.object({});
+}
+
+/** @internal */
+export namespace PatchProductsIdPhones$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<PatchProductsIdPhones, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchProductsIdPhones> =
+        z.object({});
+}
+
+/** @internal */
 export namespace PatchProductsIdProductsAddress$ {
     export type Inbound = {};
 
@@ -1162,11 +1195,12 @@ export namespace ContactInformation$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PatchProductsIdEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PatchProductsIdPhones$.Inbound> | undefined;
         address?: PatchProductsIdProductsAddress$.Inbound | undefined;
         addresses?: Array<PatchProductsIdAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -1176,7 +1210,10 @@ export namespace ContactInformation$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PatchProductsIdSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PatchProductsIdProductsCustomFields$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<ContactInformation, z.ZodTypeDef, Inbound> = z
@@ -1184,11 +1221,12 @@ export namespace ContactInformation$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PatchProductsIdEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PatchProductsIdPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PatchProductsIdProductsAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchProductsIdAddresses$.inboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -1200,19 +1238,23 @@ export namespace ContactInformation$ {
             socialProfiles: z
                 .array(z.lazy(() => PatchProductsIdSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PatchProductsIdProductsCustomFields$.inboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1223,7 +1265,10 @@ export namespace ContactInformation$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -1231,11 +1276,12 @@ export namespace ContactInformation$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PatchProductsIdEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PatchProductsIdPhones$.Outbound> | undefined;
         address?: PatchProductsIdProductsAddress$.Outbound | undefined;
         addresses?: Array<PatchProductsIdAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -1245,7 +1291,10 @@ export namespace ContactInformation$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PatchProductsIdSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PatchProductsIdProductsCustomFields$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ContactInformation> = z
@@ -1253,11 +1302,12 @@ export namespace ContactInformation$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PatchProductsIdEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PatchProductsIdPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PatchProductsIdProductsAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchProductsIdAddresses$.outboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -1269,19 +1319,23 @@ export namespace ContactInformation$ {
             socialProfiles: z
                 .array(z.lazy(() => PatchProductsIdSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PatchProductsIdProductsCustomFields$.outboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1292,7 +1346,10 @@ export namespace ContactInformation$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }
@@ -1936,9 +1993,9 @@ export namespace PatchProductsIdRequestBody$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<DownloadFiles$.Inbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PatchProductsIdProductsStatus | undefined;
         tax?: Tax$.Inbound | undefined;
         localizations?: Array<Localizations$.Inbound> | undefined;
@@ -1975,9 +2032,21 @@ export namespace PatchProductsIdRequestBody$ {
             isDownloadable: z.boolean().optional(),
             downloadFiles: z.array(z.lazy(() => DownloadFiles$.inboundSchema)).optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            publishedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: PatchProductsIdProductsStatus$.optional(),
             tax: z.lazy(() => Tax$.inboundSchema).optional(),
             localizations: z.array(z.lazy(() => Localizations$.inboundSchema)).optional(),
@@ -2058,9 +2127,9 @@ export namespace PatchProductsIdRequestBody$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<DownloadFiles$.Outbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PatchProductsIdProductsStatus | undefined;
         tax?: Tax$.Outbound | undefined;
         localizations?: Array<Localizations$.Outbound> | undefined;
@@ -2097,9 +2166,18 @@ export namespace PatchProductsIdRequestBody$ {
             isDownloadable: z.boolean().optional(),
             downloadFiles: z.array(z.lazy(() => DownloadFiles$.outboundSchema)).optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            publishedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: PatchProductsIdProductsStatus$.optional(),
             tax: z.lazy(() => Tax$.outboundSchema).optional(),
             localizations: z.array(z.lazy(() => Localizations$.outboundSchema)).optional(),
@@ -2157,7 +2235,6 @@ export namespace PatchProductsIdRequestBody$ {
 export namespace PatchProductsIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchProductsIdRequestBody$.Inbound | undefined;
     };
@@ -2165,14 +2242,12 @@ export namespace PatchProductsIdRequest$ {
     export const inboundSchema: z.ZodType<PatchProductsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchProductsIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -2180,7 +2255,6 @@ export namespace PatchProductsIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchProductsIdRequestBody$.Outbound | undefined;
     };
@@ -2188,14 +2262,12 @@ export namespace PatchProductsIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchProductsIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchProductsIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

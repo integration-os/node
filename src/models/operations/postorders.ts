@@ -27,7 +27,7 @@ export enum PostOrdersPaymentStatus {
     Paid = "paid",
     Pending = "pending",
     Refunded = "refunded",
-    PartiallyRefunded = "partially_refunded",
+    PartiallyRefunded = "partially-refunded",
     Failed = "failed",
 }
 
@@ -188,8 +188,8 @@ export type PostOrdersRequestBody = {
     customerID?: string | undefined;
     orderNumber?: string | undefined;
     status?: PostOrdersStatus | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     total?: number | undefined;
     subTotal?: number | undefined;
     tax?: number | undefined;
@@ -208,10 +208,6 @@ export type PostOrdersRequestBody = {
 };
 
 export type PostOrdersRequest = {
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -248,7 +244,7 @@ export enum PostOrdersOrdersPaymentStatus {
     Paid = "paid",
     Pending = "pending",
     Refunded = "refunded",
-    PartiallyRefunded = "partially_refunded",
+    PartiallyRefunded = "partially-refunded",
     Failed = "failed",
 }
 
@@ -409,8 +405,8 @@ export type PostOrdersUnified = {
     customerID?: string | undefined;
     orderNumber?: string | undefined;
     status?: PostOrdersOrdersStatus | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     total?: number | undefined;
     subTotal?: number | undefined;
     tax?: number | undefined;
@@ -1321,8 +1317,8 @@ export namespace PostOrdersRequestBody$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1346,8 +1342,16 @@ export namespace PostOrdersRequestBody$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -1397,8 +1401,8 @@ export namespace PostOrdersRequestBody$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1422,8 +1426,14 @@ export namespace PostOrdersRequestBody$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -1472,40 +1482,34 @@ export namespace PostOrdersRequestBody$ {
 /** @internal */
 export namespace PostOrdersRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostOrdersRequestBody$.Inbound;
     };
 
     export const inboundSchema: z.ZodType<PostOrdersRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PostOrdersRequestBody$.inboundSchema),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 requestBody: v.RequestBody,
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostOrdersRequestBody$.Outbound;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostOrdersRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PostOrdersRequestBody$.outboundSchema),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 RequestBody: v.requestBody,
             };
@@ -2405,8 +2409,8 @@ export namespace PostOrdersUnified$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -2430,8 +2434,16 @@ export namespace PostOrdersUnified$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -2483,8 +2495,8 @@ export namespace PostOrdersUnified$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -2508,8 +2520,14 @@ export namespace PostOrdersUnified$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),

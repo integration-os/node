@@ -27,7 +27,7 @@ export enum PaymentStatus {
     Paid = "paid",
     Pending = "pending",
     Refunded = "refunded",
-    PartiallyRefunded = "partially_refunded",
+    PartiallyRefunded = "partially-refunded",
     Failed = "failed",
 }
 
@@ -65,7 +65,7 @@ export type PatchOrdersIdCustomFields = {
     fieldType?: PatchOrdersIdFieldType | undefined;
 };
 
-export type PatchOrdersIdShippingAddress = {
+export type ShippingAddress = {
     id?: string | undefined;
     contactId?: string | undefined;
     accountId?: string | undefined;
@@ -124,7 +124,7 @@ export type PatchOrdersIdOrdersCustomFields = {
     fieldType?: PatchOrdersIdOrdersFieldType | undefined;
 };
 
-export type PatchOrdersIdBillingAddress = {
+export type BillingAddress = {
     id?: string | undefined;
     contactId?: string | undefined;
     accountId?: string | undefined;
@@ -188,8 +188,8 @@ export type PatchOrdersIdRequestBody = {
     customerID?: string | undefined;
     orderNumber?: string | undefined;
     status?: PatchOrdersIdStatus | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     total?: number | undefined;
     subTotal?: number | undefined;
     tax?: number | undefined;
@@ -198,8 +198,8 @@ export type PatchOrdersIdRequestBody = {
     paymentStatus?: PaymentStatus | undefined;
     paymentMethods?: Array<string> | undefined;
     shippingMethod?: string | undefined;
-    shippingAddress?: PatchOrdersIdShippingAddress | undefined;
-    billingAddress?: PatchOrdersIdBillingAddress | undefined;
+    shippingAddress?: ShippingAddress | undefined;
+    billingAddress?: BillingAddress | undefined;
     note?: string | undefined;
     discounts?: Array<number> | undefined;
     trackingInfo?: string | undefined;
@@ -212,10 +212,6 @@ export type PatchOrdersIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -430,7 +426,7 @@ export namespace PatchOrdersIdCustomFields$ {
 }
 
 /** @internal */
-export namespace PatchOrdersIdShippingAddress$ {
+export namespace ShippingAddress$ {
     export type Inbound = {
         id?: string | undefined;
         contactId?: string | undefined;
@@ -456,7 +452,7 @@ export namespace PatchOrdersIdShippingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchOrdersIdShippingAddress, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<ShippingAddress, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -539,7 +535,7 @@ export namespace PatchOrdersIdShippingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOrdersIdShippingAddress> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ShippingAddress> = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -737,7 +733,7 @@ export namespace PatchOrdersIdOrdersCustomFields$ {
 }
 
 /** @internal */
-export namespace PatchOrdersIdBillingAddress$ {
+export namespace BillingAddress$ {
     export type Inbound = {
         id?: string | undefined;
         contactId?: string | undefined;
@@ -763,7 +759,7 @@ export namespace PatchOrdersIdBillingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchOrdersIdBillingAddress, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<BillingAddress, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -846,7 +842,7 @@ export namespace PatchOrdersIdBillingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOrdersIdBillingAddress> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, BillingAddress> = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -1132,8 +1128,8 @@ export namespace PatchOrdersIdRequestBody$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PatchOrdersIdStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1142,8 +1138,8 @@ export namespace PatchOrdersIdRequestBody$ {
         paymentStatus?: PaymentStatus | undefined;
         paymentMethods?: Array<string> | undefined;
         shippingMethod?: string | undefined;
-        shippingAddress?: PatchOrdersIdShippingAddress$.Inbound | undefined;
-        billingAddress?: PatchOrdersIdBillingAddress$.Inbound | undefined;
+        shippingAddress?: ShippingAddress$.Inbound | undefined;
+        billingAddress?: BillingAddress$.Inbound | undefined;
         note?: string | undefined;
         discounts?: Array<number> | undefined;
         trackingInfo?: string | undefined;
@@ -1157,8 +1153,16 @@ export namespace PatchOrdersIdRequestBody$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PatchOrdersIdStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -1167,8 +1171,8 @@ export namespace PatchOrdersIdRequestBody$ {
             paymentStatus: PaymentStatus$.optional(),
             paymentMethods: z.array(z.string()).optional(),
             shippingMethod: z.string().optional(),
-            shippingAddress: z.lazy(() => PatchOrdersIdShippingAddress$.inboundSchema).optional(),
-            billingAddress: z.lazy(() => PatchOrdersIdBillingAddress$.inboundSchema).optional(),
+            shippingAddress: z.lazy(() => ShippingAddress$.inboundSchema).optional(),
+            billingAddress: z.lazy(() => BillingAddress$.inboundSchema).optional(),
             note: z.string().optional(),
             discounts: z.array(z.number()).optional(),
             trackingInfo: z.string().optional(),
@@ -1208,8 +1212,8 @@ export namespace PatchOrdersIdRequestBody$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PatchOrdersIdStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1218,8 +1222,8 @@ export namespace PatchOrdersIdRequestBody$ {
         paymentStatus?: PaymentStatus | undefined;
         paymentMethods?: Array<string> | undefined;
         shippingMethod?: string | undefined;
-        shippingAddress?: PatchOrdersIdShippingAddress$.Outbound | undefined;
-        billingAddress?: PatchOrdersIdBillingAddress$.Outbound | undefined;
+        shippingAddress?: ShippingAddress$.Outbound | undefined;
+        billingAddress?: BillingAddress$.Outbound | undefined;
         note?: string | undefined;
         discounts?: Array<number> | undefined;
         trackingInfo?: string | undefined;
@@ -1233,8 +1237,14 @@ export namespace PatchOrdersIdRequestBody$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PatchOrdersIdStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -1243,8 +1253,8 @@ export namespace PatchOrdersIdRequestBody$ {
             paymentStatus: PaymentStatus$.optional(),
             paymentMethods: z.array(z.string()).optional(),
             shippingMethod: z.string().optional(),
-            shippingAddress: z.lazy(() => PatchOrdersIdShippingAddress$.outboundSchema).optional(),
-            billingAddress: z.lazy(() => PatchOrdersIdBillingAddress$.outboundSchema).optional(),
+            shippingAddress: z.lazy(() => ShippingAddress$.outboundSchema).optional(),
+            billingAddress: z.lazy(() => BillingAddress$.outboundSchema).optional(),
             note: z.string().optional(),
             discounts: z.array(z.number()).optional(),
             trackingInfo: z.string().optional(),
@@ -1284,7 +1294,6 @@ export namespace PatchOrdersIdRequestBody$ {
 export namespace PatchOrdersIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchOrdersIdRequestBody$.Inbound | undefined;
     };
@@ -1292,14 +1301,12 @@ export namespace PatchOrdersIdRequest$ {
     export const inboundSchema: z.ZodType<PatchOrdersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchOrdersIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -1307,7 +1314,6 @@ export namespace PatchOrdersIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchOrdersIdRequestBody$.Outbound | undefined;
     };
@@ -1315,14 +1321,12 @@ export namespace PatchOrdersIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOrdersIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchOrdersIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

@@ -10,10 +10,6 @@ export type GetOrdersIdRequest = {
      */
     id: string;
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -48,7 +44,7 @@ export enum GetOrdersIdPaymentStatus {
     Paid = "paid",
     Pending = "pending",
     Refunded = "refunded",
-    PartiallyRefunded = "partially_refunded",
+    PartiallyRefunded = "partially-refunded",
     Failed = "failed",
 }
 
@@ -209,8 +205,8 @@ export type GetOrdersIdUnified = {
     customerID?: string | undefined;
     orderNumber?: string | undefined;
     status?: GetOrdersIdStatus | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     total?: number | undefined;
     subTotal?: number | undefined;
     tax?: number | undefined;
@@ -290,40 +286,34 @@ export type GetOrdersIdResponse = {
 export namespace GetOrdersIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetOrdersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOrdersIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -1170,8 +1160,8 @@ export namespace GetOrdersIdUnified$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: GetOrdersIdStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1195,8 +1185,16 @@ export namespace GetOrdersIdUnified$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: GetOrdersIdStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -1246,8 +1244,8 @@ export namespace GetOrdersIdUnified$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: GetOrdersIdStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1271,8 +1269,14 @@ export namespace GetOrdersIdUnified$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: GetOrdersIdStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),

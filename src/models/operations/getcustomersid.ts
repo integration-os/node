@@ -10,10 +10,6 @@ export type GetCustomersIdRequest = {
      */
     id: string;
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -173,15 +169,15 @@ export type Unified = {
     lastName?: string | undefined;
     email?: string | undefined;
     phoneNumber?: string | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     addresses?: Array<GetCustomersIdAddresses> | undefined;
     defaultAddress?: GetCustomersIdDefaultAddress | undefined;
     company?: string | undefined;
     companyId?: string | undefined;
     currency?: string | undefined;
     notes?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     status?: GetCustomersIdStatus | undefined;
     customerSegment?: string | undefined;
     customerType?: GetCustomersIdCustomerType | undefined;
@@ -255,40 +251,34 @@ export type GetCustomersIdResponse = {
 export namespace GetCustomersIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetCustomersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -941,15 +931,15 @@ export namespace Unified$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<GetCustomersIdAddresses$.Inbound> | undefined;
         defaultAddress?: GetCustomersIdDefaultAddress$.Inbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: GetCustomersIdStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: GetCustomersIdCustomerType | undefined;
@@ -971,15 +961,27 @@ export namespace Unified$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => GetCustomersIdAddresses$.inboundSchema)).optional(),
             defaultAddress: z.lazy(() => GetCustomersIdDefaultAddress$.inboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: GetCustomersIdStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: GetCustomersIdCustomerType$.optional(),
@@ -1038,15 +1040,15 @@ export namespace Unified$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<GetCustomersIdAddresses$.Outbound> | undefined;
         defaultAddress?: GetCustomersIdDefaultAddress$.Outbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: GetCustomersIdStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: GetCustomersIdCustomerType | undefined;
@@ -1068,15 +1070,24 @@ export namespace Unified$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => GetCustomersIdAddresses$.outboundSchema)).optional(),
             defaultAddress: z.lazy(() => GetCustomersIdDefaultAddress$.outboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: GetCustomersIdStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: GetCustomersIdCustomerType$.optional(),

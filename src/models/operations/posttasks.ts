@@ -637,12 +637,12 @@ export type PostTasksRequestBody = {
     description?: string | undefined;
     status?: PostTasksStatus | undefined;
     priority?: PostTasksPriority | undefined;
-    dueDate?: number | undefined;
+    dueDate?: Date | undefined;
     dueTimezone?: string | undefined;
     assignee?: PostTasksAssignee | undefined;
     createdBy?: PostTasksCreatedBy | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     labels?: Array<string> | undefined;
     comments?: Array<PostTasksComments> | undefined;
     attachments?: Array<PostTasksAttachments> | undefined;
@@ -660,10 +660,6 @@ export type PostTasksRequestBody = {
 };
 
 export type PostTasksRequest = {
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -1314,12 +1310,12 @@ export type PostTasksUnified = {
     description?: string | undefined;
     status?: PostTasksTasksResponseStatus | undefined;
     priority?: PostTasksTasksResponsePriority | undefined;
-    dueDate?: number | undefined;
+    dueDate?: Date | undefined;
     dueTimezone?: string | undefined;
     assignee?: PostTasksTasksAssignee | undefined;
     createdBy?: PostTasksTasksCreatedBy | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     labels?: Array<string> | undefined;
     comments?: Array<PostTasksTasksComments> | undefined;
     attachments?: Array<PostTasksTasksResponseAttachments> | undefined;
@@ -4196,12 +4192,12 @@ export namespace PostTasksRequestBody$ {
         description?: string | undefined;
         status?: PostTasksStatus | undefined;
         priority?: PostTasksPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: PostTasksAssignee$.Inbound | undefined;
         createdBy?: PostTasksCreatedBy$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<PostTasksComments$.Inbound> | undefined;
         attachments?: Array<PostTasksAttachments$.Inbound> | undefined;
@@ -4225,12 +4221,24 @@ export namespace PostTasksRequestBody$ {
             description: z.string().optional(),
             status: PostTasksStatus$.optional(),
             priority: PostTasksPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => PostTasksAssignee$.inboundSchema).optional(),
             createdBy: z.lazy(() => PostTasksCreatedBy$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => PostTasksComments$.inboundSchema)).optional(),
             attachments: z.array(z.lazy(() => PostTasksAttachments$.inboundSchema)).optional(),
@@ -4290,12 +4298,12 @@ export namespace PostTasksRequestBody$ {
         description?: string | undefined;
         status?: PostTasksStatus | undefined;
         priority?: PostTasksPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: PostTasksAssignee$.Outbound | undefined;
         createdBy?: PostTasksCreatedBy$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<PostTasksComments$.Outbound> | undefined;
         attachments?: Array<PostTasksAttachments$.Outbound> | undefined;
@@ -4319,12 +4327,21 @@ export namespace PostTasksRequestBody$ {
             description: z.string().optional(),
             status: PostTasksStatus$.optional(),
             priority: PostTasksPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => PostTasksAssignee$.outboundSchema).optional(),
             createdBy: z.lazy(() => PostTasksCreatedBy$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => PostTasksComments$.outboundSchema)).optional(),
             attachments: z.array(z.lazy(() => PostTasksAttachments$.outboundSchema)).optional(),
@@ -4382,40 +4399,34 @@ export namespace PostTasksRequestBody$ {
 /** @internal */
 export namespace PostTasksRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostTasksRequestBody$.Inbound;
     };
 
     export const inboundSchema: z.ZodType<PostTasksRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PostTasksRequestBody$.inboundSchema),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 requestBody: v.RequestBody,
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostTasksRequestBody$.Outbound;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostTasksRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PostTasksRequestBody$.outboundSchema),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 RequestBody: v.requestBody,
             };
@@ -7526,12 +7537,12 @@ export namespace PostTasksUnified$ {
         description?: string | undefined;
         status?: PostTasksTasksResponseStatus | undefined;
         priority?: PostTasksTasksResponsePriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: PostTasksTasksAssignee$.Inbound | undefined;
         createdBy?: PostTasksTasksCreatedBy$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<PostTasksTasksComments$.Inbound> | undefined;
         attachments?: Array<PostTasksTasksResponseAttachments$.Inbound> | undefined;
@@ -7555,12 +7566,24 @@ export namespace PostTasksUnified$ {
             description: z.string().optional(),
             status: PostTasksTasksResponseStatus$.optional(),
             priority: PostTasksTasksResponsePriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => PostTasksTasksAssignee$.inboundSchema).optional(),
             createdBy: z.lazy(() => PostTasksTasksCreatedBy$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => PostTasksTasksComments$.inboundSchema)).optional(),
             attachments: z
@@ -7624,12 +7647,12 @@ export namespace PostTasksUnified$ {
         description?: string | undefined;
         status?: PostTasksTasksResponseStatus | undefined;
         priority?: PostTasksTasksResponsePriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: PostTasksTasksAssignee$.Outbound | undefined;
         createdBy?: PostTasksTasksCreatedBy$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<PostTasksTasksComments$.Outbound> | undefined;
         attachments?: Array<PostTasksTasksResponseAttachments$.Outbound> | undefined;
@@ -7653,12 +7676,21 @@ export namespace PostTasksUnified$ {
             description: z.string().optional(),
             status: PostTasksTasksResponseStatus$.optional(),
             priority: PostTasksTasksResponsePriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => PostTasksTasksAssignee$.outboundSchema).optional(),
             createdBy: z.lazy(() => PostTasksTasksCreatedBy$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => PostTasksTasksComments$.outboundSchema)).optional(),
             attachments: z

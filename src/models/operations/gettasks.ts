@@ -6,10 +6,6 @@ import { z } from "zod";
 
 export type GetTasksRequest = {
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -654,12 +650,12 @@ export type GetTasksUnified = {
     description?: string | undefined;
     status?: GetTasksStatus | undefined;
     priority?: GetTasksPriority | undefined;
-    dueDate?: number | undefined;
+    dueDate?: Date | undefined;
     dueTimezone?: string | undefined;
     assignee?: GetTasksAssignee | undefined;
     createdBy?: GetTasksCreatedBy | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     labels?: Array<string> | undefined;
     comments?: Array<GetTasksComments> | undefined;
     attachments?: Array<GetTasksAttachments> | undefined;
@@ -743,35 +739,29 @@ export type GetTasksResponse = {
 /** @internal */
 export namespace GetTasksRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetTasksRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetTasksRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -3574,12 +3564,12 @@ export namespace GetTasksUnified$ {
         description?: string | undefined;
         status?: GetTasksStatus | undefined;
         priority?: GetTasksPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: GetTasksAssignee$.Inbound | undefined;
         createdBy?: GetTasksCreatedBy$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<GetTasksComments$.Inbound> | undefined;
         attachments?: Array<GetTasksAttachments$.Inbound> | undefined;
@@ -3603,12 +3593,24 @@ export namespace GetTasksUnified$ {
             description: z.string().optional(),
             status: GetTasksStatus$.optional(),
             priority: GetTasksPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => GetTasksAssignee$.inboundSchema).optional(),
             createdBy: z.lazy(() => GetTasksCreatedBy$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => GetTasksComments$.inboundSchema)).optional(),
             attachments: z.array(z.lazy(() => GetTasksAttachments$.inboundSchema)).optional(),
@@ -3666,12 +3668,12 @@ export namespace GetTasksUnified$ {
         description?: string | undefined;
         status?: GetTasksStatus | undefined;
         priority?: GetTasksPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: GetTasksAssignee$.Outbound | undefined;
         createdBy?: GetTasksCreatedBy$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<GetTasksComments$.Outbound> | undefined;
         attachments?: Array<GetTasksAttachments$.Outbound> | undefined;
@@ -3695,12 +3697,21 @@ export namespace GetTasksUnified$ {
             description: z.string().optional(),
             status: GetTasksStatus$.optional(),
             priority: GetTasksPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => GetTasksAssignee$.outboundSchema).optional(),
             createdBy: z.lazy(() => GetTasksCreatedBy$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => GetTasksComments$.outboundSchema)).optional(),
             attachments: z.array(z.lazy(() => GetTasksAttachments$.outboundSchema)).optional(),

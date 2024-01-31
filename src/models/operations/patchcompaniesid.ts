@@ -64,6 +64,30 @@ export type Address = {
 };
 
 export enum PatchCompaniesIdCompaniesType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type Emails = {
+    email?: string | undefined;
+    type?: PatchCompaniesIdCompaniesType | undefined;
+};
+
+export enum PatchCompaniesIdCompaniesRequestType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type Phones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PatchCompaniesIdCompaniesRequestType | undefined;
+};
+
+export enum PatchCompaniesIdCompaniesRequestRequestBodyType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -77,7 +101,7 @@ export enum PatchCompaniesIdCompaniesType {
 export type PatchCompaniesIdAdditionalInfo = {};
 
 export type PatchCompaniesIdSocialProfiles = {
-    type?: PatchCompaniesIdCompaniesType | undefined;
+    type?: PatchCompaniesIdCompaniesRequestRequestBodyType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -89,6 +113,10 @@ export type PatchCompaniesIdSocialProfiles = {
     active?: boolean | undefined;
     deleted?: boolean | undefined;
 };
+
+export type PatchCompaniesIdEmails = {};
+
+export type PatchCompaniesIdPhones = {};
 
 export type PatchCompaniesIdAddress = {};
 
@@ -104,11 +132,12 @@ export type AdditionalContacts = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PatchCompaniesIdEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PatchCompaniesIdPhones> | undefined;
     address?: PatchCompaniesIdAddress | undefined;
     addresses?: Array<PatchCompaniesIdAddresses> | undefined;
     birthday?: number | undefined;
@@ -118,20 +147,42 @@ export type AdditionalContacts = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<PatchCompaniesIdCompaniesSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<PatchCompaniesIdCompaniesCustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+};
+
+export enum PatchCompaniesIdCompaniesFieldType {
+    Text = "text",
+    Number = "number",
+    Date = "date",
+    Boolean = "boolean",
+    Enum = "enum",
+    Json = "json",
+    Array = "array",
+}
+
+export type PatchCompaniesIdCompaniesRequestCustomFields = {
+    id?: string | undefined;
+    fieldName?: string | undefined;
+    fieldValue?: string | undefined;
+    fieldType?: PatchCompaniesIdCompaniesFieldType | undefined;
 };
 
 export type PatchCompaniesIdRequestBody = {
-    id?: number | undefined;
+    id?: string | undefined;
     name?: string | undefined;
     legalName?: string | undefined;
     type?: string | undefined;
     industry?: string | undefined;
     address?: Address | undefined;
-    phone?: string | undefined;
-    email?: string | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<Emails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<Phones> | undefined;
     website?: string | undefined;
-    foundedDate?: number | undefined;
+    foundedDate?: Date | undefined;
     numberOfEmployees?: number | undefined;
     revenue?: number | undefined;
     revenueCurrency?: string | undefined;
@@ -143,10 +194,13 @@ export type PatchCompaniesIdRequestBody = {
     parentCompanyId?: string | undefined;
     additionalContacts?: Array<AdditionalContacts> | undefined;
     incorporationCountry?: string | undefined;
-    incorporationDate?: number | undefined;
+    incorporationDate?: Date | undefined;
     taxId?: string | undefined;
     regulatoryStatus?: string | undefined;
     dunsNumber?: string | undefined;
+    customFields?: Array<PatchCompaniesIdCompaniesRequestCustomFields> | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PatchCompaniesIdRequest = {
@@ -154,10 +208,6 @@ export type PatchCompaniesIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -538,6 +588,102 @@ export namespace Address$ {
 export const PatchCompaniesIdCompaniesType$ = z.nativeEnum(PatchCompaniesIdCompaniesType);
 
 /** @internal */
+export namespace Emails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PatchCompaniesIdCompaniesType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<Emails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: PatchCompaniesIdCompaniesType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PatchCompaniesIdCompaniesType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Emails> = z
+        .object({
+            email: z.string().optional(),
+            type: PatchCompaniesIdCompaniesType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PatchCompaniesIdCompaniesRequestType$ = z.nativeEnum(
+    PatchCompaniesIdCompaniesRequestType
+);
+
+/** @internal */
+export namespace Phones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PatchCompaniesIdCompaniesRequestType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<Phones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PatchCompaniesIdCompaniesRequestType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PatchCompaniesIdCompaniesRequestType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Phones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PatchCompaniesIdCompaniesRequestType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PatchCompaniesIdCompaniesRequestRequestBodyType$ = z.nativeEnum(
+    PatchCompaniesIdCompaniesRequestRequestBodyType
+);
+
+/** @internal */
 export namespace PatchCompaniesIdAdditionalInfo$ {
     export type Inbound = {};
 
@@ -553,7 +699,7 @@ export namespace PatchCompaniesIdAdditionalInfo$ {
 /** @internal */
 export namespace PatchCompaniesIdSocialProfiles$ {
     export type Inbound = {
-        type?: PatchCompaniesIdCompaniesType | undefined;
+        type?: PatchCompaniesIdCompaniesRequestRequestBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -568,7 +714,7 @@ export namespace PatchCompaniesIdSocialProfiles$ {
 
     export const inboundSchema: z.ZodType<PatchCompaniesIdSocialProfiles, z.ZodTypeDef, Inbound> = z
         .object({
-            type: PatchCompaniesIdCompaniesType$.optional(),
+            type: PatchCompaniesIdCompaniesRequestRequestBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -597,7 +743,7 @@ export namespace PatchCompaniesIdSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: PatchCompaniesIdCompaniesType | undefined;
+        type?: PatchCompaniesIdCompaniesRequestRequestBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -613,7 +759,7 @@ export namespace PatchCompaniesIdSocialProfiles$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCompaniesIdSocialProfiles> =
         z
             .object({
-                type: PatchCompaniesIdCompaniesType$.optional(),
+                type: PatchCompaniesIdCompaniesRequestRequestBodyType$.optional(),
                 username: z.string().optional(),
                 displayName: z.string().optional(),
                 url: z.string().optional(),
@@ -644,6 +790,34 @@ export namespace PatchCompaniesIdSocialProfiles$ {
                     ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 };
             });
+}
+
+/** @internal */
+export namespace PatchCompaniesIdEmails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<PatchCompaniesIdEmails, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCompaniesIdEmails> =
+        z.object({});
+}
+
+/** @internal */
+export namespace PatchCompaniesIdPhones$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<PatchCompaniesIdPhones, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCompaniesIdPhones> =
+        z.object({});
 }
 
 /** @internal */
@@ -727,11 +901,12 @@ export namespace AdditionalContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PatchCompaniesIdEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PatchCompaniesIdPhones$.Inbound> | undefined;
         address?: PatchCompaniesIdAddress$.Inbound | undefined;
         addresses?: Array<PatchCompaniesIdAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -741,7 +916,10 @@ export namespace AdditionalContacts$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PatchCompaniesIdCompaniesSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PatchCompaniesIdCompaniesCustomFields$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<AdditionalContacts, z.ZodTypeDef, Inbound> = z
@@ -749,11 +927,12 @@ export namespace AdditionalContacts$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PatchCompaniesIdEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PatchCompaniesIdPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PatchCompaniesIdAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchCompaniesIdAddresses$.inboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -765,19 +944,23 @@ export namespace AdditionalContacts$ {
             socialProfiles: z
                 .array(z.lazy(() => PatchCompaniesIdCompaniesSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PatchCompaniesIdCompaniesCustomFields$.inboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -788,7 +971,10 @@ export namespace AdditionalContacts$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -796,11 +982,12 @@ export namespace AdditionalContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PatchCompaniesIdEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PatchCompaniesIdPhones$.Outbound> | undefined;
         address?: PatchCompaniesIdAddress$.Outbound | undefined;
         addresses?: Array<PatchCompaniesIdAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -810,7 +997,10 @@ export namespace AdditionalContacts$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PatchCompaniesIdCompaniesSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PatchCompaniesIdCompaniesCustomFields$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, AdditionalContacts> = z
@@ -818,11 +1008,12 @@ export namespace AdditionalContacts$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PatchCompaniesIdEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PatchCompaniesIdPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PatchCompaniesIdAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchCompaniesIdAddresses$.outboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -834,19 +1025,23 @@ export namespace AdditionalContacts$ {
             socialProfiles: z
                 .array(z.lazy(() => PatchCompaniesIdCompaniesSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PatchCompaniesIdCompaniesCustomFields$.outboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -857,7 +1052,70 @@ export namespace AdditionalContacts$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+            };
+        });
+}
+
+/** @internal */
+export const PatchCompaniesIdCompaniesFieldType$ = z.nativeEnum(PatchCompaniesIdCompaniesFieldType);
+
+/** @internal */
+export namespace PatchCompaniesIdCompaniesRequestCustomFields$ {
+    export type Inbound = {
+        id?: string | undefined;
+        fieldName?: string | undefined;
+        fieldValue?: string | undefined;
+        fieldType?: PatchCompaniesIdCompaniesFieldType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<
+        PatchCompaniesIdCompaniesRequestCustomFields,
+        z.ZodTypeDef,
+        Inbound
+    > = z
+        .object({
+            id: z.string().optional(),
+            fieldName: z.string().optional(),
+            fieldValue: z.string().optional(),
+            fieldType: PatchCompaniesIdCompaniesFieldType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
+                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
+                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+            };
+        });
+
+    export type Outbound = {
+        id?: string | undefined;
+        fieldName?: string | undefined;
+        fieldValue?: string | undefined;
+        fieldType?: PatchCompaniesIdCompaniesFieldType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PatchCompaniesIdCompaniesRequestCustomFields
+    > = z
+        .object({
+            id: z.string().optional(),
+            fieldName: z.string().optional(),
+            fieldValue: z.string().optional(),
+            fieldType: PatchCompaniesIdCompaniesFieldType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
+                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
+                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
             };
         });
 }
@@ -865,16 +1123,18 @@ export namespace AdditionalContacts$ {
 /** @internal */
 export namespace PatchCompaniesIdRequestBody$ {
     export type Inbound = {
-        id?: number | undefined;
+        id?: string | undefined;
         name?: string | undefined;
         legalName?: string | undefined;
         type?: string | undefined;
         industry?: string | undefined;
         address?: Address$.Inbound | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<Emails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<Phones$.Inbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -886,24 +1146,33 @@ export namespace PatchCompaniesIdRequestBody$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<AdditionalContacts$.Inbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
+        customFields?: Array<PatchCompaniesIdCompaniesRequestCustomFields$.Inbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PatchCompaniesIdRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             name: z.string().optional(),
             legalName: z.string().optional(),
             type: z.string().optional(),
             industry: z.string().optional(),
             address: z.lazy(() => Address$.inboundSchema).optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => Emails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => Phones$.inboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -917,10 +1186,27 @@ export namespace PatchCompaniesIdRequestBody$ {
             parentCompanyId: z.string().optional(),
             additionalContacts: z.array(z.lazy(() => AdditionalContacts$.inboundSchema)).optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PatchCompaniesIdCompaniesRequestCustomFields$.inboundSchema))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -930,8 +1216,10 @@ export namespace PatchCompaniesIdRequestBody$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.industry === undefined ? null : { industry: v.industry }),
                 ...(v.address === undefined ? null : { address: v.address }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
@@ -963,20 +1251,25 @@ export namespace PatchCompaniesIdRequestBody$ {
                     ? null
                     : { regulatoryStatus: v.regulatoryStatus }),
                 ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
     export type Outbound = {
-        id?: number | undefined;
+        id?: string | undefined;
         name?: string | undefined;
         legalName?: string | undefined;
         type?: string | undefined;
         industry?: string | undefined;
         address?: Address$.Outbound | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<Emails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<Phones$.Outbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -988,24 +1281,32 @@ export namespace PatchCompaniesIdRequestBody$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<AdditionalContacts$.Outbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
+        customFields?: Array<PatchCompaniesIdCompaniesRequestCustomFields$.Outbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCompaniesIdRequestBody> = z
         .object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             name: z.string().optional(),
             legalName: z.string().optional(),
             type: z.string().optional(),
             industry: z.string().optional(),
             address: z.lazy(() => Address$.outboundSchema).optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => Emails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => Phones$.outboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -1021,10 +1322,24 @@ export namespace PatchCompaniesIdRequestBody$ {
                 .array(z.lazy(() => AdditionalContacts$.outboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PatchCompaniesIdCompaniesRequestCustomFields$.outboundSchema))
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -1034,8 +1349,10 @@ export namespace PatchCompaniesIdRequestBody$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.industry === undefined ? null : { industry: v.industry }),
                 ...(v.address === undefined ? null : { address: v.address }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
@@ -1067,6 +1384,9 @@ export namespace PatchCompaniesIdRequestBody$ {
                     ? null
                     : { regulatoryStatus: v.regulatoryStatus }),
                 ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }
@@ -1075,7 +1395,6 @@ export namespace PatchCompaniesIdRequestBody$ {
 export namespace PatchCompaniesIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchCompaniesIdRequestBody$.Inbound | undefined;
     };
@@ -1083,14 +1402,12 @@ export namespace PatchCompaniesIdRequest$ {
     export const inboundSchema: z.ZodType<PatchCompaniesIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchCompaniesIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -1098,7 +1415,6 @@ export namespace PatchCompaniesIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchCompaniesIdRequestBody$.Outbound | undefined;
     };
@@ -1106,14 +1422,12 @@ export namespace PatchCompaniesIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCompaniesIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchCompaniesIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

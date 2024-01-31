@@ -10,10 +10,6 @@ export type GetContactsIdRequest = {
      */
     id: string;
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -26,6 +22,30 @@ export enum GetContactsIdStatusCode {
 }
 
 export enum GetContactsIdType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type GetContactsIdEmails = {
+    email?: string | undefined;
+    type?: GetContactsIdType | undefined;
+};
+
+export enum GetContactsIdContactsType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type GetContactsIdPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: GetContactsIdContactsType | undefined;
+};
+
+export enum GetContactsIdContactsResponseType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -78,13 +98,13 @@ export type GetContactsIdAddress = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: GetContactsIdType | undefined;
+    type?: GetContactsIdContactsResponseType | undefined;
     geoLocation?: GetContactsIdGeoLocation | undefined;
     customFields?: Array<GetContactsIdContactsResponseCustomFields> | undefined;
     subdivisionCode?: string | undefined;
 };
 
-export enum GetContactsIdContactsType {
+export enum GetContactsIdContactsResponse200Type {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -113,7 +133,7 @@ export type GetContactsIdAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: GetContactsIdContactsType | undefined;
+    type?: GetContactsIdContactsResponse200Type | undefined;
     geoLocation?: GetContactsIdContactsGeoLocation | undefined;
     customFields?: Array<GetContactsIdContactsCustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -182,7 +202,7 @@ export enum GetContactsIdGender {
     PreferNotToSay = "Prefer not to say",
 }
 
-export enum GetContactsIdContactsResponse200ApplicationJSONResponseBodyType {
+export enum GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -211,7 +231,7 @@ export type GetContactsIdContactsAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType | undefined;
+    type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType | undefined;
     geoLocation?: GetContactsIdContactsResponseGeoLocation | undefined;
     customFields?: Array<GetContactsIdContactsResponse200CustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -237,7 +257,7 @@ export type GetContactsIdPreferences = {
     communications?: GetContactsIdCommunications | undefined;
 };
 
-export enum GetContactsIdContactsResponse200Type {
+export enum GetContactsIdContactsResponse200ApplicationJSONResponseBodyType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -248,7 +268,7 @@ export enum GetContactsIdContactsResponse200Type {
     Other = "other",
 }
 
-export enum GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType {
+export enum GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType {
     String = "String",
     Number = "Number",
     Boolean = "Boolean",
@@ -261,7 +281,9 @@ export type GetContactsIdContactsAdditionalInfo = {
     id?: string | undefined;
     key?: string | undefined;
     value?: string | undefined;
-    type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
+    type?:
+        | GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+        | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
     entityId?: string | undefined;
@@ -269,7 +291,7 @@ export type GetContactsIdContactsAdditionalInfo = {
 };
 
 export type GetContactsIdSocialLinks = {
-    type?: GetContactsIdContactsResponse200Type | undefined;
+    type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -315,7 +337,7 @@ export type GetContactsIdSso = {
     deleted?: boolean | undefined;
 };
 
-export enum GetContactsIdContactsResponse200ApplicationJSONType {
+export enum GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType {
     CreditCard = "CreditCard",
     PayPal = "PayPal",
     BankTransfer = "BankTransfer",
@@ -324,7 +346,7 @@ export enum GetContactsIdContactsResponse200ApplicationJSONType {
 
 export type GetContactsIdPaymentMethods = {
     id?: string | undefined;
-    type?: GetContactsIdContactsResponse200ApplicationJSONType | undefined;
+    type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
     details?: string | undefined;
     isDefault?: boolean | undefined;
 };
@@ -471,7 +493,7 @@ export type GetContactsIdNotes = {
     metadata?: Array<string> | undefined;
 };
 
-export enum GetContactsIdContactsResponseType {
+export enum GetContactsIdContactsResponse200ApplicationJSONType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -485,7 +507,7 @@ export enum GetContactsIdContactsResponseType {
 export type GetContactsIdAdditionalInfo = {};
 
 export type GetContactsIdSocialProfiles = {
-    type?: GetContactsIdContactsResponseType | undefined;
+    type?: GetContactsIdContactsResponse200ApplicationJSONType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -519,21 +541,25 @@ export type GetContactsIdUnified = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<GetContactsIdEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<GetContactsIdPhones> | undefined;
     address?: GetContactsIdAddress | undefined;
     addresses?: Array<GetContactsIdAddresses> | undefined;
-    birthday?: number | undefined;
+    birthday?: Date | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: GetContactsIdNotes | undefined;
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<GetContactsIdSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<GetContactsIdCustomFields> | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type GetContactsIdPassthrough = {};
@@ -598,40 +624,34 @@ export type GetContactsIdResponse = {
 export namespace GetContactsIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetContactsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -642,6 +662,98 @@ export const GetContactsIdStatusCode$ = z.nativeEnum(GetContactsIdStatusCode);
 
 /** @internal */
 export const GetContactsIdType$ = z.nativeEnum(GetContactsIdType);
+
+/** @internal */
+export namespace GetContactsIdEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: GetContactsIdType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<GetContactsIdEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: GetContactsIdType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: GetContactsIdType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsIdEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: GetContactsIdType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const GetContactsIdContactsType$ = z.nativeEnum(GetContactsIdContactsType);
+
+/** @internal */
+export namespace GetContactsIdPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: GetContactsIdContactsType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<GetContactsIdPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: GetContactsIdContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: GetContactsIdContactsType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsIdPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: GetContactsIdContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const GetContactsIdContactsResponseType$ = z.nativeEnum(GetContactsIdContactsResponseType);
 
 /** @internal */
 export namespace GetContactsIdGeoLocation$ {
@@ -801,7 +913,7 @@ export namespace GetContactsIdAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetContactsIdType | undefined;
+        type?: GetContactsIdContactsResponseType | undefined;
         geoLocation?: GetContactsIdGeoLocation$.Inbound | undefined;
         customFields?: Array<GetContactsIdContactsResponseCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -827,7 +939,7 @@ export namespace GetContactsIdAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetContactsIdType$.optional(),
+            type: GetContactsIdContactsResponseType$.optional(),
             geoLocation: z.lazy(() => GetContactsIdGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => GetContactsIdContactsResponseCustomFields$.inboundSchema))
@@ -884,7 +996,7 @@ export namespace GetContactsIdAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetContactsIdType | undefined;
+        type?: GetContactsIdContactsResponseType | undefined;
         geoLocation?: GetContactsIdGeoLocation$.Outbound | undefined;
         customFields?: Array<GetContactsIdContactsResponseCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -910,7 +1022,7 @@ export namespace GetContactsIdAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetContactsIdType$.optional(),
+            type: GetContactsIdContactsResponseType$.optional(),
             geoLocation: z.lazy(() => GetContactsIdGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => GetContactsIdContactsResponseCustomFields$.outboundSchema))
@@ -950,7 +1062,9 @@ export namespace GetContactsIdAddress$ {
 }
 
 /** @internal */
-export const GetContactsIdContactsType$ = z.nativeEnum(GetContactsIdContactsType);
+export const GetContactsIdContactsResponse200Type$ = z.nativeEnum(
+    GetContactsIdContactsResponse200Type
+);
 
 /** @internal */
 export namespace GetContactsIdContactsGeoLocation$ {
@@ -1008,7 +1122,7 @@ export namespace GetContactsIdAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetContactsIdContactsType | undefined;
+        type?: GetContactsIdContactsResponse200Type | undefined;
         geoLocation?: GetContactsIdContactsGeoLocation$.Inbound | undefined;
         customFields?: Array<GetContactsIdContactsCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1034,7 +1148,7 @@ export namespace GetContactsIdAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetContactsIdContactsType$.optional(),
+            type: GetContactsIdContactsResponse200Type$.optional(),
             geoLocation: z.lazy(() => GetContactsIdContactsGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => GetContactsIdContactsCustomFields$.inboundSchema))
@@ -1091,7 +1205,7 @@ export namespace GetContactsIdAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetContactsIdContactsType | undefined;
+        type?: GetContactsIdContactsResponse200Type | undefined;
         geoLocation?: GetContactsIdContactsGeoLocation$.Outbound | undefined;
         customFields?: Array<GetContactsIdContactsCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1117,7 +1231,7 @@ export namespace GetContactsIdAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetContactsIdContactsType$.optional(),
+            type: GetContactsIdContactsResponse200Type$.optional(),
             geoLocation: z.lazy(() => GetContactsIdContactsGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => GetContactsIdContactsCustomFields$.outboundSchema))
@@ -1387,9 +1501,8 @@ export namespace GetContactsIdCoverPhoto$ {
 export const GetContactsIdGender$ = z.nativeEnum(GetContactsIdGender);
 
 /** @internal */
-export const GetContactsIdContactsResponse200ApplicationJSONResponseBodyType$ = z.nativeEnum(
-    GetContactsIdContactsResponse200ApplicationJSONResponseBodyType
-);
+export const GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$ =
+    z.nativeEnum(GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType);
 
 /** @internal */
 export namespace GetContactsIdContactsResponseGeoLocation$ {
@@ -1450,7 +1563,9 @@ export namespace GetContactsIdContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType | undefined;
+        type?:
+            | GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType
+            | undefined;
         geoLocation?: GetContactsIdContactsResponseGeoLocation$.Inbound | undefined;
         customFields?: Array<GetContactsIdContactsResponse200CustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1476,7 +1591,7 @@ export namespace GetContactsIdContactsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$.optional(),
             geoLocation: z
                 .lazy(() => GetContactsIdContactsResponseGeoLocation$.inboundSchema)
                 .optional(),
@@ -1535,7 +1650,9 @@ export namespace GetContactsIdContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType | undefined;
+        type?:
+            | GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType
+            | undefined;
         geoLocation?: GetContactsIdContactsResponseGeoLocation$.Outbound | undefined;
         customFields?: Array<GetContactsIdContactsResponse200CustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1562,7 +1679,7 @@ export namespace GetContactsIdContactsAddresses$ {
                 postalCodeExtension: z.string().optional(),
                 country: z.string().optional(),
                 countryCode: z.string().optional(),
-                type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType$.optional(),
+                type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$.optional(),
                 geoLocation: z
                     .lazy(() => GetContactsIdContactsResponseGeoLocation$.outboundSchema)
                     .optional(),
@@ -1667,14 +1784,13 @@ export namespace GetContactsIdPreferences$ {
 }
 
 /** @internal */
-export const GetContactsIdContactsResponse200Type$ = z.nativeEnum(
-    GetContactsIdContactsResponse200Type
+export const GetContactsIdContactsResponse200ApplicationJSONResponseBodyType$ = z.nativeEnum(
+    GetContactsIdContactsResponse200ApplicationJSONResponseBodyType
 );
 
 /** @internal */
-export const GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType$ = z.nativeEnum(
-    GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType
-);
+export const GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$ =
+    z.nativeEnum(GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType);
 
 /** @internal */
 export namespace GetContactsIdContactsAdditionalInfo$ {
@@ -1682,7 +1798,9 @@ export namespace GetContactsIdContactsAdditionalInfo$ {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
+        type?:
+            | GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+            | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -1698,7 +1816,7 @@ export namespace GetContactsIdContactsAdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -1721,7 +1839,9 @@ export namespace GetContactsIdContactsAdditionalInfo$ {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
+        type?:
+            | GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+            | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -1737,7 +1857,7 @@ export namespace GetContactsIdContactsAdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -1760,7 +1880,7 @@ export namespace GetContactsIdContactsAdditionalInfo$ {
 /** @internal */
 export namespace GetContactsIdSocialLinks$ {
     export type Inbound = {
-        type?: GetContactsIdContactsResponse200Type | undefined;
+        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1775,7 +1895,7 @@ export namespace GetContactsIdSocialLinks$ {
 
     export const inboundSchema: z.ZodType<GetContactsIdSocialLinks, z.ZodTypeDef, Inbound> = z
         .object({
-            type: GetContactsIdContactsResponse200Type$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1806,7 +1926,7 @@ export namespace GetContactsIdSocialLinks$ {
         });
 
     export type Outbound = {
-        type?: GetContactsIdContactsResponse200Type | undefined;
+        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1821,7 +1941,7 @@ export namespace GetContactsIdSocialLinks$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsIdSocialLinks> = z
         .object({
-            type: GetContactsIdContactsResponse200Type$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1964,15 +2084,15 @@ export namespace GetContactsIdSso$ {
 }
 
 /** @internal */
-export const GetContactsIdContactsResponse200ApplicationJSONType$ = z.nativeEnum(
-    GetContactsIdContactsResponse200ApplicationJSONType
+export const GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType$ = z.nativeEnum(
+    GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType
 );
 
 /** @internal */
 export namespace GetContactsIdPaymentMethods$ {
     export type Inbound = {
         id?: string | undefined;
-        type?: GetContactsIdContactsResponse200ApplicationJSONType | undefined;
+        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -1980,7 +2100,7 @@ export namespace GetContactsIdPaymentMethods$ {
     export const inboundSchema: z.ZodType<GetContactsIdPaymentMethods, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            type: GetContactsIdContactsResponse200ApplicationJSONType$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -1995,7 +2115,7 @@ export namespace GetContactsIdPaymentMethods$ {
 
     export type Outbound = {
         id?: string | undefined;
-        type?: GetContactsIdContactsResponse200ApplicationJSONType | undefined;
+        type?: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -2003,7 +2123,7 @@ export namespace GetContactsIdPaymentMethods$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsIdPaymentMethods> = z
         .object({
             id: z.string().optional(),
-            type: GetContactsIdContactsResponse200ApplicationJSONType$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -2781,7 +2901,9 @@ export namespace GetContactsIdNotes$ {
 }
 
 /** @internal */
-export const GetContactsIdContactsResponseType$ = z.nativeEnum(GetContactsIdContactsResponseType);
+export const GetContactsIdContactsResponse200ApplicationJSONType$ = z.nativeEnum(
+    GetContactsIdContactsResponse200ApplicationJSONType
+);
 
 /** @internal */
 export namespace GetContactsIdAdditionalInfo$ {
@@ -2799,7 +2921,7 @@ export namespace GetContactsIdAdditionalInfo$ {
 /** @internal */
 export namespace GetContactsIdSocialProfiles$ {
     export type Inbound = {
-        type?: GetContactsIdContactsResponseType | undefined;
+        type?: GetContactsIdContactsResponse200ApplicationJSONType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -2814,7 +2936,7 @@ export namespace GetContactsIdSocialProfiles$ {
 
     export const inboundSchema: z.ZodType<GetContactsIdSocialProfiles, z.ZodTypeDef, Inbound> = z
         .object({
-            type: GetContactsIdContactsResponseType$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -2843,7 +2965,7 @@ export namespace GetContactsIdSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: GetContactsIdContactsResponseType | undefined;
+        type?: GetContactsIdContactsResponse200ApplicationJSONType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -2858,7 +2980,7 @@ export namespace GetContactsIdSocialProfiles$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsIdSocialProfiles> = z
         .object({
-            type: GetContactsIdContactsResponseType$.optional(),
+            type: GetContactsIdContactsResponse200ApplicationJSONType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -2945,21 +3067,25 @@ export namespace GetContactsIdUnified$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetContactsIdEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetContactsIdPhones$.Inbound> | undefined;
         address?: GetContactsIdAddress$.Inbound | undefined;
         addresses?: Array<GetContactsIdAddresses$.Inbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: GetContactsIdNotes$.Inbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetContactsIdSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetContactsIdCustomFields$.Inbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetContactsIdUnified, z.ZodTypeDef, Inbound> = z
@@ -2967,14 +3093,19 @@ export namespace GetContactsIdUnified$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetContactsIdEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetContactsIdPhones$.inboundSchema)).optional(),
             address: z.lazy(() => GetContactsIdAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetContactsIdAddresses$.inboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => GetContactsIdNotes$.inboundSchema).optional(),
@@ -2983,8 +3114,19 @@ export namespace GetContactsIdUnified$ {
             socialProfiles: z
                 .array(z.lazy(() => GetContactsIdSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => GetContactsIdCustomFields$.inboundSchema))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
                 .optional(),
         })
         .transform((v) => {
@@ -2992,10 +3134,11 @@ export namespace GetContactsIdUnified$ {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -3006,7 +3149,10 @@ export namespace GetContactsIdUnified$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -3014,21 +3160,25 @@ export namespace GetContactsIdUnified$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetContactsIdEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetContactsIdPhones$.Outbound> | undefined;
         address?: GetContactsIdAddress$.Outbound | undefined;
         addresses?: Array<GetContactsIdAddresses$.Outbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: GetContactsIdNotes$.Outbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetContactsIdSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetContactsIdCustomFields$.Outbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsIdUnified> = z
@@ -3036,14 +3186,18 @@ export namespace GetContactsIdUnified$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetContactsIdEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetContactsIdPhones$.outboundSchema)).optional(),
             address: z.lazy(() => GetContactsIdAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetContactsIdAddresses$.outboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => GetContactsIdNotes$.outboundSchema).optional(),
@@ -3052,8 +3206,17 @@ export namespace GetContactsIdUnified$ {
             socialProfiles: z
                 .array(z.lazy(() => GetContactsIdSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => GetContactsIdCustomFields$.outboundSchema))
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
                 .optional(),
         })
         .transform((v) => {
@@ -3061,10 +3224,11 @@ export namespace GetContactsIdUnified$ {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -3075,7 +3239,10 @@ export namespace GetContactsIdUnified$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }

@@ -219,12 +219,12 @@ export type PatchUsersIdRequestBody = {
     profilePicture?: PatchUsersIdProfilePicture | undefined;
     coverPhoto?: PatchUsersIdCoverPhoto | undefined;
     gender?: PatchUsersIdGender | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     phoneNumber?: string | undefined;
     isActive?: boolean | undefined;
-    lastLogin?: number | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    lastLogin?: Date | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     addresses?: Array<PatchUsersIdAddresses> | undefined;
     roles?: Array<PatchUsersIdRoles> | undefined;
     preferences?: PatchUsersIdPreferences | undefined;
@@ -241,10 +241,6 @@ export type PatchUsersIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -1150,12 +1146,12 @@ export namespace PatchUsersIdRequestBody$ {
         profilePicture?: PatchUsersIdProfilePicture$.Inbound | undefined;
         coverPhoto?: PatchUsersIdCoverPhoto$.Inbound | undefined;
         gender?: PatchUsersIdGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<PatchUsersIdAddresses$.Inbound> | undefined;
         roles?: Array<PatchUsersIdRoles> | undefined;
         preferences?: PatchUsersIdPreferences$.Inbound | undefined;
@@ -1179,12 +1175,28 @@ export namespace PatchUsersIdRequestBody$ {
             profilePicture: z.lazy(() => PatchUsersIdProfilePicture$.inboundSchema).optional(),
             coverPhoto: z.lazy(() => PatchUsersIdCoverPhoto$.inboundSchema).optional(),
             gender: PatchUsersIdGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => PatchUsersIdAddresses$.inboundSchema)).optional(),
             roles: z.array(PatchUsersIdRoles$).optional(),
             preferences: z.lazy(() => PatchUsersIdPreferences$.inboundSchema).optional(),
@@ -1236,12 +1248,12 @@ export namespace PatchUsersIdRequestBody$ {
         profilePicture?: PatchUsersIdProfilePicture$.Outbound | undefined;
         coverPhoto?: PatchUsersIdCoverPhoto$.Outbound | undefined;
         gender?: PatchUsersIdGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<PatchUsersIdAddresses$.Outbound> | undefined;
         roles?: Array<PatchUsersIdRoles> | undefined;
         preferences?: PatchUsersIdPreferences$.Outbound | undefined;
@@ -1265,12 +1277,24 @@ export namespace PatchUsersIdRequestBody$ {
             profilePicture: z.lazy(() => PatchUsersIdProfilePicture$.outboundSchema).optional(),
             coverPhoto: z.lazy(() => PatchUsersIdCoverPhoto$.outboundSchema).optional(),
             gender: PatchUsersIdGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => PatchUsersIdAddresses$.outboundSchema)).optional(),
             roles: z.array(PatchUsersIdRoles$).optional(),
             preferences: z.lazy(() => PatchUsersIdPreferences$.outboundSchema).optional(),
@@ -1316,7 +1340,6 @@ export namespace PatchUsersIdRequestBody$ {
 export namespace PatchUsersIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchUsersIdRequestBody$.Inbound | undefined;
     };
@@ -1324,14 +1347,12 @@ export namespace PatchUsersIdRequest$ {
     export const inboundSchema: z.ZodType<PatchUsersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchUsersIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -1339,7 +1360,6 @@ export namespace PatchUsersIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchUsersIdRequestBody$.Outbound | undefined;
     };
@@ -1347,14 +1367,12 @@ export namespace PatchUsersIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchUsersIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchUsersIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

@@ -10,488 +10,496 @@ import * as errors from "../models/errors";
 import * as operations from "../models/operations";
 
 export class Notes extends ClientSDK {
-  private readonly options$: SDKOptions;
+    private readonly options$: SDKOptions;
 
-  constructor(options: SDKOptions = {}) {
-    super({
-      client: options.httpClient || new HTTPClient(),
-      baseURL: serverURLFromOptions(options),
-    });
+    constructor(options: SDKOptions = {}) {
+        super({
+            client: options.httpClient || new HTTPClient(),
+            baseURL: serverURLFromOptions(options),
+        });
 
-    this.options$ = options;
-    void this.options$;
-  }
-  /**
-   * Get notes
-   *
-   * @remarks
-   * Get a single notes record
-   */
-  async get(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.GetNotesIdResponse> {
-    const input$: operations.GetNotesIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
-
-    const payload$ = operations.GetNotesIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
-        }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetNotesIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        this.options$ = options;
+        void this.options$;
     }
-  }
+    /**
+     * Get notes
+     *
+     * @remarks
+     * Get a single notes record
+     */
+    async get(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetNotesIdResponse> {
+        const input$: operations.GetNotesIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-  /**
-   * Delete notes
-   *
-   * @remarks
-   * Delete a single notes record
-   */
-  async delete(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.DeleteNotesIdResponse> {
-    const input$: operations.DeleteNotesIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+        const payload$ = operations.GetNotesIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const payload$ =
-      operations.DeleteNotesIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
+        const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
 
-    const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "delete", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "GET",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.DeleteNotesIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Update notes
-   *
-   * @remarks
-   * Update a single notes record
-   */
-  async update(
-    connectionKey: string,
-    { id }: { id: string },
-    requestBody?: operations.PatchNotesIdRequestBody | undefined,
-    options?: RequestOptions
-  ): Promise<operations.PatchNotesIdResponse> {
-    const input$: operations.PatchNotesIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.PatchNotesIdRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetNotesIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "patch", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PatchNotesIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * List notes
-   *
-   * @remarks
-   * Get all notes records
-   */
-  async list(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetNotesResponse> {
-    const input$: operations.GetNotesRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Delete notes
+     *
+     * @remarks
+     * Delete a single notes record
+     */
+    async delete(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.DeleteNotesIdResponse> {
+        const input$: operations.DeleteNotesIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-    const payload$ = operations.GetNotesRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.DeleteNotesIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const path$ = this.templateURLComponent("/notes")();
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "DELETE",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetNotesResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Create notes
-   *
-   * @remarks
-   * Create a single notes record
-   */
-  async create(
-    connectionKey: string,
-    requestBody: operations.PostNotesRequestBody,
-    options?: RequestOptions
-  ): Promise<operations.PostNotesResponse> {
-    const input$: operations.PostNotesRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ = operations.PostNotesRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const path$ = this.templateURLComponent("/notes")();
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.DeleteNotesIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "post", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PostNotesResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * Get notes count
-   *
-   * @remarks
-   * Get the count of notes records
-   */
-  async count(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetNotesCountResponse> {
-    const input$: operations.GetNotesCountRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Update notes
+     *
+     * @remarks
+     * Update a single notes record
+     */
+    async update(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        requestBody?: operations.PatchNotesIdRequestBody | undefined,
+        options?: RequestOptions
+    ): Promise<operations.PatchNotesIdResponse> {
+        const input$: operations.PatchNotesIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
 
-    const payload$ =
-      operations.GetNotesCountRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.PatchNotesIdRequest$.outboundSchema.parse(input$);
 
-    const path$ = this.templateURLComponent("/notes/count")();
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
+
+        const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "PATCH",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetNotesCountResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PatchNotesIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
     }
-  }
+
+    /**
+     * List notes
+     *
+     * @remarks
+     * Get all notes records
+     */
+    async list(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetNotesResponse> {
+        const input$: operations.GetNotesRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetNotesRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/notes")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "GET",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetNotesResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Create notes
+     *
+     * @remarks
+     * Create a single notes record
+     */
+    async create(
+        xIntegrationosConnectionKey: string,
+        requestBody: operations.PostNotesRequestBody,
+        options?: RequestOptions
+    ): Promise<operations.PostNotesResponse> {
+        const input$: operations.PostNotesRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.PostNotesRequest$.outboundSchema.parse(input$);
+
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+
+        const path$ = this.templateURLComponent("/notes")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "POST",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PostNotesResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Get notes count
+     *
+     * @remarks
+     * Get the count of notes records
+     */
+    async count(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetNotesCountResponse> {
+        const input$: operations.GetNotesCountRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetNotesCountRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/notes/count")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "GET",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetNotesCountResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
 }

@@ -10,10 +10,6 @@ export type GetLeadsIdRequest = {
      */
     id: string;
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -48,11 +44,12 @@ export type GetLeadsIdOpportunities = {
     closeDate?: number | undefined;
     type?: string | undefined;
     nextStep?: string | undefined;
+    leadId?: string | undefined;
     leadSource?: string | undefined;
     isClosed?: boolean | undefined;
     isWon?: boolean | undefined;
-    createdDate?: number | undefined;
-    lastModifiedDate?: number | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
     lostReason?: string | undefined;
     campaign?: GetLeadsIdCampaign | undefined;
     account?: GetLeadsIdAccount | undefined;
@@ -63,18 +60,29 @@ export type GetLeadsIdOpportunities = {
     customFields?: Array<GetLeadsIdLeadsResponseCustomFields> | undefined;
 };
 
-export enum GetLeadsIdEmailType {
-    Work = "Work",
-    Personal = "Personal",
-    Other = "Other",
+export enum GetLeadsIdType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
 }
 
-export enum GetLeadsIdPhoneType {
-    Work = "Work",
-    Mobile = "Mobile",
-    Home = "Home",
-    Other = "Other",
+export type GetLeadsIdEmails = {
+    email?: string | undefined;
+    type?: GetLeadsIdType | undefined;
+};
+
+export enum GetLeadsIdLeadsType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
 }
+
+export type GetLeadsIdPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: GetLeadsIdLeadsType | undefined;
+};
 
 export type GetLeadsIdLeadSource = {
     sourceId?: string | undefined;
@@ -93,7 +101,7 @@ export enum GetLeadsIdLeadStatus {
     BadTiming = "BadTiming",
 }
 
-export enum GetLeadsIdType {
+export enum GetLeadsIdLeadsResponseType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -122,7 +130,7 @@ export type GetLeadsIdAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: GetLeadsIdType | undefined;
+    type?: GetLeadsIdLeadsResponseType | undefined;
     geoLocation?: GetLeadsIdGeoLocation | undefined;
     customFields?: Array<GetLeadsIdLeadsCustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -136,7 +144,7 @@ export enum GetLeadsIdPreferredContactMethod {
     InPerson = "InPerson",
 }
 
-export enum GetLeadsIdLeadsType {
+export enum GetLeadsIdLeadsResponse200Type {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -150,7 +158,7 @@ export enum GetLeadsIdLeadsType {
 export type GetLeadsIdAdditionalInfo = {};
 
 export type GetLeadsIdSocialProfiles = {
-    type?: GetLeadsIdLeadsType | undefined;
+    type?: GetLeadsIdLeadsResponse200Type | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -228,11 +236,11 @@ export type GetLeadsIdUnified = {
     firstName?: string | undefined;
     middleName?: string | undefined;
     lastName?: string | undefined;
-    email?: string | undefined;
     opportunities?: Array<GetLeadsIdOpportunities> | undefined;
-    emailType?: GetLeadsIdEmailType | undefined;
-    phone?: string | undefined;
-    phoneType?: GetLeadsIdPhoneType | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<GetLeadsIdEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<GetLeadsIdPhones> | undefined;
     companyName?: string | undefined;
     jobTitle?: string | undefined;
     website?: string | undefined;
@@ -242,8 +250,8 @@ export type GetLeadsIdUnified = {
     numberOfEmployees?: number | undefined;
     annualRevenue?: number | undefined;
     addresses?: Array<GetLeadsIdAddresses> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     preferredContactMethod?: GetLeadsIdPreferredContactMethod | undefined;
     socialProfiles?: Array<GetLeadsIdSocialProfiles> | undefined;
     customFields?: Array<GetLeadsIdCustomFields> | undefined;
@@ -312,40 +320,34 @@ export type GetLeadsIdResponse = {
 export namespace GetLeadsIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetLeadsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -449,11 +451,12 @@ export namespace GetLeadsIdOpportunities$ {
         closeDate?: number | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
         lostReason?: string | undefined;
         campaign?: GetLeadsIdCampaign$.Inbound | undefined;
         account?: GetLeadsIdAccount$.Inbound | undefined;
@@ -476,11 +479,12 @@ export namespace GetLeadsIdOpportunities$ {
             closeDate: z.number().optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => GetLeadsIdCampaign$.inboundSchema).optional(),
             account: z.lazy(() => GetLeadsIdAccount$.inboundSchema).optional(),
@@ -506,13 +510,12 @@ export namespace GetLeadsIdOpportunities$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),
@@ -535,11 +538,12 @@ export namespace GetLeadsIdOpportunities$ {
         closeDate?: number | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
         lostReason?: string | undefined;
         campaign?: GetLeadsIdCampaign$.Outbound | undefined;
         account?: GetLeadsIdAccount$.Outbound | undefined;
@@ -562,11 +566,12 @@ export namespace GetLeadsIdOpportunities$ {
             closeDate: z.number().optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => GetLeadsIdCampaign$.outboundSchema).optional(),
             account: z.lazy(() => GetLeadsIdAccount$.outboundSchema).optional(),
@@ -592,13 +597,12 @@ export namespace GetLeadsIdOpportunities$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),
@@ -612,10 +616,96 @@ export namespace GetLeadsIdOpportunities$ {
 }
 
 /** @internal */
-export const GetLeadsIdEmailType$ = z.nativeEnum(GetLeadsIdEmailType);
+export const GetLeadsIdType$ = z.nativeEnum(GetLeadsIdType);
 
 /** @internal */
-export const GetLeadsIdPhoneType$ = z.nativeEnum(GetLeadsIdPhoneType);
+export namespace GetLeadsIdEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: GetLeadsIdType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<GetLeadsIdEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: GetLeadsIdType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: GetLeadsIdType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsIdEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: GetLeadsIdType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const GetLeadsIdLeadsType$ = z.nativeEnum(GetLeadsIdLeadsType);
+
+/** @internal */
+export namespace GetLeadsIdPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: GetLeadsIdLeadsType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<GetLeadsIdPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: GetLeadsIdLeadsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: GetLeadsIdLeadsType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsIdPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: GetLeadsIdLeadsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
 
 /** @internal */
 export namespace GetLeadsIdLeadSource$ {
@@ -664,7 +754,7 @@ export namespace GetLeadsIdLeadSource$ {
 export const GetLeadsIdLeadStatus$ = z.nativeEnum(GetLeadsIdLeadStatus);
 
 /** @internal */
-export const GetLeadsIdType$ = z.nativeEnum(GetLeadsIdType);
+export const GetLeadsIdLeadsResponseType$ = z.nativeEnum(GetLeadsIdLeadsResponseType);
 
 /** @internal */
 export namespace GetLeadsIdGeoLocation$ {
@@ -714,7 +804,7 @@ export namespace GetLeadsIdAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetLeadsIdType | undefined;
+        type?: GetLeadsIdLeadsResponseType | undefined;
         geoLocation?: GetLeadsIdGeoLocation$.Inbound | undefined;
         customFields?: Array<GetLeadsIdLeadsCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -740,7 +830,7 @@ export namespace GetLeadsIdAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetLeadsIdType$.optional(),
+            type: GetLeadsIdLeadsResponseType$.optional(),
             geoLocation: z.lazy(() => GetLeadsIdGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => GetLeadsIdLeadsCustomFields$.inboundSchema))
@@ -797,7 +887,7 @@ export namespace GetLeadsIdAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetLeadsIdType | undefined;
+        type?: GetLeadsIdLeadsResponseType | undefined;
         geoLocation?: GetLeadsIdGeoLocation$.Outbound | undefined;
         customFields?: Array<GetLeadsIdLeadsCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -823,7 +913,7 @@ export namespace GetLeadsIdAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetLeadsIdType$.optional(),
+            type: GetLeadsIdLeadsResponseType$.optional(),
             geoLocation: z.lazy(() => GetLeadsIdGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => GetLeadsIdLeadsCustomFields$.outboundSchema))
@@ -866,7 +956,7 @@ export namespace GetLeadsIdAddresses$ {
 export const GetLeadsIdPreferredContactMethod$ = z.nativeEnum(GetLeadsIdPreferredContactMethod);
 
 /** @internal */
-export const GetLeadsIdLeadsType$ = z.nativeEnum(GetLeadsIdLeadsType);
+export const GetLeadsIdLeadsResponse200Type$ = z.nativeEnum(GetLeadsIdLeadsResponse200Type);
 
 /** @internal */
 export namespace GetLeadsIdAdditionalInfo$ {
@@ -884,7 +974,7 @@ export namespace GetLeadsIdAdditionalInfo$ {
 /** @internal */
 export namespace GetLeadsIdSocialProfiles$ {
     export type Inbound = {
-        type?: GetLeadsIdLeadsType | undefined;
+        type?: GetLeadsIdLeadsResponse200Type | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -899,7 +989,7 @@ export namespace GetLeadsIdSocialProfiles$ {
 
     export const inboundSchema: z.ZodType<GetLeadsIdSocialProfiles, z.ZodTypeDef, Inbound> = z
         .object({
-            type: GetLeadsIdLeadsType$.optional(),
+            type: GetLeadsIdLeadsResponse200Type$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -928,7 +1018,7 @@ export namespace GetLeadsIdSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: GetLeadsIdLeadsType | undefined;
+        type?: GetLeadsIdLeadsResponse200Type | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -943,7 +1033,7 @@ export namespace GetLeadsIdSocialProfiles$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsIdSocialProfiles> = z
         .object({
-            type: GetLeadsIdLeadsType$.optional(),
+            type: GetLeadsIdLeadsResponse200Type$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1202,11 +1292,11 @@ export namespace GetLeadsIdUnified$ {
         firstName?: string | undefined;
         middleName?: string | undefined;
         lastName?: string | undefined;
-        email?: string | undefined;
         opportunities?: Array<GetLeadsIdOpportunities$.Inbound> | undefined;
-        emailType?: GetLeadsIdEmailType | undefined;
-        phone?: string | undefined;
-        phoneType?: GetLeadsIdPhoneType | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetLeadsIdEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetLeadsIdPhones$.Inbound> | undefined;
         companyName?: string | undefined;
         jobTitle?: string | undefined;
         website?: string | undefined;
@@ -1216,8 +1306,8 @@ export namespace GetLeadsIdUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<GetLeadsIdAddresses$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: GetLeadsIdPreferredContactMethod | undefined;
         socialProfiles?: Array<GetLeadsIdSocialProfiles$.Inbound> | undefined;
         customFields?: Array<GetLeadsIdCustomFields$.Inbound> | undefined;
@@ -1231,11 +1321,11 @@ export namespace GetLeadsIdUnified$ {
             firstName: z.string().optional(),
             middleName: z.string().optional(),
             lastName: z.string().optional(),
-            email: z.string().optional(),
             opportunities: z.array(z.lazy(() => GetLeadsIdOpportunities$.inboundSchema)).optional(),
-            emailType: GetLeadsIdEmailType$.optional(),
-            phone: z.string().optional(),
-            phoneType: GetLeadsIdPhoneType$.optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetLeadsIdEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetLeadsIdPhones$.inboundSchema)).optional(),
             companyName: z.string().optional(),
             jobTitle: z.string().optional(),
             website: z.string().optional(),
@@ -1245,8 +1335,16 @@ export namespace GetLeadsIdUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => GetLeadsIdAddresses$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredContactMethod: GetLeadsIdPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => GetLeadsIdSocialProfiles$.inboundSchema))
@@ -1261,11 +1359,11 @@ export namespace GetLeadsIdUnified$ {
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.middleName === undefined ? null : { middleName: v.middleName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
-                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.companyName === undefined ? null : { companyName: v.companyName }),
                 ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
                 ...(v.website === undefined ? null : { website: v.website }),
@@ -1294,11 +1392,11 @@ export namespace GetLeadsIdUnified$ {
         firstName?: string | undefined;
         middleName?: string | undefined;
         lastName?: string | undefined;
-        email?: string | undefined;
         opportunities?: Array<GetLeadsIdOpportunities$.Outbound> | undefined;
-        emailType?: GetLeadsIdEmailType | undefined;
-        phone?: string | undefined;
-        phoneType?: GetLeadsIdPhoneType | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetLeadsIdEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetLeadsIdPhones$.Outbound> | undefined;
         companyName?: string | undefined;
         jobTitle?: string | undefined;
         website?: string | undefined;
@@ -1308,8 +1406,8 @@ export namespace GetLeadsIdUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<GetLeadsIdAddresses$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: GetLeadsIdPreferredContactMethod | undefined;
         socialProfiles?: Array<GetLeadsIdSocialProfiles$.Outbound> | undefined;
         customFields?: Array<GetLeadsIdCustomFields$.Outbound> | undefined;
@@ -1323,13 +1421,13 @@ export namespace GetLeadsIdUnified$ {
             firstName: z.string().optional(),
             middleName: z.string().optional(),
             lastName: z.string().optional(),
-            email: z.string().optional(),
             opportunities: z
                 .array(z.lazy(() => GetLeadsIdOpportunities$.outboundSchema))
                 .optional(),
-            emailType: GetLeadsIdEmailType$.optional(),
-            phone: z.string().optional(),
-            phoneType: GetLeadsIdPhoneType$.optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetLeadsIdEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetLeadsIdPhones$.outboundSchema)).optional(),
             companyName: z.string().optional(),
             jobTitle: z.string().optional(),
             website: z.string().optional(),
@@ -1339,8 +1437,14 @@ export namespace GetLeadsIdUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => GetLeadsIdAddresses$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredContactMethod: GetLeadsIdPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => GetLeadsIdSocialProfiles$.outboundSchema))
@@ -1355,11 +1459,11 @@ export namespace GetLeadsIdUnified$ {
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.middleName === undefined ? null : { middleName: v.middleName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.opportunities === undefined ? null : { opportunities: v.opportunities }),
-                ...(v.emailType === undefined ? null : { emailType: v.emailType }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.phoneType === undefined ? null : { phoneType: v.phoneType }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.companyName === undefined ? null : { companyName: v.companyName }),
                 ...(v.jobTitle === undefined ? null : { jobTitle: v.jobTitle }),
                 ...(v.website === undefined ? null : { website: v.website }),

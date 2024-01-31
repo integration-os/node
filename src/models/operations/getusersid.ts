@@ -10,10 +10,6 @@ export type GetUsersIdRequest = {
      */
     id: string;
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -240,12 +236,12 @@ export type GetUsersIdUnified = {
     profilePicture?: GetUsersIdProfilePicture | undefined;
     coverPhoto?: GetUsersIdCoverPhoto | undefined;
     gender?: GetUsersIdGender | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     phoneNumber?: string | undefined;
     isActive?: boolean | undefined;
-    lastLogin?: number | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    lastLogin?: Date | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     addresses?: Array<GetUsersIdAddresses> | undefined;
     roles?: Array<GetUsersIdRoles> | undefined;
     preferences?: GetUsersIdPreferences | undefined;
@@ -319,40 +315,34 @@ export type GetUsersIdResponse = {
 export namespace GetUsersIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetUsersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetUsersIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -1189,12 +1179,12 @@ export namespace GetUsersIdUnified$ {
         profilePicture?: GetUsersIdProfilePicture$.Inbound | undefined;
         coverPhoto?: GetUsersIdCoverPhoto$.Inbound | undefined;
         gender?: GetUsersIdGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<GetUsersIdAddresses$.Inbound> | undefined;
         roles?: Array<GetUsersIdRoles> | undefined;
         preferences?: GetUsersIdPreferences$.Inbound | undefined;
@@ -1218,12 +1208,28 @@ export namespace GetUsersIdUnified$ {
             profilePicture: z.lazy(() => GetUsersIdProfilePicture$.inboundSchema).optional(),
             coverPhoto: z.lazy(() => GetUsersIdCoverPhoto$.inboundSchema).optional(),
             gender: GetUsersIdGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => GetUsersIdAddresses$.inboundSchema)).optional(),
             roles: z.array(GetUsersIdRoles$).optional(),
             preferences: z.lazy(() => GetUsersIdPreferences$.inboundSchema).optional(),
@@ -1275,12 +1281,12 @@ export namespace GetUsersIdUnified$ {
         profilePicture?: GetUsersIdProfilePicture$.Outbound | undefined;
         coverPhoto?: GetUsersIdCoverPhoto$.Outbound | undefined;
         gender?: GetUsersIdGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<GetUsersIdAddresses$.Outbound> | undefined;
         roles?: Array<GetUsersIdRoles> | undefined;
         preferences?: GetUsersIdPreferences$.Outbound | undefined;
@@ -1304,12 +1310,24 @@ export namespace GetUsersIdUnified$ {
             profilePicture: z.lazy(() => GetUsersIdProfilePicture$.outboundSchema).optional(),
             coverPhoto: z.lazy(() => GetUsersIdCoverPhoto$.outboundSchema).optional(),
             gender: GetUsersIdGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => GetUsersIdAddresses$.outboundSchema)).optional(),
             roles: z.array(GetUsersIdRoles$).optional(),
             preferences: z.lazy(() => GetUsersIdPreferences$.outboundSchema).optional(),

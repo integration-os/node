@@ -3,7 +3,7 @@
  */
 
 import { HTTPClient, matchResponse, matchStatusCode, unpackHeaders } from "./http";
-import { SecurityState, resolveSecurity } from "./security";
+import { SecurityState, resolveSecurity, resolveGlobalSecurity } from "./security";
 import { pathToFunc } from "./url";
 import { encodeForm } from "./encodings";
 import { stringToBase64 } from "./base64";
@@ -23,14 +23,14 @@ type RequestConfig = {
 };
 
 export class ClientSDK {
-    readonly #client: HTTPClient;
+    private readonly client: HTTPClient;
     protected readonly baseURL: URL;
 
     constructor(init: { client: HTTPClient; baseURL: URL }) {
         const url = init.baseURL;
         url.pathname = url.pathname.replace(/\/+$/, "") + "/";
 
-        this.#client = init.client;
+        this.client = init.client;
         this.baseURL = url;
     }
 
@@ -92,7 +92,7 @@ export class ClientSDK {
             method,
         });
 
-        return this.#client.request(req);
+        return this.client.request(req);
     }
 
     protected unpackHeaders = unpackHeaders;
@@ -103,4 +103,5 @@ export class ClientSDK {
     protected templateURLComponent = pathToFunc;
 
     protected resolveSecurity = resolveSecurity;
+    protected resolveGlobalSecurity = resolveGlobalSecurity;
 }

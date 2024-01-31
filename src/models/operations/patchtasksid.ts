@@ -602,7 +602,7 @@ export type Watchers = {
     paymentMethods?: PatchTasksIdTasksRequestPaymentMethods | undefined;
 };
 
-export type Recipient = {};
+export type PatchTasksIdRecipient = {};
 
 export enum PatchTasksIdTasksPriority {
     High = "HIGH",
@@ -619,7 +619,7 @@ export type Notifications = {
     type?: string | undefined;
     title?: string | undefined;
     message?: string | undefined;
-    recipient?: Recipient | undefined;
+    recipient?: PatchTasksIdRecipient | undefined;
     status?: string | undefined;
     priority?: PatchTasksIdTasksPriority | undefined;
     channel?: string | undefined;
@@ -637,12 +637,12 @@ export type PatchTasksIdRequestBody = {
     description?: string | undefined;
     status?: PatchTasksIdStatus | undefined;
     priority?: PatchTasksIdPriority | undefined;
-    dueDate?: number | undefined;
+    dueDate?: Date | undefined;
     dueTimezone?: string | undefined;
     assignee?: Assignee | undefined;
     createdBy?: CreatedBy | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     labels?: Array<string> | undefined;
     comments?: Array<Comments> | undefined;
     attachments?: Array<PatchTasksIdAttachments> | undefined;
@@ -664,10 +664,6 @@ export type PatchTasksIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -3422,14 +3418,17 @@ export namespace Watchers$ {
 }
 
 /** @internal */
-export namespace Recipient$ {
+export namespace PatchTasksIdRecipient$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<Recipient, z.ZodTypeDef, Inbound> = z.object({});
+    export const inboundSchema: z.ZodType<PatchTasksIdRecipient, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
 
     export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Recipient> = z.object({});
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchTasksIdRecipient> =
+        z.object({});
 }
 
 /** @internal */
@@ -3474,7 +3473,7 @@ export namespace Notifications$ {
         type?: string | undefined;
         title?: string | undefined;
         message?: string | undefined;
-        recipient?: Recipient$.Inbound | undefined;
+        recipient?: PatchTasksIdRecipient$.Inbound | undefined;
         status?: string | undefined;
         priority?: PatchTasksIdTasksPriority | undefined;
         channel?: string | undefined;
@@ -3492,7 +3491,7 @@ export namespace Notifications$ {
             type: z.string().optional(),
             title: z.string().optional(),
             message: z.string().optional(),
-            recipient: z.lazy(() => Recipient$.inboundSchema).optional(),
+            recipient: z.lazy(() => PatchTasksIdRecipient$.inboundSchema).optional(),
             status: z.string().optional(),
             priority: PatchTasksIdTasksPriority$.optional(),
             channel: z.string().optional(),
@@ -3531,7 +3530,7 @@ export namespace Notifications$ {
         type?: string | undefined;
         title?: string | undefined;
         message?: string | undefined;
-        recipient?: Recipient$.Outbound | undefined;
+        recipient?: PatchTasksIdRecipient$.Outbound | undefined;
         status?: string | undefined;
         priority?: PatchTasksIdTasksPriority | undefined;
         channel?: string | undefined;
@@ -3549,7 +3548,7 @@ export namespace Notifications$ {
             type: z.string().optional(),
             title: z.string().optional(),
             message: z.string().optional(),
-            recipient: z.lazy(() => Recipient$.outboundSchema).optional(),
+            recipient: z.lazy(() => PatchTasksIdRecipient$.outboundSchema).optional(),
             status: z.string().optional(),
             priority: PatchTasksIdTasksPriority$.optional(),
             channel: z.string().optional(),
@@ -3594,12 +3593,12 @@ export namespace PatchTasksIdRequestBody$ {
         description?: string | undefined;
         status?: PatchTasksIdStatus | undefined;
         priority?: PatchTasksIdPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: Assignee$.Inbound | undefined;
         createdBy?: CreatedBy$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<Comments$.Inbound> | undefined;
         attachments?: Array<PatchTasksIdAttachments$.Inbound> | undefined;
@@ -3623,12 +3622,24 @@ export namespace PatchTasksIdRequestBody$ {
             description: z.string().optional(),
             status: PatchTasksIdStatus$.optional(),
             priority: PatchTasksIdPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => Assignee$.inboundSchema).optional(),
             createdBy: z.lazy(() => CreatedBy$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => Comments$.inboundSchema)).optional(),
             attachments: z.array(z.lazy(() => PatchTasksIdAttachments$.inboundSchema)).optional(),
@@ -3688,12 +3699,12 @@ export namespace PatchTasksIdRequestBody$ {
         description?: string | undefined;
         status?: PatchTasksIdStatus | undefined;
         priority?: PatchTasksIdPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: Assignee$.Outbound | undefined;
         createdBy?: CreatedBy$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<Comments$.Outbound> | undefined;
         attachments?: Array<PatchTasksIdAttachments$.Outbound> | undefined;
@@ -3717,12 +3728,21 @@ export namespace PatchTasksIdRequestBody$ {
             description: z.string().optional(),
             status: PatchTasksIdStatus$.optional(),
             priority: PatchTasksIdPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => Assignee$.outboundSchema).optional(),
             createdBy: z.lazy(() => CreatedBy$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => Comments$.outboundSchema)).optional(),
             attachments: z.array(z.lazy(() => PatchTasksIdAttachments$.outboundSchema)).optional(),
@@ -3781,7 +3801,6 @@ export namespace PatchTasksIdRequestBody$ {
 export namespace PatchTasksIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchTasksIdRequestBody$.Inbound | undefined;
     };
@@ -3789,14 +3808,12 @@ export namespace PatchTasksIdRequest$ {
     export const inboundSchema: z.ZodType<PatchTasksIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchTasksIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -3804,7 +3821,6 @@ export namespace PatchTasksIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchTasksIdRequestBody$.Outbound | undefined;
     };
@@ -3812,14 +3828,12 @@ export namespace PatchTasksIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchTasksIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchTasksIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

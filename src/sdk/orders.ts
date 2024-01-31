@@ -10,489 +10,496 @@ import * as errors from "../models/errors";
 import * as operations from "../models/operations";
 
 export class Orders extends ClientSDK {
-  private readonly options$: SDKOptions;
+    private readonly options$: SDKOptions;
 
-  constructor(options: SDKOptions = {}) {
-    super({
-      client: options.httpClient || new HTTPClient(),
-      baseURL: serverURLFromOptions(options),
-    });
+    constructor(options: SDKOptions = {}) {
+        super({
+            client: options.httpClient || new HTTPClient(),
+            baseURL: serverURLFromOptions(options),
+        });
 
-    this.options$ = options;
-    void this.options$;
-  }
-  /**
-   * Get orders
-   *
-   * @remarks
-   * Get a single orders record
-   */
-  async get(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.GetOrdersIdResponse> {
-    const input$: operations.GetOrdersIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.GetOrdersIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
-        }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetOrdersIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        this.options$ = options;
+        void this.options$;
     }
-  }
+    /**
+     * Get orders
+     *
+     * @remarks
+     * Get a single orders record
+     */
+    async get(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetOrdersIdResponse> {
+        const input$: operations.GetOrdersIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-  /**
-   * Delete orders
-   *
-   * @remarks
-   * Delete a single orders record
-   */
-  async delete(
-    connectionKey: string,
-    { id }: { id: string },
-    options?: RequestOptions
-  ): Promise<operations.DeleteOrdersIdResponse> {
-    const input$: operations.DeleteOrdersIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+        const payload$ = operations.GetOrdersIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const payload$ =
-      operations.DeleteOrdersIdRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
+        const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
 
-    const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "delete", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "GET",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.DeleteOrdersIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Update orders
-   *
-   * @remarks
-   * Update a single orders record
-   */
-  async update(
-    connectionKey: string,
-    { id }: { id: string },
-    requestBody?: operations.PatchOrdersIdRequestBody | undefined,
-    options?: RequestOptions
-  ): Promise<operations.PatchOrdersIdResponse> {
-    const input$: operations.PatchOrdersIdRequest = {
-      id: id,
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ =
-      operations.PatchOrdersIdRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const pathParams$ = {
-      id: enc$.encodeSimple("id", payload$.id, {
-        explode: false,
-        charEncoding: "percent",
-      }),
-    };
-
-    const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetOrdersIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "patch", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PatchOrdersIdResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * List orders
-   *
-   * @remarks
-   * Get all orders records
-   */
-  async list(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetOrdersResponse> {
-    const input$: operations.GetOrdersRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Delete orders
+     *
+     * @remarks
+     * Delete a single orders record
+     */
+    async delete(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.DeleteOrdersIdResponse> {
+        const input$: operations.DeleteOrdersIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
 
-    const payload$ = operations.GetOrdersRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.DeleteOrdersIdRequest$.outboundSchema.parse(input$);
+        const body$ = null;
 
-    const path$ = this.templateURLComponent("/orders")();
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "DELETE",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetOrdersResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
-    }
-  }
-
-  /**
-   * Create orders
-   *
-   * @remarks
-   * Create a single orders record
-   */
-  async create(
-    connectionKey: string,
-    requestBody: operations.PostOrdersRequestBody,
-    options?: RequestOptions
-  ): Promise<operations.PostOrdersResponse> {
-    const input$: operations.PostOrdersRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-      requestBody: requestBody,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Content-Type", "application/json");
-    headers$.set("Accept", "application/json");
-
-    const payload$ = operations.PostOrdersRequest$.outboundSchema.parse(input$);
-
-    const body$ = enc$.encodeJSON("body", payload$.RequestBody, {
-      explode: true,
-    });
-
-    const path$ = this.templateURLComponent("/orders")();
-
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.DeleteOrdersIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
         }
-      )
-    );
-
-    const response = await this.fetch$(
-      { method: "post", path: path$, headers: headers$, body: body$ },
-      options
-    );
-
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
-
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.PostOrdersResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
     }
-  }
 
-  /**
-   * Get orders count
-   *
-   * @remarks
-   * Get the count of orders records
-   */
-  async count(
-    connectionKey: string,
-    options?: RequestOptions
-  ): Promise<operations.GetOrdersCountResponse> {
-    const input$: operations.GetOrdersCountRequest = {
-      xIntegrationosSecret: this.options$.client as string,
-      xIntegrationosConnectionKey: connectionKey,
-    };
-    const headers$ = new Headers();
-    headers$.set("user-agent", SDK_METADATA.userAgent);
-    headers$.set("Accept", "application/json");
+    /**
+     * Update orders
+     *
+     * @remarks
+     * Update a single orders record
+     */
+    async update(
+        id: string,
+        xIntegrationosConnectionKey: string,
+        requestBody?: operations.PatchOrdersIdRequestBody | undefined,
+        options?: RequestOptions
+    ): Promise<operations.PatchOrdersIdResponse> {
+        const input$: operations.PatchOrdersIdRequest = {
+            id: id,
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
 
-    const payload$ =
-      operations.GetOrdersCountRequest$.outboundSchema.parse(input$);
-    const body$ = null;
+        const payload$ = operations.PatchOrdersIdRequest$.outboundSchema.parse(input$);
 
-    const path$ = this.templateURLComponent("/orders/count")();
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
 
-    headers$.set(
-      "X-INTEGRATIONOS-CONNECTION-KEY",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-CONNECTION-KEY",
-        payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
-        { explode: false, charEncoding: "none" }
-      )
-    );
-    headers$.set(
-      "X-INTEGRATIONOS-SECRET",
-      enc$.encodeSimple(
-        "X-INTEGRATIONOS-SECRET",
-        payload$["X-INTEGRATIONOS-SECRET"],
-        {
-          explode: false,
-          charEncoding: "none",
+        const pathParams$ = {
+            id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
+        };
+
+        const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
         }
-      )
-    );
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
 
-    const response = await this.fetch$(
-      { method: "get", path: path$, headers: headers$, body: body$ },
-      options
-    );
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "PATCH",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
 
-    const responseFields$ = {
-      ContentType:
-        response.headers.get("content-type") ?? "application/octet-stream",
-      StatusCode: response.status,
-      RawResponse: response,
-    };
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
 
-    if (this.matchResponse(response, 200, "application/json")) {
-      const responseBody = await response.json();
-      const result = operations.GetOrdersCountResponse$.inboundSchema.parse({
-        ...responseFields$,
-        object: responseBody,
-      });
-      return result;
-    } else {
-      const responseBody = await response.text();
-      throw new errors.SDKError(
-        "Unexpected API response",
-        response,
-        responseBody
-      );
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PatchOrdersIdResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
     }
-  }
+
+    /**
+     * List orders
+     *
+     * @remarks
+     * Get all orders records
+     */
+    async list(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetOrdersResponse> {
+        const input$: operations.GetOrdersRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetOrdersRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/orders")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "GET",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetOrdersResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Create orders
+     *
+     * @remarks
+     * Create a single orders record
+     */
+    async create(
+        xIntegrationosConnectionKey: string,
+        requestBody: operations.PostOrdersRequestBody,
+        options?: RequestOptions
+    ): Promise<operations.PostOrdersResponse> {
+        const input$: operations.PostOrdersRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+            requestBody: requestBody,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Content-Type", "application/json");
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.PostOrdersRequest$.outboundSchema.parse(input$);
+
+        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+
+        const path$ = this.templateURLComponent("/orders")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "POST",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.PostOrdersResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
+
+    /**
+     * Get orders count
+     *
+     * @remarks
+     * Get the count of orders records
+     */
+    async count(
+        xIntegrationosConnectionKey: string,
+        options?: RequestOptions
+    ): Promise<operations.GetOrdersCountResponse> {
+        const input$: operations.GetOrdersCountRequest = {
+            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
+        };
+        const headers$ = new Headers();
+        headers$.set("user-agent", SDK_METADATA.userAgent);
+        headers$.set("Accept", "application/json");
+
+        const payload$ = operations.GetOrdersCountRequest$.outboundSchema.parse(input$);
+        const body$ = null;
+
+        const path$ = this.templateURLComponent("/orders/count")();
+
+        headers$.set(
+            "X-INTEGRATIONOS-CONNECTION-KEY",
+            enc$.encodeSimple(
+                "X-INTEGRATIONOS-CONNECTION-KEY",
+                payload$["X-INTEGRATIONOS-CONNECTION-KEY"],
+                { explode: false, charEncoding: "none" }
+            )
+        );
+
+        let security$;
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
+        } else {
+            security$ = {};
+        }
+        const securitySettings$ = this.resolveGlobalSecurity(security$);
+
+        const response = await this.fetch$(
+            {
+                security: securitySettings$,
+                method: "GET",
+                path: path$,
+                headers: headers$,
+                body: body$,
+            },
+            options
+        );
+
+        const responseFields$ = {
+            ContentType: response.headers.get("content-type") ?? "application/octet-stream",
+            StatusCode: response.status,
+            RawResponse: response,
+        };
+
+        if (this.matchResponse(response, 200, "application/json")) {
+            const responseBody = await response.json();
+            const result = operations.GetOrdersCountResponse$.inboundSchema.parse({
+                ...responseFields$,
+                object: responseBody,
+            });
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
+        } else {
+            const responseBody = await response.text();
+            throw new errors.SDKError("Unexpected API response", response, responseBody);
+        }
+    }
 }

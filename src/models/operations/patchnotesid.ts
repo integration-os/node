@@ -341,10 +341,10 @@ export type PatchNotesIdRequestBody = {
     id?: string | undefined;
     title?: string | undefined;
     content?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    lastAccessed?: number | undefined;
-    reminder?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    lastAccessed?: Date | undefined;
+    reminder?: Date | undefined;
     color?: string | undefined;
     priority?: PatchNotesIdPriority | undefined;
     author?: PatchNotesIdAuthor | undefined;
@@ -361,10 +361,6 @@ export type PatchNotesIdRequest = {
      * The id of the model
      */
     id: string;
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -1857,10 +1853,10 @@ export namespace PatchNotesIdRequestBody$ {
         id?: string | undefined;
         title?: string | undefined;
         content?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        lastAccessed?: number | undefined;
-        reminder?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        lastAccessed?: string | undefined;
+        reminder?: string | undefined;
         color?: string | undefined;
         priority?: PatchNotesIdPriority | undefined;
         author?: PatchNotesIdAuthor$.Inbound | undefined;
@@ -1877,10 +1873,26 @@ export namespace PatchNotesIdRequestBody$ {
             id: z.string().optional(),
             title: z.string().optional(),
             content: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            lastAccessed: z.number().optional(),
-            reminder: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            lastAccessed: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            reminder: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             color: z.string().optional(),
             priority: PatchNotesIdPriority$.optional(),
             author: z.lazy(() => PatchNotesIdAuthor$.inboundSchema).optional(),
@@ -1916,10 +1928,10 @@ export namespace PatchNotesIdRequestBody$ {
         id?: string | undefined;
         title?: string | undefined;
         content?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        lastAccessed?: number | undefined;
-        reminder?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        lastAccessed?: string | undefined;
+        reminder?: string | undefined;
         color?: string | undefined;
         priority?: PatchNotesIdPriority | undefined;
         author?: PatchNotesIdAuthor$.Outbound | undefined;
@@ -1936,10 +1948,22 @@ export namespace PatchNotesIdRequestBody$ {
             id: z.string().optional(),
             title: z.string().optional(),
             content: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            lastAccessed: z.number().optional(),
-            reminder: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            lastAccessed: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            reminder: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             color: z.string().optional(),
             priority: PatchNotesIdPriority$.optional(),
             author: z.lazy(() => PatchNotesIdAuthor$.outboundSchema).optional(),
@@ -1976,7 +2000,6 @@ export namespace PatchNotesIdRequestBody$ {
 export namespace PatchNotesIdRequest$ {
     export type Inbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchNotesIdRequestBody$.Inbound | undefined;
     };
@@ -1984,14 +2007,12 @@ export namespace PatchNotesIdRequest$ {
     export const inboundSchema: z.ZodType<PatchNotesIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string(),
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PatchNotesIdRequestBody$.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.RequestBody === undefined ? null : { requestBody: v.RequestBody }),
             };
@@ -1999,7 +2020,6 @@ export namespace PatchNotesIdRequest$ {
 
     export type Outbound = {
         id: string;
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody?: PatchNotesIdRequestBody$.Outbound | undefined;
     };
@@ -2007,14 +2027,12 @@ export namespace PatchNotesIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchNotesIdRequest> = z
         .object({
             id: z.string(),
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PatchNotesIdRequestBody$.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
                 id: v.id,
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 ...(v.requestBody === undefined ? null : { RequestBody: v.requestBody }),
             };

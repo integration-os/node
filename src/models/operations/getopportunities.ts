@@ -6,10 +6,6 @@ import { z } from "zod";
 
 export type GetOpportunitiesRequest = {
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -48,7 +44,7 @@ export type GetOpportunitiesPerformanceMetrics = {
     conversionRate?: number | undefined;
 };
 
-export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType {
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType {
     String = "String",
     Number = "Number",
     Boolean = "Boolean",
@@ -57,13 +53,11 @@ export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyU
     Array = "Array",
 }
 
-export type GetOpportunitiesOpportunitiesMetadata = {
+export type GetOpportunitiesOpportunitiesResponseMetadata = {
     id?: string | undefined;
     key?: string | undefined;
     value?: string | undefined;
-    type?:
-        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
-        | undefined;
+    type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
     entityId?: string | undefined;
@@ -90,7 +84,7 @@ export enum GetOpportunitiesAccessControlType {
     None = "None",
 }
 
-export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType {
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType {
     User = "User",
     Group = "Group",
 }
@@ -99,7 +93,7 @@ export type GetOpportunitiesAssigneeDetails = {
     identifier?: string | undefined;
     displayName?: string | undefined;
     type?:
-        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType
+        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
         | undefined;
 };
 
@@ -129,7 +123,7 @@ export type GetOpportunitiesCreativeAssets = {
     content?: string | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
-    metadata?: GetOpportunitiesOpportunitiesMetadata | undefined;
+    metadata?: GetOpportunitiesOpportunitiesResponseMetadata | undefined;
     associatedWith?: GetOpportunitiesOpportunitiesAssociatedWith | undefined;
     permissions?: GetOpportunitiesOpportunitiesPermissions | undefined;
 };
@@ -154,55 +148,193 @@ export type GetOpportunitiesCampaign = {
 };
 
 export enum GetOpportunitiesAccountType {
-    Customer = "Customer",
-    Partner = "Partner",
-    Competitor = "Competitor",
-    Investor = "Investor",
-    Vendor = "Vendor",
-    Other = "Other",
+    Checking = "checking",
+    Savings = "savings",
+    CreditCard = "credit-card",
+    Investment = "investment",
+    Loan = "loan",
+    Ira = "ira",
+    RothIra = "roth-ira",
+    FourHundredAndOnek = "401k",
 }
 
-export enum GetOpportunitiesRating {
-    Hot = "Hot",
-    Warm = "Warm",
-    Cold = "Cold",
+export enum GetOpportunitiesCurrency {
+    Aed = "AED",
+    Afn = "AFN",
+    All = "ALL",
+    Amd = "AMD",
+    Ang = "ANG",
+    Aoa = "AOA",
+    Ars = "ARS",
+    Aud = "AUD",
+    Awg = "AWG",
+    Azn = "AZN",
+    Bam = "BAM",
+    Bbd = "BBD",
+    Bdt = "BDT",
+    Bgn = "BGN",
+    Bhd = "BHD",
+    Bif = "BIF",
+    Bmd = "BMD",
+    Bnd = "BND",
+    Bob = "BOB",
+    Brl = "BRL",
+    Bsd = "BSD",
+    Btn = "BTN",
+    Bwp = "BWP",
+    Byn = "BYN",
+    Bzd = "BZD",
+    Cad = "CAD",
+    Cdf = "CDF",
+    Chf = "CHF",
+    Clp = "CLP",
+    Cny = "CNY",
+    Cop = "COP",
+    Crc = "CRC",
+    Cuc = "CUC",
+    Cup = "CUP",
+    Cve = "CVE",
+    Czk = "CZK",
+    Djf = "DJF",
+    Dkk = "DKK",
+    Dop = "DOP",
+    Dzd = "DZD",
+    Egp = "EGP",
+    Ern = "ERN",
+    Etb = "ETB",
+    Eur = "EUR",
+    Fjd = "FJD",
+    Fkp = "FKP",
+    Fok = "FOK",
+    Gbp = "GBP",
+    Gel = "GEL",
+    Ggp = "GGP",
+    Ghs = "GHS",
+    Gip = "GIP",
+    Gmd = "GMD",
+    Gnf = "GNF",
+    Gtq = "GTQ",
+    Gyd = "GYD",
+    Hkd = "HKD",
+    Hnl = "HNL",
+    Hrk = "HRK",
+    Htg = "HTG",
+    Huf = "HUF",
+    Idr = "IDR",
+    Ils = "ILS",
+    Imp = "IMP",
+    Inr = "INR",
+    Iqd = "IQD",
+    Irr = "IRR",
+    Isk = "ISK",
+    Jep = "JEP",
+    Jmd = "JMD",
+    Jod = "JOD",
+    Jpy = "JPY",
+    Kes = "KES",
+    Kgs = "KGS",
+    Khr = "KHR",
+    Kid = "KID",
+    Kmf = "KMF",
+    Kpw = "KPW",
+    Krw = "KRW",
+    Kwd = "KWD",
+    Kyd = "KYD",
+    Kzt = "KZT",
+    Lak = "LAK",
+    Lbp = "LBP",
+    Lkr = "LKR",
+    Lrd = "LRD",
+    Lsl = "LSL",
+    Lyd = "LYD",
+    Mad = "MAD",
+    Mdl = "MDL",
+    Mga = "MGA",
+    Mkd = "MKD",
+    Mmk = "MMK",
+    Mnt = "MNT",
+    Mop = "MOP",
+    Mru = "MRU",
+    Mur = "MUR",
+    Mvr = "MVR",
+    Mwk = "MWK",
+    Mxn = "MXN",
+    Myr = "MYR",
+    Mzn = "MZN",
+    Nad = "NAD",
+    Ngn = "NGN",
+    Nio = "NIO",
+    Nok = "NOK",
+    Npr = "NPR",
+    Nzd = "NZD",
+    Omr = "OMR",
+    Pab = "PAB",
+    Pen = "PEN",
+    Pgk = "PGK",
+    Php = "PHP",
+    Pkr = "PKR",
+    Pln = "PLN",
+    Pyg = "PYG",
+    Qar = "QAR",
+    Ron = "RON",
+    Rsd = "RSD",
+    Rub = "RUB",
+    Rwf = "RWF",
+    Sar = "SAR",
+    Sbd = "SBD",
+    Scr = "SCR",
+    Sdg = "SDG",
+    Sek = "SEK",
+    Sgd = "SGD",
+    Shp = "SHP",
+    Sll = "SLL",
+    Sos = "SOS",
+    Srd = "SRD",
+    Ssp = "SSP",
+    Stn = "STN",
+    Syp = "SYP",
+    Szl = "SZL",
+    Thb = "THB",
+    Tjs = "TJS",
+    Tmt = "TMT",
+    Tnd = "TND",
+    Top = "TOP",
+    Try = "TRY",
+    Ttd = "TTD",
+    Tvd = "TVD",
+    Twd = "TWD",
+    Tzs = "TZS",
+    Uah = "UAH",
+    Ugx = "UGX",
+    Usd = "USD",
+    Uyu = "UYU",
+    Uzs = "UZS",
+    Ves = "VES",
+    Vnd = "VND",
+    Vuv = "VUV",
+    Wst = "WST",
+    Xaf = "XAF",
+    Xcd = "XCD",
+    Xdr = "XDR",
+    Xof = "XOF",
+    Xpf = "XPF",
+    Yer = "YER",
+    Zar = "ZAR",
+    Zmw = "ZMW",
+    Zwl = "ZWL",
 }
 
-export enum GetOpportunitiesOpportunitiesType {
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType {
     Home = "home",
     Work = "work",
     Other = "other",
 }
 
-export type GetOpportunitiesGeoLocation = {
-    latitude?: number | undefined;
-    longitude?: number | undefined;
-    altitude?: number | undefined;
-    accuracy?: number | undefined;
-    altitudeAccuracy?: number | undefined;
-    heading?: number | undefined;
-    speed?: number | undefined;
-    timestamp?: number | undefined;
-};
+export type GetOpportunitiesOpportunitiesResponseGeoLocation = {};
 
-export enum GetOpportunitiesOpportunitiesResponseFieldType {
-    Text = "text",
-    Number = "number",
-    Date = "date",
-    Boolean = "boolean",
-    Enum = "enum",
-    Json = "json",
-    Array = "array",
-}
+export type GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields = {};
 
-export type GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields = {
-    id?: string | undefined;
-    fieldName?: string | undefined;
-    fieldValue?: string | undefined;
-    fieldType?: GetOpportunitiesOpportunitiesResponseFieldType | undefined;
-};
-
-export type GetOpportunitiesBillingAddress = {
+export type GetOpportunitiesOpportunitiesResponseAddresses = {
     id?: string | undefined;
     contactId?: string | undefined;
     accountId?: string | undefined;
@@ -221,15 +353,17 @@ export type GetOpportunitiesBillingAddress = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: GetOpportunitiesOpportunitiesType | undefined;
-    geoLocation?: GetOpportunitiesGeoLocation | undefined;
+    type?:
+        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType
+        | undefined;
+    geoLocation?: GetOpportunitiesOpportunitiesResponseGeoLocation | undefined;
     customFields?:
-        | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields>
+        | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields>
         | undefined;
     subdivisionCode?: string | undefined;
 };
 
-export enum GetOpportunitiesOpportunitiesResponseType {
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -246,7 +380,7 @@ export type GetOpportunitiesOpportunitiesGeoLocation = {
     timestamp?: number | undefined;
 };
 
-export enum GetOpportunitiesOpportunitiesResponse200FieldType {
+export enum GetOpportunitiesOpportunitiesFieldType {
     Text = "text",
     Number = "number",
     Date = "date",
@@ -260,10 +394,10 @@ export type GetOpportunitiesOpportunitiesResponse200CustomFields = {
     id?: string | undefined;
     fieldName?: string | undefined;
     fieldValue?: string | undefined;
-    fieldType?: GetOpportunitiesOpportunitiesResponse200FieldType | undefined;
+    fieldType?: GetOpportunitiesOpportunitiesFieldType | undefined;
 };
 
-export type GetOpportunitiesShippingAddress = {
+export type GetOpportunitiesDefaultAddress = {
     id?: string | undefined;
     contactId?: string | undefined;
     accountId?: string | undefined;
@@ -282,56 +416,374 @@ export type GetOpportunitiesShippingAddress = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: GetOpportunitiesOpportunitiesResponseType | undefined;
+    type?:
+        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType
+        | undefined;
     geoLocation?: GetOpportunitiesOpportunitiesGeoLocation | undefined;
     customFields?: Array<GetOpportunitiesOpportunitiesResponse200CustomFields> | undefined;
     subdivisionCode?: string | undefined;
 };
 
-export enum GetOpportunitiesOpportunitiesStatus {
-    Active = "Active",
-    Inactive = "Inactive",
-    Pending = "Pending",
-    Closed = "Closed",
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus {
+    Active = "active",
+    Inactive = "inactive",
+    Archived = "archived",
 }
 
-export enum GetOpportunitiesOpportunitiesFieldType {
-    Text = "text",
-    Number = "number",
-    Date = "date",
-    Boolean = "boolean",
-    Enum = "enum",
-    Json = "json",
-    Array = "array",
+export enum GetOpportunitiesCustomerType {
+    Retail = "retail",
+    Wholesale = "wholesale",
 }
 
-export type GetOpportunitiesOpportunitiesResponseCustomFields = {
+export enum GetOpportunitiesPreferredContactMethod {
+    Email = "email",
+    Phone = "phone",
+    Mail = "mail",
+    Sms = "sms",
+}
+
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType {
+    Facebook = "facebook",
+    Twitter = "twitter",
+    Linkedin = "linkedin",
+    Instagram = "instagram",
+    Tiktok = "tiktok",
+    Pinterest = "pinterest",
+    Youtube = "youtube",
+    Other = "other",
+}
+
+export type GetOpportunitiesOpportunitiesAdditionalInfo = {};
+
+export type GetOpportunitiesOpportunitiesSocialProfiles = {
+    type?:
+        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType
+        | undefined;
+    username?: string | undefined;
+    displayName?: string | undefined;
+    url?: string | undefined;
+    avatarUrl?: string | undefined;
+    email?: string | undefined;
+    additionalInfo?: GetOpportunitiesOpportunitiesAdditionalInfo | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    active?: boolean | undefined;
+    deleted?: boolean | undefined;
+};
+
+export type GetOpportunitiesOpportunitiesOwner = {
     id?: string | undefined;
-    fieldName?: string | undefined;
-    fieldValue?: string | undefined;
-    fieldType?: GetOpportunitiesOpportunitiesFieldType | undefined;
+    title?: string | undefined;
+    fullName?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    email?: string | undefined;
+    phoneNumber?: string | undefined;
+    dateOfBirth?: number | undefined;
+    addresses?: Array<GetOpportunitiesOpportunitiesResponseAddresses> | undefined;
+    defaultAddress?: GetOpportunitiesDefaultAddress | undefined;
+    company?: string | undefined;
+    companyId?: string | undefined;
+    currency?: string | undefined;
+    notes?: string | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    status?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus | undefined;
+    customerSegment?: string | undefined;
+    customerType?: GetOpportunitiesCustomerType | undefined;
+    loyaltyProgramMembership?: string | undefined;
+    preferredContactMethod?: GetOpportunitiesPreferredContactMethod | undefined;
+    tags?: Array<string> | undefined;
+    metadata?: string | undefined;
+    socialProfiles?: Array<GetOpportunitiesOpportunitiesSocialProfiles> | undefined;
+    source?: string | undefined;
+};
+
+export enum GetOpportunitiesOpportunitiesStatus {
+    Active = "active",
+    Closed = "closed",
+    Frozen = "frozen",
+    Suspended = "suspended",
+}
+
+export type GetOpportunitiesPaymentMethod = {};
+
+export enum GetOpportunitiesOpportunitiesType {
+    Deposit = "deposit",
+    Withdrawal = "withdrawal",
+    Transfer = "transfer",
+    Fee = "fee",
+    Refund = "refund",
+}
+
+export enum GetOpportunitiesOpportunitiesCurrency {
+    Aed = "AED",
+    Afn = "AFN",
+    All = "ALL",
+    Amd = "AMD",
+    Ang = "ANG",
+    Aoa = "AOA",
+    Ars = "ARS",
+    Aud = "AUD",
+    Awg = "AWG",
+    Azn = "AZN",
+    Bam = "BAM",
+    Bbd = "BBD",
+    Bdt = "BDT",
+    Bgn = "BGN",
+    Bhd = "BHD",
+    Bif = "BIF",
+    Bmd = "BMD",
+    Bnd = "BND",
+    Bob = "BOB",
+    Brl = "BRL",
+    Bsd = "BSD",
+    Btn = "BTN",
+    Bwp = "BWP",
+    Byn = "BYN",
+    Bzd = "BZD",
+    Cad = "CAD",
+    Cdf = "CDF",
+    Chf = "CHF",
+    Clp = "CLP",
+    Cny = "CNY",
+    Cop = "COP",
+    Crc = "CRC",
+    Cuc = "CUC",
+    Cup = "CUP",
+    Cve = "CVE",
+    Czk = "CZK",
+    Djf = "DJF",
+    Dkk = "DKK",
+    Dop = "DOP",
+    Dzd = "DZD",
+    Egp = "EGP",
+    Ern = "ERN",
+    Etb = "ETB",
+    Eur = "EUR",
+    Fjd = "FJD",
+    Fkp = "FKP",
+    Fok = "FOK",
+    Gbp = "GBP",
+    Gel = "GEL",
+    Ggp = "GGP",
+    Ghs = "GHS",
+    Gip = "GIP",
+    Gmd = "GMD",
+    Gnf = "GNF",
+    Gtq = "GTQ",
+    Gyd = "GYD",
+    Hkd = "HKD",
+    Hnl = "HNL",
+    Hrk = "HRK",
+    Htg = "HTG",
+    Huf = "HUF",
+    Idr = "IDR",
+    Ils = "ILS",
+    Imp = "IMP",
+    Inr = "INR",
+    Iqd = "IQD",
+    Irr = "IRR",
+    Isk = "ISK",
+    Jep = "JEP",
+    Jmd = "JMD",
+    Jod = "JOD",
+    Jpy = "JPY",
+    Kes = "KES",
+    Kgs = "KGS",
+    Khr = "KHR",
+    Kid = "KID",
+    Kmf = "KMF",
+    Kpw = "KPW",
+    Krw = "KRW",
+    Kwd = "KWD",
+    Kyd = "KYD",
+    Kzt = "KZT",
+    Lak = "LAK",
+    Lbp = "LBP",
+    Lkr = "LKR",
+    Lrd = "LRD",
+    Lsl = "LSL",
+    Lyd = "LYD",
+    Mad = "MAD",
+    Mdl = "MDL",
+    Mga = "MGA",
+    Mkd = "MKD",
+    Mmk = "MMK",
+    Mnt = "MNT",
+    Mop = "MOP",
+    Mru = "MRU",
+    Mur = "MUR",
+    Mvr = "MVR",
+    Mwk = "MWK",
+    Mxn = "MXN",
+    Myr = "MYR",
+    Mzn = "MZN",
+    Nad = "NAD",
+    Ngn = "NGN",
+    Nio = "NIO",
+    Nok = "NOK",
+    Npr = "NPR",
+    Nzd = "NZD",
+    Omr = "OMR",
+    Pab = "PAB",
+    Pen = "PEN",
+    Pgk = "PGK",
+    Php = "PHP",
+    Pkr = "PKR",
+    Pln = "PLN",
+    Pyg = "PYG",
+    Qar = "QAR",
+    Ron = "RON",
+    Rsd = "RSD",
+    Rub = "RUB",
+    Rwf = "RWF",
+    Sar = "SAR",
+    Sbd = "SBD",
+    Scr = "SCR",
+    Sdg = "SDG",
+    Sek = "SEK",
+    Sgd = "SGD",
+    Shp = "SHP",
+    Sll = "SLL",
+    Sos = "SOS",
+    Srd = "SRD",
+    Ssp = "SSP",
+    Stn = "STN",
+    Syp = "SYP",
+    Szl = "SZL",
+    Thb = "THB",
+    Tjs = "TJS",
+    Tmt = "TMT",
+    Tnd = "TND",
+    Top = "TOP",
+    Try = "TRY",
+    Ttd = "TTD",
+    Tvd = "TVD",
+    Twd = "TWD",
+    Tzs = "TZS",
+    Uah = "UAH",
+    Ugx = "UGX",
+    Usd = "USD",
+    Uyu = "UYU",
+    Uzs = "UZS",
+    Ves = "VES",
+    Vnd = "VND",
+    Vuv = "VUV",
+    Wst = "WST",
+    Xaf = "XAF",
+    Xcd = "XCD",
+    Xdr = "XDR",
+    Xof = "XOF",
+    Xpf = "XPF",
+    Yer = "YER",
+    Zar = "ZAR",
+    Zmw = "ZMW",
+    Zwl = "ZWL",
+}
+
+export type GetOpportunitiesRecipient = {};
+
+export type GetOpportunitiesSender = {};
+
+export enum GetOpportunitiesTransactionCategory {
+    Payment = "payment",
+    Transfer = "transfer",
+    Withdrawal = "withdrawal",
+    Deposit = "deposit",
+    Fee = "fee",
+}
+
+export enum GetOpportunitiesOpportunitiesResponse200Status {
+    Pending = "pending",
+    Cleared = "cleared",
+    Cancelled = "cancelled",
+    Failed = "failed",
+}
+
+export enum GetOpportunitiesTransactionMethod {
+    Online = "online",
+    Atm = "atm",
+    BankBranch = "bank-branch",
+    Mail = "mail",
+    Mobile = "mobile",
+    Telephone = "telephone",
+}
+
+export enum GetOpportunitiesTransactionType {
+    Sale = "sale",
+    Refund = "refund",
+    ChargeBack = "charge-back",
+}
+
+export type GetOpportunitiesRefund = {};
+
+export type GetOpportunitiesDispute = {};
+
+export type GetOpportunitiesOpportunitiesMetadata = {};
+
+export type GetOpportunitiesShipping = {};
+
+export type GetOpportunitiesBillingDetails = {};
+
+export type GetOpportunitiesTransactions = {
+    id?: string | undefined;
+    accountId?: string | undefined;
+    invoiceId?: string | undefined;
+    orderId?: string | undefined;
+    paymentMethod?: GetOpportunitiesPaymentMethod | undefined;
+    amount?: number | undefined;
+    taxAmount?: number | undefined;
+    type?: GetOpportunitiesOpportunitiesType | undefined;
+    date?: number | undefined;
+    currency?: GetOpportunitiesOpportunitiesCurrency | undefined;
+    recipient?: GetOpportunitiesRecipient | undefined;
+    sender?: GetOpportunitiesSender | undefined;
+    description?: string | undefined;
+    checkNumber?: string | undefined;
+    transactionCategory?: GetOpportunitiesTransactionCategory | undefined;
+    tags?: Array<string> | undefined;
+    status?: GetOpportunitiesOpportunitiesResponse200Status | undefined;
+    transactionMethod?: GetOpportunitiesTransactionMethod | undefined;
+    transactionType?: GetOpportunitiesTransactionType | undefined;
+    refund?: GetOpportunitiesRefund | undefined;
+    dispute?: GetOpportunitiesDispute | undefined;
+    metadata?: GetOpportunitiesOpportunitiesMetadata | undefined;
+    exchangeRate?: number | undefined;
+    shipping?: GetOpportunitiesShipping | undefined;
+    billingDetails?: GetOpportunitiesBillingDetails | undefined;
+    applicationFee?: number | undefined;
+    paymentIntent?: string | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    deleted?: boolean | undefined;
 };
 
 export type GetOpportunitiesAccount = {
     id?: string | undefined;
-    name?: string | undefined;
-    industry?: string | undefined;
+    accountNumber?: string | undefined;
     accountType?: GetOpportunitiesAccountType | undefined;
-    rating?: GetOpportunitiesRating | undefined;
-    phone?: string | undefined;
-    email?: string | undefined;
-    website?: string | undefined;
-    billingAddress?: GetOpportunitiesBillingAddress | undefined;
-    shippingAddress?: GetOpportunitiesShippingAddress | undefined;
-    numberOfEmployees?: number | undefined;
-    annualRevenue?: number | undefined;
-    createdDate?: number | undefined;
-    lastModifiedDate?: number | undefined;
+    balance?: number | undefined;
+    currency?: GetOpportunitiesCurrency | undefined;
+    owner?: GetOpportunitiesOpportunitiesOwner | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    closedAt?: number | undefined;
     status?: GetOpportunitiesOpportunitiesStatus | undefined;
-    ownerId?: string | undefined;
-    customFields?: Array<GetOpportunitiesOpportunitiesResponseCustomFields> | undefined;
-    tags?: Array<string> | undefined;
+    transactions?: Array<GetOpportunitiesTransactions> | undefined;
+    branch?: string | undefined;
+    notes?: string | undefined;
+    interestRate?: number | undefined;
+    overdraftLimit?: number | undefined;
+    overdraftProtection?: boolean | undefined;
+    active?: boolean | undefined;
+    deleted?: boolean | undefined;
 };
+
+export type GetOpportunitiesEmails = {};
+
+export type GetOpportunitiesPhones = {};
 
 export type GetOpportunitiesAddress = {};
 
@@ -347,11 +799,12 @@ export type GetOpportunitiesContacts = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<GetOpportunitiesEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<GetOpportunitiesPhones> | undefined;
     address?: GetOpportunitiesAddress | undefined;
     addresses?: Array<GetOpportunitiesAddresses> | undefined;
     birthday?: number | undefined;
@@ -361,7 +814,10 @@ export type GetOpportunitiesContacts = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<GetOpportunitiesSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<GetOpportunitiesOpportunitiesCustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
 };
 
 export enum GetOpportunitiesMimeType {
@@ -421,15 +877,15 @@ export enum GetOpportunitiesGender {
     PreferNotToSay = "Prefer not to say",
 }
 
-export enum GetOpportunitiesOpportunitiesResponse200Type {
+export enum GetOpportunitiesOpportunitiesResponseType {
     Home = "home",
     Work = "work",
     Other = "other",
 }
 
-export type GetOpportunitiesOpportunitiesResponseGeoLocation = {};
+export type GetOpportunitiesGeoLocation = {};
 
-export type GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields = {};
+export type GetOpportunitiesOpportunitiesResponseCustomFields = {};
 
 export type GetOpportunitiesOpportunitiesAddresses = {
     id?: string | undefined;
@@ -450,11 +906,9 @@ export type GetOpportunitiesOpportunitiesAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: GetOpportunitiesOpportunitiesResponse200Type | undefined;
-    geoLocation?: GetOpportunitiesOpportunitiesResponseGeoLocation | undefined;
-    customFields?:
-        | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields>
-        | undefined;
+    type?: GetOpportunitiesOpportunitiesResponseType | undefined;
+    geoLocation?: GetOpportunitiesGeoLocation | undefined;
+    customFields?: Array<GetOpportunitiesOpportunitiesResponseCustomFields> | undefined;
     subdivisionCode?: string | undefined;
 };
 
@@ -478,7 +932,7 @@ export type GetOpportunitiesPreferences = {
     communications?: GetOpportunitiesCommunications | undefined;
 };
 
-export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONType {
+export enum GetOpportunitiesOpportunitiesResponse200Type {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -489,7 +943,7 @@ export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONType {
     Other = "other",
 }
 
-export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType {
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType {
     String = "String",
     Number = "Number",
     Boolean = "Boolean",
@@ -503,7 +957,7 @@ export type GetOpportunitiesAdditionalInfo = {
     key?: string | undefined;
     value?: string | undefined;
     type?:
-        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType
+        | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType
         | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
@@ -512,7 +966,7 @@ export type GetOpportunitiesAdditionalInfo = {
 };
 
 export type GetOpportunitiesSocialLinks = {
-    type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType | undefined;
+    type?: GetOpportunitiesOpportunitiesResponse200Type | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -558,7 +1012,7 @@ export type GetOpportunitiesSso = {
     deleted?: boolean | undefined;
 };
 
-export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType {
+export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONType {
     CreditCard = "CreditCard",
     PayPal = "PayPal",
     BankTransfer = "BankTransfer",
@@ -567,7 +1021,7 @@ export enum GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyT
 
 export type GetOpportunitiesPaymentMethods = {
     id?: string | undefined;
-    type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType | undefined;
+    type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType | undefined;
     details?: string | undefined;
     isDefault?: boolean | undefined;
 };
@@ -647,14 +1101,15 @@ export type GetOpportunitiesUnified = {
     currency?: string | undefined;
     stage?: string | undefined;
     probability?: number | undefined;
-    closeDate?: number | undefined;
+    closeDate?: Date | undefined;
     type?: string | undefined;
     nextStep?: string | undefined;
+    leadId?: string | undefined;
     leadSource?: string | undefined;
     isClosed?: boolean | undefined;
     isWon?: boolean | undefined;
-    createdDate?: number | undefined;
-    lastModifiedDate?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lostReason?: string | undefined;
     campaign?: GetOpportunitiesCampaign | undefined;
     account?: GetOpportunitiesAccount | undefined;
@@ -732,35 +1187,29 @@ export type GetOpportunitiesResponse = {
 /** @internal */
 export namespace GetOpportunitiesRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetOpportunitiesRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -865,20 +1314,16 @@ export namespace GetOpportunitiesPerformanceMetrics$ {
 }
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType$ =
-    z.nativeEnum(
-        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
-    );
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType$ =
+    z.nativeEnum(GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType);
 
 /** @internal */
-export namespace GetOpportunitiesOpportunitiesMetadata$ {
+export namespace GetOpportunitiesOpportunitiesResponseMetadata$ {
     export type Inbound = {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?:
-            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
-            | undefined;
+        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -886,7 +1331,7 @@ export namespace GetOpportunitiesOpportunitiesMetadata$ {
     };
 
     export const inboundSchema: z.ZodType<
-        GetOpportunitiesOpportunitiesMetadata,
+        GetOpportunitiesOpportunitiesResponseMetadata,
         z.ZodTypeDef,
         Inbound
     > = z
@@ -894,7 +1339,7 @@ export namespace GetOpportunitiesOpportunitiesMetadata$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -917,9 +1362,7 @@ export namespace GetOpportunitiesOpportunitiesMetadata$ {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?:
-            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
-            | undefined;
+        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -929,13 +1372,13 @@ export namespace GetOpportunitiesOpportunitiesMetadata$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        GetOpportunitiesOpportunitiesMetadata
+        GetOpportunitiesOpportunitiesResponseMetadata
     > = z
         .object({
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -1013,9 +1456,9 @@ export namespace GetOpportunitiesOpportunitiesAssociatedWith$ {
 export const GetOpportunitiesAccessControlType$ = z.nativeEnum(GetOpportunitiesAccessControlType);
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType$ =
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType$ =
     z.nativeEnum(
-        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType
+        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
     );
 
 /** @internal */
@@ -1024,7 +1467,7 @@ export namespace GetOpportunitiesAssigneeDetails$ {
         identifier?: string | undefined;
         displayName?: string | undefined;
         type?:
-            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
             | undefined;
     };
 
@@ -1033,7 +1476,7 @@ export namespace GetOpportunitiesAssigneeDetails$ {
             .object({
                 identifier: z.string().optional(),
                 displayName: z.string().optional(),
-                type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType$.optional(),
+                type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType$.optional(),
             })
             .transform((v) => {
                 return {
@@ -1047,7 +1490,7 @@ export namespace GetOpportunitiesAssigneeDetails$ {
         identifier?: string | undefined;
         displayName?: string | undefined;
         type?:
-            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType
             | undefined;
     };
 
@@ -1059,7 +1502,7 @@ export namespace GetOpportunitiesAssigneeDetails$ {
         .object({
             identifier: z.string().optional(),
             displayName: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignCreativeAssetsType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedCampaignType$.optional(),
         })
         .transform((v) => {
             return {
@@ -1173,7 +1616,7 @@ export namespace GetOpportunitiesCreativeAssets$ {
         content?: string | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        metadata?: GetOpportunitiesOpportunitiesMetadata$.Inbound | undefined;
+        metadata?: GetOpportunitiesOpportunitiesResponseMetadata$.Inbound | undefined;
         associatedWith?: GetOpportunitiesOpportunitiesAssociatedWith$.Inbound | undefined;
         permissions?: GetOpportunitiesOpportunitiesPermissions$.Inbound | undefined;
     };
@@ -1190,7 +1633,9 @@ export namespace GetOpportunitiesCreativeAssets$ {
             content: z.string().optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
-            metadata: z.lazy(() => GetOpportunitiesOpportunitiesMetadata$.inboundSchema).optional(),
+            metadata: z
+                .lazy(() => GetOpportunitiesOpportunitiesResponseMetadata$.inboundSchema)
+                .optional(),
             associatedWith: z
                 .lazy(() => GetOpportunitiesOpportunitiesAssociatedWith$.inboundSchema)
                 .optional(),
@@ -1227,7 +1672,7 @@ export namespace GetOpportunitiesCreativeAssets$ {
         content?: string | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        metadata?: GetOpportunitiesOpportunitiesMetadata$.Outbound | undefined;
+        metadata?: GetOpportunitiesOpportunitiesResponseMetadata$.Outbound | undefined;
         associatedWith?: GetOpportunitiesOpportunitiesAssociatedWith$.Outbound | undefined;
         permissions?: GetOpportunitiesOpportunitiesPermissions$.Outbound | undefined;
     };
@@ -1246,7 +1691,7 @@ export namespace GetOpportunitiesCreativeAssets$ {
                 createdAt: z.number().optional(),
                 updatedAt: z.number().optional(),
                 metadata: z
-                    .lazy(() => GetOpportunitiesOpportunitiesMetadata$.outboundSchema)
+                    .lazy(() => GetOpportunitiesOpportunitiesResponseMetadata$.outboundSchema)
                     .optional(),
                 associatedWith: z
                     .lazy(() => GetOpportunitiesOpportunitiesAssociatedWith$.outboundSchema)
@@ -1409,152 +1854,52 @@ export namespace GetOpportunitiesCampaign$ {
 export const GetOpportunitiesAccountType$ = z.nativeEnum(GetOpportunitiesAccountType);
 
 /** @internal */
-export const GetOpportunitiesRating$ = z.nativeEnum(GetOpportunitiesRating);
+export const GetOpportunitiesCurrency$ = z.nativeEnum(GetOpportunitiesCurrency);
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesType$ = z.nativeEnum(GetOpportunitiesOpportunitiesType);
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType$ =
+    z.nativeEnum(GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType);
 
 /** @internal */
-export namespace GetOpportunitiesGeoLocation$ {
-    export type Inbound = {
-        latitude?: number | undefined;
-        longitude?: number | undefined;
-        altitude?: number | undefined;
-        accuracy?: number | undefined;
-        altitudeAccuracy?: number | undefined;
-        heading?: number | undefined;
-        speed?: number | undefined;
-        timestamp?: number | undefined;
-    };
-
-    export const inboundSchema: z.ZodType<GetOpportunitiesGeoLocation, z.ZodTypeDef, Inbound> = z
-        .object({
-            latitude: z.number().optional(),
-            longitude: z.number().optional(),
-            altitude: z.number().optional(),
-            accuracy: z.number().optional(),
-            altitudeAccuracy: z.number().optional(),
-            heading: z.number().optional(),
-            speed: z.number().optional(),
-            timestamp: z.number().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.latitude === undefined ? null : { latitude: v.latitude }),
-                ...(v.longitude === undefined ? null : { longitude: v.longitude }),
-                ...(v.altitude === undefined ? null : { altitude: v.altitude }),
-                ...(v.accuracy === undefined ? null : { accuracy: v.accuracy }),
-                ...(v.altitudeAccuracy === undefined
-                    ? null
-                    : { altitudeAccuracy: v.altitudeAccuracy }),
-                ...(v.heading === undefined ? null : { heading: v.heading }),
-                ...(v.speed === undefined ? null : { speed: v.speed }),
-                ...(v.timestamp === undefined ? null : { timestamp: v.timestamp }),
-            };
-        });
-
-    export type Outbound = {
-        latitude?: number | undefined;
-        longitude?: number | undefined;
-        altitude?: number | undefined;
-        accuracy?: number | undefined;
-        altitudeAccuracy?: number | undefined;
-        heading?: number | undefined;
-        speed?: number | undefined;
-        timestamp?: number | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesGeoLocation> = z
-        .object({
-            latitude: z.number().optional(),
-            longitude: z.number().optional(),
-            altitude: z.number().optional(),
-            accuracy: z.number().optional(),
-            altitudeAccuracy: z.number().optional(),
-            heading: z.number().optional(),
-            speed: z.number().optional(),
-            timestamp: z.number().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.latitude === undefined ? null : { latitude: v.latitude }),
-                ...(v.longitude === undefined ? null : { longitude: v.longitude }),
-                ...(v.altitude === undefined ? null : { altitude: v.altitude }),
-                ...(v.accuracy === undefined ? null : { accuracy: v.accuracy }),
-                ...(v.altitudeAccuracy === undefined
-                    ? null
-                    : { altitudeAccuracy: v.altitudeAccuracy }),
-                ...(v.heading === undefined ? null : { heading: v.heading }),
-                ...(v.speed === undefined ? null : { speed: v.speed }),
-                ...(v.timestamp === undefined ? null : { timestamp: v.timestamp }),
-            };
-        });
-}
-
-/** @internal */
-export const GetOpportunitiesOpportunitiesResponseFieldType$ = z.nativeEnum(
-    GetOpportunitiesOpportunitiesResponseFieldType
-);
-
-/** @internal */
-export namespace GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields$ {
-    export type Inbound = {
-        id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: GetOpportunitiesOpportunitiesResponseFieldType | undefined;
-    };
+export namespace GetOpportunitiesOpportunitiesResponseGeoLocation$ {
+    export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields,
+        GetOpportunitiesOpportunitiesResponseGeoLocation,
         z.ZodTypeDef,
         Inbound
-    > = z
-        .object({
-            id: z.string().optional(),
-            fieldName: z.string().optional(),
-            fieldValue: z.string().optional(),
-            fieldType: GetOpportunitiesOpportunitiesResponseFieldType$.optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
-            };
-        });
+    > = z.object({});
 
-    export type Outbound = {
-        id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: GetOpportunitiesOpportunitiesResponseFieldType | undefined;
-    };
+    export type Outbound = {};
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields
-    > = z
-        .object({
-            id: z.string().optional(),
-            fieldName: z.string().optional(),
-            fieldValue: z.string().optional(),
-            fieldType: GetOpportunitiesOpportunitiesResponseFieldType$.optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
-            };
-        });
+        GetOpportunitiesOpportunitiesResponseGeoLocation
+    > = z.object({});
 }
 
 /** @internal */
-export namespace GetOpportunitiesBillingAddress$ {
+export namespace GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<
+        GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields,
+        z.ZodTypeDef,
+        Inbound
+    > = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields
+    > = z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesOpportunitiesResponseAddresses$ {
     export type Inbound = {
         id?: string | undefined;
         contactId?: string | undefined;
@@ -1574,15 +1919,21 @@ export namespace GetOpportunitiesBillingAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesType | undefined;
-        geoLocation?: GetOpportunitiesGeoLocation$.Inbound | undefined;
+        type?:
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType
+            | undefined;
+        geoLocation?: GetOpportunitiesOpportunitiesResponseGeoLocation$.Inbound | undefined;
         customFields?:
-            | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields$.Inbound>
+            | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.Inbound>
             | undefined;
         subdivisionCode?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetOpportunitiesBillingAddress, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<
+        GetOpportunitiesOpportunitiesResponseAddresses,
+        z.ZodTypeDef,
+        Inbound
+    > = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -1602,13 +1953,15 @@ export namespace GetOpportunitiesBillingAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesType$.optional(),
-            geoLocation: z.lazy(() => GetOpportunitiesGeoLocation$.inboundSchema).optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+            geoLocation: z
+                .lazy(() => GetOpportunitiesOpportunitiesResponseGeoLocation$.inboundSchema)
+                .optional(),
             customFields: z
                 .array(
                     z.lazy(
                         () =>
-                            GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields$.inboundSchema
+                            GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.inboundSchema
                     )
                 )
                 .optional(),
@@ -1664,83 +2017,91 @@ export namespace GetOpportunitiesBillingAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesType | undefined;
-        geoLocation?: GetOpportunitiesGeoLocation$.Outbound | undefined;
+        type?:
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType
+            | undefined;
+        geoLocation?: GetOpportunitiesOpportunitiesResponseGeoLocation$.Outbound | undefined;
         customFields?:
-            | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields$.Outbound>
+            | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.Outbound>
             | undefined;
         subdivisionCode?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesBillingAddress> =
-        z
-            .object({
-                id: z.string().optional(),
-                contactId: z.string().optional(),
-                accountId: z.string().optional(),
-                firstName: z.string().optional(),
-                lastName: z.string().optional(),
-                name: z.string().optional(),
-                companyName: z.string().optional(),
-                email: z.string().optional(),
-                phone: z.string().optional(),
-                street: z.string().optional(),
-                addressLine2: z.string().optional(),
-                city: z.string().optional(),
-                province: z.string().optional(),
-                region: z.string().optional(),
-                postalCode: z.string().optional(),
-                postalCodeExtension: z.string().optional(),
-                country: z.string().optional(),
-                countryCode: z.string().optional(),
-                type: GetOpportunitiesOpportunitiesType$.optional(),
-                geoLocation: z.lazy(() => GetOpportunitiesGeoLocation$.outboundSchema).optional(),
-                customFields: z
-                    .array(
-                        z.lazy(
-                            () =>
-                                GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyCustomFields$.outboundSchema
-                        )
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        GetOpportunitiesOpportunitiesResponseAddresses
+    > = z
+        .object({
+            id: z.string().optional(),
+            contactId: z.string().optional(),
+            accountId: z.string().optional(),
+            firstName: z.string().optional(),
+            lastName: z.string().optional(),
+            name: z.string().optional(),
+            companyName: z.string().optional(),
+            email: z.string().optional(),
+            phone: z.string().optional(),
+            street: z.string().optional(),
+            addressLine2: z.string().optional(),
+            city: z.string().optional(),
+            province: z.string().optional(),
+            region: z.string().optional(),
+            postalCode: z.string().optional(),
+            postalCodeExtension: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+            geoLocation: z
+                .lazy(() => GetOpportunitiesOpportunitiesResponseGeoLocation$.outboundSchema)
+                .optional(),
+            customFields: z
+                .array(
+                    z.lazy(
+                        () =>
+                            GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.outboundSchema
                     )
-                    .optional(),
-                subdivisionCode: z.string().optional(),
-            })
-            .transform((v) => {
-                return {
-                    ...(v.id === undefined ? null : { id: v.id }),
-                    ...(v.contactId === undefined ? null : { contactId: v.contactId }),
-                    ...(v.accountId === undefined ? null : { accountId: v.accountId }),
-                    ...(v.firstName === undefined ? null : { firstName: v.firstName }),
-                    ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                    ...(v.name === undefined ? null : { name: v.name }),
-                    ...(v.companyName === undefined ? null : { companyName: v.companyName }),
-                    ...(v.email === undefined ? null : { email: v.email }),
-                    ...(v.phone === undefined ? null : { phone: v.phone }),
-                    ...(v.street === undefined ? null : { street: v.street }),
-                    ...(v.addressLine2 === undefined ? null : { addressLine2: v.addressLine2 }),
-                    ...(v.city === undefined ? null : { city: v.city }),
-                    ...(v.province === undefined ? null : { province: v.province }),
-                    ...(v.region === undefined ? null : { region: v.region }),
-                    ...(v.postalCode === undefined ? null : { postalCode: v.postalCode }),
-                    ...(v.postalCodeExtension === undefined
-                        ? null
-                        : { postalCodeExtension: v.postalCodeExtension }),
-                    ...(v.country === undefined ? null : { country: v.country }),
-                    ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
-                    ...(v.type === undefined ? null : { type: v.type }),
-                    ...(v.geoLocation === undefined ? null : { geoLocation: v.geoLocation }),
-                    ...(v.customFields === undefined ? null : { customFields: v.customFields }),
-                    ...(v.subdivisionCode === undefined
-                        ? null
-                        : { subdivisionCode: v.subdivisionCode }),
-                };
-            });
+                )
+                .optional(),
+            subdivisionCode: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.contactId === undefined ? null : { contactId: v.contactId }),
+                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.name === undefined ? null : { name: v.name }),
+                ...(v.companyName === undefined ? null : { companyName: v.companyName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.street === undefined ? null : { street: v.street }),
+                ...(v.addressLine2 === undefined ? null : { addressLine2: v.addressLine2 }),
+                ...(v.city === undefined ? null : { city: v.city }),
+                ...(v.province === undefined ? null : { province: v.province }),
+                ...(v.region === undefined ? null : { region: v.region }),
+                ...(v.postalCode === undefined ? null : { postalCode: v.postalCode }),
+                ...(v.postalCodeExtension === undefined
+                    ? null
+                    : { postalCodeExtension: v.postalCodeExtension }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.geoLocation === undefined ? null : { geoLocation: v.geoLocation }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.subdivisionCode === undefined
+                    ? null
+                    : { subdivisionCode: v.subdivisionCode }),
+            };
+        });
 }
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponseType$ = z.nativeEnum(
-    GetOpportunitiesOpportunitiesResponseType
-);
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType$ =
+    z.nativeEnum(
+        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType
+    );
 
 /** @internal */
 export namespace GetOpportunitiesOpportunitiesGeoLocation$ {
@@ -1828,8 +2189,8 @@ export namespace GetOpportunitiesOpportunitiesGeoLocation$ {
 }
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponse200FieldType$ = z.nativeEnum(
-    GetOpportunitiesOpportunitiesResponse200FieldType
+export const GetOpportunitiesOpportunitiesFieldType$ = z.nativeEnum(
+    GetOpportunitiesOpportunitiesFieldType
 );
 
 /** @internal */
@@ -1838,7 +2199,7 @@ export namespace GetOpportunitiesOpportunitiesResponse200CustomFields$ {
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: GetOpportunitiesOpportunitiesResponse200FieldType | undefined;
+        fieldType?: GetOpportunitiesOpportunitiesFieldType | undefined;
     };
 
     export const inboundSchema: z.ZodType<
@@ -1850,7 +2211,7 @@ export namespace GetOpportunitiesOpportunitiesResponse200CustomFields$ {
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: GetOpportunitiesOpportunitiesResponse200FieldType$.optional(),
+            fieldType: GetOpportunitiesOpportunitiesFieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -1865,7 +2226,7 @@ export namespace GetOpportunitiesOpportunitiesResponse200CustomFields$ {
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: GetOpportunitiesOpportunitiesResponse200FieldType | undefined;
+        fieldType?: GetOpportunitiesOpportunitiesFieldType | undefined;
     };
 
     export const outboundSchema: z.ZodType<
@@ -1877,7 +2238,7 @@ export namespace GetOpportunitiesOpportunitiesResponse200CustomFields$ {
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: GetOpportunitiesOpportunitiesResponse200FieldType$.optional(),
+            fieldType: GetOpportunitiesOpportunitiesFieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -1890,7 +2251,7 @@ export namespace GetOpportunitiesOpportunitiesResponse200CustomFields$ {
 }
 
 /** @internal */
-export namespace GetOpportunitiesShippingAddress$ {
+export namespace GetOpportunitiesDefaultAddress$ {
     export type Inbound = {
         id?: string | undefined;
         contactId?: string | undefined;
@@ -1910,7 +2271,9 @@ export namespace GetOpportunitiesShippingAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesResponseType | undefined;
+        type?:
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType
+            | undefined;
         geoLocation?: GetOpportunitiesOpportunitiesGeoLocation$.Inbound | undefined;
         customFields?:
             | Array<GetOpportunitiesOpportunitiesResponse200CustomFields$.Inbound>
@@ -1918,104 +2281,7 @@ export namespace GetOpportunitiesShippingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetOpportunitiesShippingAddress, z.ZodTypeDef, Inbound> =
-        z
-            .object({
-                id: z.string().optional(),
-                contactId: z.string().optional(),
-                accountId: z.string().optional(),
-                firstName: z.string().optional(),
-                lastName: z.string().optional(),
-                name: z.string().optional(),
-                companyName: z.string().optional(),
-                email: z.string().optional(),
-                phone: z.string().optional(),
-                street: z.string().optional(),
-                addressLine2: z.string().optional(),
-                city: z.string().optional(),
-                province: z.string().optional(),
-                region: z.string().optional(),
-                postalCode: z.string().optional(),
-                postalCodeExtension: z.string().optional(),
-                country: z.string().optional(),
-                countryCode: z.string().optional(),
-                type: GetOpportunitiesOpportunitiesResponseType$.optional(),
-                geoLocation: z
-                    .lazy(() => GetOpportunitiesOpportunitiesGeoLocation$.inboundSchema)
-                    .optional(),
-                customFields: z
-                    .array(
-                        z.lazy(
-                            () =>
-                                GetOpportunitiesOpportunitiesResponse200CustomFields$.inboundSchema
-                        )
-                    )
-                    .optional(),
-                subdivisionCode: z.string().optional(),
-            })
-            .transform((v) => {
-                return {
-                    ...(v.id === undefined ? null : { id: v.id }),
-                    ...(v.contactId === undefined ? null : { contactId: v.contactId }),
-                    ...(v.accountId === undefined ? null : { accountId: v.accountId }),
-                    ...(v.firstName === undefined ? null : { firstName: v.firstName }),
-                    ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                    ...(v.name === undefined ? null : { name: v.name }),
-                    ...(v.companyName === undefined ? null : { companyName: v.companyName }),
-                    ...(v.email === undefined ? null : { email: v.email }),
-                    ...(v.phone === undefined ? null : { phone: v.phone }),
-                    ...(v.street === undefined ? null : { street: v.street }),
-                    ...(v.addressLine2 === undefined ? null : { addressLine2: v.addressLine2 }),
-                    ...(v.city === undefined ? null : { city: v.city }),
-                    ...(v.province === undefined ? null : { province: v.province }),
-                    ...(v.region === undefined ? null : { region: v.region }),
-                    ...(v.postalCode === undefined ? null : { postalCode: v.postalCode }),
-                    ...(v.postalCodeExtension === undefined
-                        ? null
-                        : { postalCodeExtension: v.postalCodeExtension }),
-                    ...(v.country === undefined ? null : { country: v.country }),
-                    ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
-                    ...(v.type === undefined ? null : { type: v.type }),
-                    ...(v.geoLocation === undefined ? null : { geoLocation: v.geoLocation }),
-                    ...(v.customFields === undefined ? null : { customFields: v.customFields }),
-                    ...(v.subdivisionCode === undefined
-                        ? null
-                        : { subdivisionCode: v.subdivisionCode }),
-                };
-            });
-
-    export type Outbound = {
-        id?: string | undefined;
-        contactId?: string | undefined;
-        accountId?: string | undefined;
-        firstName?: string | undefined;
-        lastName?: string | undefined;
-        name?: string | undefined;
-        companyName?: string | undefined;
-        email?: string | undefined;
-        phone?: string | undefined;
-        street?: string | undefined;
-        addressLine2?: string | undefined;
-        city?: string | undefined;
-        province?: string | undefined;
-        region?: string | undefined;
-        postalCode?: string | undefined;
-        postalCodeExtension?: string | undefined;
-        country?: string | undefined;
-        countryCode?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesResponseType | undefined;
-        geoLocation?: GetOpportunitiesOpportunitiesGeoLocation$.Outbound | undefined;
-        customFields?:
-            | Array<GetOpportunitiesOpportunitiesResponse200CustomFields$.Outbound>
-            | undefined;
-        subdivisionCode?: string | undefined;
-    };
-
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        GetOpportunitiesShippingAddress
-    > = z
+    export const inboundSchema: z.ZodType<GetOpportunitiesDefaultAddress, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -2035,14 +2301,14 @@ export namespace GetOpportunitiesShippingAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponseType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType$.optional(),
             geoLocation: z
-                .lazy(() => GetOpportunitiesOpportunitiesGeoLocation$.outboundSchema)
+                .lazy(() => GetOpportunitiesOpportunitiesGeoLocation$.inboundSchema)
                 .optional(),
             customFields: z
                 .array(
                     z.lazy(
-                        () => GetOpportunitiesOpportunitiesResponse200CustomFields$.outboundSchema
+                        () => GetOpportunitiesOpportunitiesResponse200CustomFields$.inboundSchema
                     )
                 )
                 .optional(),
@@ -2078,6 +2344,455 @@ export namespace GetOpportunitiesShippingAddress$ {
                     : { subdivisionCode: v.subdivisionCode }),
             };
         });
+
+    export type Outbound = {
+        id?: string | undefined;
+        contactId?: string | undefined;
+        accountId?: string | undefined;
+        firstName?: string | undefined;
+        lastName?: string | undefined;
+        name?: string | undefined;
+        companyName?: string | undefined;
+        email?: string | undefined;
+        phone?: string | undefined;
+        street?: string | undefined;
+        addressLine2?: string | undefined;
+        city?: string | undefined;
+        province?: string | undefined;
+        region?: string | undefined;
+        postalCode?: string | undefined;
+        postalCodeExtension?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?:
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType
+            | undefined;
+        geoLocation?: GetOpportunitiesOpportunitiesGeoLocation$.Outbound | undefined;
+        customFields?:
+            | Array<GetOpportunitiesOpportunitiesResponse200CustomFields$.Outbound>
+            | undefined;
+        subdivisionCode?: string | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesDefaultAddress> =
+        z
+            .object({
+                id: z.string().optional(),
+                contactId: z.string().optional(),
+                accountId: z.string().optional(),
+                firstName: z.string().optional(),
+                lastName: z.string().optional(),
+                name: z.string().optional(),
+                companyName: z.string().optional(),
+                email: z.string().optional(),
+                phone: z.string().optional(),
+                street: z.string().optional(),
+                addressLine2: z.string().optional(),
+                city: z.string().optional(),
+                province: z.string().optional(),
+                region: z.string().optional(),
+                postalCode: z.string().optional(),
+                postalCodeExtension: z.string().optional(),
+                country: z.string().optional(),
+                countryCode: z.string().optional(),
+                type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountType$.optional(),
+                geoLocation: z
+                    .lazy(() => GetOpportunitiesOpportunitiesGeoLocation$.outboundSchema)
+                    .optional(),
+                customFields: z
+                    .array(
+                        z.lazy(
+                            () =>
+                                GetOpportunitiesOpportunitiesResponse200CustomFields$.outboundSchema
+                        )
+                    )
+                    .optional(),
+                subdivisionCode: z.string().optional(),
+            })
+            .transform((v) => {
+                return {
+                    ...(v.id === undefined ? null : { id: v.id }),
+                    ...(v.contactId === undefined ? null : { contactId: v.contactId }),
+                    ...(v.accountId === undefined ? null : { accountId: v.accountId }),
+                    ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                    ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                    ...(v.name === undefined ? null : { name: v.name }),
+                    ...(v.companyName === undefined ? null : { companyName: v.companyName }),
+                    ...(v.email === undefined ? null : { email: v.email }),
+                    ...(v.phone === undefined ? null : { phone: v.phone }),
+                    ...(v.street === undefined ? null : { street: v.street }),
+                    ...(v.addressLine2 === undefined ? null : { addressLine2: v.addressLine2 }),
+                    ...(v.city === undefined ? null : { city: v.city }),
+                    ...(v.province === undefined ? null : { province: v.province }),
+                    ...(v.region === undefined ? null : { region: v.region }),
+                    ...(v.postalCode === undefined ? null : { postalCode: v.postalCode }),
+                    ...(v.postalCodeExtension === undefined
+                        ? null
+                        : { postalCodeExtension: v.postalCodeExtension }),
+                    ...(v.country === undefined ? null : { country: v.country }),
+                    ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                    ...(v.type === undefined ? null : { type: v.type }),
+                    ...(v.geoLocation === undefined ? null : { geoLocation: v.geoLocation }),
+                    ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                    ...(v.subdivisionCode === undefined
+                        ? null
+                        : { subdivisionCode: v.subdivisionCode }),
+                };
+            });
+}
+
+/** @internal */
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus$ = z.nativeEnum(
+    GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus
+);
+
+/** @internal */
+export const GetOpportunitiesCustomerType$ = z.nativeEnum(GetOpportunitiesCustomerType);
+
+/** @internal */
+export const GetOpportunitiesPreferredContactMethod$ = z.nativeEnum(
+    GetOpportunitiesPreferredContactMethod
+);
+
+/** @internal */
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType$ =
+    z.nativeEnum(
+        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType
+    );
+
+/** @internal */
+export namespace GetOpportunitiesOpportunitiesAdditionalInfo$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<
+        GetOpportunitiesOpportunitiesAdditionalInfo,
+        z.ZodTypeDef,
+        Inbound
+    > = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        GetOpportunitiesOpportunitiesAdditionalInfo
+    > = z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesOpportunitiesSocialProfiles$ {
+    export type Inbound = {
+        type?:
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType
+            | undefined;
+        username?: string | undefined;
+        displayName?: string | undefined;
+        url?: string | undefined;
+        avatarUrl?: string | undefined;
+        email?: string | undefined;
+        additionalInfo?: GetOpportunitiesOpportunitiesAdditionalInfo$.Inbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<
+        GetOpportunitiesOpportunitiesSocialProfiles,
+        z.ZodTypeDef,
+        Inbound
+    > = z
+        .object({
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType$.optional(),
+            username: z.string().optional(),
+            displayName: z.string().optional(),
+            url: z.string().optional(),
+            avatarUrl: z.string().optional(),
+            email: z.string().optional(),
+            additionalInfo: z
+                .lazy(() => GetOpportunitiesOpportunitiesAdditionalInfo$.inboundSchema)
+                .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.username === undefined ? null : { username: v.username }),
+                ...(v.displayName === undefined ? null : { displayName: v.displayName }),
+                ...(v.url === undefined ? null : { url: v.url }),
+                ...(v.avatarUrl === undefined ? null : { avatarUrl: v.avatarUrl }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.additionalInfo === undefined ? null : { additionalInfo: v.additionalInfo }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+            };
+        });
+
+    export type Outbound = {
+        type?:
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType
+            | undefined;
+        username?: string | undefined;
+        displayName?: string | undefined;
+        url?: string | undefined;
+        avatarUrl?: string | undefined;
+        email?: string | undefined;
+        additionalInfo?: GetOpportunitiesOpportunitiesAdditionalInfo$.Outbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        GetOpportunitiesOpportunitiesSocialProfiles
+    > = z
+        .object({
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedAccountOwnerType$.optional(),
+            username: z.string().optional(),
+            displayName: z.string().optional(),
+            url: z.string().optional(),
+            avatarUrl: z.string().optional(),
+            email: z.string().optional(),
+            additionalInfo: z
+                .lazy(() => GetOpportunitiesOpportunitiesAdditionalInfo$.outboundSchema)
+                .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.username === undefined ? null : { username: v.username }),
+                ...(v.displayName === undefined ? null : { displayName: v.displayName }),
+                ...(v.url === undefined ? null : { url: v.url }),
+                ...(v.avatarUrl === undefined ? null : { avatarUrl: v.avatarUrl }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.additionalInfo === undefined ? null : { additionalInfo: v.additionalInfo }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+            };
+        });
+}
+
+/** @internal */
+export namespace GetOpportunitiesOpportunitiesOwner$ {
+    export type Inbound = {
+        id?: string | undefined;
+        title?: string | undefined;
+        fullName?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        phoneNumber?: string | undefined;
+        dateOfBirth?: number | undefined;
+        addresses?: Array<GetOpportunitiesOpportunitiesResponseAddresses$.Inbound> | undefined;
+        defaultAddress?: GetOpportunitiesDefaultAddress$.Inbound | undefined;
+        company?: string | undefined;
+        companyId?: string | undefined;
+        currency?: string | undefined;
+        notes?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        status?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus | undefined;
+        customerSegment?: string | undefined;
+        customerType?: GetOpportunitiesCustomerType | undefined;
+        loyaltyProgramMembership?: string | undefined;
+        preferredContactMethod?: GetOpportunitiesPreferredContactMethod | undefined;
+        tags?: Array<string> | undefined;
+        metadata?: string | undefined;
+        socialProfiles?: Array<GetOpportunitiesOpportunitiesSocialProfiles$.Inbound> | undefined;
+        source?: string | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<
+        GetOpportunitiesOpportunitiesOwner,
+        z.ZodTypeDef,
+        Inbound
+    > = z
+        .object({
+            id: z.string().optional(),
+            title: z.string().optional(),
+            fullName: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            phoneNumber: z.string().optional(),
+            dateOfBirth: z.number().optional(),
+            addresses: z
+                .array(z.lazy(() => GetOpportunitiesOpportunitiesResponseAddresses$.inboundSchema))
+                .optional(),
+            defaultAddress: z.lazy(() => GetOpportunitiesDefaultAddress$.inboundSchema).optional(),
+            company: z.string().optional(),
+            companyId: z.string().optional(),
+            currency: z.string().optional(),
+            notes: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            status: GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus$.optional(),
+            customerSegment: z.string().optional(),
+            customerType: GetOpportunitiesCustomerType$.optional(),
+            loyaltyProgramMembership: z.string().optional(),
+            preferredContactMethod: GetOpportunitiesPreferredContactMethod$.optional(),
+            tags: z.array(z.string()).optional(),
+            metadata: z.string().optional(),
+            socialProfiles: z
+                .array(z.lazy(() => GetOpportunitiesOpportunitiesSocialProfiles$.inboundSchema))
+                .optional(),
+            source: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.fullName === undefined ? null : { fullName: v.fullName }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.defaultAddress === undefined ? null : { defaultAddress: v.defaultAddress }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.companyId === undefined ? null : { companyId: v.companyId }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.customerSegment === undefined
+                    ? null
+                    : { customerSegment: v.customerSegment }),
+                ...(v.customerType === undefined ? null : { customerType: v.customerType }),
+                ...(v.loyaltyProgramMembership === undefined
+                    ? null
+                    : { loyaltyProgramMembership: v.loyaltyProgramMembership }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.source === undefined ? null : { source: v.source }),
+            };
+        });
+
+    export type Outbound = {
+        id?: string | undefined;
+        title?: string | undefined;
+        fullName?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        phoneNumber?: string | undefined;
+        dateOfBirth?: number | undefined;
+        addresses?: Array<GetOpportunitiesOpportunitiesResponseAddresses$.Outbound> | undefined;
+        defaultAddress?: GetOpportunitiesDefaultAddress$.Outbound | undefined;
+        company?: string | undefined;
+        companyId?: string | undefined;
+        currency?: string | undefined;
+        notes?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        status?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus | undefined;
+        customerSegment?: string | undefined;
+        customerType?: GetOpportunitiesCustomerType | undefined;
+        loyaltyProgramMembership?: string | undefined;
+        preferredContactMethod?: GetOpportunitiesPreferredContactMethod | undefined;
+        tags?: Array<string> | undefined;
+        metadata?: string | undefined;
+        socialProfiles?: Array<GetOpportunitiesOpportunitiesSocialProfiles$.Outbound> | undefined;
+        source?: string | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        GetOpportunitiesOpportunitiesOwner
+    > = z
+        .object({
+            id: z.string().optional(),
+            title: z.string().optional(),
+            fullName: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            phoneNumber: z.string().optional(),
+            dateOfBirth: z.number().optional(),
+            addresses: z
+                .array(z.lazy(() => GetOpportunitiesOpportunitiesResponseAddresses$.outboundSchema))
+                .optional(),
+            defaultAddress: z.lazy(() => GetOpportunitiesDefaultAddress$.outboundSchema).optional(),
+            company: z.string().optional(),
+            companyId: z.string().optional(),
+            currency: z.string().optional(),
+            notes: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            status: GetOpportunitiesOpportunitiesResponse200ApplicationJSONStatus$.optional(),
+            customerSegment: z.string().optional(),
+            customerType: GetOpportunitiesCustomerType$.optional(),
+            loyaltyProgramMembership: z.string().optional(),
+            preferredContactMethod: GetOpportunitiesPreferredContactMethod$.optional(),
+            tags: z.array(z.string()).optional(),
+            metadata: z.string().optional(),
+            socialProfiles: z
+                .array(z.lazy(() => GetOpportunitiesOpportunitiesSocialProfiles$.outboundSchema))
+                .optional(),
+            source: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.fullName === undefined ? null : { fullName: v.fullName }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.defaultAddress === undefined ? null : { defaultAddress: v.defaultAddress }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.companyId === undefined ? null : { companyId: v.companyId }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.customerSegment === undefined
+                    ? null
+                    : { customerSegment: v.customerSegment }),
+                ...(v.customerType === undefined ? null : { customerType: v.customerType }),
+                ...(v.loyaltyProgramMembership === undefined
+                    ? null
+                    : { loyaltyProgramMembership: v.loyaltyProgramMembership }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.source === undefined ? null : { source: v.source }),
+            };
+        });
 }
 
 /** @internal */
@@ -2086,63 +2801,356 @@ export const GetOpportunitiesOpportunitiesStatus$ = z.nativeEnum(
 );
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesFieldType$ = z.nativeEnum(
-    GetOpportunitiesOpportunitiesFieldType
+export namespace GetOpportunitiesPaymentMethod$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesPaymentMethod, z.ZodTypeDef, Inbound> =
+        z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesPaymentMethod> =
+        z.object({});
+}
+
+/** @internal */
+export const GetOpportunitiesOpportunitiesType$ = z.nativeEnum(GetOpportunitiesOpportunitiesType);
+
+/** @internal */
+export const GetOpportunitiesOpportunitiesCurrency$ = z.nativeEnum(
+    GetOpportunitiesOpportunitiesCurrency
 );
 
 /** @internal */
-export namespace GetOpportunitiesOpportunitiesResponseCustomFields$ {
-    export type Inbound = {
-        id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: GetOpportunitiesOpportunitiesFieldType | undefined;
-    };
+export namespace GetOpportunitiesRecipient$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesRecipient, z.ZodTypeDef, Inbound> =
+        z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesRecipient> =
+        z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesSender$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesSender, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesSender> =
+        z.object({});
+}
+
+/** @internal */
+export const GetOpportunitiesTransactionCategory$ = z.nativeEnum(
+    GetOpportunitiesTransactionCategory
+);
+
+/** @internal */
+export const GetOpportunitiesOpportunitiesResponse200Status$ = z.nativeEnum(
+    GetOpportunitiesOpportunitiesResponse200Status
+);
+
+/** @internal */
+export const GetOpportunitiesTransactionMethod$ = z.nativeEnum(GetOpportunitiesTransactionMethod);
+
+/** @internal */
+export const GetOpportunitiesTransactionType$ = z.nativeEnum(GetOpportunitiesTransactionType);
+
+/** @internal */
+export namespace GetOpportunitiesRefund$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesRefund, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesRefund> =
+        z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesDispute$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesDispute, z.ZodTypeDef, Inbound> =
+        z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesDispute> =
+        z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesOpportunitiesMetadata$ {
+    export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        GetOpportunitiesOpportunitiesResponseCustomFields,
+        GetOpportunitiesOpportunitiesMetadata,
         z.ZodTypeDef,
         Inbound
-    > = z
+    > = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        GetOpportunitiesOpportunitiesMetadata
+    > = z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesShipping$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesShipping, z.ZodTypeDef, Inbound> =
+        z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesShipping> =
+        z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesBillingDetails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesBillingDetails, z.ZodTypeDef, Inbound> =
+        z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesBillingDetails> =
+        z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesTransactions$ {
+    export type Inbound = {
+        id?: string | undefined;
+        accountId?: string | undefined;
+        invoiceId?: string | undefined;
+        orderId?: string | undefined;
+        paymentMethod?: GetOpportunitiesPaymentMethod$.Inbound | undefined;
+        amount?: number | undefined;
+        taxAmount?: number | undefined;
+        type?: GetOpportunitiesOpportunitiesType | undefined;
+        date?: number | undefined;
+        currency?: GetOpportunitiesOpportunitiesCurrency | undefined;
+        recipient?: GetOpportunitiesRecipient$.Inbound | undefined;
+        sender?: GetOpportunitiesSender$.Inbound | undefined;
+        description?: string | undefined;
+        checkNumber?: string | undefined;
+        transactionCategory?: GetOpportunitiesTransactionCategory | undefined;
+        tags?: Array<string> | undefined;
+        status?: GetOpportunitiesOpportunitiesResponse200Status | undefined;
+        transactionMethod?: GetOpportunitiesTransactionMethod | undefined;
+        transactionType?: GetOpportunitiesTransactionType | undefined;
+        refund?: GetOpportunitiesRefund$.Inbound | undefined;
+        dispute?: GetOpportunitiesDispute$.Inbound | undefined;
+        metadata?: GetOpportunitiesOpportunitiesMetadata$.Inbound | undefined;
+        exchangeRate?: number | undefined;
+        shipping?: GetOpportunitiesShipping$.Inbound | undefined;
+        billingDetails?: GetOpportunitiesBillingDetails$.Inbound | undefined;
+        applicationFee?: number | undefined;
+        paymentIntent?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        deleted?: boolean | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesTransactions, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            fieldName: z.string().optional(),
-            fieldValue: z.string().optional(),
-            fieldType: GetOpportunitiesOpportunitiesFieldType$.optional(),
+            accountId: z.string().optional(),
+            invoiceId: z.string().optional(),
+            orderId: z.string().optional(),
+            paymentMethod: z.lazy(() => GetOpportunitiesPaymentMethod$.inboundSchema).optional(),
+            amount: z.number().optional(),
+            taxAmount: z.number().optional(),
+            type: GetOpportunitiesOpportunitiesType$.optional(),
+            date: z.number().optional(),
+            currency: GetOpportunitiesOpportunitiesCurrency$.optional(),
+            recipient: z.lazy(() => GetOpportunitiesRecipient$.inboundSchema).optional(),
+            sender: z.lazy(() => GetOpportunitiesSender$.inboundSchema).optional(),
+            description: z.string().optional(),
+            checkNumber: z.string().optional(),
+            transactionCategory: GetOpportunitiesTransactionCategory$.optional(),
+            tags: z.array(z.string()).optional(),
+            status: GetOpportunitiesOpportunitiesResponse200Status$.optional(),
+            transactionMethod: GetOpportunitiesTransactionMethod$.optional(),
+            transactionType: GetOpportunitiesTransactionType$.optional(),
+            refund: z.lazy(() => GetOpportunitiesRefund$.inboundSchema).optional(),
+            dispute: z.lazy(() => GetOpportunitiesDispute$.inboundSchema).optional(),
+            metadata: z.lazy(() => GetOpportunitiesOpportunitiesMetadata$.inboundSchema).optional(),
+            exchangeRate: z.number().optional(),
+            shipping: z.lazy(() => GetOpportunitiesShipping$.inboundSchema).optional(),
+            billingDetails: z.lazy(() => GetOpportunitiesBillingDetails$.inboundSchema).optional(),
+            applicationFee: z.number().optional(),
+            paymentIntent: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            deleted: z.boolean().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
+                ...(v.invoiceId === undefined ? null : { invoiceId: v.invoiceId }),
+                ...(v.orderId === undefined ? null : { orderId: v.orderId }),
+                ...(v.paymentMethod === undefined ? null : { paymentMethod: v.paymentMethod }),
+                ...(v.amount === undefined ? null : { amount: v.amount }),
+                ...(v.taxAmount === undefined ? null : { taxAmount: v.taxAmount }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.date === undefined ? null : { date: v.date }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.recipient === undefined ? null : { recipient: v.recipient }),
+                ...(v.sender === undefined ? null : { sender: v.sender }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.checkNumber === undefined ? null : { checkNumber: v.checkNumber }),
+                ...(v.transactionCategory === undefined
+                    ? null
+                    : { transactionCategory: v.transactionCategory }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.transactionMethod === undefined
+                    ? null
+                    : { transactionMethod: v.transactionMethod }),
+                ...(v.transactionType === undefined
+                    ? null
+                    : { transactionType: v.transactionType }),
+                ...(v.refund === undefined ? null : { refund: v.refund }),
+                ...(v.dispute === undefined ? null : { dispute: v.dispute }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.exchangeRate === undefined ? null : { exchangeRate: v.exchangeRate }),
+                ...(v.shipping === undefined ? null : { shipping: v.shipping }),
+                ...(v.billingDetails === undefined ? null : { billingDetails: v.billingDetails }),
+                ...(v.applicationFee === undefined ? null : { applicationFee: v.applicationFee }),
+                ...(v.paymentIntent === undefined ? null : { paymentIntent: v.paymentIntent }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
 
     export type Outbound = {
         id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: GetOpportunitiesOpportunitiesFieldType | undefined;
+        accountId?: string | undefined;
+        invoiceId?: string | undefined;
+        orderId?: string | undefined;
+        paymentMethod?: GetOpportunitiesPaymentMethod$.Outbound | undefined;
+        amount?: number | undefined;
+        taxAmount?: number | undefined;
+        type?: GetOpportunitiesOpportunitiesType | undefined;
+        date?: number | undefined;
+        currency?: GetOpportunitiesOpportunitiesCurrency | undefined;
+        recipient?: GetOpportunitiesRecipient$.Outbound | undefined;
+        sender?: GetOpportunitiesSender$.Outbound | undefined;
+        description?: string | undefined;
+        checkNumber?: string | undefined;
+        transactionCategory?: GetOpportunitiesTransactionCategory | undefined;
+        tags?: Array<string> | undefined;
+        status?: GetOpportunitiesOpportunitiesResponse200Status | undefined;
+        transactionMethod?: GetOpportunitiesTransactionMethod | undefined;
+        transactionType?: GetOpportunitiesTransactionType | undefined;
+        refund?: GetOpportunitiesRefund$.Outbound | undefined;
+        dispute?: GetOpportunitiesDispute$.Outbound | undefined;
+        metadata?: GetOpportunitiesOpportunitiesMetadata$.Outbound | undefined;
+        exchangeRate?: number | undefined;
+        shipping?: GetOpportunitiesShipping$.Outbound | undefined;
+        billingDetails?: GetOpportunitiesBillingDetails$.Outbound | undefined;
+        applicationFee?: number | undefined;
+        paymentIntent?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        deleted?: boolean | undefined;
     };
 
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        GetOpportunitiesOpportunitiesResponseCustomFields
-    > = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesTransactions> = z
         .object({
             id: z.string().optional(),
-            fieldName: z.string().optional(),
-            fieldValue: z.string().optional(),
-            fieldType: GetOpportunitiesOpportunitiesFieldType$.optional(),
+            accountId: z.string().optional(),
+            invoiceId: z.string().optional(),
+            orderId: z.string().optional(),
+            paymentMethod: z.lazy(() => GetOpportunitiesPaymentMethod$.outboundSchema).optional(),
+            amount: z.number().optional(),
+            taxAmount: z.number().optional(),
+            type: GetOpportunitiesOpportunitiesType$.optional(),
+            date: z.number().optional(),
+            currency: GetOpportunitiesOpportunitiesCurrency$.optional(),
+            recipient: z.lazy(() => GetOpportunitiesRecipient$.outboundSchema).optional(),
+            sender: z.lazy(() => GetOpportunitiesSender$.outboundSchema).optional(),
+            description: z.string().optional(),
+            checkNumber: z.string().optional(),
+            transactionCategory: GetOpportunitiesTransactionCategory$.optional(),
+            tags: z.array(z.string()).optional(),
+            status: GetOpportunitiesOpportunitiesResponse200Status$.optional(),
+            transactionMethod: GetOpportunitiesTransactionMethod$.optional(),
+            transactionType: GetOpportunitiesTransactionType$.optional(),
+            refund: z.lazy(() => GetOpportunitiesRefund$.outboundSchema).optional(),
+            dispute: z.lazy(() => GetOpportunitiesDispute$.outboundSchema).optional(),
+            metadata: z
+                .lazy(() => GetOpportunitiesOpportunitiesMetadata$.outboundSchema)
+                .optional(),
+            exchangeRate: z.number().optional(),
+            shipping: z.lazy(() => GetOpportunitiesShipping$.outboundSchema).optional(),
+            billingDetails: z.lazy(() => GetOpportunitiesBillingDetails$.outboundSchema).optional(),
+            applicationFee: z.number().optional(),
+            paymentIntent: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            deleted: z.boolean().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
+                ...(v.invoiceId === undefined ? null : { invoiceId: v.invoiceId }),
+                ...(v.orderId === undefined ? null : { orderId: v.orderId }),
+                ...(v.paymentMethod === undefined ? null : { paymentMethod: v.paymentMethod }),
+                ...(v.amount === undefined ? null : { amount: v.amount }),
+                ...(v.taxAmount === undefined ? null : { taxAmount: v.taxAmount }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.date === undefined ? null : { date: v.date }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.recipient === undefined ? null : { recipient: v.recipient }),
+                ...(v.sender === undefined ? null : { sender: v.sender }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.checkNumber === undefined ? null : { checkNumber: v.checkNumber }),
+                ...(v.transactionCategory === undefined
+                    ? null
+                    : { transactionCategory: v.transactionCategory }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.transactionMethod === undefined
+                    ? null
+                    : { transactionMethod: v.transactionMethod }),
+                ...(v.transactionType === undefined
+                    ? null
+                    : { transactionType: v.transactionType }),
+                ...(v.refund === undefined ? null : { refund: v.refund }),
+                ...(v.dispute === undefined ? null : { dispute: v.dispute }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.exchangeRate === undefined ? null : { exchangeRate: v.exchangeRate }),
+                ...(v.shipping === undefined ? null : { shipping: v.shipping }),
+                ...(v.billingDetails === undefined ? null : { billingDetails: v.billingDetails }),
+                ...(v.applicationFee === undefined ? null : { applicationFee: v.applicationFee }),
+                ...(v.paymentIntent === undefined ? null : { paymentIntent: v.paymentIntent }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
 }
@@ -2151,161 +3159,169 @@ export namespace GetOpportunitiesOpportunitiesResponseCustomFields$ {
 export namespace GetOpportunitiesAccount$ {
     export type Inbound = {
         id?: string | undefined;
-        name?: string | undefined;
-        industry?: string | undefined;
+        accountNumber?: string | undefined;
         accountType?: GetOpportunitiesAccountType | undefined;
-        rating?: GetOpportunitiesRating | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
-        website?: string | undefined;
-        billingAddress?: GetOpportunitiesBillingAddress$.Inbound | undefined;
-        shippingAddress?: GetOpportunitiesShippingAddress$.Inbound | undefined;
-        numberOfEmployees?: number | undefined;
-        annualRevenue?: number | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        balance?: number | undefined;
+        currency?: GetOpportunitiesCurrency | undefined;
+        owner?: GetOpportunitiesOpportunitiesOwner$.Inbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        closedAt?: number | undefined;
         status?: GetOpportunitiesOpportunitiesStatus | undefined;
-        ownerId?: string | undefined;
-        customFields?:
-            | Array<GetOpportunitiesOpportunitiesResponseCustomFields$.Inbound>
-            | undefined;
-        tags?: Array<string> | undefined;
+        transactions?: Array<GetOpportunitiesTransactions$.Inbound> | undefined;
+        branch?: string | undefined;
+        notes?: string | undefined;
+        interestRate?: number | undefined;
+        overdraftLimit?: number | undefined;
+        overdraftProtection?: boolean | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetOpportunitiesAccount, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            name: z.string().optional(),
-            industry: z.string().optional(),
+            accountNumber: z.string().optional(),
             accountType: GetOpportunitiesAccountType$.optional(),
-            rating: GetOpportunitiesRating$.optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
-            website: z.string().optional(),
-            billingAddress: z.lazy(() => GetOpportunitiesBillingAddress$.inboundSchema).optional(),
-            shippingAddress: z
-                .lazy(() => GetOpportunitiesShippingAddress$.inboundSchema)
-                .optional(),
-            numberOfEmployees: z.number().optional(),
-            annualRevenue: z.number().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            balance: z.number().optional(),
+            currency: GetOpportunitiesCurrency$.optional(),
+            owner: z.lazy(() => GetOpportunitiesOpportunitiesOwner$.inboundSchema).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            closedAt: z.number().optional(),
             status: GetOpportunitiesOpportunitiesStatus$.optional(),
-            ownerId: z.string().optional(),
-            customFields: z
-                .array(
-                    z.lazy(() => GetOpportunitiesOpportunitiesResponseCustomFields$.inboundSchema)
-                )
+            transactions: z
+                .array(z.lazy(() => GetOpportunitiesTransactions$.inboundSchema))
                 .optional(),
-            tags: z.array(z.string()).optional(),
+            branch: z.string().optional(),
+            notes: z.string().optional(),
+            interestRate: z.number().optional(),
+            overdraftLimit: z.number().optional(),
+            overdraftProtection: z.boolean().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.name === undefined ? null : { name: v.name }),
-                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.accountNumber === undefined ? null : { accountNumber: v.accountNumber }),
                 ...(v.accountType === undefined ? null : { accountType: v.accountType }),
-                ...(v.rating === undefined ? null : { rating: v.rating }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
-                ...(v.website === undefined ? null : { website: v.website }),
-                ...(v.billingAddress === undefined ? null : { billingAddress: v.billingAddress }),
-                ...(v.shippingAddress === undefined
-                    ? null
-                    : { shippingAddress: v.shippingAddress }),
-                ...(v.numberOfEmployees === undefined
-                    ? null
-                    : { numberOfEmployees: v.numberOfEmployees }),
-                ...(v.annualRevenue === undefined ? null : { annualRevenue: v.annualRevenue }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.balance === undefined ? null : { balance: v.balance }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.owner === undefined ? null : { owner: v.owner }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.closedAt === undefined ? null : { closedAt: v.closedAt }),
                 ...(v.status === undefined ? null : { status: v.status }),
-                ...(v.ownerId === undefined ? null : { ownerId: v.ownerId }),
-                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
-                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.transactions === undefined ? null : { transactions: v.transactions }),
+                ...(v.branch === undefined ? null : { branch: v.branch }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.interestRate === undefined ? null : { interestRate: v.interestRate }),
+                ...(v.overdraftLimit === undefined ? null : { overdraftLimit: v.overdraftLimit }),
+                ...(v.overdraftProtection === undefined
+                    ? null
+                    : { overdraftProtection: v.overdraftProtection }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
 
     export type Outbound = {
         id?: string | undefined;
-        name?: string | undefined;
-        industry?: string | undefined;
+        accountNumber?: string | undefined;
         accountType?: GetOpportunitiesAccountType | undefined;
-        rating?: GetOpportunitiesRating | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
-        website?: string | undefined;
-        billingAddress?: GetOpportunitiesBillingAddress$.Outbound | undefined;
-        shippingAddress?: GetOpportunitiesShippingAddress$.Outbound | undefined;
-        numberOfEmployees?: number | undefined;
-        annualRevenue?: number | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        balance?: number | undefined;
+        currency?: GetOpportunitiesCurrency | undefined;
+        owner?: GetOpportunitiesOpportunitiesOwner$.Outbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        closedAt?: number | undefined;
         status?: GetOpportunitiesOpportunitiesStatus | undefined;
-        ownerId?: string | undefined;
-        customFields?:
-            | Array<GetOpportunitiesOpportunitiesResponseCustomFields$.Outbound>
-            | undefined;
-        tags?: Array<string> | undefined;
+        transactions?: Array<GetOpportunitiesTransactions$.Outbound> | undefined;
+        branch?: string | undefined;
+        notes?: string | undefined;
+        interestRate?: number | undefined;
+        overdraftLimit?: number | undefined;
+        overdraftProtection?: boolean | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesAccount> = z
         .object({
             id: z.string().optional(),
-            name: z.string().optional(),
-            industry: z.string().optional(),
+            accountNumber: z.string().optional(),
             accountType: GetOpportunitiesAccountType$.optional(),
-            rating: GetOpportunitiesRating$.optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
-            website: z.string().optional(),
-            billingAddress: z.lazy(() => GetOpportunitiesBillingAddress$.outboundSchema).optional(),
-            shippingAddress: z
-                .lazy(() => GetOpportunitiesShippingAddress$.outboundSchema)
-                .optional(),
-            numberOfEmployees: z.number().optional(),
-            annualRevenue: z.number().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            balance: z.number().optional(),
+            currency: GetOpportunitiesCurrency$.optional(),
+            owner: z.lazy(() => GetOpportunitiesOpportunitiesOwner$.outboundSchema).optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            closedAt: z.number().optional(),
             status: GetOpportunitiesOpportunitiesStatus$.optional(),
-            ownerId: z.string().optional(),
-            customFields: z
-                .array(
-                    z.lazy(() => GetOpportunitiesOpportunitiesResponseCustomFields$.outboundSchema)
-                )
+            transactions: z
+                .array(z.lazy(() => GetOpportunitiesTransactions$.outboundSchema))
                 .optional(),
-            tags: z.array(z.string()).optional(),
+            branch: z.string().optional(),
+            notes: z.string().optional(),
+            interestRate: z.number().optional(),
+            overdraftLimit: z.number().optional(),
+            overdraftProtection: z.boolean().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.name === undefined ? null : { name: v.name }),
-                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.accountNumber === undefined ? null : { accountNumber: v.accountNumber }),
                 ...(v.accountType === undefined ? null : { accountType: v.accountType }),
-                ...(v.rating === undefined ? null : { rating: v.rating }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
-                ...(v.website === undefined ? null : { website: v.website }),
-                ...(v.billingAddress === undefined ? null : { billingAddress: v.billingAddress }),
-                ...(v.shippingAddress === undefined
-                    ? null
-                    : { shippingAddress: v.shippingAddress }),
-                ...(v.numberOfEmployees === undefined
-                    ? null
-                    : { numberOfEmployees: v.numberOfEmployees }),
-                ...(v.annualRevenue === undefined ? null : { annualRevenue: v.annualRevenue }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.balance === undefined ? null : { balance: v.balance }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.owner === undefined ? null : { owner: v.owner }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.closedAt === undefined ? null : { closedAt: v.closedAt }),
                 ...(v.status === undefined ? null : { status: v.status }),
-                ...(v.ownerId === undefined ? null : { ownerId: v.ownerId }),
-                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
-                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.transactions === undefined ? null : { transactions: v.transactions }),
+                ...(v.branch === undefined ? null : { branch: v.branch }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.interestRate === undefined ? null : { interestRate: v.interestRate }),
+                ...(v.overdraftLimit === undefined ? null : { overdraftLimit: v.overdraftLimit }),
+                ...(v.overdraftProtection === undefined
+                    ? null
+                    : { overdraftProtection: v.overdraftProtection }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
+}
+
+/** @internal */
+export namespace GetOpportunitiesEmails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesEmails, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesEmails> =
+        z.object({});
+}
+
+/** @internal */
+export namespace GetOpportunitiesPhones$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetOpportunitiesPhones, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesPhones> =
+        z.object({});
 }
 
 /** @internal */
@@ -2386,11 +3402,12 @@ export namespace GetOpportunitiesContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetOpportunitiesEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetOpportunitiesPhones$.Inbound> | undefined;
         address?: GetOpportunitiesAddress$.Inbound | undefined;
         addresses?: Array<GetOpportunitiesAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -2400,7 +3417,10 @@ export namespace GetOpportunitiesContacts$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetOpportunitiesSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetOpportunitiesOpportunitiesCustomFields$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetOpportunitiesContacts, z.ZodTypeDef, Inbound> = z
@@ -2408,11 +3428,12 @@ export namespace GetOpportunitiesContacts$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetOpportunitiesEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetOpportunitiesPhones$.inboundSchema)).optional(),
             address: z.lazy(() => GetOpportunitiesAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetOpportunitiesAddresses$.inboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -2424,19 +3445,23 @@ export namespace GetOpportunitiesContacts$ {
             socialProfiles: z
                 .array(z.lazy(() => GetOpportunitiesSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => GetOpportunitiesOpportunitiesCustomFields$.inboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -2447,7 +3472,10 @@ export namespace GetOpportunitiesContacts$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -2455,11 +3483,12 @@ export namespace GetOpportunitiesContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetOpportunitiesEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetOpportunitiesPhones$.Outbound> | undefined;
         address?: GetOpportunitiesAddress$.Outbound | undefined;
         addresses?: Array<GetOpportunitiesAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -2469,7 +3498,10 @@ export namespace GetOpportunitiesContacts$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetOpportunitiesSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetOpportunitiesOpportunitiesCustomFields$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesContacts> = z
@@ -2477,11 +3509,12 @@ export namespace GetOpportunitiesContacts$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetOpportunitiesEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetOpportunitiesPhones$.outboundSchema)).optional(),
             address: z.lazy(() => GetOpportunitiesAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetOpportunitiesAddresses$.outboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -2493,19 +3526,23 @@ export namespace GetOpportunitiesContacts$ {
             socialProfiles: z
                 .array(z.lazy(() => GetOpportunitiesSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => GetOpportunitiesOpportunitiesCustomFields$.outboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -2516,7 +3553,10 @@ export namespace GetOpportunitiesContacts$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }
@@ -2752,35 +3792,29 @@ export namespace GetOpportunitiesCoverPhoto$ {
 export const GetOpportunitiesGender$ = z.nativeEnum(GetOpportunitiesGender);
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponse200Type$ = z.nativeEnum(
-    GetOpportunitiesOpportunitiesResponse200Type
+export const GetOpportunitiesOpportunitiesResponseType$ = z.nativeEnum(
+    GetOpportunitiesOpportunitiesResponseType
 );
 
 /** @internal */
-export namespace GetOpportunitiesOpportunitiesResponseGeoLocation$ {
+export namespace GetOpportunitiesGeoLocation$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<
-        GetOpportunitiesOpportunitiesResponseGeoLocation,
-        z.ZodTypeDef,
-        Inbound
-    > = z.object({});
+    export const inboundSchema: z.ZodType<GetOpportunitiesGeoLocation, z.ZodTypeDef, Inbound> =
+        z.object({});
 
     export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<
-        Outbound,
-        z.ZodTypeDef,
-        GetOpportunitiesOpportunitiesResponseGeoLocation
-    > = z.object({});
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesGeoLocation> =
+        z.object({});
 }
 
 /** @internal */
-export namespace GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$ {
+export namespace GetOpportunitiesOpportunitiesResponseCustomFields$ {
     export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields,
+        GetOpportunitiesOpportunitiesResponseCustomFields,
         z.ZodTypeDef,
         Inbound
     > = z.object({});
@@ -2790,7 +3824,7 @@ export namespace GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFi
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields
+        GetOpportunitiesOpportunitiesResponseCustomFields
     > = z.object({});
 }
 
@@ -2815,10 +3849,10 @@ export namespace GetOpportunitiesOpportunitiesAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesResponse200Type | undefined;
-        geoLocation?: GetOpportunitiesOpportunitiesResponseGeoLocation$.Inbound | undefined;
+        type?: GetOpportunitiesOpportunitiesResponseType | undefined;
+        geoLocation?: GetOpportunitiesGeoLocation$.Inbound | undefined;
         customFields?:
-            | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.Inbound>
+            | Array<GetOpportunitiesOpportunitiesResponseCustomFields$.Inbound>
             | undefined;
         subdivisionCode?: string | undefined;
     };
@@ -2847,16 +3881,11 @@ export namespace GetOpportunitiesOpportunitiesAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponse200Type$.optional(),
-            geoLocation: z
-                .lazy(() => GetOpportunitiesOpportunitiesResponseGeoLocation$.inboundSchema)
-                .optional(),
+            type: GetOpportunitiesOpportunitiesResponseType$.optional(),
+            geoLocation: z.lazy(() => GetOpportunitiesGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(
-                    z.lazy(
-                        () =>
-                            GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.inboundSchema
-                    )
+                    z.lazy(() => GetOpportunitiesOpportunitiesResponseCustomFields$.inboundSchema)
                 )
                 .optional(),
             subdivisionCode: z.string().optional(),
@@ -2911,10 +3940,10 @@ export namespace GetOpportunitiesOpportunitiesAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesResponse200Type | undefined;
-        geoLocation?: GetOpportunitiesOpportunitiesResponseGeoLocation$.Outbound | undefined;
+        type?: GetOpportunitiesOpportunitiesResponseType | undefined;
+        geoLocation?: GetOpportunitiesGeoLocation$.Outbound | undefined;
         customFields?:
-            | Array<GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.Outbound>
+            | Array<GetOpportunitiesOpportunitiesResponseCustomFields$.Outbound>
             | undefined;
         subdivisionCode?: string | undefined;
     };
@@ -2943,16 +3972,11 @@ export namespace GetOpportunitiesOpportunitiesAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponse200Type$.optional(),
-            geoLocation: z
-                .lazy(() => GetOpportunitiesOpportunitiesResponseGeoLocation$.outboundSchema)
-                .optional(),
+            type: GetOpportunitiesOpportunitiesResponseType$.optional(),
+            geoLocation: z.lazy(() => GetOpportunitiesGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(
-                    z.lazy(
-                        () =>
-                            GetOpportunitiesOpportunitiesResponse200ApplicationJSONCustomFields$.outboundSchema
-                    )
+                    z.lazy(() => GetOpportunitiesOpportunitiesResponseCustomFields$.outboundSchema)
                 )
                 .optional(),
             subdivisionCode: z.string().optional(),
@@ -3051,13 +4075,15 @@ export namespace GetOpportunitiesPreferences$ {
 }
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONType$ = z.nativeEnum(
-    GetOpportunitiesOpportunitiesResponse200ApplicationJSONType
+export const GetOpportunitiesOpportunitiesResponse200Type$ = z.nativeEnum(
+    GetOpportunitiesOpportunitiesResponse200Type
 );
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType$ =
-    z.nativeEnum(GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType);
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType$ =
+    z.nativeEnum(
+        GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType
+    );
 
 /** @internal */
 export namespace GetOpportunitiesAdditionalInfo$ {
@@ -3066,7 +4092,7 @@ export namespace GetOpportunitiesAdditionalInfo$ {
         key?: string | undefined;
         value?: string | undefined;
         type?:
-            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType
             | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
@@ -3079,7 +4105,7 @@ export namespace GetOpportunitiesAdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -3103,7 +4129,7 @@ export namespace GetOpportunitiesAdditionalInfo$ {
         key?: string | undefined;
         value?: string | undefined;
         type?:
-            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType
+            | GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType
             | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
@@ -3117,7 +4143,7 @@ export namespace GetOpportunitiesAdditionalInfo$ {
                 id: z.string().optional(),
                 key: z.string().optional(),
                 value: z.string().optional(),
-                type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+                type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyUnifiedOwnerType$.optional(),
                 createdAt: z.number().optional(),
                 updatedAt: z.number().optional(),
                 entityId: z.string().optional(),
@@ -3140,7 +4166,7 @@ export namespace GetOpportunitiesAdditionalInfo$ {
 /** @internal */
 export namespace GetOpportunitiesSocialLinks$ {
     export type Inbound = {
-        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType | undefined;
+        type?: GetOpportunitiesOpportunitiesResponse200Type | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -3155,7 +4181,7 @@ export namespace GetOpportunitiesSocialLinks$ {
 
     export const inboundSchema: z.ZodType<GetOpportunitiesSocialLinks, z.ZodTypeDef, Inbound> = z
         .object({
-            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200Type$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -3184,7 +4210,7 @@ export namespace GetOpportunitiesSocialLinks$ {
         });
 
     export type Outbound = {
-        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType | undefined;
+        type?: GetOpportunitiesOpportunitiesResponse200Type | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -3199,7 +4225,7 @@ export namespace GetOpportunitiesSocialLinks$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesSocialLinks> = z
         .object({
-            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200Type$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -3340,14 +4366,15 @@ export namespace GetOpportunitiesSso$ {
 }
 
 /** @internal */
-export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType$ =
-    z.nativeEnum(GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType);
+export const GetOpportunitiesOpportunitiesResponse200ApplicationJSONType$ = z.nativeEnum(
+    GetOpportunitiesOpportunitiesResponse200ApplicationJSONType
+);
 
 /** @internal */
 export namespace GetOpportunitiesPaymentMethods$ {
     export type Inbound = {
         id?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType | undefined;
+        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -3355,7 +4382,7 @@ export namespace GetOpportunitiesPaymentMethods$ {
     export const inboundSchema: z.ZodType<GetOpportunitiesPaymentMethods, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType$.optional(),
+            type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -3370,7 +4397,7 @@ export namespace GetOpportunitiesPaymentMethods$ {
 
     export type Outbound = {
         id?: string | undefined;
-        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType | undefined;
+        type?: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -3379,7 +4406,7 @@ export namespace GetOpportunitiesPaymentMethods$ {
         z
             .object({
                 id: z.string().optional(),
-                type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONResponseBodyType$.optional(),
+                type: GetOpportunitiesOpportunitiesResponse200ApplicationJSONType$.optional(),
                 details: z.string().optional(),
                 isDefault: z.boolean().optional(),
             })
@@ -3776,14 +4803,15 @@ export namespace GetOpportunitiesUnified$ {
         currency?: string | undefined;
         stage?: string | undefined;
         probability?: number | undefined;
-        closeDate?: number | undefined;
+        closeDate?: string | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         lostReason?: string | undefined;
         campaign?: GetOpportunitiesCampaign$.Inbound | undefined;
         account?: GetOpportunitiesAccount$.Inbound | undefined;
@@ -3803,14 +4831,27 @@ export namespace GetOpportunitiesUnified$ {
             currency: z.string().optional(),
             stage: z.string().optional(),
             probability: z.number().optional(),
-            closeDate: z.number().optional(),
+            closeDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => GetOpportunitiesCampaign$.inboundSchema).optional(),
             account: z.lazy(() => GetOpportunitiesAccount$.inboundSchema).optional(),
@@ -3836,13 +4877,12 @@ export namespace GetOpportunitiesUnified$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),
@@ -3862,14 +4902,15 @@ export namespace GetOpportunitiesUnified$ {
         currency?: string | undefined;
         stage?: string | undefined;
         probability?: number | undefined;
-        closeDate?: number | undefined;
+        closeDate?: string | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
+        leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdDate?: number | undefined;
-        lastModifiedDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         lostReason?: string | undefined;
         campaign?: GetOpportunitiesCampaign$.Outbound | undefined;
         account?: GetOpportunitiesAccount$.Outbound | undefined;
@@ -3889,14 +4930,24 @@ export namespace GetOpportunitiesUnified$ {
             currency: z.string().optional(),
             stage: z.string().optional(),
             probability: z.number().optional(),
-            closeDate: z.number().optional(),
+            closeDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
+            leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdDate: z.number().optional(),
-            lastModifiedDate: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => GetOpportunitiesCampaign$.outboundSchema).optional(),
             account: z.lazy(() => GetOpportunitiesAccount$.outboundSchema).optional(),
@@ -3922,13 +4973,12 @@ export namespace GetOpportunitiesUnified$ {
                 ...(v.closeDate === undefined ? null : { closeDate: v.closeDate }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.nextStep === undefined ? null : { nextStep: v.nextStep }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.leadSource === undefined ? null : { leadSource: v.leadSource }),
                 ...(v.isClosed === undefined ? null : { isClosed: v.isClosed }),
                 ...(v.isWon === undefined ? null : { isWon: v.isWon }),
-                ...(v.createdDate === undefined ? null : { createdDate: v.createdDate }),
-                ...(v.lastModifiedDate === undefined
-                    ? null
-                    : { lastModifiedDate: v.lastModifiedDate }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.lostReason === undefined ? null : { lostReason: v.lostReason }),
                 ...(v.campaign === undefined ? null : { campaign: v.campaign }),
                 ...(v.account === undefined ? null : { account: v.account }),

@@ -64,6 +64,30 @@ export type PostCompaniesAddress = {
 };
 
 export enum PostCompaniesCompaniesType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostCompaniesEmails = {
+    email?: string | undefined;
+    type?: PostCompaniesCompaniesType | undefined;
+};
+
+export enum PostCompaniesCompaniesRequestType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostCompaniesPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PostCompaniesCompaniesRequestType | undefined;
+};
+
+export enum PostCompaniesCompaniesRequestRequestBodyType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -77,7 +101,7 @@ export enum PostCompaniesCompaniesType {
 export type PostCompaniesAdditionalInfo = {};
 
 export type PostCompaniesSocialProfiles = {
-    type?: PostCompaniesCompaniesType | undefined;
+    type?: PostCompaniesCompaniesRequestRequestBodyType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -89,6 +113,10 @@ export type PostCompaniesSocialProfiles = {
     active?: boolean | undefined;
     deleted?: boolean | undefined;
 };
+
+export type PostCompaniesCompaniesEmails = {};
+
+export type PostCompaniesCompaniesPhones = {};
 
 export type PostCompaniesCompaniesAddress = {};
 
@@ -104,11 +132,12 @@ export type PostCompaniesAdditionalContacts = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostCompaniesCompaniesEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostCompaniesCompaniesPhones> | undefined;
     address?: PostCompaniesCompaniesAddress | undefined;
     addresses?: Array<PostCompaniesAddresses> | undefined;
     birthday?: number | undefined;
@@ -118,20 +147,42 @@ export type PostCompaniesAdditionalContacts = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<PostCompaniesCompaniesSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<PostCompaniesCompaniesCustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+};
+
+export enum PostCompaniesCompaniesFieldType {
+    Text = "text",
+    Number = "number",
+    Date = "date",
+    Boolean = "boolean",
+    Enum = "enum",
+    Json = "json",
+    Array = "array",
+}
+
+export type PostCompaniesCompaniesRequestCustomFields = {
+    id?: string | undefined;
+    fieldName?: string | undefined;
+    fieldValue?: string | undefined;
+    fieldType?: PostCompaniesCompaniesFieldType | undefined;
 };
 
 export type PostCompaniesRequestBody = {
-    id?: number | undefined;
+    id?: string | undefined;
     name?: string | undefined;
     legalName?: string | undefined;
     type?: string | undefined;
     industry?: string | undefined;
     address?: PostCompaniesAddress | undefined;
-    phone?: string | undefined;
-    email?: string | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostCompaniesEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostCompaniesPhones> | undefined;
     website?: string | undefined;
-    foundedDate?: number | undefined;
+    foundedDate?: Date | undefined;
     numberOfEmployees?: number | undefined;
     revenue?: number | undefined;
     revenueCurrency?: string | undefined;
@@ -143,17 +194,16 @@ export type PostCompaniesRequestBody = {
     parentCompanyId?: string | undefined;
     additionalContacts?: Array<PostCompaniesAdditionalContacts> | undefined;
     incorporationCountry?: string | undefined;
-    incorporationDate?: number | undefined;
+    incorporationDate?: Date | undefined;
     taxId?: string | undefined;
     regulatoryStatus?: string | undefined;
     dunsNumber?: string | undefined;
+    customFields?: Array<PostCompaniesCompaniesRequestCustomFields> | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostCompaniesRequest = {
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -184,7 +234,7 @@ export type PostCompaniesCompaniesGeoLocation = {
     timestamp?: number | undefined;
 };
 
-export enum PostCompaniesCompaniesFieldType {
+export enum PostCompaniesCompaniesResponse200FieldType {
     Text = "text",
     Number = "number",
     Date = "date",
@@ -194,11 +244,11 @@ export enum PostCompaniesCompaniesFieldType {
     Array = "array",
 }
 
-export type PostCompaniesCompaniesResponseCustomFields = {
+export type PostCompaniesCompaniesResponse200ApplicationJSONCustomFields = {
     id?: string | undefined;
     fieldName?: string | undefined;
     fieldValue?: string | undefined;
-    fieldType?: PostCompaniesCompaniesFieldType | undefined;
+    fieldType?: PostCompaniesCompaniesResponse200FieldType | undefined;
 };
 
 export type PostCompaniesCompaniesResponseAddress = {
@@ -222,11 +272,35 @@ export type PostCompaniesCompaniesResponseAddress = {
     countryCode?: string | undefined;
     type?: PostCompaniesCompaniesResponseType | undefined;
     geoLocation?: PostCompaniesCompaniesGeoLocation | undefined;
-    customFields?: Array<PostCompaniesCompaniesResponseCustomFields> | undefined;
+    customFields?: Array<PostCompaniesCompaniesResponse200ApplicationJSONCustomFields> | undefined;
     subdivisionCode?: string | undefined;
 };
 
 export enum PostCompaniesCompaniesResponse200Type {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostCompaniesCompaniesResponseEmails = {
+    email?: string | undefined;
+    type?: PostCompaniesCompaniesResponse200Type | undefined;
+};
+
+export enum PostCompaniesCompaniesResponse200ApplicationJSONType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostCompaniesCompaniesResponsePhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PostCompaniesCompaniesResponse200ApplicationJSONType | undefined;
+};
+
+export enum PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -240,7 +314,7 @@ export enum PostCompaniesCompaniesResponse200Type {
 export type PostCompaniesCompaniesAdditionalInfo = {};
 
 export type PostCompaniesCompaniesResponseSocialProfiles = {
-    type?: PostCompaniesCompaniesResponse200Type | undefined;
+    type?: PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -252,6 +326,10 @@ export type PostCompaniesCompaniesResponseSocialProfiles = {
     active?: boolean | undefined;
     deleted?: boolean | undefined;
 };
+
+export type PostCompaniesCompaniesResponse200Emails = {};
+
+export type PostCompaniesCompaniesResponse200Phones = {};
 
 export type PostCompaniesCompaniesResponse200Address = {};
 
@@ -267,11 +345,12 @@ export type PostCompaniesCompaniesAdditionalContacts = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostCompaniesCompaniesResponse200Emails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostCompaniesCompaniesResponse200Phones> | undefined;
     address?: PostCompaniesCompaniesResponse200Address | undefined;
     addresses?: Array<PostCompaniesCompaniesAddresses> | undefined;
     birthday?: number | undefined;
@@ -281,20 +360,42 @@ export type PostCompaniesCompaniesAdditionalContacts = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<PostCompaniesCompaniesResponse200SocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<PostCompaniesCompaniesResponse200CustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+};
+
+export enum PostCompaniesCompaniesResponseFieldType {
+    Text = "text",
+    Number = "number",
+    Date = "date",
+    Boolean = "boolean",
+    Enum = "enum",
+    Json = "json",
+    Array = "array",
+}
+
+export type PostCompaniesCompaniesResponseCustomFields = {
+    id?: string | undefined;
+    fieldName?: string | undefined;
+    fieldValue?: string | undefined;
+    fieldType?: PostCompaniesCompaniesResponseFieldType | undefined;
 };
 
 export type PostCompaniesUnified = {
-    id?: number | undefined;
+    id?: string | undefined;
     name?: string | undefined;
     legalName?: string | undefined;
     type?: string | undefined;
     industry?: string | undefined;
     address?: PostCompaniesCompaniesResponseAddress | undefined;
-    phone?: string | undefined;
-    email?: string | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostCompaniesCompaniesResponseEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostCompaniesCompaniesResponsePhones> | undefined;
     website?: string | undefined;
-    foundedDate?: number | undefined;
+    foundedDate?: Date | undefined;
     numberOfEmployees?: number | undefined;
     revenue?: number | undefined;
     revenueCurrency?: string | undefined;
@@ -306,10 +407,13 @@ export type PostCompaniesUnified = {
     parentCompanyId?: string | undefined;
     additionalContacts?: Array<PostCompaniesCompaniesAdditionalContacts> | undefined;
     incorporationCountry?: string | undefined;
-    incorporationDate?: number | undefined;
+    incorporationDate?: Date | undefined;
     taxId?: string | undefined;
     regulatoryStatus?: string | undefined;
     dunsNumber?: string | undefined;
+    customFields?: Array<PostCompaniesCompaniesResponseCustomFields> | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostCompaniesPassthrough = {};
@@ -675,6 +779,100 @@ export namespace PostCompaniesAddress$ {
 export const PostCompaniesCompaniesType$ = z.nativeEnum(PostCompaniesCompaniesType);
 
 /** @internal */
+export namespace PostCompaniesEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PostCompaniesCompaniesType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostCompaniesEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: PostCompaniesCompaniesType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PostCompaniesCompaniesType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: PostCompaniesCompaniesType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostCompaniesCompaniesRequestType$ = z.nativeEnum(PostCompaniesCompaniesRequestType);
+
+/** @internal */
+export namespace PostCompaniesPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostCompaniesCompaniesRequestType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostCompaniesPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostCompaniesCompaniesRequestType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostCompaniesCompaniesRequestType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostCompaniesCompaniesRequestType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostCompaniesCompaniesRequestRequestBodyType$ = z.nativeEnum(
+    PostCompaniesCompaniesRequestRequestBodyType
+);
+
+/** @internal */
 export namespace PostCompaniesAdditionalInfo$ {
     export type Inbound = {};
 
@@ -690,7 +888,7 @@ export namespace PostCompaniesAdditionalInfo$ {
 /** @internal */
 export namespace PostCompaniesSocialProfiles$ {
     export type Inbound = {
-        type?: PostCompaniesCompaniesType | undefined;
+        type?: PostCompaniesCompaniesRequestRequestBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -705,7 +903,7 @@ export namespace PostCompaniesSocialProfiles$ {
 
     export const inboundSchema: z.ZodType<PostCompaniesSocialProfiles, z.ZodTypeDef, Inbound> = z
         .object({
-            type: PostCompaniesCompaniesType$.optional(),
+            type: PostCompaniesCompaniesRequestRequestBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -734,7 +932,7 @@ export namespace PostCompaniesSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: PostCompaniesCompaniesType | undefined;
+        type?: PostCompaniesCompaniesRequestRequestBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -749,7 +947,7 @@ export namespace PostCompaniesSocialProfiles$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesSocialProfiles> = z
         .object({
-            type: PostCompaniesCompaniesType$.optional(),
+            type: PostCompaniesCompaniesRequestRequestBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -776,6 +974,32 @@ export namespace PostCompaniesSocialProfiles$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
+}
+
+/** @internal */
+export namespace PostCompaniesCompaniesEmails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<PostCompaniesCompaniesEmails, z.ZodTypeDef, Inbound> =
+        z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesCompaniesEmails> =
+        z.object({});
+}
+
+/** @internal */
+export namespace PostCompaniesCompaniesPhones$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<PostCompaniesCompaniesPhones, z.ZodTypeDef, Inbound> =
+        z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesCompaniesPhones> =
+        z.object({});
 }
 
 /** @internal */
@@ -862,11 +1086,12 @@ export namespace PostCompaniesAdditionalContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesCompaniesEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesCompaniesPhones$.Inbound> | undefined;
         address?: PostCompaniesCompaniesAddress$.Inbound | undefined;
         addresses?: Array<PostCompaniesAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -876,7 +1101,10 @@ export namespace PostCompaniesAdditionalContacts$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PostCompaniesCompaniesSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PostCompaniesCompaniesCustomFields$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCompaniesAdditionalContacts, z.ZodTypeDef, Inbound> =
@@ -885,11 +1113,16 @@ export namespace PostCompaniesAdditionalContacts$ {
                 id: z.string().optional(),
                 firstName: z.string().optional(),
                 lastName: z.string().optional(),
+                leadId: z.string().optional(),
                 company: z.string().optional(),
-                email: z.string().optional(),
-                emails: z.array(z.string()).optional(),
-                phone: z.string().optional(),
-                phones: z.array(z.string()).optional(),
+                defaultEmail: z.string().optional(),
+                emails: z
+                    .array(z.lazy(() => PostCompaniesCompaniesEmails$.inboundSchema))
+                    .optional(),
+                defaultPhone: z.string().optional(),
+                phones: z
+                    .array(z.lazy(() => PostCompaniesCompaniesPhones$.inboundSchema))
+                    .optional(),
                 address: z.lazy(() => PostCompaniesCompaniesAddress$.inboundSchema).optional(),
                 addresses: z.array(z.lazy(() => PostCompaniesAddresses$.inboundSchema)).optional(),
                 birthday: z.number().optional(),
@@ -901,19 +1134,23 @@ export namespace PostCompaniesAdditionalContacts$ {
                 socialProfiles: z
                     .array(z.lazy(() => PostCompaniesCompaniesSocialProfiles$.inboundSchema))
                     .optional(),
+                isActive: z.boolean().optional(),
                 customFields: z
                     .array(z.lazy(() => PostCompaniesCompaniesCustomFields$.inboundSchema))
                     .optional(),
+                createdAt: z.number().optional(),
+                updatedAt: z.number().optional(),
             })
             .transform((v) => {
                 return {
                     ...(v.id === undefined ? null : { id: v.id }),
                     ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                     ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                    ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                     ...(v.company === undefined ? null : { company: v.company }),
-                    ...(v.email === undefined ? null : { email: v.email }),
+                    ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                     ...(v.emails === undefined ? null : { emails: v.emails }),
-                    ...(v.phone === undefined ? null : { phone: v.phone }),
+                    ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                     ...(v.phones === undefined ? null : { phones: v.phones }),
                     ...(v.address === undefined ? null : { address: v.address }),
                     ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -926,7 +1163,10 @@ export namespace PostCompaniesAdditionalContacts$ {
                     ...(v.socialProfiles === undefined
                         ? null
                         : { socialProfiles: v.socialProfiles }),
+                    ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                     ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                    ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                    ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 };
             });
 
@@ -934,11 +1174,12 @@ export namespace PostCompaniesAdditionalContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesCompaniesEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesCompaniesPhones$.Outbound> | undefined;
         address?: PostCompaniesCompaniesAddress$.Outbound | undefined;
         addresses?: Array<PostCompaniesAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -948,7 +1189,10 @@ export namespace PostCompaniesAdditionalContacts$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PostCompaniesCompaniesSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PostCompaniesCompaniesCustomFields$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<
@@ -960,11 +1204,12 @@ export namespace PostCompaniesAdditionalContacts$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostCompaniesCompaniesEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostCompaniesCompaniesPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PostCompaniesCompaniesAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => PostCompaniesAddresses$.outboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -976,19 +1221,23 @@ export namespace PostCompaniesAdditionalContacts$ {
             socialProfiles: z
                 .array(z.lazy(() => PostCompaniesCompaniesSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PostCompaniesCompaniesCustomFields$.outboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -999,7 +1248,70 @@ export namespace PostCompaniesAdditionalContacts$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+            };
+        });
+}
+
+/** @internal */
+export const PostCompaniesCompaniesFieldType$ = z.nativeEnum(PostCompaniesCompaniesFieldType);
+
+/** @internal */
+export namespace PostCompaniesCompaniesRequestCustomFields$ {
+    export type Inbound = {
+        id?: string | undefined;
+        fieldName?: string | undefined;
+        fieldValue?: string | undefined;
+        fieldType?: PostCompaniesCompaniesFieldType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<
+        PostCompaniesCompaniesRequestCustomFields,
+        z.ZodTypeDef,
+        Inbound
+    > = z
+        .object({
+            id: z.string().optional(),
+            fieldName: z.string().optional(),
+            fieldValue: z.string().optional(),
+            fieldType: PostCompaniesCompaniesFieldType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
+                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
+                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+            };
+        });
+
+    export type Outbound = {
+        id?: string | undefined;
+        fieldName?: string | undefined;
+        fieldValue?: string | undefined;
+        fieldType?: PostCompaniesCompaniesFieldType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PostCompaniesCompaniesRequestCustomFields
+    > = z
+        .object({
+            id: z.string().optional(),
+            fieldName: z.string().optional(),
+            fieldValue: z.string().optional(),
+            fieldType: PostCompaniesCompaniesFieldType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
+                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
+                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
             };
         });
 }
@@ -1007,16 +1319,18 @@ export namespace PostCompaniesAdditionalContacts$ {
 /** @internal */
 export namespace PostCompaniesRequestBody$ {
     export type Inbound = {
-        id?: number | undefined;
+        id?: string | undefined;
         name?: string | undefined;
         legalName?: string | undefined;
         type?: string | undefined;
         industry?: string | undefined;
         address?: PostCompaniesAddress$.Inbound | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesPhones$.Inbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -1028,24 +1342,33 @@ export namespace PostCompaniesRequestBody$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesAdditionalContacts$.Inbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
+        customFields?: Array<PostCompaniesCompaniesRequestCustomFields$.Inbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCompaniesRequestBody, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             name: z.string().optional(),
             legalName: z.string().optional(),
             type: z.string().optional(),
             industry: z.string().optional(),
             address: z.lazy(() => PostCompaniesAddress$.inboundSchema).optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostCompaniesEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostCompaniesPhones$.inboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -1061,10 +1384,27 @@ export namespace PostCompaniesRequestBody$ {
                 .array(z.lazy(() => PostCompaniesAdditionalContacts$.inboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostCompaniesCompaniesRequestCustomFields$.inboundSchema))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -1074,8 +1414,10 @@ export namespace PostCompaniesRequestBody$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.industry === undefined ? null : { industry: v.industry }),
                 ...(v.address === undefined ? null : { address: v.address }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
@@ -1107,20 +1449,25 @@ export namespace PostCompaniesRequestBody$ {
                     ? null
                     : { regulatoryStatus: v.regulatoryStatus }),
                 ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
     export type Outbound = {
-        id?: number | undefined;
+        id?: string | undefined;
         name?: string | undefined;
         legalName?: string | undefined;
         type?: string | undefined;
         industry?: string | undefined;
         address?: PostCompaniesAddress$.Outbound | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesPhones$.Outbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -1132,24 +1479,32 @@ export namespace PostCompaniesRequestBody$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesAdditionalContacts$.Outbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
+        customFields?: Array<PostCompaniesCompaniesRequestCustomFields$.Outbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesRequestBody> = z
         .object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             name: z.string().optional(),
             legalName: z.string().optional(),
             type: z.string().optional(),
             industry: z.string().optional(),
             address: z.lazy(() => PostCompaniesAddress$.outboundSchema).optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostCompaniesEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostCompaniesPhones$.outboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -1165,10 +1520,24 @@ export namespace PostCompaniesRequestBody$ {
                 .array(z.lazy(() => PostCompaniesAdditionalContacts$.outboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostCompaniesCompaniesRequestCustomFields$.outboundSchema))
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -1178,8 +1547,10 @@ export namespace PostCompaniesRequestBody$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.industry === undefined ? null : { industry: v.industry }),
                 ...(v.address === undefined ? null : { address: v.address }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
@@ -1211,6 +1582,9 @@ export namespace PostCompaniesRequestBody$ {
                     ? null
                     : { regulatoryStatus: v.regulatoryStatus }),
                 ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }
@@ -1218,40 +1592,34 @@ export namespace PostCompaniesRequestBody$ {
 /** @internal */
 export namespace PostCompaniesRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostCompaniesRequestBody$.Inbound;
     };
 
     export const inboundSchema: z.ZodType<PostCompaniesRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PostCompaniesRequestBody$.inboundSchema),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 requestBody: v.RequestBody,
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostCompaniesRequestBody$.Outbound;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PostCompaniesRequestBody$.outboundSchema),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 RequestBody: v.requestBody,
             };
@@ -1350,19 +1718,21 @@ export namespace PostCompaniesCompaniesGeoLocation$ {
 }
 
 /** @internal */
-export const PostCompaniesCompaniesFieldType$ = z.nativeEnum(PostCompaniesCompaniesFieldType);
+export const PostCompaniesCompaniesResponse200FieldType$ = z.nativeEnum(
+    PostCompaniesCompaniesResponse200FieldType
+);
 
 /** @internal */
-export namespace PostCompaniesCompaniesResponseCustomFields$ {
+export namespace PostCompaniesCompaniesResponse200ApplicationJSONCustomFields$ {
     export type Inbound = {
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: PostCompaniesCompaniesFieldType | undefined;
+        fieldType?: PostCompaniesCompaniesResponse200FieldType | undefined;
     };
 
     export const inboundSchema: z.ZodType<
-        PostCompaniesCompaniesResponseCustomFields,
+        PostCompaniesCompaniesResponse200ApplicationJSONCustomFields,
         z.ZodTypeDef,
         Inbound
     > = z
@@ -1370,7 +1740,7 @@ export namespace PostCompaniesCompaniesResponseCustomFields$ {
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: PostCompaniesCompaniesFieldType$.optional(),
+            fieldType: PostCompaniesCompaniesResponse200FieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -1385,19 +1755,19 @@ export namespace PostCompaniesCompaniesResponseCustomFields$ {
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: PostCompaniesCompaniesFieldType | undefined;
+        fieldType?: PostCompaniesCompaniesResponse200FieldType | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PostCompaniesCompaniesResponseCustomFields
+        PostCompaniesCompaniesResponse200ApplicationJSONCustomFields
     > = z
         .object({
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: PostCompaniesCompaniesFieldType$.optional(),
+            fieldType: PostCompaniesCompaniesResponse200FieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -1432,7 +1802,9 @@ export namespace PostCompaniesCompaniesResponseAddress$ {
         countryCode?: string | undefined;
         type?: PostCompaniesCompaniesResponseType | undefined;
         geoLocation?: PostCompaniesCompaniesGeoLocation$.Inbound | undefined;
-        customFields?: Array<PostCompaniesCompaniesResponseCustomFields$.Inbound> | undefined;
+        customFields?:
+            | Array<PostCompaniesCompaniesResponse200ApplicationJSONCustomFields$.Inbound>
+            | undefined;
         subdivisionCode?: string | undefined;
     };
 
@@ -1463,7 +1835,12 @@ export namespace PostCompaniesCompaniesResponseAddress$ {
             type: PostCompaniesCompaniesResponseType$.optional(),
             geoLocation: z.lazy(() => PostCompaniesCompaniesGeoLocation$.inboundSchema).optional(),
             customFields: z
-                .array(z.lazy(() => PostCompaniesCompaniesResponseCustomFields$.inboundSchema))
+                .array(
+                    z.lazy(
+                        () =>
+                            PostCompaniesCompaniesResponse200ApplicationJSONCustomFields$.inboundSchema
+                    )
+                )
                 .optional(),
             subdivisionCode: z.string().optional(),
         })
@@ -1519,7 +1896,9 @@ export namespace PostCompaniesCompaniesResponseAddress$ {
         countryCode?: string | undefined;
         type?: PostCompaniesCompaniesResponseType | undefined;
         geoLocation?: PostCompaniesCompaniesGeoLocation$.Outbound | undefined;
-        customFields?: Array<PostCompaniesCompaniesResponseCustomFields$.Outbound> | undefined;
+        customFields?:
+            | Array<PostCompaniesCompaniesResponse200ApplicationJSONCustomFields$.Outbound>
+            | undefined;
         subdivisionCode?: string | undefined;
     };
 
@@ -1550,7 +1929,12 @@ export namespace PostCompaniesCompaniesResponseAddress$ {
             type: PostCompaniesCompaniesResponseType$.optional(),
             geoLocation: z.lazy(() => PostCompaniesCompaniesGeoLocation$.outboundSchema).optional(),
             customFields: z
-                .array(z.lazy(() => PostCompaniesCompaniesResponseCustomFields$.outboundSchema))
+                .array(
+                    z.lazy(
+                        () =>
+                            PostCompaniesCompaniesResponse200ApplicationJSONCustomFields$.outboundSchema
+                    )
+                )
                 .optional(),
             subdivisionCode: z.string().optional(),
         })
@@ -1592,6 +1976,118 @@ export const PostCompaniesCompaniesResponse200Type$ = z.nativeEnum(
 );
 
 /** @internal */
+export namespace PostCompaniesCompaniesResponseEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PostCompaniesCompaniesResponse200Type | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<
+        PostCompaniesCompaniesResponseEmails,
+        z.ZodTypeDef,
+        Inbound
+    > = z
+        .object({
+            email: z.string().optional(),
+            type: PostCompaniesCompaniesResponse200Type$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PostCompaniesCompaniesResponse200Type | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PostCompaniesCompaniesResponseEmails
+    > = z
+        .object({
+            email: z.string().optional(),
+            type: PostCompaniesCompaniesResponse200Type$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostCompaniesCompaniesResponse200ApplicationJSONType$ = z.nativeEnum(
+    PostCompaniesCompaniesResponse200ApplicationJSONType
+);
+
+/** @internal */
+export namespace PostCompaniesCompaniesResponsePhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostCompaniesCompaniesResponse200ApplicationJSONType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<
+        PostCompaniesCompaniesResponsePhones,
+        z.ZodTypeDef,
+        Inbound
+    > = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostCompaniesCompaniesResponse200ApplicationJSONType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostCompaniesCompaniesResponse200ApplicationJSONType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PostCompaniesCompaniesResponsePhones
+    > = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostCompaniesCompaniesResponse200ApplicationJSONType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType$ = z.nativeEnum(
+    PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType
+);
+
+/** @internal */
 export namespace PostCompaniesCompaniesAdditionalInfo$ {
     export type Inbound = {};
 
@@ -1613,7 +2109,7 @@ export namespace PostCompaniesCompaniesAdditionalInfo$ {
 /** @internal */
 export namespace PostCompaniesCompaniesResponseSocialProfiles$ {
     export type Inbound = {
-        type?: PostCompaniesCompaniesResponse200Type | undefined;
+        type?: PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1632,7 +2128,7 @@ export namespace PostCompaniesCompaniesResponseSocialProfiles$ {
         Inbound
     > = z
         .object({
-            type: PostCompaniesCompaniesResponse200Type$.optional(),
+            type: PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1663,7 +2159,7 @@ export namespace PostCompaniesCompaniesResponseSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: PostCompaniesCompaniesResponse200Type | undefined;
+        type?: PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -1682,7 +2178,7 @@ export namespace PostCompaniesCompaniesResponseSocialProfiles$ {
         PostCompaniesCompaniesResponseSocialProfiles
     > = z
         .object({
-            type: PostCompaniesCompaniesResponse200Type$.optional(),
+            type: PostCompaniesCompaniesResponse200ApplicationJSONResponseBodyType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -1711,6 +2207,44 @@ export namespace PostCompaniesCompaniesResponseSocialProfiles$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
+}
+
+/** @internal */
+export namespace PostCompaniesCompaniesResponse200Emails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<
+        PostCompaniesCompaniesResponse200Emails,
+        z.ZodTypeDef,
+        Inbound
+    > = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PostCompaniesCompaniesResponse200Emails
+    > = z.object({});
+}
+
+/** @internal */
+export namespace PostCompaniesCompaniesResponse200Phones$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<
+        PostCompaniesCompaniesResponse200Phones,
+        z.ZodTypeDef,
+        Inbound
+    > = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PostCompaniesCompaniesResponse200Phones
+    > = z.object({});
 }
 
 /** @internal */
@@ -1805,11 +2339,12 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesCompaniesResponse200Emails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesCompaniesResponse200Phones$.Inbound> | undefined;
         address?: PostCompaniesCompaniesResponse200Address$.Inbound | undefined;
         addresses?: Array<PostCompaniesCompaniesAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -1821,7 +2356,10 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
         socialProfiles?:
             | Array<PostCompaniesCompaniesResponse200SocialProfiles$.Inbound>
             | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PostCompaniesCompaniesResponse200CustomFields$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<
@@ -1833,11 +2371,16 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponse200Emails$.inboundSchema))
+                .optional(),
+            defaultPhone: z.string().optional(),
+            phones: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponse200Phones$.inboundSchema))
+                .optional(),
             address: z
                 .lazy(() => PostCompaniesCompaniesResponse200Address$.inboundSchema)
                 .optional(),
@@ -1853,19 +2396,23 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
             socialProfiles: z
                 .array(z.lazy(() => PostCompaniesCompaniesResponse200SocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PostCompaniesCompaniesResponse200CustomFields$.inboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1876,7 +2423,10 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -1884,11 +2434,12 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesCompaniesResponse200Emails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesCompaniesResponse200Phones$.Outbound> | undefined;
         address?: PostCompaniesCompaniesResponse200Address$.Outbound | undefined;
         addresses?: Array<PostCompaniesCompaniesAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -1900,7 +2451,10 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
         socialProfiles?:
             | Array<PostCompaniesCompaniesResponse200SocialProfiles$.Outbound>
             | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PostCompaniesCompaniesResponse200CustomFields$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<
@@ -1912,11 +2466,16 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponse200Emails$.outboundSchema))
+                .optional(),
+            defaultPhone: z.string().optional(),
+            phones: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponse200Phones$.outboundSchema))
+                .optional(),
             address: z
                 .lazy(() => PostCompaniesCompaniesResponse200Address$.outboundSchema)
                 .optional(),
@@ -1934,19 +2493,23 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
                     z.lazy(() => PostCompaniesCompaniesResponse200SocialProfiles$.outboundSchema)
                 )
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PostCompaniesCompaniesResponse200CustomFields$.outboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1957,7 +2520,72 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+            };
+        });
+}
+
+/** @internal */
+export const PostCompaniesCompaniesResponseFieldType$ = z.nativeEnum(
+    PostCompaniesCompaniesResponseFieldType
+);
+
+/** @internal */
+export namespace PostCompaniesCompaniesResponseCustomFields$ {
+    export type Inbound = {
+        id?: string | undefined;
+        fieldName?: string | undefined;
+        fieldValue?: string | undefined;
+        fieldType?: PostCompaniesCompaniesResponseFieldType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<
+        PostCompaniesCompaniesResponseCustomFields,
+        z.ZodTypeDef,
+        Inbound
+    > = z
+        .object({
+            id: z.string().optional(),
+            fieldName: z.string().optional(),
+            fieldValue: z.string().optional(),
+            fieldType: PostCompaniesCompaniesResponseFieldType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
+                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
+                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+            };
+        });
+
+    export type Outbound = {
+        id?: string | undefined;
+        fieldName?: string | undefined;
+        fieldValue?: string | undefined;
+        fieldType?: PostCompaniesCompaniesResponseFieldType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PostCompaniesCompaniesResponseCustomFields
+    > = z
+        .object({
+            id: z.string().optional(),
+            fieldName: z.string().optional(),
+            fieldValue: z.string().optional(),
+            fieldType: PostCompaniesCompaniesResponseFieldType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
+                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
+                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
             };
         });
 }
@@ -1965,16 +2593,18 @@ export namespace PostCompaniesCompaniesAdditionalContacts$ {
 /** @internal */
 export namespace PostCompaniesUnified$ {
     export type Inbound = {
-        id?: number | undefined;
+        id?: string | undefined;
         name?: string | undefined;
         legalName?: string | undefined;
         type?: string | undefined;
         industry?: string | undefined;
         address?: PostCompaniesCompaniesResponseAddress$.Inbound | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesCompaniesResponseEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesCompaniesResponsePhones$.Inbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -1986,24 +2616,37 @@ export namespace PostCompaniesUnified$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesCompaniesAdditionalContacts$.Inbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
+        customFields?: Array<PostCompaniesCompaniesResponseCustomFields$.Inbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCompaniesUnified, z.ZodTypeDef, Inbound> = z
         .object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             name: z.string().optional(),
             legalName: z.string().optional(),
             type: z.string().optional(),
             industry: z.string().optional(),
             address: z.lazy(() => PostCompaniesCompaniesResponseAddress$.inboundSchema).optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
+            defaultEmail: z.string().optional(),
+            emails: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponseEmails$.inboundSchema))
+                .optional(),
+            defaultPhone: z.string().optional(),
+            phones: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponsePhones$.inboundSchema))
+                .optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -2019,10 +2662,27 @@ export namespace PostCompaniesUnified$ {
                 .array(z.lazy(() => PostCompaniesCompaniesAdditionalContacts$.inboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponseCustomFields$.inboundSchema))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -2032,8 +2692,10 @@ export namespace PostCompaniesUnified$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.industry === undefined ? null : { industry: v.industry }),
                 ...(v.address === undefined ? null : { address: v.address }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
@@ -2065,20 +2727,25 @@ export namespace PostCompaniesUnified$ {
                     ? null
                     : { regulatoryStatus: v.regulatoryStatus }),
                 ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
     export type Outbound = {
-        id?: number | undefined;
+        id?: string | undefined;
         name?: string | undefined;
         legalName?: string | undefined;
         type?: string | undefined;
         industry?: string | undefined;
         address?: PostCompaniesCompaniesResponseAddress$.Outbound | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostCompaniesCompaniesResponseEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostCompaniesCompaniesResponsePhones$.Outbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -2090,24 +2757,36 @@ export namespace PostCompaniesUnified$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesCompaniesAdditionalContacts$.Outbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
+        customFields?: Array<PostCompaniesCompaniesResponseCustomFields$.Outbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesUnified> = z
         .object({
-            id: z.number().optional(),
+            id: z.string().optional(),
             name: z.string().optional(),
             legalName: z.string().optional(),
             type: z.string().optional(),
             industry: z.string().optional(),
             address: z.lazy(() => PostCompaniesCompaniesResponseAddress$.outboundSchema).optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
+            defaultEmail: z.string().optional(),
+            emails: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponseEmails$.outboundSchema))
+                .optional(),
+            defaultPhone: z.string().optional(),
+            phones: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponsePhones$.outboundSchema))
+                .optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -2123,10 +2802,24 @@ export namespace PostCompaniesUnified$ {
                 .array(z.lazy(() => PostCompaniesCompaniesAdditionalContacts$.outboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
+            customFields: z
+                .array(z.lazy(() => PostCompaniesCompaniesResponseCustomFields$.outboundSchema))
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -2136,8 +2829,10 @@ export namespace PostCompaniesUnified$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.industry === undefined ? null : { industry: v.industry }),
                 ...(v.address === undefined ? null : { address: v.address }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
+                ...(v.emails === undefined ? null : { emails: v.emails }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
+                ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
@@ -2169,6 +2864,9 @@ export namespace PostCompaniesUnified$ {
                     ? null
                     : { regulatoryStatus: v.regulatoryStatus }),
                 ...(v.dunsNumber === undefined ? null : { dunsNumber: v.dunsNumber }),
+                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }

@@ -6,10 +6,6 @@ import { z } from "zod";
 
 export type GetProductsRequest = {
     /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
-    /**
      * The unique identifier of a Connected Account
      */
     xIntegrationosConnectionKey: string;
@@ -156,6 +152,10 @@ export type GetProductsAddress = {
     subdivisionCode?: string | undefined;
 };
 
+export type GetProductsEmails = {};
+
+export type GetProductsPhones = {};
+
 export type GetProductsProductsAddress = {};
 
 export type GetProductsAddresses = {};
@@ -170,11 +170,12 @@ export type GetProductsContactInformation = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<GetProductsEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<GetProductsPhones> | undefined;
     address?: GetProductsProductsAddress | undefined;
     addresses?: Array<GetProductsAddresses> | undefined;
     birthday?: number | undefined;
@@ -184,7 +185,10 @@ export type GetProductsContactInformation = {
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<GetProductsSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<GetProductsProductsResponse200CustomFields> | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
 };
 
 export enum GetProductsType {
@@ -257,6 +261,7 @@ export type GetProductsDownloadFiles = {
 export enum GetProductsStatus {
     Active = "active",
     Archived = "archived",
+    Preorder = "preorder",
     Draft = "draft",
     Deleted = "deleted",
 }
@@ -333,9 +338,9 @@ export type GetProductsUnified = {
     isDownloadable?: boolean | undefined;
     downloadFiles?: Array<GetProductsDownloadFiles> | undefined;
     relatedProducts?: Array<string> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    publishedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    publishedAt?: Date | undefined;
     status?: GetProductsStatus | undefined;
     tax?: GetProductsTax | undefined;
     localizations?: Array<GetProductsLocalizations> | undefined;
@@ -408,35 +413,29 @@ export type GetProductsResponse = {
 /** @internal */
 export namespace GetProductsRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const inboundSchema: z.ZodType<GetProductsRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetProductsRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
             };
         });
@@ -1133,6 +1132,32 @@ export namespace GetProductsAddress$ {
 }
 
 /** @internal */
+export namespace GetProductsEmails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetProductsEmails, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetProductsEmails> = z.object(
+        {}
+    );
+}
+
+/** @internal */
+export namespace GetProductsPhones$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<GetProductsPhones, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetProductsPhones> = z.object(
+        {}
+    );
+}
+
+/** @internal */
 export namespace GetProductsProductsAddress$ {
     export type Inbound = {};
 
@@ -1209,11 +1234,12 @@ export namespace GetProductsContactInformation$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetProductsEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetProductsPhones$.Inbound> | undefined;
         address?: GetProductsProductsAddress$.Inbound | undefined;
         addresses?: Array<GetProductsAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
@@ -1223,7 +1249,10 @@ export namespace GetProductsContactInformation$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetProductsSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetProductsProductsResponse200CustomFields$.Inbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetProductsContactInformation, z.ZodTypeDef, Inbound> = z
@@ -1231,11 +1260,12 @@ export namespace GetProductsContactInformation$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => GetProductsEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => GetProductsPhones$.inboundSchema)).optional(),
             address: z.lazy(() => GetProductsProductsAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetProductsAddresses$.inboundSchema)).optional(),
             birthday: z.number().optional(),
@@ -1247,19 +1277,23 @@ export namespace GetProductsContactInformation$ {
             socialProfiles: z
                 .array(z.lazy(() => GetProductsSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => GetProductsProductsResponse200CustomFields$.inboundSchema))
                 .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1270,7 +1304,10 @@ export namespace GetProductsContactInformation$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -1278,11 +1315,12 @@ export namespace GetProductsContactInformation$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<GetProductsEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<GetProductsPhones$.Outbound> | undefined;
         address?: GetProductsProductsAddress$.Outbound | undefined;
         addresses?: Array<GetProductsAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
@@ -1292,7 +1330,10 @@ export namespace GetProductsContactInformation$ {
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<GetProductsSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<GetProductsProductsResponse200CustomFields$.Outbound> | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetProductsContactInformation> =
@@ -1301,11 +1342,12 @@ export namespace GetProductsContactInformation$ {
                 id: z.string().optional(),
                 firstName: z.string().optional(),
                 lastName: z.string().optional(),
+                leadId: z.string().optional(),
                 company: z.string().optional(),
-                email: z.string().optional(),
-                emails: z.array(z.string()).optional(),
-                phone: z.string().optional(),
-                phones: z.array(z.string()).optional(),
+                defaultEmail: z.string().optional(),
+                emails: z.array(z.lazy(() => GetProductsEmails$.outboundSchema)).optional(),
+                defaultPhone: z.string().optional(),
+                phones: z.array(z.lazy(() => GetProductsPhones$.outboundSchema)).optional(),
                 address: z.lazy(() => GetProductsProductsAddress$.outboundSchema).optional(),
                 addresses: z.array(z.lazy(() => GetProductsAddresses$.outboundSchema)).optional(),
                 birthday: z.number().optional(),
@@ -1317,19 +1359,23 @@ export namespace GetProductsContactInformation$ {
                 socialProfiles: z
                     .array(z.lazy(() => GetProductsSocialProfiles$.outboundSchema))
                     .optional(),
+                isActive: z.boolean().optional(),
                 customFields: z
                     .array(z.lazy(() => GetProductsProductsResponse200CustomFields$.outboundSchema))
                     .optional(),
+                createdAt: z.number().optional(),
+                updatedAt: z.number().optional(),
             })
             .transform((v) => {
                 return {
                     ...(v.id === undefined ? null : { id: v.id }),
                     ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                     ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                    ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                     ...(v.company === undefined ? null : { company: v.company }),
-                    ...(v.email === undefined ? null : { email: v.email }),
+                    ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                     ...(v.emails === undefined ? null : { emails: v.emails }),
-                    ...(v.phone === undefined ? null : { phone: v.phone }),
+                    ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                     ...(v.phones === undefined ? null : { phones: v.phones }),
                     ...(v.address === undefined ? null : { address: v.address }),
                     ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -1342,7 +1388,10 @@ export namespace GetProductsContactInformation$ {
                     ...(v.socialProfiles === undefined
                         ? null
                         : { socialProfiles: v.socialProfiles }),
+                    ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                     ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                    ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                    ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 };
             });
 }
@@ -1969,9 +2018,9 @@ export namespace GetProductsUnified$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<GetProductsDownloadFiles$.Inbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: GetProductsStatus | undefined;
         tax?: GetProductsTax$.Inbound | undefined;
         localizations?: Array<GetProductsLocalizations$.Inbound> | undefined;
@@ -2008,9 +2057,21 @@ export namespace GetProductsUnified$ {
                 .array(z.lazy(() => GetProductsDownloadFiles$.inboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            publishedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: GetProductsStatus$.optional(),
             tax: z.lazy(() => GetProductsTax$.inboundSchema).optional(),
             localizations: z
@@ -2093,9 +2154,9 @@ export namespace GetProductsUnified$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<GetProductsDownloadFiles$.Outbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: GetProductsStatus | undefined;
         tax?: GetProductsTax$.Outbound | undefined;
         localizations?: Array<GetProductsLocalizations$.Outbound> | undefined;
@@ -2134,9 +2195,18 @@ export namespace GetProductsUnified$ {
                 .array(z.lazy(() => GetProductsDownloadFiles$.outboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            publishedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: GetProductsStatus$.optional(),
             tax: z.lazy(() => GetProductsTax$.outboundSchema).optional(),
             localizations: z

@@ -5,6 +5,30 @@
 import { z } from "zod";
 
 export enum PostContactsType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostContactsEmails = {
+    email?: string | undefined;
+    type?: PostContactsType | undefined;
+};
+
+export enum PostContactsContactsType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostContactsPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PostContactsContactsType | undefined;
+};
+
+export enum PostContactsContactsRequestType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -57,13 +81,13 @@ export type PostContactsAddress = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostContactsType | undefined;
+    type?: PostContactsContactsRequestType | undefined;
     geoLocation?: PostContactsGeoLocation | undefined;
     customFields?: Array<PostContactsCustomFields> | undefined;
     subdivisionCode?: string | undefined;
 };
 
-export enum PostContactsContactsType {
+export enum PostContactsContactsRequestRequestBodyType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -92,7 +116,7 @@ export type PostContactsAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostContactsContactsType | undefined;
+    type?: PostContactsContactsRequestRequestBodyType | undefined;
     geoLocation?: PostContactsContactsGeoLocation | undefined;
     customFields?: Array<PostContactsContactsCustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -161,7 +185,7 @@ export enum PostContactsGender {
     PreferNotToSay = "Prefer not to say",
 }
 
-export enum PostContactsContactsRequestType {
+export enum PostContactsContactsRequestRequestBodyNotesType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -190,7 +214,7 @@ export type PostContactsContactsAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostContactsContactsRequestType | undefined;
+    type?: PostContactsContactsRequestRequestBodyNotesType | undefined;
     geoLocation?: PostContactsContactsRequestGeoLocation | undefined;
     customFields?: Array<PostContactsContactsRequestCustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -216,7 +240,7 @@ export type PostContactsPreferences = {
     communications?: PostContactsCommunications | undefined;
 };
 
-export enum PostContactsContactsRequestRequestBodyType {
+export enum PostContactsContactsRequestRequestBodyNotesAuthorType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -227,7 +251,7 @@ export enum PostContactsContactsRequestRequestBodyType {
     Other = "other",
 }
 
-export enum PostContactsContactsRequestRequestBodyNotesType {
+export enum PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType {
     String = "String",
     Number = "Number",
     Boolean = "Boolean",
@@ -240,7 +264,7 @@ export type PostContactsAdditionalInfo = {
     id?: string | undefined;
     key?: string | undefined;
     value?: string | undefined;
-    type?: PostContactsContactsRequestRequestBodyNotesType | undefined;
+    type?: PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
     entityId?: string | undefined;
@@ -248,7 +272,7 @@ export type PostContactsAdditionalInfo = {
 };
 
 export type PostContactsSocialLinks = {
-    type?: PostContactsContactsRequestRequestBodyType | undefined;
+    type?: PostContactsContactsRequestRequestBodyNotesAuthorType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -294,7 +318,7 @@ export type PostContactsSso = {
     deleted?: boolean | undefined;
 };
 
-export enum PostContactsContactsRequestRequestBodyNotesAuthorType {
+export enum PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType {
     CreditCard = "CreditCard",
     PayPal = "PayPal",
     BankTransfer = "BankTransfer",
@@ -303,7 +327,7 @@ export enum PostContactsContactsRequestRequestBodyNotesAuthorType {
 
 export type PostContactsPaymentMethods = {
     id?: string | undefined;
-    type?: PostContactsContactsRequestRequestBodyNotesAuthorType | undefined;
+    type?: PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType | undefined;
     details?: string | undefined;
     isDefault?: boolean | undefined;
 };
@@ -498,28 +522,28 @@ export type PostContactsRequestBody = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostContactsEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostContactsPhones> | undefined;
     address?: PostContactsAddress | undefined;
     addresses?: Array<PostContactsAddresses> | undefined;
-    birthday?: number | undefined;
+    birthday?: Date | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: PostContactsNotes | undefined;
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<PostContactsSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<PostContactsContactsRequestRequestBodyCustomFields> | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostContactsRequest = {
-    /**
-     * IntegrationOS API key
-     */
-    xIntegrationosSecret: string;
     /**
      * The unique identifier of a Connected Account
      */
@@ -534,6 +558,30 @@ export enum PostContactsStatusCode {
 }
 
 export enum PostContactsContactsResponseType {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostContactsContactsEmails = {
+    email?: string | undefined;
+    type?: PostContactsContactsResponseType | undefined;
+};
+
+export enum PostContactsContactsResponse200Type {
+    Personal = "personal",
+    Business = "business",
+    Other = "other",
+}
+
+export type PostContactsContactsPhones = {
+    phone?: string | undefined;
+    country?: string | undefined;
+    countryCode?: string | undefined;
+    type?: PostContactsContactsResponse200Type | undefined;
+};
+
+export enum PostContactsContactsResponse200ApplicationJSONType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -586,13 +634,13 @@ export type PostContactsContactsAddress = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostContactsContactsResponseType | undefined;
+    type?: PostContactsContactsResponse200ApplicationJSONType | undefined;
     geoLocation?: PostContactsContactsResponseGeoLocation | undefined;
     customFields?: Array<PostContactsContactsResponse200ApplicationJSONCustomFields> | undefined;
     subdivisionCode?: string | undefined;
 };
 
-export enum PostContactsContactsResponse200Type {
+export enum PostContactsContactsResponse200ApplicationJSONResponseBodyType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -621,7 +669,7 @@ export type PostContactsContactsResponseAddresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostContactsContactsResponse200Type | undefined;
+    type?: PostContactsContactsResponse200ApplicationJSONResponseBodyType | undefined;
     geoLocation?: PostContactsContactsResponse200GeoLocation | undefined;
     customFields?: Array<PostContactsContactsResponse200CustomFields> | undefined;
     subdivisionCode?: string | undefined;
@@ -690,7 +738,7 @@ export enum PostContactsContactsResponseGender {
     PreferNotToSay = "Prefer not to say",
 }
 
-export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType {
+export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType {
     Home = "home",
     Work = "work",
     Other = "other",
@@ -719,7 +767,9 @@ export type PostContactsContactsResponse200Addresses = {
     postalCodeExtension?: string | undefined;
     country?: string | undefined;
     countryCode?: string | undefined;
-    type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType | undefined;
+    type?:
+        | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType
+        | undefined;
     geoLocation?: PostContactsContactsResponse200ApplicationJSONGeoLocation | undefined;
     customFields?:
         | Array<PostContactsContactsResponse200ApplicationJSONResponseBodyCustomFields>
@@ -747,7 +797,7 @@ export type PostContactsContactsResponsePreferences = {
     communications?: PostContactsContactsCommunications | undefined;
 };
 
-export enum PostContactsContactsResponse200ApplicationJSONResponseBodyType {
+export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -758,7 +808,7 @@ export enum PostContactsContactsResponse200ApplicationJSONResponseBodyType {
     Other = "other",
 }
 
-export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType {
+export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType {
     String = "String",
     Number = "Number",
     Boolean = "Boolean",
@@ -772,7 +822,7 @@ export type PostContactsContactsResponse200AdditionalInfo = {
     key?: string | undefined;
     value?: string | undefined;
     type?:
-        | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+        | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType
         | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
@@ -781,7 +831,7 @@ export type PostContactsContactsResponse200AdditionalInfo = {
 };
 
 export type PostContactsContactsResponseSocialLinks = {
-    type?: PostContactsContactsResponse200ApplicationJSONResponseBodyType | undefined;
+    type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -827,7 +877,7 @@ export type PostContactsContactsResponseSso = {
     deleted?: boolean | undefined;
 };
 
-export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType {
+export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType {
     CreditCard = "CreditCard",
     PayPal = "PayPal",
     BankTransfer = "BankTransfer",
@@ -836,7 +886,9 @@ export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedTyp
 
 export type PostContactsContactsResponsePaymentMethods = {
     id?: string | undefined;
-    type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
+    type?:
+        | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+        | undefined;
     details?: string | undefined;
     isDefault?: boolean | undefined;
 };
@@ -983,7 +1035,7 @@ export type PostContactsContactsNotes = {
     metadata?: Array<string> | undefined;
 };
 
-export enum PostContactsContactsResponse200ApplicationJSONType {
+export enum PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType {
     Facebook = "facebook",
     Twitter = "twitter",
     Linkedin = "linkedin",
@@ -997,7 +1049,7 @@ export enum PostContactsContactsResponse200ApplicationJSONType {
 export type PostContactsContactsResponseAdditionalInfo = {};
 
 export type PostContactsContactsSocialProfiles = {
-    type?: PostContactsContactsResponse200ApplicationJSONType | undefined;
+    type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -1031,21 +1083,25 @@ export type PostContactsUnified = {
     id?: string | undefined;
     firstName?: string | undefined;
     lastName?: string | undefined;
+    leadId?: string | undefined;
     company?: string | undefined;
-    email?: string | undefined;
-    emails?: Array<string> | undefined;
-    phone?: string | undefined;
-    phones?: Array<string> | undefined;
+    defaultEmail?: string | undefined;
+    emails?: Array<PostContactsContactsEmails> | undefined;
+    defaultPhone?: string | undefined;
+    phones?: Array<PostContactsContactsPhones> | undefined;
     address?: PostContactsContactsAddress | undefined;
     addresses?: Array<PostContactsContactsResponseAddresses> | undefined;
-    birthday?: number | undefined;
+    birthday?: Date | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: PostContactsContactsNotes | undefined;
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
     socialProfiles?: Array<PostContactsContactsSocialProfiles> | undefined;
+    isActive?: boolean | undefined;
     customFields?: Array<PostContactsContactsResponseCustomFields> | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostContactsPassthrough = {};
@@ -1108,6 +1164,98 @@ export type PostContactsResponse = {
 
 /** @internal */
 export const PostContactsType$ = z.nativeEnum(PostContactsType);
+
+/** @internal */
+export namespace PostContactsEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PostContactsType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostContactsEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: PostContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PostContactsType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: PostContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostContactsContactsType$ = z.nativeEnum(PostContactsContactsType);
+
+/** @internal */
+export namespace PostContactsPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostContactsContactsType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostContactsPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostContactsContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostContactsContactsType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostContactsContactsType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostContactsContactsRequestType$ = z.nativeEnum(PostContactsContactsRequestType);
 
 /** @internal */
 export namespace PostContactsGeoLocation$ {
@@ -1259,7 +1407,7 @@ export namespace PostContactsAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsType | undefined;
+        type?: PostContactsContactsRequestType | undefined;
         geoLocation?: PostContactsGeoLocation$.Inbound | undefined;
         customFields?: Array<PostContactsCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1285,7 +1433,7 @@ export namespace PostContactsAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsType$.optional(),
+            type: PostContactsContactsRequestType$.optional(),
             geoLocation: z.lazy(() => PostContactsGeoLocation$.inboundSchema).optional(),
             customFields: z.array(z.lazy(() => PostContactsCustomFields$.inboundSchema)).optional(),
             subdivisionCode: z.string().optional(),
@@ -1340,7 +1488,7 @@ export namespace PostContactsAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsType | undefined;
+        type?: PostContactsContactsRequestType | undefined;
         geoLocation?: PostContactsGeoLocation$.Outbound | undefined;
         customFields?: Array<PostContactsCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1366,7 +1514,7 @@ export namespace PostContactsAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsType$.optional(),
+            type: PostContactsContactsRequestType$.optional(),
             geoLocation: z.lazy(() => PostContactsGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PostContactsCustomFields$.outboundSchema))
@@ -1406,7 +1554,9 @@ export namespace PostContactsAddress$ {
 }
 
 /** @internal */
-export const PostContactsContactsType$ = z.nativeEnum(PostContactsContactsType);
+export const PostContactsContactsRequestRequestBodyType$ = z.nativeEnum(
+    PostContactsContactsRequestRequestBodyType
+);
 
 /** @internal */
 export namespace PostContactsContactsGeoLocation$ {
@@ -1461,7 +1611,7 @@ export namespace PostContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsType | undefined;
+        type?: PostContactsContactsRequestRequestBodyType | undefined;
         geoLocation?: PostContactsContactsGeoLocation$.Inbound | undefined;
         customFields?: Array<PostContactsContactsCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1487,7 +1637,7 @@ export namespace PostContactsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsType$.optional(),
+            type: PostContactsContactsRequestRequestBodyType$.optional(),
             geoLocation: z.lazy(() => PostContactsContactsGeoLocation$.inboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PostContactsContactsCustomFields$.inboundSchema))
@@ -1544,7 +1694,7 @@ export namespace PostContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsType | undefined;
+        type?: PostContactsContactsRequestRequestBodyType | undefined;
         geoLocation?: PostContactsContactsGeoLocation$.Outbound | undefined;
         customFields?: Array<PostContactsContactsCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1570,7 +1720,7 @@ export namespace PostContactsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsType$.optional(),
+            type: PostContactsContactsRequestRequestBodyType$.optional(),
             geoLocation: z.lazy(() => PostContactsContactsGeoLocation$.outboundSchema).optional(),
             customFields: z
                 .array(z.lazy(() => PostContactsContactsCustomFields$.outboundSchema))
@@ -1840,7 +1990,9 @@ export namespace PostContactsCoverPhoto$ {
 export const PostContactsGender$ = z.nativeEnum(PostContactsGender);
 
 /** @internal */
-export const PostContactsContactsRequestType$ = z.nativeEnum(PostContactsContactsRequestType);
+export const PostContactsContactsRequestRequestBodyNotesType$ = z.nativeEnum(
+    PostContactsContactsRequestRequestBodyNotesType
+);
 
 /** @internal */
 export namespace PostContactsContactsRequestGeoLocation$ {
@@ -1901,7 +2053,7 @@ export namespace PostContactsContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsRequestType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesType | undefined;
         geoLocation?: PostContactsContactsRequestGeoLocation$.Inbound | undefined;
         customFields?: Array<PostContactsContactsRequestCustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -1927,7 +2079,7 @@ export namespace PostContactsContactsAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsRequestType$.optional(),
+            type: PostContactsContactsRequestRequestBodyNotesType$.optional(),
             geoLocation: z
                 .lazy(() => PostContactsContactsRequestGeoLocation$.inboundSchema)
                 .optional(),
@@ -1986,7 +2138,7 @@ export namespace PostContactsContactsAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsRequestType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesType | undefined;
         geoLocation?: PostContactsContactsRequestGeoLocation$.Outbound | undefined;
         customFields?: Array<PostContactsContactsRequestCustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -2013,7 +2165,7 @@ export namespace PostContactsContactsAddresses$ {
                 postalCodeExtension: z.string().optional(),
                 country: z.string().optional(),
                 countryCode: z.string().optional(),
-                type: PostContactsContactsRequestType$.optional(),
+                type: PostContactsContactsRequestRequestBodyNotesType$.optional(),
                 geoLocation: z
                     .lazy(() => PostContactsContactsRequestGeoLocation$.outboundSchema)
                     .optional(),
@@ -2116,13 +2268,13 @@ export namespace PostContactsPreferences$ {
 }
 
 /** @internal */
-export const PostContactsContactsRequestRequestBodyType$ = z.nativeEnum(
-    PostContactsContactsRequestRequestBodyType
+export const PostContactsContactsRequestRequestBodyNotesAuthorType$ = z.nativeEnum(
+    PostContactsContactsRequestRequestBodyNotesAuthorType
 );
 
 /** @internal */
-export const PostContactsContactsRequestRequestBodyNotesType$ = z.nativeEnum(
-    PostContactsContactsRequestRequestBodyNotesType
+export const PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType$ = z.nativeEnum(
+    PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType
 );
 
 /** @internal */
@@ -2131,7 +2283,7 @@ export namespace PostContactsAdditionalInfo$ {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?: PostContactsContactsRequestRequestBodyNotesType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -2143,7 +2295,7 @@ export namespace PostContactsAdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: PostContactsContactsRequestRequestBodyNotesType$.optional(),
+            type: PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -2166,7 +2318,7 @@ export namespace PostContactsAdditionalInfo$ {
         id?: string | undefined;
         key?: string | undefined;
         value?: string | undefined;
-        type?: PostContactsContactsRequestRequestBodyNotesType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         entityId?: string | undefined;
@@ -2178,7 +2330,7 @@ export namespace PostContactsAdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: PostContactsContactsRequestRequestBodyNotesType$.optional(),
+            type: PostContactsContactsRequestRequestBodyNotesAuthorSocialLinksType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -2201,7 +2353,7 @@ export namespace PostContactsAdditionalInfo$ {
 /** @internal */
 export namespace PostContactsSocialLinks$ {
     export type Inbound = {
-        type?: PostContactsContactsRequestRequestBodyType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesAuthorType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -2216,7 +2368,7 @@ export namespace PostContactsSocialLinks$ {
 
     export const inboundSchema: z.ZodType<PostContactsSocialLinks, z.ZodTypeDef, Inbound> = z
         .object({
-            type: PostContactsContactsRequestRequestBodyType$.optional(),
+            type: PostContactsContactsRequestRequestBodyNotesAuthorType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -2245,7 +2397,7 @@ export namespace PostContactsSocialLinks$ {
         });
 
     export type Outbound = {
-        type?: PostContactsContactsRequestRequestBodyType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesAuthorType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -2260,7 +2412,7 @@ export namespace PostContactsSocialLinks$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsSocialLinks> = z
         .object({
-            type: PostContactsContactsRequestRequestBodyType$.optional(),
+            type: PostContactsContactsRequestRequestBodyNotesAuthorType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -2399,15 +2551,15 @@ export namespace PostContactsSso$ {
 }
 
 /** @internal */
-export const PostContactsContactsRequestRequestBodyNotesAuthorType$ = z.nativeEnum(
-    PostContactsContactsRequestRequestBodyNotesAuthorType
+export const PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType$ = z.nativeEnum(
+    PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType
 );
 
 /** @internal */
 export namespace PostContactsPaymentMethods$ {
     export type Inbound = {
         id?: string | undefined;
-        type?: PostContactsContactsRequestRequestBodyNotesAuthorType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -2415,7 +2567,7 @@ export namespace PostContactsPaymentMethods$ {
     export const inboundSchema: z.ZodType<PostContactsPaymentMethods, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            type: PostContactsContactsRequestRequestBodyNotesAuthorType$.optional(),
+            type: PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -2430,7 +2582,7 @@ export namespace PostContactsPaymentMethods$ {
 
     export type Outbound = {
         id?: string | undefined;
-        type?: PostContactsContactsRequestRequestBodyNotesAuthorType | undefined;
+        type?: PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -2438,7 +2590,7 @@ export namespace PostContactsPaymentMethods$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsPaymentMethods> = z
         .object({
             id: z.string().optional(),
-            type: PostContactsContactsRequestRequestBodyNotesAuthorType$.optional(),
+            type: PostContactsContactsRequestRequestBodyNotesAuthorPaymentMethodsType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -3398,23 +3550,27 @@ export namespace PostContactsRequestBody$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostContactsEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostContactsPhones$.Inbound> | undefined;
         address?: PostContactsAddress$.Inbound | undefined;
         addresses?: Array<PostContactsAddresses$.Inbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsNotes$.Inbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PostContactsSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?:
             | Array<PostContactsContactsRequestRequestBodyCustomFields$.Inbound>
             | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostContactsRequestBody, z.ZodTypeDef, Inbound> = z
@@ -3422,14 +3578,19 @@ export namespace PostContactsRequestBody$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostContactsEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostContactsPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PostContactsAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => PostContactsAddresses$.inboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsNotes$.inboundSchema).optional(),
@@ -3438,10 +3599,21 @@ export namespace PostContactsRequestBody$ {
             socialProfiles: z
                 .array(z.lazy(() => PostContactsSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(
                     z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.inboundSchema)
                 )
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
                 .optional(),
         })
         .transform((v) => {
@@ -3449,10 +3621,11 @@ export namespace PostContactsRequestBody$ {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -3463,7 +3636,10 @@ export namespace PostContactsRequestBody$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -3471,23 +3647,27 @@ export namespace PostContactsRequestBody$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostContactsEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostContactsPhones$.Outbound> | undefined;
         address?: PostContactsAddress$.Outbound | undefined;
         addresses?: Array<PostContactsAddresses$.Outbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsNotes$.Outbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PostContactsSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?:
             | Array<PostContactsContactsRequestRequestBodyCustomFields$.Outbound>
             | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsRequestBody> = z
@@ -3495,14 +3675,18 @@ export namespace PostContactsRequestBody$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostContactsEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostContactsPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PostContactsAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => PostContactsAddresses$.outboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsNotes$.outboundSchema).optional(),
@@ -3511,10 +3695,19 @@ export namespace PostContactsRequestBody$ {
             socialProfiles: z
                 .array(z.lazy(() => PostContactsSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(
                     z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.outboundSchema)
                 )
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
                 .optional(),
         })
         .transform((v) => {
@@ -3522,10 +3715,11 @@ export namespace PostContactsRequestBody$ {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -3536,7 +3730,10 @@ export namespace PostContactsRequestBody$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }
@@ -3544,40 +3741,34 @@ export namespace PostContactsRequestBody$ {
 /** @internal */
 export namespace PostContactsRequest$ {
     export type Inbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostContactsRequestBody$.Inbound;
     };
 
     export const inboundSchema: z.ZodType<PostContactsRequest, z.ZodTypeDef, Inbound> = z
         .object({
-            "X-INTEGRATIONOS-SECRET": z.string(),
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             RequestBody: z.lazy(() => PostContactsRequestBody$.inboundSchema),
         })
         .transform((v) => {
             return {
-                xIntegrationosSecret: v["X-INTEGRATIONOS-SECRET"],
                 xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 requestBody: v.RequestBody,
             };
         });
 
     export type Outbound = {
-        "X-INTEGRATIONOS-SECRET": string;
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         RequestBody: PostContactsRequestBody$.Outbound;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsRequest> = z
         .object({
-            xIntegrationosSecret: z.string(),
             xIntegrationosConnectionKey: z.string(),
             requestBody: z.lazy(() => PostContactsRequestBody$.outboundSchema),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-SECRET": v.xIntegrationosSecret,
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
                 RequestBody: v.requestBody,
             };
@@ -3589,6 +3780,102 @@ export const PostContactsStatusCode$ = z.nativeEnum(PostContactsStatusCode);
 
 /** @internal */
 export const PostContactsContactsResponseType$ = z.nativeEnum(PostContactsContactsResponseType);
+
+/** @internal */
+export namespace PostContactsContactsEmails$ {
+    export type Inbound = {
+        email?: string | undefined;
+        type?: PostContactsContactsResponseType | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostContactsContactsEmails, z.ZodTypeDef, Inbound> = z
+        .object({
+            email: z.string().optional(),
+            type: PostContactsContactsResponseType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        email?: string | undefined;
+        type?: PostContactsContactsResponseType | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsContactsEmails> = z
+        .object({
+            email: z.string().optional(),
+            type: PostContactsContactsResponseType$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostContactsContactsResponse200Type$ = z.nativeEnum(
+    PostContactsContactsResponse200Type
+);
+
+/** @internal */
+export namespace PostContactsContactsPhones$ {
+    export type Inbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostContactsContactsResponse200Type | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PostContactsContactsPhones, z.ZodTypeDef, Inbound> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostContactsContactsResponse200Type$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+
+    export type Outbound = {
+        phone?: string | undefined;
+        country?: string | undefined;
+        countryCode?: string | undefined;
+        type?: PostContactsContactsResponse200Type | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsContactsPhones> = z
+        .object({
+            phone: z.string().optional(),
+            country: z.string().optional(),
+            countryCode: z.string().optional(),
+            type: PostContactsContactsResponse200Type$.optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.country === undefined ? null : { country: v.country }),
+                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                ...(v.type === undefined ? null : { type: v.type }),
+            };
+        });
+}
+
+/** @internal */
+export const PostContactsContactsResponse200ApplicationJSONType$ = z.nativeEnum(
+    PostContactsContactsResponse200ApplicationJSONType
+);
 
 /** @internal */
 export namespace PostContactsContactsResponseGeoLocation$ {
@@ -3758,7 +4045,7 @@ export namespace PostContactsContactsAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsResponseType | undefined;
+        type?: PostContactsContactsResponse200ApplicationJSONType | undefined;
         geoLocation?: PostContactsContactsResponseGeoLocation$.Inbound | undefined;
         customFields?:
             | Array<PostContactsContactsResponse200ApplicationJSONCustomFields$.Inbound>
@@ -3786,7 +4073,7 @@ export namespace PostContactsContactsAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsResponseType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONType$.optional(),
             geoLocation: z
                 .lazy(() => PostContactsContactsResponseGeoLocation$.inboundSchema)
                 .optional(),
@@ -3850,7 +4137,7 @@ export namespace PostContactsContactsAddress$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsResponseType | undefined;
+        type?: PostContactsContactsResponse200ApplicationJSONType | undefined;
         geoLocation?: PostContactsContactsResponseGeoLocation$.Outbound | undefined;
         customFields?:
             | Array<PostContactsContactsResponse200ApplicationJSONCustomFields$.Outbound>
@@ -3878,7 +4165,7 @@ export namespace PostContactsContactsAddress$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsResponseType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONType$.optional(),
             geoLocation: z
                 .lazy(() => PostContactsContactsResponseGeoLocation$.outboundSchema)
                 .optional(),
@@ -3925,8 +4212,8 @@ export namespace PostContactsContactsAddress$ {
 }
 
 /** @internal */
-export const PostContactsContactsResponse200Type$ = z.nativeEnum(
-    PostContactsContactsResponse200Type
+export const PostContactsContactsResponse200ApplicationJSONResponseBodyType$ = z.nativeEnum(
+    PostContactsContactsResponse200ApplicationJSONResponseBodyType
 );
 
 /** @internal */
@@ -3988,7 +4275,7 @@ export namespace PostContactsContactsResponseAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsResponse200Type | undefined;
+        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyType | undefined;
         geoLocation?: PostContactsContactsResponse200GeoLocation$.Inbound | undefined;
         customFields?: Array<PostContactsContactsResponse200CustomFields$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -4018,7 +4305,7 @@ export namespace PostContactsContactsResponseAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsResponse200Type$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyType$.optional(),
             geoLocation: z
                 .lazy(() => PostContactsContactsResponse200GeoLocation$.inboundSchema)
                 .optional(),
@@ -4077,7 +4364,7 @@ export namespace PostContactsContactsResponseAddresses$ {
         postalCodeExtension?: string | undefined;
         country?: string | undefined;
         countryCode?: string | undefined;
-        type?: PostContactsContactsResponse200Type | undefined;
+        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyType | undefined;
         geoLocation?: PostContactsContactsResponse200GeoLocation$.Outbound | undefined;
         customFields?: Array<PostContactsContactsResponse200CustomFields$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
@@ -4107,7 +4394,7 @@ export namespace PostContactsContactsResponseAddresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsResponse200Type$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyType$.optional(),
             geoLocation: z
                 .lazy(() => PostContactsContactsResponse200GeoLocation$.outboundSchema)
                 .optional(),
@@ -4399,8 +4686,10 @@ export namespace PostContactsContactsResponseCoverPhoto$ {
 export const PostContactsContactsResponseGender$ = z.nativeEnum(PostContactsContactsResponseGender);
 
 /** @internal */
-export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$ =
-    z.nativeEnum(PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType);
+export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType$ =
+    z.nativeEnum(
+        PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType
+    );
 
 /** @internal */
 export namespace PostContactsContactsResponse200ApplicationJSONGeoLocation$ {
@@ -4462,7 +4751,7 @@ export namespace PostContactsContactsResponse200Addresses$ {
         country?: string | undefined;
         countryCode?: string | undefined;
         type?:
-            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType
             | undefined;
         geoLocation?:
             | PostContactsContactsResponse200ApplicationJSONGeoLocation$.Inbound
@@ -4497,7 +4786,7 @@ export namespace PostContactsContactsResponse200Addresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType$.optional(),
             geoLocation: z
                 .lazy(
                     () => PostContactsContactsResponse200ApplicationJSONGeoLocation$.inboundSchema
@@ -4564,7 +4853,7 @@ export namespace PostContactsContactsResponse200Addresses$ {
         country?: string | undefined;
         countryCode?: string | undefined;
         type?:
-            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType
             | undefined;
         geoLocation?:
             | PostContactsContactsResponse200ApplicationJSONGeoLocation$.Outbound
@@ -4599,7 +4888,7 @@ export namespace PostContactsContactsResponse200Addresses$ {
             postalCodeExtension: z.string().optional(),
             country: z.string().optional(),
             countryCode: z.string().optional(),
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorAddressesType$.optional(),
             geoLocation: z
                 .lazy(
                     () => PostContactsContactsResponse200ApplicationJSONGeoLocation$.outboundSchema
@@ -4717,13 +5006,14 @@ export namespace PostContactsContactsResponsePreferences$ {
 }
 
 /** @internal */
-export const PostContactsContactsResponse200ApplicationJSONResponseBodyType$ = z.nativeEnum(
-    PostContactsContactsResponse200ApplicationJSONResponseBodyType
-);
+export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$ =
+    z.nativeEnum(PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType);
 
 /** @internal */
-export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$ =
-    z.nativeEnum(PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType);
+export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType$ =
+    z.nativeEnum(
+        PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType
+    );
 
 /** @internal */
 export namespace PostContactsContactsResponse200AdditionalInfo$ {
@@ -4732,7 +5022,7 @@ export namespace PostContactsContactsResponse200AdditionalInfo$ {
         key?: string | undefined;
         value?: string | undefined;
         type?:
-            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType
             | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
@@ -4749,7 +5039,7 @@ export namespace PostContactsContactsResponse200AdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -4773,7 +5063,7 @@ export namespace PostContactsContactsResponse200AdditionalInfo$ {
         key?: string | undefined;
         value?: string | undefined;
         type?:
-            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType
             | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
@@ -4790,7 +5080,7 @@ export namespace PostContactsContactsResponse200AdditionalInfo$ {
             id: z.string().optional(),
             key: z.string().optional(),
             value: z.string().optional(),
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorSocialLinksType$.optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             entityId: z.string().optional(),
@@ -4813,7 +5103,9 @@ export namespace PostContactsContactsResponse200AdditionalInfo$ {
 /** @internal */
 export namespace PostContactsContactsResponseSocialLinks$ {
     export type Inbound = {
-        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyType | undefined;
+        type?:
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType
+            | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -4832,7 +5124,7 @@ export namespace PostContactsContactsResponseSocialLinks$ {
         Inbound
     > = z
         .object({
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -4863,7 +5155,9 @@ export namespace PostContactsContactsResponseSocialLinks$ {
         });
 
     export type Outbound = {
-        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyType | undefined;
+        type?:
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType
+            | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -4882,7 +5176,7 @@ export namespace PostContactsContactsResponseSocialLinks$ {
         PostContactsContactsResponseSocialLinks
     > = z
         .object({
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -5032,15 +5326,16 @@ export namespace PostContactsContactsResponseSso$ {
 }
 
 /** @internal */
-export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType$ = z.nativeEnum(
-    PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType
-);
+export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$ =
+    z.nativeEnum(PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType);
 
 /** @internal */
 export namespace PostContactsContactsResponsePaymentMethods$ {
     export type Inbound = {
         id?: string | undefined;
-        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
+        type?:
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+            | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -5052,7 +5347,7 @@ export namespace PostContactsContactsResponsePaymentMethods$ {
     > = z
         .object({
             id: z.string().optional(),
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -5067,7 +5362,9 @@ export namespace PostContactsContactsResponsePaymentMethods$ {
 
     export type Outbound = {
         id?: string | undefined;
-        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
+        type?:
+            | PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType
+            | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
     };
@@ -5079,7 +5376,7 @@ export namespace PostContactsContactsResponsePaymentMethods$ {
     > = z
         .object({
             id: z.string().optional(),
-            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedNotesAuthorType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
         })
@@ -5961,8 +6258,8 @@ export namespace PostContactsContactsNotes$ {
 }
 
 /** @internal */
-export const PostContactsContactsResponse200ApplicationJSONType$ = z.nativeEnum(
-    PostContactsContactsResponse200ApplicationJSONType
+export const PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType$ = z.nativeEnum(
+    PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType
 );
 
 /** @internal */
@@ -5987,7 +6284,7 @@ export namespace PostContactsContactsResponseAdditionalInfo$ {
 /** @internal */
 export namespace PostContactsContactsSocialProfiles$ {
     export type Inbound = {
-        type?: PostContactsContactsResponse200ApplicationJSONType | undefined;
+        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -6006,7 +6303,7 @@ export namespace PostContactsContactsSocialProfiles$ {
         Inbound
     > = z
         .object({
-            type: PostContactsContactsResponse200ApplicationJSONType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -6037,7 +6334,7 @@ export namespace PostContactsContactsSocialProfiles$ {
         });
 
     export type Outbound = {
-        type?: PostContactsContactsResponse200ApplicationJSONType | undefined;
+        type?: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -6056,7 +6353,7 @@ export namespace PostContactsContactsSocialProfiles$ {
         PostContactsContactsSocialProfiles
     > = z
         .object({
-            type: PostContactsContactsResponse200ApplicationJSONType$.optional(),
+            type: PostContactsContactsResponse200ApplicationJSONResponseBodyUnifiedType$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -6155,21 +6452,25 @@ export namespace PostContactsUnified$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostContactsContactsEmails$.Inbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostContactsContactsPhones$.Inbound> | undefined;
         address?: PostContactsContactsAddress$.Inbound | undefined;
         addresses?: Array<PostContactsContactsResponseAddresses$.Inbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsContactsNotes$.Inbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PostContactsContactsSocialProfiles$.Inbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PostContactsContactsResponseCustomFields$.Inbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostContactsUnified, z.ZodTypeDef, Inbound> = z
@@ -6177,16 +6478,21 @@ export namespace PostContactsUnified$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostContactsContactsEmails$.inboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostContactsContactsPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PostContactsContactsAddress$.inboundSchema).optional(),
             addresses: z
                 .array(z.lazy(() => PostContactsContactsResponseAddresses$.inboundSchema))
                 .optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsContactsNotes$.inboundSchema).optional(),
@@ -6195,8 +6501,19 @@ export namespace PostContactsUnified$ {
             socialProfiles: z
                 .array(z.lazy(() => PostContactsContactsSocialProfiles$.inboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PostContactsContactsResponseCustomFields$.inboundSchema))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
                 .optional(),
         })
         .transform((v) => {
@@ -6204,10 +6521,11 @@ export namespace PostContactsUnified$ {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -6218,7 +6536,10 @@ export namespace PostContactsUnified$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 
@@ -6226,21 +6547,25 @@ export namespace PostContactsUnified$ {
         id?: string | undefined;
         firstName?: string | undefined;
         lastName?: string | undefined;
+        leadId?: string | undefined;
         company?: string | undefined;
-        email?: string | undefined;
-        emails?: Array<string> | undefined;
-        phone?: string | undefined;
-        phones?: Array<string> | undefined;
+        defaultEmail?: string | undefined;
+        emails?: Array<PostContactsContactsEmails$.Outbound> | undefined;
+        defaultPhone?: string | undefined;
+        phones?: Array<PostContactsContactsPhones$.Outbound> | undefined;
         address?: PostContactsContactsAddress$.Outbound | undefined;
         addresses?: Array<PostContactsContactsResponseAddresses$.Outbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsContactsNotes$.Outbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
         socialProfiles?: Array<PostContactsContactsSocialProfiles$.Outbound> | undefined;
+        isActive?: boolean | undefined;
         customFields?: Array<PostContactsContactsResponseCustomFields$.Outbound> | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsUnified> = z
@@ -6248,16 +6573,20 @@ export namespace PostContactsUnified$ {
             id: z.string().optional(),
             firstName: z.string().optional(),
             lastName: z.string().optional(),
+            leadId: z.string().optional(),
             company: z.string().optional(),
-            email: z.string().optional(),
-            emails: z.array(z.string()).optional(),
-            phone: z.string().optional(),
-            phones: z.array(z.string()).optional(),
+            defaultEmail: z.string().optional(),
+            emails: z.array(z.lazy(() => PostContactsContactsEmails$.outboundSchema)).optional(),
+            defaultPhone: z.string().optional(),
+            phones: z.array(z.lazy(() => PostContactsContactsPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PostContactsContactsAddress$.outboundSchema).optional(),
             addresses: z
                 .array(z.lazy(() => PostContactsContactsResponseAddresses$.outboundSchema))
                 .optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsContactsNotes$.outboundSchema).optional(),
@@ -6266,8 +6595,17 @@ export namespace PostContactsUnified$ {
             socialProfiles: z
                 .array(z.lazy(() => PostContactsContactsSocialProfiles$.outboundSchema))
                 .optional(),
+            isActive: z.boolean().optional(),
             customFields: z
                 .array(z.lazy(() => PostContactsContactsResponseCustomFields$.outboundSchema))
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
                 .optional(),
         })
         .transform((v) => {
@@ -6275,10 +6613,11 @@ export namespace PostContactsUnified$ {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.firstName === undefined ? null : { firstName: v.firstName }),
                 ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.leadId === undefined ? null : { leadId: v.leadId }),
                 ...(v.company === undefined ? null : { company: v.company }),
-                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.defaultEmail === undefined ? null : { defaultEmail: v.defaultEmail }),
                 ...(v.emails === undefined ? null : { emails: v.emails }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
+                ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.address === undefined ? null : { address: v.address }),
                 ...(v.addresses === undefined ? null : { addresses: v.addresses }),
@@ -6289,7 +6628,10 @@ export namespace PostContactsUnified$ {
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.websites === undefined ? null : { websites: v.websites }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.isActive === undefined ? null : { isActive: v.isActive }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
             };
         });
 }
