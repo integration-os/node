@@ -165,15 +165,15 @@ export type GetCustomersUnified = {
     lastName?: string | undefined;
     email?: string | undefined;
     phoneNumber?: string | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     addresses?: Array<GetCustomersAddresses> | undefined;
     defaultAddress?: GetCustomersDefaultAddress | undefined;
     company?: string | undefined;
     companyId?: string | undefined;
     currency?: string | undefined;
     notes?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     status?: GetCustomersStatus | undefined;
     customerSegment?: string | undefined;
     customerType?: GetCustomersCustomerType | undefined;
@@ -920,15 +920,15 @@ export namespace GetCustomersUnified$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<GetCustomersAddresses$.Inbound> | undefined;
         defaultAddress?: GetCustomersDefaultAddress$.Inbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: GetCustomersStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: GetCustomersCustomerType | undefined;
@@ -950,15 +950,27 @@ export namespace GetCustomersUnified$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => GetCustomersAddresses$.inboundSchema)).optional(),
             defaultAddress: z.lazy(() => GetCustomersDefaultAddress$.inboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: GetCustomersStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: GetCustomersCustomerType$.optional(),
@@ -1017,15 +1029,15 @@ export namespace GetCustomersUnified$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<GetCustomersAddresses$.Outbound> | undefined;
         defaultAddress?: GetCustomersDefaultAddress$.Outbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: GetCustomersStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: GetCustomersCustomerType | undefined;
@@ -1047,15 +1059,24 @@ export namespace GetCustomersUnified$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => GetCustomersAddresses$.outboundSchema)).optional(),
             defaultAddress: z.lazy(() => GetCustomersDefaultAddress$.outboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: GetCustomersStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: GetCustomersCustomerType$.optional(),

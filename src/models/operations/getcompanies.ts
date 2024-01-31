@@ -195,7 +195,7 @@ export type GetCompaniesUnified = {
     defaultPhone?: string | undefined;
     phones?: Array<GetCompaniesPhones> | undefined;
     website?: string | undefined;
-    foundedDate?: number | undefined;
+    foundedDate?: Date | undefined;
     numberOfEmployees?: number | undefined;
     revenue?: number | undefined;
     revenueCurrency?: string | undefined;
@@ -207,13 +207,13 @@ export type GetCompaniesUnified = {
     parentCompanyId?: string | undefined;
     additionalContacts?: Array<GetCompaniesAdditionalContacts> | undefined;
     incorporationCountry?: string | undefined;
-    incorporationDate?: number | undefined;
+    incorporationDate?: Date | undefined;
     taxId?: string | undefined;
     regulatoryStatus?: string | undefined;
     dunsNumber?: string | undefined;
     customFields?: Array<GetCompaniesCustomFields> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type GetCompaniesPassthrough = {};
@@ -1166,7 +1166,7 @@ export namespace GetCompaniesUnified$ {
         defaultPhone?: string | undefined;
         phones?: Array<GetCompaniesPhones$.Inbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -1178,13 +1178,13 @@ export namespace GetCompaniesUnified$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<GetCompaniesAdditionalContacts$.Inbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
         customFields?: Array<GetCompaniesCustomFields$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetCompaniesUnified, z.ZodTypeDef, Inbound> = z
@@ -1200,7 +1200,11 @@ export namespace GetCompaniesUnified$ {
             defaultPhone: z.string().optional(),
             phones: z.array(z.lazy(() => GetCompaniesPhones$.inboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -1216,13 +1220,25 @@ export namespace GetCompaniesUnified$ {
                 .array(z.lazy(() => GetCompaniesAdditionalContacts$.inboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
             customFields: z.array(z.lazy(() => GetCompaniesCustomFields$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -1285,7 +1301,7 @@ export namespace GetCompaniesUnified$ {
         defaultPhone?: string | undefined;
         phones?: Array<GetCompaniesPhones$.Outbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -1297,13 +1313,13 @@ export namespace GetCompaniesUnified$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<GetCompaniesAdditionalContacts$.Outbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
         customFields?: Array<GetCompaniesCustomFields$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCompaniesUnified> = z
@@ -1319,7 +1335,10 @@ export namespace GetCompaniesUnified$ {
             defaultPhone: z.string().optional(),
             phones: z.array(z.lazy(() => GetCompaniesPhones$.outboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -1335,15 +1354,24 @@ export namespace GetCompaniesUnified$ {
                 .array(z.lazy(() => GetCompaniesAdditionalContacts$.outboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
             customFields: z
                 .array(z.lazy(() => GetCompaniesCustomFields$.outboundSchema))
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {

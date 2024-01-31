@@ -188,8 +188,8 @@ export type PostOrdersRequestBody = {
     customerID?: string | undefined;
     orderNumber?: string | undefined;
     status?: PostOrdersStatus | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     total?: number | undefined;
     subTotal?: number | undefined;
     tax?: number | undefined;
@@ -405,8 +405,8 @@ export type PostOrdersUnified = {
     customerID?: string | undefined;
     orderNumber?: string | undefined;
     status?: PostOrdersOrdersStatus | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     total?: number | undefined;
     subTotal?: number | undefined;
     tax?: number | undefined;
@@ -1317,8 +1317,8 @@ export namespace PostOrdersRequestBody$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1342,8 +1342,16 @@ export namespace PostOrdersRequestBody$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -1393,8 +1401,8 @@ export namespace PostOrdersRequestBody$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -1418,8 +1426,14 @@ export namespace PostOrdersRequestBody$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -2395,8 +2409,8 @@ export namespace PostOrdersUnified$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -2420,8 +2434,16 @@ export namespace PostOrdersUnified$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),
@@ -2473,8 +2495,8 @@ export namespace PostOrdersUnified$ {
         customerID?: string | undefined;
         orderNumber?: string | undefined;
         status?: PostOrdersOrdersStatus | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
@@ -2498,8 +2520,14 @@ export namespace PostOrdersUnified$ {
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
             status: PostOrdersOrdersStatus$.optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             total: z.number().optional(),
             subTotal: z.number().optional(),
             tax: z.number().optional(),

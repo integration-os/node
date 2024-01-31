@@ -233,8 +233,8 @@ export type PostLeadsRequestBody = {
     numberOfEmployees?: number | undefined;
     annualRevenue?: number | undefined;
     addresses?: Array<PostLeadsAddresses> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     preferredContactMethod?: PostLeadsPreferredContactMethod | undefined;
     socialProfiles?: Array<PostLeadsSocialProfiles> | undefined;
     customFields?: Array<PostLeadsLeadsRequestCustomFields> | undefined;
@@ -484,8 +484,8 @@ export type PostLeadsUnified = {
     numberOfEmployees?: number | undefined;
     annualRevenue?: number | undefined;
     addresses?: Array<PostLeadsLeadsAddresses> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     preferredContactMethod?: PostLeadsLeadsPreferredContactMethod | undefined;
     socialProfiles?: Array<PostLeadsLeadsSocialProfiles> | undefined;
     customFields?: Array<PostLeadsLeadsResponseCustomFields> | undefined;
@@ -1499,8 +1499,8 @@ export namespace PostLeadsRequestBody$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<PostLeadsAddresses$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: PostLeadsPreferredContactMethod | undefined;
         socialProfiles?: Array<PostLeadsSocialProfiles$.Inbound> | undefined;
         customFields?: Array<PostLeadsLeadsRequestCustomFields$.Inbound> | undefined;
@@ -1528,8 +1528,16 @@ export namespace PostLeadsRequestBody$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => PostLeadsAddresses$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredContactMethod: PostLeadsPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => PostLeadsSocialProfiles$.inboundSchema))
@@ -1593,8 +1601,8 @@ export namespace PostLeadsRequestBody$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<PostLeadsAddresses$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: PostLeadsPreferredContactMethod | undefined;
         socialProfiles?: Array<PostLeadsSocialProfiles$.Outbound> | undefined;
         customFields?: Array<PostLeadsLeadsRequestCustomFields$.Outbound> | undefined;
@@ -1622,8 +1630,14 @@ export namespace PostLeadsRequestBody$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => PostLeadsAddresses$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredContactMethod: PostLeadsPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => PostLeadsSocialProfiles$.outboundSchema))
@@ -2713,8 +2727,8 @@ export namespace PostLeadsUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<PostLeadsLeadsAddresses$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: PostLeadsLeadsPreferredContactMethod | undefined;
         socialProfiles?: Array<PostLeadsLeadsSocialProfiles$.Inbound> | undefined;
         customFields?: Array<PostLeadsLeadsResponseCustomFields$.Inbound> | undefined;
@@ -2744,8 +2758,16 @@ export namespace PostLeadsUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => PostLeadsLeadsAddresses$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredContactMethod: PostLeadsLeadsPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => PostLeadsLeadsSocialProfiles$.inboundSchema))
@@ -2809,8 +2831,8 @@ export namespace PostLeadsUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<PostLeadsLeadsAddresses$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: PostLeadsLeadsPreferredContactMethod | undefined;
         socialProfiles?: Array<PostLeadsLeadsSocialProfiles$.Outbound> | undefined;
         customFields?: Array<PostLeadsLeadsResponseCustomFields$.Outbound> | undefined;
@@ -2840,8 +2862,14 @@ export namespace PostLeadsUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => PostLeadsLeadsAddresses$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredContactMethod: PostLeadsLeadsPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => PostLeadsLeadsSocialProfiles$.outboundSchema))

@@ -311,7 +311,7 @@ export type GetJobsUnified = {
     employmentType?: GetJobsEmploymentType | undefined;
     location?: GetJobsLocation | undefined;
     remote?: boolean | undefined;
-    validUntil?: number | undefined;
+    validUntil?: Date | undefined;
     company?: GetJobsCompany | undefined;
     baseSalary?: GetJobsBaseSalary | undefined;
     qualifications?: string | undefined;
@@ -326,8 +326,8 @@ export type GetJobsUnified = {
     occupationalCategory?: string | undefined;
     incentiveCompensation?: string | undefined;
     jobBenefits?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     employmentUnit?: GetJobsEmploymentUnit | undefined;
     jobImmediateStart?: boolean | undefined;
     jobFlexibleHours?: boolean | undefined;
@@ -336,9 +336,9 @@ export type GetJobsUnified = {
     jobTrialPeriod?: string | undefined;
     workFromHome?: boolean | undefined;
     languagesSpoken?: Array<string> | undefined;
-    applicationDeadline?: number | undefined;
+    applicationDeadline?: Date | undefined;
     incentives?: string | undefined;
-    jobStartDate?: number | undefined;
+    jobStartDate?: Date | undefined;
     salaryCurrency?: string | undefined;
 };
 
@@ -1887,7 +1887,7 @@ export namespace GetJobsUnified$ {
         employmentType?: GetJobsEmploymentType | undefined;
         location?: GetJobsLocation$.Inbound | undefined;
         remote?: boolean | undefined;
-        validUntil?: number | undefined;
+        validUntil?: string | undefined;
         company?: GetJobsCompany$.Inbound | undefined;
         baseSalary?: GetJobsBaseSalary$.Inbound | undefined;
         qualifications?: string | undefined;
@@ -1902,8 +1902,8 @@ export namespace GetJobsUnified$ {
         occupationalCategory?: string | undefined;
         incentiveCompensation?: string | undefined;
         jobBenefits?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         employmentUnit?: GetJobsEmploymentUnit$.Inbound | undefined;
         jobImmediateStart?: boolean | undefined;
         jobFlexibleHours?: boolean | undefined;
@@ -1912,9 +1912,9 @@ export namespace GetJobsUnified$ {
         jobTrialPeriod?: string | undefined;
         workFromHome?: boolean | undefined;
         languagesSpoken?: Array<string> | undefined;
-        applicationDeadline?: number | undefined;
+        applicationDeadline?: string | undefined;
         incentives?: string | undefined;
-        jobStartDate?: number | undefined;
+        jobStartDate?: string | undefined;
         salaryCurrency?: string | undefined;
     };
 
@@ -1926,7 +1926,11 @@ export namespace GetJobsUnified$ {
             employmentType: GetJobsEmploymentType$.optional(),
             location: z.lazy(() => GetJobsLocation$.inboundSchema).optional(),
             remote: z.boolean().optional(),
-            validUntil: z.number().optional(),
+            validUntil: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             company: z.lazy(() => GetJobsCompany$.inboundSchema).optional(),
             baseSalary: z.lazy(() => GetJobsBaseSalary$.inboundSchema).optional(),
             qualifications: z.string().optional(),
@@ -1941,8 +1945,16 @@ export namespace GetJobsUnified$ {
             occupationalCategory: z.string().optional(),
             incentiveCompensation: z.string().optional(),
             jobBenefits: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             employmentUnit: z.lazy(() => GetJobsEmploymentUnit$.inboundSchema).optional(),
             jobImmediateStart: z.boolean().optional(),
             jobFlexibleHours: z.boolean().optional(),
@@ -1951,9 +1963,17 @@ export namespace GetJobsUnified$ {
             jobTrialPeriod: z.string().optional(),
             workFromHome: z.boolean().optional(),
             languagesSpoken: z.array(z.string()).optional(),
-            applicationDeadline: z.number().optional(),
+            applicationDeadline: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             incentives: z.string().optional(),
-            jobStartDate: z.number().optional(),
+            jobStartDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             salaryCurrency: z.string().optional(),
         })
         .transform((v) => {
@@ -2025,7 +2045,7 @@ export namespace GetJobsUnified$ {
         employmentType?: GetJobsEmploymentType | undefined;
         location?: GetJobsLocation$.Outbound | undefined;
         remote?: boolean | undefined;
-        validUntil?: number | undefined;
+        validUntil?: string | undefined;
         company?: GetJobsCompany$.Outbound | undefined;
         baseSalary?: GetJobsBaseSalary$.Outbound | undefined;
         qualifications?: string | undefined;
@@ -2040,8 +2060,8 @@ export namespace GetJobsUnified$ {
         occupationalCategory?: string | undefined;
         incentiveCompensation?: string | undefined;
         jobBenefits?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         employmentUnit?: GetJobsEmploymentUnit$.Outbound | undefined;
         jobImmediateStart?: boolean | undefined;
         jobFlexibleHours?: boolean | undefined;
@@ -2050,9 +2070,9 @@ export namespace GetJobsUnified$ {
         jobTrialPeriod?: string | undefined;
         workFromHome?: boolean | undefined;
         languagesSpoken?: Array<string> | undefined;
-        applicationDeadline?: number | undefined;
+        applicationDeadline?: string | undefined;
         incentives?: string | undefined;
-        jobStartDate?: number | undefined;
+        jobStartDate?: string | undefined;
         salaryCurrency?: string | undefined;
     };
 
@@ -2064,7 +2084,10 @@ export namespace GetJobsUnified$ {
             employmentType: GetJobsEmploymentType$.optional(),
             location: z.lazy(() => GetJobsLocation$.outboundSchema).optional(),
             remote: z.boolean().optional(),
-            validUntil: z.number().optional(),
+            validUntil: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             company: z.lazy(() => GetJobsCompany$.outboundSchema).optional(),
             baseSalary: z.lazy(() => GetJobsBaseSalary$.outboundSchema).optional(),
             qualifications: z.string().optional(),
@@ -2079,8 +2102,14 @@ export namespace GetJobsUnified$ {
             occupationalCategory: z.string().optional(),
             incentiveCompensation: z.string().optional(),
             jobBenefits: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             employmentUnit: z.lazy(() => GetJobsEmploymentUnit$.outboundSchema).optional(),
             jobImmediateStart: z.boolean().optional(),
             jobFlexibleHours: z.boolean().optional(),
@@ -2089,9 +2118,15 @@ export namespace GetJobsUnified$ {
             jobTrialPeriod: z.string().optional(),
             workFromHome: z.boolean().optional(),
             languagesSpoken: z.array(z.string()).optional(),
-            applicationDeadline: z.number().optional(),
+            applicationDeadline: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             incentives: z.string().optional(),
-            jobStartDate: z.number().optional(),
+            jobStartDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             salaryCurrency: z.string().optional(),
         })
         .transform((v) => {

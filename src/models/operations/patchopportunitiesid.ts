@@ -133,18 +133,180 @@ export type PatchOpportunitiesIdCampaign = {
 };
 
 export enum AccountType {
-    Customer = "Customer",
-    Partner = "Partner",
-    Competitor = "Competitor",
-    Investor = "Investor",
-    Vendor = "Vendor",
-    Other = "Other",
+    Checking = "checking",
+    Savings = "savings",
+    CreditCard = "credit-card",
+    Investment = "investment",
+    Loan = "loan",
+    Ira = "ira",
+    RothIra = "roth-ira",
+    FourHundredAndOnek = "401k",
 }
 
-export enum Rating {
-    Hot = "Hot",
-    Warm = "Warm",
-    Cold = "Cold",
+export enum Currency {
+    Aed = "AED",
+    Afn = "AFN",
+    All = "ALL",
+    Amd = "AMD",
+    Ang = "ANG",
+    Aoa = "AOA",
+    Ars = "ARS",
+    Aud = "AUD",
+    Awg = "AWG",
+    Azn = "AZN",
+    Bam = "BAM",
+    Bbd = "BBD",
+    Bdt = "BDT",
+    Bgn = "BGN",
+    Bhd = "BHD",
+    Bif = "BIF",
+    Bmd = "BMD",
+    Bnd = "BND",
+    Bob = "BOB",
+    Brl = "BRL",
+    Bsd = "BSD",
+    Btn = "BTN",
+    Bwp = "BWP",
+    Byn = "BYN",
+    Bzd = "BZD",
+    Cad = "CAD",
+    Cdf = "CDF",
+    Chf = "CHF",
+    Clp = "CLP",
+    Cny = "CNY",
+    Cop = "COP",
+    Crc = "CRC",
+    Cuc = "CUC",
+    Cup = "CUP",
+    Cve = "CVE",
+    Czk = "CZK",
+    Djf = "DJF",
+    Dkk = "DKK",
+    Dop = "DOP",
+    Dzd = "DZD",
+    Egp = "EGP",
+    Ern = "ERN",
+    Etb = "ETB",
+    Eur = "EUR",
+    Fjd = "FJD",
+    Fkp = "FKP",
+    Fok = "FOK",
+    Gbp = "GBP",
+    Gel = "GEL",
+    Ggp = "GGP",
+    Ghs = "GHS",
+    Gip = "GIP",
+    Gmd = "GMD",
+    Gnf = "GNF",
+    Gtq = "GTQ",
+    Gyd = "GYD",
+    Hkd = "HKD",
+    Hnl = "HNL",
+    Hrk = "HRK",
+    Htg = "HTG",
+    Huf = "HUF",
+    Idr = "IDR",
+    Ils = "ILS",
+    Imp = "IMP",
+    Inr = "INR",
+    Iqd = "IQD",
+    Irr = "IRR",
+    Isk = "ISK",
+    Jep = "JEP",
+    Jmd = "JMD",
+    Jod = "JOD",
+    Jpy = "JPY",
+    Kes = "KES",
+    Kgs = "KGS",
+    Khr = "KHR",
+    Kid = "KID",
+    Kmf = "KMF",
+    Kpw = "KPW",
+    Krw = "KRW",
+    Kwd = "KWD",
+    Kyd = "KYD",
+    Kzt = "KZT",
+    Lak = "LAK",
+    Lbp = "LBP",
+    Lkr = "LKR",
+    Lrd = "LRD",
+    Lsl = "LSL",
+    Lyd = "LYD",
+    Mad = "MAD",
+    Mdl = "MDL",
+    Mga = "MGA",
+    Mkd = "MKD",
+    Mmk = "MMK",
+    Mnt = "MNT",
+    Mop = "MOP",
+    Mru = "MRU",
+    Mur = "MUR",
+    Mvr = "MVR",
+    Mwk = "MWK",
+    Mxn = "MXN",
+    Myr = "MYR",
+    Mzn = "MZN",
+    Nad = "NAD",
+    Ngn = "NGN",
+    Nio = "NIO",
+    Nok = "NOK",
+    Npr = "NPR",
+    Nzd = "NZD",
+    Omr = "OMR",
+    Pab = "PAB",
+    Pen = "PEN",
+    Pgk = "PGK",
+    Php = "PHP",
+    Pkr = "PKR",
+    Pln = "PLN",
+    Pyg = "PYG",
+    Qar = "QAR",
+    Ron = "RON",
+    Rsd = "RSD",
+    Rub = "RUB",
+    Rwf = "RWF",
+    Sar = "SAR",
+    Sbd = "SBD",
+    Scr = "SCR",
+    Sdg = "SDG",
+    Sek = "SEK",
+    Sgd = "SGD",
+    Shp = "SHP",
+    Sll = "SLL",
+    Sos = "SOS",
+    Srd = "SRD",
+    Ssp = "SSP",
+    Stn = "STN",
+    Syp = "SYP",
+    Szl = "SZL",
+    Thb = "THB",
+    Tjs = "TJS",
+    Tmt = "TMT",
+    Tnd = "TND",
+    Top = "TOP",
+    Try = "TRY",
+    Ttd = "TTD",
+    Tvd = "TVD",
+    Twd = "TWD",
+    Tzs = "TZS",
+    Uah = "UAH",
+    Ugx = "UGX",
+    Usd = "USD",
+    Uyu = "UYU",
+    Uzs = "UZS",
+    Ves = "VES",
+    Vnd = "VND",
+    Vuv = "VUV",
+    Wst = "WST",
+    Xaf = "XAF",
+    Xcd = "XCD",
+    Xdr = "XDR",
+    Xof = "XOF",
+    Xpf = "XPF",
+    Yer = "YER",
+    Zar = "ZAR",
+    Zmw = "ZMW",
+    Zwl = "ZWL",
 }
 
 export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyType {
@@ -153,35 +315,11 @@ export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyType {
     Other = "other",
 }
 
-export type PatchOpportunitiesIdGeoLocation = {
-    latitude?: number | undefined;
-    longitude?: number | undefined;
-    altitude?: number | undefined;
-    accuracy?: number | undefined;
-    altitudeAccuracy?: number | undefined;
-    heading?: number | undefined;
-    speed?: number | undefined;
-    timestamp?: number | undefined;
-};
+export type PatchOpportunitiesIdGeoLocation = {};
 
-export enum PatchOpportunitiesIdFieldType {
-    Text = "text",
-    Number = "number",
-    Date = "date",
-    Boolean = "boolean",
-    Enum = "enum",
-    Json = "json",
-    Array = "array",
-}
+export type PatchOpportunitiesIdCustomFields = {};
 
-export type PatchOpportunitiesIdCustomFields = {
-    id?: string | undefined;
-    fieldName?: string | undefined;
-    fieldValue?: string | undefined;
-    fieldType?: PatchOpportunitiesIdFieldType | undefined;
-};
-
-export type BillingAddress = {
+export type PatchOpportunitiesIdAddresses = {
     id?: string | undefined;
     contactId?: string | undefined;
     accountId?: string | undefined;
@@ -223,7 +361,7 @@ export type PatchOpportunitiesIdOpportunitiesGeoLocation = {
     timestamp?: number | undefined;
 };
 
-export enum PatchOpportunitiesIdOpportunitiesFieldType {
+export enum PatchOpportunitiesIdFieldType {
     Text = "text",
     Number = "number",
     Date = "date",
@@ -237,10 +375,10 @@ export type PatchOpportunitiesIdOpportunitiesCustomFields = {
     id?: string | undefined;
     fieldName?: string | undefined;
     fieldValue?: string | undefined;
-    fieldType?: PatchOpportunitiesIdOpportunitiesFieldType | undefined;
+    fieldType?: PatchOpportunitiesIdFieldType | undefined;
 };
 
-export type ShippingAddress = {
+export type PatchOpportunitiesIdDefaultAddress = {
     id?: string | undefined;
     contactId?: string | undefined;
     accountId?: string | undefined;
@@ -266,48 +404,358 @@ export type ShippingAddress = {
 };
 
 export enum PatchOpportunitiesIdOpportunitiesStatus {
-    Active = "Active",
-    Inactive = "Inactive",
-    Pending = "Pending",
-    Closed = "Closed",
+    Active = "active",
+    Inactive = "inactive",
+    Archived = "archived",
 }
 
-export enum PatchOpportunitiesIdOpportunitiesRequestFieldType {
-    Text = "text",
-    Number = "number",
-    Date = "date",
-    Boolean = "boolean",
-    Enum = "enum",
-    Json = "json",
-    Array = "array",
+export enum PatchOpportunitiesIdCustomerType {
+    Retail = "retail",
+    Wholesale = "wholesale",
 }
 
-export type PatchOpportunitiesIdOpportunitiesRequestCustomFields = {
+export enum PatchOpportunitiesIdPreferredContactMethod {
+    Email = "email",
+    Phone = "phone",
+    Mail = "mail",
+    Sms = "sms",
+}
+
+export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType {
+    Facebook = "facebook",
+    Twitter = "twitter",
+    Linkedin = "linkedin",
+    Instagram = "instagram",
+    Tiktok = "tiktok",
+    Pinterest = "pinterest",
+    Youtube = "youtube",
+    Other = "other",
+}
+
+export type PatchOpportunitiesIdAdditionalInfo = {};
+
+export type PatchOpportunitiesIdSocialProfiles = {
+    type?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType | undefined;
+    username?: string | undefined;
+    displayName?: string | undefined;
+    url?: string | undefined;
+    avatarUrl?: string | undefined;
+    email?: string | undefined;
+    additionalInfo?: PatchOpportunitiesIdAdditionalInfo | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    active?: boolean | undefined;
+    deleted?: boolean | undefined;
+};
+
+export type PatchOpportunitiesIdOwner = {
     id?: string | undefined;
-    fieldName?: string | undefined;
-    fieldValue?: string | undefined;
-    fieldType?: PatchOpportunitiesIdOpportunitiesRequestFieldType | undefined;
+    title?: string | undefined;
+    fullName?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    email?: string | undefined;
+    phoneNumber?: string | undefined;
+    dateOfBirth?: number | undefined;
+    addresses?: Array<PatchOpportunitiesIdAddresses> | undefined;
+    defaultAddress?: PatchOpportunitiesIdDefaultAddress | undefined;
+    company?: string | undefined;
+    companyId?: string | undefined;
+    currency?: string | undefined;
+    notes?: string | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    status?: PatchOpportunitiesIdOpportunitiesStatus | undefined;
+    customerSegment?: string | undefined;
+    customerType?: PatchOpportunitiesIdCustomerType | undefined;
+    loyaltyProgramMembership?: string | undefined;
+    preferredContactMethod?: PatchOpportunitiesIdPreferredContactMethod | undefined;
+    tags?: Array<string> | undefined;
+    metadata?: string | undefined;
+    socialProfiles?: Array<PatchOpportunitiesIdSocialProfiles> | undefined;
+    source?: string | undefined;
+};
+
+export enum PatchOpportunitiesIdOpportunitiesRequestStatus {
+    Active = "active",
+    Closed = "closed",
+    Frozen = "frozen",
+    Suspended = "suspended",
+}
+
+export type PaymentMethod = {};
+
+export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType {
+    Deposit = "deposit",
+    Withdrawal = "withdrawal",
+    Transfer = "transfer",
+    Fee = "fee",
+    Refund = "refund",
+}
+
+export enum PatchOpportunitiesIdCurrency {
+    Aed = "AED",
+    Afn = "AFN",
+    All = "ALL",
+    Amd = "AMD",
+    Ang = "ANG",
+    Aoa = "AOA",
+    Ars = "ARS",
+    Aud = "AUD",
+    Awg = "AWG",
+    Azn = "AZN",
+    Bam = "BAM",
+    Bbd = "BBD",
+    Bdt = "BDT",
+    Bgn = "BGN",
+    Bhd = "BHD",
+    Bif = "BIF",
+    Bmd = "BMD",
+    Bnd = "BND",
+    Bob = "BOB",
+    Brl = "BRL",
+    Bsd = "BSD",
+    Btn = "BTN",
+    Bwp = "BWP",
+    Byn = "BYN",
+    Bzd = "BZD",
+    Cad = "CAD",
+    Cdf = "CDF",
+    Chf = "CHF",
+    Clp = "CLP",
+    Cny = "CNY",
+    Cop = "COP",
+    Crc = "CRC",
+    Cuc = "CUC",
+    Cup = "CUP",
+    Cve = "CVE",
+    Czk = "CZK",
+    Djf = "DJF",
+    Dkk = "DKK",
+    Dop = "DOP",
+    Dzd = "DZD",
+    Egp = "EGP",
+    Ern = "ERN",
+    Etb = "ETB",
+    Eur = "EUR",
+    Fjd = "FJD",
+    Fkp = "FKP",
+    Fok = "FOK",
+    Gbp = "GBP",
+    Gel = "GEL",
+    Ggp = "GGP",
+    Ghs = "GHS",
+    Gip = "GIP",
+    Gmd = "GMD",
+    Gnf = "GNF",
+    Gtq = "GTQ",
+    Gyd = "GYD",
+    Hkd = "HKD",
+    Hnl = "HNL",
+    Hrk = "HRK",
+    Htg = "HTG",
+    Huf = "HUF",
+    Idr = "IDR",
+    Ils = "ILS",
+    Imp = "IMP",
+    Inr = "INR",
+    Iqd = "IQD",
+    Irr = "IRR",
+    Isk = "ISK",
+    Jep = "JEP",
+    Jmd = "JMD",
+    Jod = "JOD",
+    Jpy = "JPY",
+    Kes = "KES",
+    Kgs = "KGS",
+    Khr = "KHR",
+    Kid = "KID",
+    Kmf = "KMF",
+    Kpw = "KPW",
+    Krw = "KRW",
+    Kwd = "KWD",
+    Kyd = "KYD",
+    Kzt = "KZT",
+    Lak = "LAK",
+    Lbp = "LBP",
+    Lkr = "LKR",
+    Lrd = "LRD",
+    Lsl = "LSL",
+    Lyd = "LYD",
+    Mad = "MAD",
+    Mdl = "MDL",
+    Mga = "MGA",
+    Mkd = "MKD",
+    Mmk = "MMK",
+    Mnt = "MNT",
+    Mop = "MOP",
+    Mru = "MRU",
+    Mur = "MUR",
+    Mvr = "MVR",
+    Mwk = "MWK",
+    Mxn = "MXN",
+    Myr = "MYR",
+    Mzn = "MZN",
+    Nad = "NAD",
+    Ngn = "NGN",
+    Nio = "NIO",
+    Nok = "NOK",
+    Npr = "NPR",
+    Nzd = "NZD",
+    Omr = "OMR",
+    Pab = "PAB",
+    Pen = "PEN",
+    Pgk = "PGK",
+    Php = "PHP",
+    Pkr = "PKR",
+    Pln = "PLN",
+    Pyg = "PYG",
+    Qar = "QAR",
+    Ron = "RON",
+    Rsd = "RSD",
+    Rub = "RUB",
+    Rwf = "RWF",
+    Sar = "SAR",
+    Sbd = "SBD",
+    Scr = "SCR",
+    Sdg = "SDG",
+    Sek = "SEK",
+    Sgd = "SGD",
+    Shp = "SHP",
+    Sll = "SLL",
+    Sos = "SOS",
+    Srd = "SRD",
+    Ssp = "SSP",
+    Stn = "STN",
+    Syp = "SYP",
+    Szl = "SZL",
+    Thb = "THB",
+    Tjs = "TJS",
+    Tmt = "TMT",
+    Tnd = "TND",
+    Top = "TOP",
+    Try = "TRY",
+    Ttd = "TTD",
+    Tvd = "TVD",
+    Twd = "TWD",
+    Tzs = "TZS",
+    Uah = "UAH",
+    Ugx = "UGX",
+    Usd = "USD",
+    Uyu = "UYU",
+    Uzs = "UZS",
+    Ves = "VES",
+    Vnd = "VND",
+    Vuv = "VUV",
+    Wst = "WST",
+    Xaf = "XAF",
+    Xcd = "XCD",
+    Xdr = "XDR",
+    Xof = "XOF",
+    Xpf = "XPF",
+    Yer = "YER",
+    Zar = "ZAR",
+    Zmw = "ZMW",
+    Zwl = "ZWL",
+}
+
+export type Recipient = {};
+
+export type Sender = {};
+
+export enum TransactionCategory {
+    Payment = "payment",
+    Transfer = "transfer",
+    Withdrawal = "withdrawal",
+    Deposit = "deposit",
+    Fee = "fee",
+}
+
+export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus {
+    Pending = "pending",
+    Cleared = "cleared",
+    Cancelled = "cancelled",
+    Failed = "failed",
+}
+
+export enum TransactionMethod {
+    Online = "online",
+    Atm = "atm",
+    BankBranch = "bank-branch",
+    Mail = "mail",
+    Mobile = "mobile",
+    Telephone = "telephone",
+}
+
+export enum TransactionType {
+    Sale = "sale",
+    Refund = "refund",
+    ChargeBack = "charge-back",
+}
+
+export type Refund = {};
+
+export type Dispute = {};
+
+export type PatchOpportunitiesIdOpportunitiesMetadata = {};
+
+export type Shipping = {};
+
+export type BillingDetails = {};
+
+export type Transactions = {
+    id?: string | undefined;
+    accountId?: string | undefined;
+    invoiceId?: string | undefined;
+    orderId?: string | undefined;
+    paymentMethod?: PaymentMethod | undefined;
+    amount?: number | undefined;
+    taxAmount?: number | undefined;
+    type?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType | undefined;
+    date?: number | undefined;
+    currency?: PatchOpportunitiesIdCurrency | undefined;
+    recipient?: Recipient | undefined;
+    sender?: Sender | undefined;
+    description?: string | undefined;
+    checkNumber?: string | undefined;
+    transactionCategory?: TransactionCategory | undefined;
+    tags?: Array<string> | undefined;
+    status?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus | undefined;
+    transactionMethod?: TransactionMethod | undefined;
+    transactionType?: TransactionType | undefined;
+    refund?: Refund | undefined;
+    dispute?: Dispute | undefined;
+    metadata?: PatchOpportunitiesIdOpportunitiesMetadata | undefined;
+    exchangeRate?: number | undefined;
+    shipping?: Shipping | undefined;
+    billingDetails?: BillingDetails | undefined;
+    applicationFee?: number | undefined;
+    paymentIntent?: string | undefined;
+    createdAt?: number | undefined;
+    updatedAt?: number | undefined;
+    deleted?: boolean | undefined;
 };
 
 export type PatchOpportunitiesIdAccount = {
     id?: string | undefined;
-    name?: string | undefined;
-    industry?: string | undefined;
+    accountNumber?: string | undefined;
     accountType?: AccountType | undefined;
-    rating?: Rating | undefined;
-    phone?: string | undefined;
-    email?: string | undefined;
-    website?: string | undefined;
-    billingAddress?: BillingAddress | undefined;
-    shippingAddress?: ShippingAddress | undefined;
-    numberOfEmployees?: number | undefined;
-    annualRevenue?: number | undefined;
+    balance?: number | undefined;
+    currency?: Currency | undefined;
+    owner?: PatchOpportunitiesIdOwner | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
-    status?: PatchOpportunitiesIdOpportunitiesStatus | undefined;
-    ownerId?: string | undefined;
-    customFields?: Array<PatchOpportunitiesIdOpportunitiesRequestCustomFields> | undefined;
-    tags?: Array<string> | undefined;
+    closedAt?: number | undefined;
+    status?: PatchOpportunitiesIdOpportunitiesRequestStatus | undefined;
+    transactions?: Array<Transactions> | undefined;
+    branch?: string | undefined;
+    notes?: string | undefined;
+    interestRate?: number | undefined;
+    overdraftLimit?: number | undefined;
+    overdraftProtection?: boolean | undefined;
+    active?: boolean | undefined;
+    deleted?: boolean | undefined;
 };
 
 export type PatchOpportunitiesIdEmails = {};
@@ -316,13 +764,13 @@ export type PatchOpportunitiesIdPhones = {};
 
 export type PatchOpportunitiesIdAddress = {};
 
-export type PatchOpportunitiesIdAddresses = {};
+export type PatchOpportunitiesIdOpportunitiesAddresses = {};
 
 export type PatchOpportunitiesIdNotes = {};
 
-export type PatchOpportunitiesIdSocialProfiles = {};
+export type PatchOpportunitiesIdOpportunitiesSocialProfiles = {};
 
-export type PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields = {};
+export type PatchOpportunitiesIdOpportunitiesRequestCustomFields = {};
 
 export type PatchOpportunitiesIdContacts = {
     id?: string | undefined;
@@ -335,18 +783,16 @@ export type PatchOpportunitiesIdContacts = {
     defaultPhone?: string | undefined;
     phones?: Array<PatchOpportunitiesIdPhones> | undefined;
     address?: PatchOpportunitiesIdAddress | undefined;
-    addresses?: Array<PatchOpportunitiesIdAddresses> | undefined;
+    addresses?: Array<PatchOpportunitiesIdOpportunitiesAddresses> | undefined;
     birthday?: number | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: PatchOpportunitiesIdNotes | undefined;
     tags?: Array<string> | undefined;
     websites?: Array<string> | undefined;
-    socialProfiles?: Array<PatchOpportunitiesIdSocialProfiles> | undefined;
+    socialProfiles?: Array<PatchOpportunitiesIdOpportunitiesSocialProfiles> | undefined;
     isActive?: boolean | undefined;
-    customFields?:
-        | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields>
-        | undefined;
+    customFields?: Array<PatchOpportunitiesIdOpportunitiesRequestCustomFields> | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
 };
@@ -416,9 +862,9 @@ export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerType {
 
 export type PatchOpportunitiesIdOpportunitiesRequestGeoLocation = {};
 
-export type PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields = {};
+export type PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields = {};
 
-export type PatchOpportunitiesIdOpportunitiesAddresses = {
+export type PatchOpportunitiesIdOpportunitiesRequestAddresses = {
     id?: string | undefined;
     contactId?: string | undefined;
     accountId?: string | undefined;
@@ -440,7 +886,7 @@ export type PatchOpportunitiesIdOpportunitiesAddresses = {
     type?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerType | undefined;
     geoLocation?: PatchOpportunitiesIdOpportunitiesRequestGeoLocation | undefined;
     customFields?:
-        | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields>
+        | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields>
         | undefined;
     subdivisionCode?: string | undefined;
 };
@@ -485,7 +931,7 @@ export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerSocialLinksA
     Array = "Array",
 }
 
-export type PatchOpportunitiesIdAdditionalInfo = {
+export type PatchOpportunitiesIdOpportunitiesAdditionalInfo = {
     id?: string | undefined;
     key?: string | undefined;
     value?: string | undefined;
@@ -505,14 +951,14 @@ export type PatchOpportunitiesIdSocialLinks = {
     url?: string | undefined;
     avatarUrl?: string | undefined;
     email?: string | undefined;
-    additionalInfo?: PatchOpportunitiesIdAdditionalInfo | undefined;
+    additionalInfo?: PatchOpportunitiesIdOpportunitiesAdditionalInfo | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
 };
 
-export enum PatchOpportunitiesIdOpportunitiesRequestStatus {
+export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus {
     Pending = "Pending",
     Verified = "Verified",
     Suspended = "Suspended",
@@ -559,7 +1005,7 @@ export type PatchOpportunitiesIdPaymentMethods = {
     isDefault?: boolean | undefined;
 };
 
-export type PatchOpportunitiesIdOwner = {
+export type PatchOpportunitiesIdOpportunitiesOwner = {
     id?: string | undefined;
     firstName?: string | undefined;
     middleName?: string | undefined;
@@ -576,18 +1022,18 @@ export type PatchOpportunitiesIdOwner = {
     lastLogin?: number | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
-    addresses?: Array<PatchOpportunitiesIdOpportunitiesAddresses> | undefined;
+    addresses?: Array<PatchOpportunitiesIdOpportunitiesRequestAddresses> | undefined;
     roles?: Array<PatchOpportunitiesIdRoles> | undefined;
     preferences?: PatchOpportunitiesIdPreferences | undefined;
     bio?: string | undefined;
     website?: string | undefined;
     socialLinks?: PatchOpportunitiesIdSocialLinks | undefined;
-    status?: PatchOpportunitiesIdOpportunitiesRequestStatus | undefined;
+    status?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus | undefined;
     sso?: Array<PatchOpportunitiesIdSso> | undefined;
     paymentMethods?: PatchOpportunitiesIdPaymentMethods | undefined;
 };
 
-export type PatchOpportunitiesIdOpportunitiesMetadata = {};
+export type PatchOpportunitiesIdOpportunitiesRequestMetadata = {};
 
 export type PatchOpportunitiesIdOpportunitiesAssociatedWith = {};
 
@@ -604,12 +1050,12 @@ export type PatchOpportunitiesIdAttachments = {
     content?: string | undefined;
     createdAt?: number | undefined;
     updatedAt?: number | undefined;
-    metadata?: PatchOpportunitiesIdOpportunitiesMetadata | undefined;
+    metadata?: PatchOpportunitiesIdOpportunitiesRequestMetadata | undefined;
     associatedWith?: PatchOpportunitiesIdOpportunitiesAssociatedWith | undefined;
     permissions?: PatchOpportunitiesIdOpportunitiesPermissions | undefined;
 };
 
-export enum PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType {
+export enum PatchOpportunitiesIdOpportunitiesFieldType {
     Text = "text",
     Number = "number",
     Date = "date",
@@ -623,7 +1069,7 @@ export type PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields1 = {
     id?: string | undefined;
     fieldName?: string | undefined;
     fieldValue?: string | undefined;
-    fieldType?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType | undefined;
+    fieldType?: PatchOpportunitiesIdOpportunitiesFieldType | undefined;
 };
 
 export type PatchOpportunitiesIdRequestBody = {
@@ -634,20 +1080,20 @@ export type PatchOpportunitiesIdRequestBody = {
     currency?: string | undefined;
     stage?: string | undefined;
     probability?: number | undefined;
-    closeDate?: number | undefined;
+    closeDate?: Date | undefined;
     type?: string | undefined;
     nextStep?: string | undefined;
     leadId?: string | undefined;
     leadSource?: string | undefined;
     isClosed?: boolean | undefined;
     isWon?: boolean | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     lostReason?: string | undefined;
     campaign?: PatchOpportunitiesIdCampaign | undefined;
     account?: PatchOpportunitiesIdAccount | undefined;
     contacts?: Array<PatchOpportunitiesIdContacts> | undefined;
-    owner?: PatchOpportunitiesIdOwner | undefined;
+    owner?: PatchOpportunitiesIdOpportunitiesOwner | undefined;
     attachments?: Array<PatchOpportunitiesIdAttachments> | undefined;
     notes?: Array<string> | undefined;
     customFields?:
@@ -1326,7 +1772,7 @@ export namespace PatchOpportunitiesIdCampaign$ {
 export const AccountType$ = z.nativeEnum(AccountType);
 
 /** @internal */
-export const Rating$ = z.nativeEnum(Rating);
+export const Currency$ = z.nativeEnum(Currency);
 
 /** @internal */
 export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyType$ = z.nativeEnum(
@@ -1335,145 +1781,38 @@ export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyType$ = z.native
 
 /** @internal */
 export namespace PatchOpportunitiesIdGeoLocation$ {
-    export type Inbound = {
-        latitude?: number | undefined;
-        longitude?: number | undefined;
-        altitude?: number | undefined;
-        accuracy?: number | undefined;
-        altitudeAccuracy?: number | undefined;
-        heading?: number | undefined;
-        speed?: number | undefined;
-        timestamp?: number | undefined;
-    };
+    export type Inbound = {};
 
     export const inboundSchema: z.ZodType<PatchOpportunitiesIdGeoLocation, z.ZodTypeDef, Inbound> =
-        z
-            .object({
-                latitude: z.number().optional(),
-                longitude: z.number().optional(),
-                altitude: z.number().optional(),
-                accuracy: z.number().optional(),
-                altitudeAccuracy: z.number().optional(),
-                heading: z.number().optional(),
-                speed: z.number().optional(),
-                timestamp: z.number().optional(),
-            })
-            .transform((v) => {
-                return {
-                    ...(v.latitude === undefined ? null : { latitude: v.latitude }),
-                    ...(v.longitude === undefined ? null : { longitude: v.longitude }),
-                    ...(v.altitude === undefined ? null : { altitude: v.altitude }),
-                    ...(v.accuracy === undefined ? null : { accuracy: v.accuracy }),
-                    ...(v.altitudeAccuracy === undefined
-                        ? null
-                        : { altitudeAccuracy: v.altitudeAccuracy }),
-                    ...(v.heading === undefined ? null : { heading: v.heading }),
-                    ...(v.speed === undefined ? null : { speed: v.speed }),
-                    ...(v.timestamp === undefined ? null : { timestamp: v.timestamp }),
-                };
-            });
+        z.object({});
 
-    export type Outbound = {
-        latitude?: number | undefined;
-        longitude?: number | undefined;
-        altitude?: number | undefined;
-        accuracy?: number | undefined;
-        altitudeAccuracy?: number | undefined;
-        heading?: number | undefined;
-        speed?: number | undefined;
-        timestamp?: number | undefined;
-    };
+    export type Outbound = {};
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
         PatchOpportunitiesIdGeoLocation
-    > = z
-        .object({
-            latitude: z.number().optional(),
-            longitude: z.number().optional(),
-            altitude: z.number().optional(),
-            accuracy: z.number().optional(),
-            altitudeAccuracy: z.number().optional(),
-            heading: z.number().optional(),
-            speed: z.number().optional(),
-            timestamp: z.number().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.latitude === undefined ? null : { latitude: v.latitude }),
-                ...(v.longitude === undefined ? null : { longitude: v.longitude }),
-                ...(v.altitude === undefined ? null : { altitude: v.altitude }),
-                ...(v.accuracy === undefined ? null : { accuracy: v.accuracy }),
-                ...(v.altitudeAccuracy === undefined
-                    ? null
-                    : { altitudeAccuracy: v.altitudeAccuracy }),
-                ...(v.heading === undefined ? null : { heading: v.heading }),
-                ...(v.speed === undefined ? null : { speed: v.speed }),
-                ...(v.timestamp === undefined ? null : { timestamp: v.timestamp }),
-            };
-        });
+    > = z.object({});
 }
 
 /** @internal */
-export const PatchOpportunitiesIdFieldType$ = z.nativeEnum(PatchOpportunitiesIdFieldType);
-
-/** @internal */
 export namespace PatchOpportunitiesIdCustomFields$ {
-    export type Inbound = {
-        id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdFieldType | undefined;
-    };
+    export type Inbound = {};
 
     export const inboundSchema: z.ZodType<PatchOpportunitiesIdCustomFields, z.ZodTypeDef, Inbound> =
-        z
-            .object({
-                id: z.string().optional(),
-                fieldName: z.string().optional(),
-                fieldValue: z.string().optional(),
-                fieldType: PatchOpportunitiesIdFieldType$.optional(),
-            })
-            .transform((v) => {
-                return {
-                    ...(v.id === undefined ? null : { id: v.id }),
-                    ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                    ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                    ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
-                };
-            });
+        z.object({});
 
-    export type Outbound = {
-        id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdFieldType | undefined;
-    };
+    export type Outbound = {};
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
         PatchOpportunitiesIdCustomFields
-    > = z
-        .object({
-            id: z.string().optional(),
-            fieldName: z.string().optional(),
-            fieldValue: z.string().optional(),
-            fieldType: PatchOpportunitiesIdFieldType$.optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
-            };
-        });
+    > = z.object({});
 }
 
 /** @internal */
-export namespace BillingAddress$ {
+export namespace PatchOpportunitiesIdAddresses$ {
     export type Inbound = {
         id?: string | undefined;
         contactId?: string | undefined;
@@ -1499,7 +1838,7 @@ export namespace BillingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<BillingAddress, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchOpportunitiesIdAddresses, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -1582,63 +1921,66 @@ export namespace BillingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, BillingAddress> = z
-        .object({
-            id: z.string().optional(),
-            contactId: z.string().optional(),
-            accountId: z.string().optional(),
-            firstName: z.string().optional(),
-            lastName: z.string().optional(),
-            name: z.string().optional(),
-            companyName: z.string().optional(),
-            email: z.string().optional(),
-            phone: z.string().optional(),
-            street: z.string().optional(),
-            addressLine2: z.string().optional(),
-            city: z.string().optional(),
-            province: z.string().optional(),
-            region: z.string().optional(),
-            postalCode: z.string().optional(),
-            postalCodeExtension: z.string().optional(),
-            country: z.string().optional(),
-            countryCode: z.string().optional(),
-            type: PatchOpportunitiesIdOpportunitiesRequestRequestBodyType$.optional(),
-            geoLocation: z.lazy(() => PatchOpportunitiesIdGeoLocation$.outboundSchema).optional(),
-            customFields: z
-                .array(z.lazy(() => PatchOpportunitiesIdCustomFields$.outboundSchema))
-                .optional(),
-            subdivisionCode: z.string().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.contactId === undefined ? null : { contactId: v.contactId }),
-                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
-                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
-                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
-                ...(v.name === undefined ? null : { name: v.name }),
-                ...(v.companyName === undefined ? null : { companyName: v.companyName }),
-                ...(v.email === undefined ? null : { email: v.email }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.street === undefined ? null : { street: v.street }),
-                ...(v.addressLine2 === undefined ? null : { addressLine2: v.addressLine2 }),
-                ...(v.city === undefined ? null : { city: v.city }),
-                ...(v.province === undefined ? null : { province: v.province }),
-                ...(v.region === undefined ? null : { region: v.region }),
-                ...(v.postalCode === undefined ? null : { postalCode: v.postalCode }),
-                ...(v.postalCodeExtension === undefined
-                    ? null
-                    : { postalCodeExtension: v.postalCodeExtension }),
-                ...(v.country === undefined ? null : { country: v.country }),
-                ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
-                ...(v.type === undefined ? null : { type: v.type }),
-                ...(v.geoLocation === undefined ? null : { geoLocation: v.geoLocation }),
-                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
-                ...(v.subdivisionCode === undefined
-                    ? null
-                    : { subdivisionCode: v.subdivisionCode }),
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOpportunitiesIdAddresses> =
+        z
+            .object({
+                id: z.string().optional(),
+                contactId: z.string().optional(),
+                accountId: z.string().optional(),
+                firstName: z.string().optional(),
+                lastName: z.string().optional(),
+                name: z.string().optional(),
+                companyName: z.string().optional(),
+                email: z.string().optional(),
+                phone: z.string().optional(),
+                street: z.string().optional(),
+                addressLine2: z.string().optional(),
+                city: z.string().optional(),
+                province: z.string().optional(),
+                region: z.string().optional(),
+                postalCode: z.string().optional(),
+                postalCodeExtension: z.string().optional(),
+                country: z.string().optional(),
+                countryCode: z.string().optional(),
+                type: PatchOpportunitiesIdOpportunitiesRequestRequestBodyType$.optional(),
+                geoLocation: z
+                    .lazy(() => PatchOpportunitiesIdGeoLocation$.outboundSchema)
+                    .optional(),
+                customFields: z
+                    .array(z.lazy(() => PatchOpportunitiesIdCustomFields$.outboundSchema))
+                    .optional(),
+                subdivisionCode: z.string().optional(),
+            })
+            .transform((v) => {
+                return {
+                    ...(v.id === undefined ? null : { id: v.id }),
+                    ...(v.contactId === undefined ? null : { contactId: v.contactId }),
+                    ...(v.accountId === undefined ? null : { accountId: v.accountId }),
+                    ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                    ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                    ...(v.name === undefined ? null : { name: v.name }),
+                    ...(v.companyName === undefined ? null : { companyName: v.companyName }),
+                    ...(v.email === undefined ? null : { email: v.email }),
+                    ...(v.phone === undefined ? null : { phone: v.phone }),
+                    ...(v.street === undefined ? null : { street: v.street }),
+                    ...(v.addressLine2 === undefined ? null : { addressLine2: v.addressLine2 }),
+                    ...(v.city === undefined ? null : { city: v.city }),
+                    ...(v.province === undefined ? null : { province: v.province }),
+                    ...(v.region === undefined ? null : { region: v.region }),
+                    ...(v.postalCode === undefined ? null : { postalCode: v.postalCode }),
+                    ...(v.postalCodeExtension === undefined
+                        ? null
+                        : { postalCodeExtension: v.postalCodeExtension }),
+                    ...(v.country === undefined ? null : { country: v.country }),
+                    ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
+                    ...(v.type === undefined ? null : { type: v.type }),
+                    ...(v.geoLocation === undefined ? null : { geoLocation: v.geoLocation }),
+                    ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                    ...(v.subdivisionCode === undefined
+                        ? null
+                        : { subdivisionCode: v.subdivisionCode }),
+                };
+            });
 }
 
 /** @internal */
@@ -1732,9 +2074,7 @@ export namespace PatchOpportunitiesIdOpportunitiesGeoLocation$ {
 }
 
 /** @internal */
-export const PatchOpportunitiesIdOpportunitiesFieldType$ = z.nativeEnum(
-    PatchOpportunitiesIdOpportunitiesFieldType
-);
+export const PatchOpportunitiesIdFieldType$ = z.nativeEnum(PatchOpportunitiesIdFieldType);
 
 /** @internal */
 export namespace PatchOpportunitiesIdOpportunitiesCustomFields$ {
@@ -1742,7 +2082,7 @@ export namespace PatchOpportunitiesIdOpportunitiesCustomFields$ {
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdOpportunitiesFieldType | undefined;
+        fieldType?: PatchOpportunitiesIdFieldType | undefined;
     };
 
     export const inboundSchema: z.ZodType<
@@ -1754,7 +2094,7 @@ export namespace PatchOpportunitiesIdOpportunitiesCustomFields$ {
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: PatchOpportunitiesIdOpportunitiesFieldType$.optional(),
+            fieldType: PatchOpportunitiesIdFieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -1769,7 +2109,7 @@ export namespace PatchOpportunitiesIdOpportunitiesCustomFields$ {
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdOpportunitiesFieldType | undefined;
+        fieldType?: PatchOpportunitiesIdFieldType | undefined;
     };
 
     export const outboundSchema: z.ZodType<
@@ -1781,7 +2121,7 @@ export namespace PatchOpportunitiesIdOpportunitiesCustomFields$ {
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: PatchOpportunitiesIdOpportunitiesFieldType$.optional(),
+            fieldType: PatchOpportunitiesIdFieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -1794,7 +2134,7 @@ export namespace PatchOpportunitiesIdOpportunitiesCustomFields$ {
 }
 
 /** @internal */
-export namespace ShippingAddress$ {
+export namespace PatchOpportunitiesIdDefaultAddress$ {
     export type Inbound = {
         id?: string | undefined;
         contactId?: string | undefined;
@@ -1820,7 +2160,11 @@ export namespace ShippingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<ShippingAddress, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<
+        PatchOpportunitiesIdDefaultAddress,
+        z.ZodTypeDef,
+        Inbound
+    > = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -1905,7 +2249,11 @@ export namespace ShippingAddress$ {
         subdivisionCode?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ShippingAddress> = z
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PatchOpportunitiesIdDefaultAddress
+    > = z
         .object({
             id: z.string().optional(),
             contactId: z.string().optional(),
@@ -1972,63 +2320,688 @@ export const PatchOpportunitiesIdOpportunitiesStatus$ = z.nativeEnum(
 );
 
 /** @internal */
-export const PatchOpportunitiesIdOpportunitiesRequestFieldType$ = z.nativeEnum(
-    PatchOpportunitiesIdOpportunitiesRequestFieldType
+export const PatchOpportunitiesIdCustomerType$ = z.nativeEnum(PatchOpportunitiesIdCustomerType);
+
+/** @internal */
+export const PatchOpportunitiesIdPreferredContactMethod$ = z.nativeEnum(
+    PatchOpportunitiesIdPreferredContactMethod
 );
 
 /** @internal */
-export namespace PatchOpportunitiesIdOpportunitiesRequestCustomFields$ {
+export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType$ = z.nativeEnum(
+    PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType
+);
+
+/** @internal */
+export namespace PatchOpportunitiesIdAdditionalInfo$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<
+        PatchOpportunitiesIdAdditionalInfo,
+        z.ZodTypeDef,
+        Inbound
+    > = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PatchOpportunitiesIdAdditionalInfo
+    > = z.object({});
+}
+
+/** @internal */
+export namespace PatchOpportunitiesIdSocialProfiles$ {
     export type Inbound = {
-        id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdOpportunitiesRequestFieldType | undefined;
+        type?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType | undefined;
+        username?: string | undefined;
+        displayName?: string | undefined;
+        url?: string | undefined;
+        avatarUrl?: string | undefined;
+        email?: string | undefined;
+        additionalInfo?: PatchOpportunitiesIdAdditionalInfo$.Inbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
     };
 
     export const inboundSchema: z.ZodType<
-        PatchOpportunitiesIdOpportunitiesRequestCustomFields,
+        PatchOpportunitiesIdSocialProfiles,
         z.ZodTypeDef,
         Inbound
     > = z
         .object({
-            id: z.string().optional(),
-            fieldName: z.string().optional(),
-            fieldValue: z.string().optional(),
-            fieldType: PatchOpportunitiesIdOpportunitiesRequestFieldType$.optional(),
+            type: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType$.optional(),
+            username: z.string().optional(),
+            displayName: z.string().optional(),
+            url: z.string().optional(),
+            avatarUrl: z.string().optional(),
+            email: z.string().optional(),
+            additionalInfo: z
+                .lazy(() => PatchOpportunitiesIdAdditionalInfo$.inboundSchema)
+                .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
         })
         .transform((v) => {
             return {
-                ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.username === undefined ? null : { username: v.username }),
+                ...(v.displayName === undefined ? null : { displayName: v.displayName }),
+                ...(v.url === undefined ? null : { url: v.url }),
+                ...(v.avatarUrl === undefined ? null : { avatarUrl: v.avatarUrl }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.additionalInfo === undefined ? null : { additionalInfo: v.additionalInfo }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
 
     export type Outbound = {
-        id?: string | undefined;
-        fieldName?: string | undefined;
-        fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdOpportunitiesRequestFieldType | undefined;
+        type?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType | undefined;
+        username?: string | undefined;
+        displayName?: string | undefined;
+        url?: string | undefined;
+        avatarUrl?: string | undefined;
+        email?: string | undefined;
+        additionalInfo?: PatchOpportunitiesIdAdditionalInfo$.Outbound | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchOpportunitiesIdOpportunitiesRequestCustomFields
+        PatchOpportunitiesIdSocialProfiles
     > = z
         .object({
+            type: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountOwnerType$.optional(),
+            username: z.string().optional(),
+            displayName: z.string().optional(),
+            url: z.string().optional(),
+            avatarUrl: z.string().optional(),
+            email: z.string().optional(),
+            additionalInfo: z
+                .lazy(() => PatchOpportunitiesIdAdditionalInfo$.outboundSchema)
+                .optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.username === undefined ? null : { username: v.username }),
+                ...(v.displayName === undefined ? null : { displayName: v.displayName }),
+                ...(v.url === undefined ? null : { url: v.url }),
+                ...(v.avatarUrl === undefined ? null : { avatarUrl: v.avatarUrl }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.additionalInfo === undefined ? null : { additionalInfo: v.additionalInfo }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+            };
+        });
+}
+
+/** @internal */
+export namespace PatchOpportunitiesIdOwner$ {
+    export type Inbound = {
+        id?: string | undefined;
+        title?: string | undefined;
+        fullName?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        phoneNumber?: string | undefined;
+        dateOfBirth?: number | undefined;
+        addresses?: Array<PatchOpportunitiesIdAddresses$.Inbound> | undefined;
+        defaultAddress?: PatchOpportunitiesIdDefaultAddress$.Inbound | undefined;
+        company?: string | undefined;
+        companyId?: string | undefined;
+        currency?: string | undefined;
+        notes?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesStatus | undefined;
+        customerSegment?: string | undefined;
+        customerType?: PatchOpportunitiesIdCustomerType | undefined;
+        loyaltyProgramMembership?: string | undefined;
+        preferredContactMethod?: PatchOpportunitiesIdPreferredContactMethod | undefined;
+        tags?: Array<string> | undefined;
+        metadata?: string | undefined;
+        socialProfiles?: Array<PatchOpportunitiesIdSocialProfiles$.Inbound> | undefined;
+        source?: string | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<PatchOpportunitiesIdOwner, z.ZodTypeDef, Inbound> = z
+        .object({
             id: z.string().optional(),
-            fieldName: z.string().optional(),
-            fieldValue: z.string().optional(),
-            fieldType: PatchOpportunitiesIdOpportunitiesRequestFieldType$.optional(),
+            title: z.string().optional(),
+            fullName: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            phoneNumber: z.string().optional(),
+            dateOfBirth: z.number().optional(),
+            addresses: z
+                .array(z.lazy(() => PatchOpportunitiesIdAddresses$.inboundSchema))
+                .optional(),
+            defaultAddress: z
+                .lazy(() => PatchOpportunitiesIdDefaultAddress$.inboundSchema)
+                .optional(),
+            company: z.string().optional(),
+            companyId: z.string().optional(),
+            currency: z.string().optional(),
+            notes: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            status: PatchOpportunitiesIdOpportunitiesStatus$.optional(),
+            customerSegment: z.string().optional(),
+            customerType: PatchOpportunitiesIdCustomerType$.optional(),
+            loyaltyProgramMembership: z.string().optional(),
+            preferredContactMethod: PatchOpportunitiesIdPreferredContactMethod$.optional(),
+            tags: z.array(z.string()).optional(),
+            metadata: z.string().optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PatchOpportunitiesIdSocialProfiles$.inboundSchema))
+                .optional(),
+            source: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
-                ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
-                ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.fullName === undefined ? null : { fullName: v.fullName }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.defaultAddress === undefined ? null : { defaultAddress: v.defaultAddress }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.companyId === undefined ? null : { companyId: v.companyId }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.customerSegment === undefined
+                    ? null
+                    : { customerSegment: v.customerSegment }),
+                ...(v.customerType === undefined ? null : { customerType: v.customerType }),
+                ...(v.loyaltyProgramMembership === undefined
+                    ? null
+                    : { loyaltyProgramMembership: v.loyaltyProgramMembership }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.source === undefined ? null : { source: v.source }),
+            };
+        });
+
+    export type Outbound = {
+        id?: string | undefined;
+        title?: string | undefined;
+        fullName?: string | undefined;
+        firstName?: string | undefined;
+        middleName?: string | undefined;
+        lastName?: string | undefined;
+        email?: string | undefined;
+        phoneNumber?: string | undefined;
+        dateOfBirth?: number | undefined;
+        addresses?: Array<PatchOpportunitiesIdAddresses$.Outbound> | undefined;
+        defaultAddress?: PatchOpportunitiesIdDefaultAddress$.Outbound | undefined;
+        company?: string | undefined;
+        companyId?: string | undefined;
+        currency?: string | undefined;
+        notes?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesStatus | undefined;
+        customerSegment?: string | undefined;
+        customerType?: PatchOpportunitiesIdCustomerType | undefined;
+        loyaltyProgramMembership?: string | undefined;
+        preferredContactMethod?: PatchOpportunitiesIdPreferredContactMethod | undefined;
+        tags?: Array<string> | undefined;
+        metadata?: string | undefined;
+        socialProfiles?: Array<PatchOpportunitiesIdSocialProfiles$.Outbound> | undefined;
+        source?: string | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOpportunitiesIdOwner> = z
+        .object({
+            id: z.string().optional(),
+            title: z.string().optional(),
+            fullName: z.string().optional(),
+            firstName: z.string().optional(),
+            middleName: z.string().optional(),
+            lastName: z.string().optional(),
+            email: z.string().optional(),
+            phoneNumber: z.string().optional(),
+            dateOfBirth: z.number().optional(),
+            addresses: z
+                .array(z.lazy(() => PatchOpportunitiesIdAddresses$.outboundSchema))
+                .optional(),
+            defaultAddress: z
+                .lazy(() => PatchOpportunitiesIdDefaultAddress$.outboundSchema)
+                .optional(),
+            company: z.string().optional(),
+            companyId: z.string().optional(),
+            currency: z.string().optional(),
+            notes: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            status: PatchOpportunitiesIdOpportunitiesStatus$.optional(),
+            customerSegment: z.string().optional(),
+            customerType: PatchOpportunitiesIdCustomerType$.optional(),
+            loyaltyProgramMembership: z.string().optional(),
+            preferredContactMethod: PatchOpportunitiesIdPreferredContactMethod$.optional(),
+            tags: z.array(z.string()).optional(),
+            metadata: z.string().optional(),
+            socialProfiles: z
+                .array(z.lazy(() => PatchOpportunitiesIdSocialProfiles$.outboundSchema))
+                .optional(),
+            source: z.string().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.title === undefined ? null : { title: v.title }),
+                ...(v.fullName === undefined ? null : { fullName: v.fullName }),
+                ...(v.firstName === undefined ? null : { firstName: v.firstName }),
+                ...(v.middleName === undefined ? null : { middleName: v.middleName }),
+                ...(v.lastName === undefined ? null : { lastName: v.lastName }),
+                ...(v.email === undefined ? null : { email: v.email }),
+                ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.dateOfBirth === undefined ? null : { dateOfBirth: v.dateOfBirth }),
+                ...(v.addresses === undefined ? null : { addresses: v.addresses }),
+                ...(v.defaultAddress === undefined ? null : { defaultAddress: v.defaultAddress }),
+                ...(v.company === undefined ? null : { company: v.company }),
+                ...(v.companyId === undefined ? null : { companyId: v.companyId }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.customerSegment === undefined
+                    ? null
+                    : { customerSegment: v.customerSegment }),
+                ...(v.customerType === undefined ? null : { customerType: v.customerType }),
+                ...(v.loyaltyProgramMembership === undefined
+                    ? null
+                    : { loyaltyProgramMembership: v.loyaltyProgramMembership }),
+                ...(v.preferredContactMethod === undefined
+                    ? null
+                    : { preferredContactMethod: v.preferredContactMethod }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
+                ...(v.source === undefined ? null : { source: v.source }),
+            };
+        });
+}
+
+/** @internal */
+export const PatchOpportunitiesIdOpportunitiesRequestStatus$ = z.nativeEnum(
+    PatchOpportunitiesIdOpportunitiesRequestStatus
+);
+
+/** @internal */
+export namespace PaymentMethod$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<PaymentMethod, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PaymentMethod> = z.object({});
+}
+
+/** @internal */
+export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType$ =
+    z.nativeEnum(PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType);
+
+/** @internal */
+export const PatchOpportunitiesIdCurrency$ = z.nativeEnum(PatchOpportunitiesIdCurrency);
+
+/** @internal */
+export namespace Recipient$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<Recipient, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Recipient> = z.object({});
+}
+
+/** @internal */
+export namespace Sender$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<Sender, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Sender> = z.object({});
+}
+
+/** @internal */
+export const TransactionCategory$ = z.nativeEnum(TransactionCategory);
+
+/** @internal */
+export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus$ = z.nativeEnum(
+    PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus
+);
+
+/** @internal */
+export const TransactionMethod$ = z.nativeEnum(TransactionMethod);
+
+/** @internal */
+export const TransactionType$ = z.nativeEnum(TransactionType);
+
+/** @internal */
+export namespace Refund$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<Refund, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Refund> = z.object({});
+}
+
+/** @internal */
+export namespace Dispute$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<Dispute, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Dispute> = z.object({});
+}
+
+/** @internal */
+export namespace PatchOpportunitiesIdOpportunitiesMetadata$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<
+        PatchOpportunitiesIdOpportunitiesMetadata,
+        z.ZodTypeDef,
+        Inbound
+    > = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PatchOpportunitiesIdOpportunitiesMetadata
+    > = z.object({});
+}
+
+/** @internal */
+export namespace Shipping$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<Shipping, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Shipping> = z.object({});
+}
+
+/** @internal */
+export namespace BillingDetails$ {
+    export type Inbound = {};
+
+    export const inboundSchema: z.ZodType<BillingDetails, z.ZodTypeDef, Inbound> = z.object({});
+
+    export type Outbound = {};
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, BillingDetails> = z.object({});
+}
+
+/** @internal */
+export namespace Transactions$ {
+    export type Inbound = {
+        id?: string | undefined;
+        accountId?: string | undefined;
+        invoiceId?: string | undefined;
+        orderId?: string | undefined;
+        paymentMethod?: PaymentMethod$.Inbound | undefined;
+        amount?: number | undefined;
+        taxAmount?: number | undefined;
+        type?:
+            | PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType
+            | undefined;
+        date?: number | undefined;
+        currency?: PatchOpportunitiesIdCurrency | undefined;
+        recipient?: Recipient$.Inbound | undefined;
+        sender?: Sender$.Inbound | undefined;
+        description?: string | undefined;
+        checkNumber?: string | undefined;
+        transactionCategory?: TransactionCategory | undefined;
+        tags?: Array<string> | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus | undefined;
+        transactionMethod?: TransactionMethod | undefined;
+        transactionType?: TransactionType | undefined;
+        refund?: Refund$.Inbound | undefined;
+        dispute?: Dispute$.Inbound | undefined;
+        metadata?: PatchOpportunitiesIdOpportunitiesMetadata$.Inbound | undefined;
+        exchangeRate?: number | undefined;
+        shipping?: Shipping$.Inbound | undefined;
+        billingDetails?: BillingDetails$.Inbound | undefined;
+        applicationFee?: number | undefined;
+        paymentIntent?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        deleted?: boolean | undefined;
+    };
+
+    export const inboundSchema: z.ZodType<Transactions, z.ZodTypeDef, Inbound> = z
+        .object({
+            id: z.string().optional(),
+            accountId: z.string().optional(),
+            invoiceId: z.string().optional(),
+            orderId: z.string().optional(),
+            paymentMethod: z.lazy(() => PaymentMethod$.inboundSchema).optional(),
+            amount: z.number().optional(),
+            taxAmount: z.number().optional(),
+            type: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType$.optional(),
+            date: z.number().optional(),
+            currency: PatchOpportunitiesIdCurrency$.optional(),
+            recipient: z.lazy(() => Recipient$.inboundSchema).optional(),
+            sender: z.lazy(() => Sender$.inboundSchema).optional(),
+            description: z.string().optional(),
+            checkNumber: z.string().optional(),
+            transactionCategory: TransactionCategory$.optional(),
+            tags: z.array(z.string()).optional(),
+            status: PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus$.optional(),
+            transactionMethod: TransactionMethod$.optional(),
+            transactionType: TransactionType$.optional(),
+            refund: z.lazy(() => Refund$.inboundSchema).optional(),
+            dispute: z.lazy(() => Dispute$.inboundSchema).optional(),
+            metadata: z
+                .lazy(() => PatchOpportunitiesIdOpportunitiesMetadata$.inboundSchema)
+                .optional(),
+            exchangeRate: z.number().optional(),
+            shipping: z.lazy(() => Shipping$.inboundSchema).optional(),
+            billingDetails: z.lazy(() => BillingDetails$.inboundSchema).optional(),
+            applicationFee: z.number().optional(),
+            paymentIntent: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            deleted: z.boolean().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
+                ...(v.invoiceId === undefined ? null : { invoiceId: v.invoiceId }),
+                ...(v.orderId === undefined ? null : { orderId: v.orderId }),
+                ...(v.paymentMethod === undefined ? null : { paymentMethod: v.paymentMethod }),
+                ...(v.amount === undefined ? null : { amount: v.amount }),
+                ...(v.taxAmount === undefined ? null : { taxAmount: v.taxAmount }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.date === undefined ? null : { date: v.date }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.recipient === undefined ? null : { recipient: v.recipient }),
+                ...(v.sender === undefined ? null : { sender: v.sender }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.checkNumber === undefined ? null : { checkNumber: v.checkNumber }),
+                ...(v.transactionCategory === undefined
+                    ? null
+                    : { transactionCategory: v.transactionCategory }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.transactionMethod === undefined
+                    ? null
+                    : { transactionMethod: v.transactionMethod }),
+                ...(v.transactionType === undefined
+                    ? null
+                    : { transactionType: v.transactionType }),
+                ...(v.refund === undefined ? null : { refund: v.refund }),
+                ...(v.dispute === undefined ? null : { dispute: v.dispute }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.exchangeRate === undefined ? null : { exchangeRate: v.exchangeRate }),
+                ...(v.shipping === undefined ? null : { shipping: v.shipping }),
+                ...(v.billingDetails === undefined ? null : { billingDetails: v.billingDetails }),
+                ...(v.applicationFee === undefined ? null : { applicationFee: v.applicationFee }),
+                ...(v.paymentIntent === undefined ? null : { paymentIntent: v.paymentIntent }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+            };
+        });
+
+    export type Outbound = {
+        id?: string | undefined;
+        accountId?: string | undefined;
+        invoiceId?: string | undefined;
+        orderId?: string | undefined;
+        paymentMethod?: PaymentMethod$.Outbound | undefined;
+        amount?: number | undefined;
+        taxAmount?: number | undefined;
+        type?:
+            | PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType
+            | undefined;
+        date?: number | undefined;
+        currency?: PatchOpportunitiesIdCurrency | undefined;
+        recipient?: Recipient$.Outbound | undefined;
+        sender?: Sender$.Outbound | undefined;
+        description?: string | undefined;
+        checkNumber?: string | undefined;
+        transactionCategory?: TransactionCategory | undefined;
+        tags?: Array<string> | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus | undefined;
+        transactionMethod?: TransactionMethod | undefined;
+        transactionType?: TransactionType | undefined;
+        refund?: Refund$.Outbound | undefined;
+        dispute?: Dispute$.Outbound | undefined;
+        metadata?: PatchOpportunitiesIdOpportunitiesMetadata$.Outbound | undefined;
+        exchangeRate?: number | undefined;
+        shipping?: Shipping$.Outbound | undefined;
+        billingDetails?: BillingDetails$.Outbound | undefined;
+        applicationFee?: number | undefined;
+        paymentIntent?: string | undefined;
+        createdAt?: number | undefined;
+        updatedAt?: number | undefined;
+        deleted?: boolean | undefined;
+    };
+
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Transactions> = z
+        .object({
+            id: z.string().optional(),
+            accountId: z.string().optional(),
+            invoiceId: z.string().optional(),
+            orderId: z.string().optional(),
+            paymentMethod: z.lazy(() => PaymentMethod$.outboundSchema).optional(),
+            amount: z.number().optional(),
+            taxAmount: z.number().optional(),
+            type: PatchOpportunitiesIdOpportunitiesRequestRequestBodyAccountTransactionsType$.optional(),
+            date: z.number().optional(),
+            currency: PatchOpportunitiesIdCurrency$.optional(),
+            recipient: z.lazy(() => Recipient$.outboundSchema).optional(),
+            sender: z.lazy(() => Sender$.outboundSchema).optional(),
+            description: z.string().optional(),
+            checkNumber: z.string().optional(),
+            transactionCategory: TransactionCategory$.optional(),
+            tags: z.array(z.string()).optional(),
+            status: PatchOpportunitiesIdOpportunitiesRequestRequestBodyStatus$.optional(),
+            transactionMethod: TransactionMethod$.optional(),
+            transactionType: TransactionType$.optional(),
+            refund: z.lazy(() => Refund$.outboundSchema).optional(),
+            dispute: z.lazy(() => Dispute$.outboundSchema).optional(),
+            metadata: z
+                .lazy(() => PatchOpportunitiesIdOpportunitiesMetadata$.outboundSchema)
+                .optional(),
+            exchangeRate: z.number().optional(),
+            shipping: z.lazy(() => Shipping$.outboundSchema).optional(),
+            billingDetails: z.lazy(() => BillingDetails$.outboundSchema).optional(),
+            applicationFee: z.number().optional(),
+            paymentIntent: z.string().optional(),
+            createdAt: z.number().optional(),
+            updatedAt: z.number().optional(),
+            deleted: z.boolean().optional(),
+        })
+        .transform((v) => {
+            return {
+                ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
+                ...(v.invoiceId === undefined ? null : { invoiceId: v.invoiceId }),
+                ...(v.orderId === undefined ? null : { orderId: v.orderId }),
+                ...(v.paymentMethod === undefined ? null : { paymentMethod: v.paymentMethod }),
+                ...(v.amount === undefined ? null : { amount: v.amount }),
+                ...(v.taxAmount === undefined ? null : { taxAmount: v.taxAmount }),
+                ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.date === undefined ? null : { date: v.date }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.recipient === undefined ? null : { recipient: v.recipient }),
+                ...(v.sender === undefined ? null : { sender: v.sender }),
+                ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.checkNumber === undefined ? null : { checkNumber: v.checkNumber }),
+                ...(v.transactionCategory === undefined
+                    ? null
+                    : { transactionCategory: v.transactionCategory }),
+                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.status === undefined ? null : { status: v.status }),
+                ...(v.transactionMethod === undefined
+                    ? null
+                    : { transactionMethod: v.transactionMethod }),
+                ...(v.transactionType === undefined
+                    ? null
+                    : { transactionType: v.transactionType }),
+                ...(v.refund === undefined ? null : { refund: v.refund }),
+                ...(v.dispute === undefined ? null : { dispute: v.dispute }),
+                ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.exchangeRate === undefined ? null : { exchangeRate: v.exchangeRate }),
+                ...(v.shipping === undefined ? null : { shipping: v.shipping }),
+                ...(v.billingDetails === undefined ? null : { billingDetails: v.billingDetails }),
+                ...(v.applicationFee === undefined ? null : { applicationFee: v.applicationFee }),
+                ...(v.paymentIntent === undefined ? null : { paymentIntent: v.paymentIntent }),
+                ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
 }
@@ -2037,155 +3010,135 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestCustomFields$ {
 export namespace PatchOpportunitiesIdAccount$ {
     export type Inbound = {
         id?: string | undefined;
-        name?: string | undefined;
-        industry?: string | undefined;
+        accountNumber?: string | undefined;
         accountType?: AccountType | undefined;
-        rating?: Rating | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
-        website?: string | undefined;
-        billingAddress?: BillingAddress$.Inbound | undefined;
-        shippingAddress?: ShippingAddress$.Inbound | undefined;
-        numberOfEmployees?: number | undefined;
-        annualRevenue?: number | undefined;
+        balance?: number | undefined;
+        currency?: Currency | undefined;
+        owner?: PatchOpportunitiesIdOwner$.Inbound | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        status?: PatchOpportunitiesIdOpportunitiesStatus | undefined;
-        ownerId?: string | undefined;
-        customFields?:
-            | Array<PatchOpportunitiesIdOpportunitiesRequestCustomFields$.Inbound>
-            | undefined;
-        tags?: Array<string> | undefined;
+        closedAt?: number | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesRequestStatus | undefined;
+        transactions?: Array<Transactions$.Inbound> | undefined;
+        branch?: string | undefined;
+        notes?: string | undefined;
+        interestRate?: number | undefined;
+        overdraftLimit?: number | undefined;
+        overdraftProtection?: boolean | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
     };
 
     export const inboundSchema: z.ZodType<PatchOpportunitiesIdAccount, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            name: z.string().optional(),
-            industry: z.string().optional(),
+            accountNumber: z.string().optional(),
             accountType: AccountType$.optional(),
-            rating: Rating$.optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
-            website: z.string().optional(),
-            billingAddress: z.lazy(() => BillingAddress$.inboundSchema).optional(),
-            shippingAddress: z.lazy(() => ShippingAddress$.inboundSchema).optional(),
-            numberOfEmployees: z.number().optional(),
-            annualRevenue: z.number().optional(),
+            balance: z.number().optional(),
+            currency: Currency$.optional(),
+            owner: z.lazy(() => PatchOpportunitiesIdOwner$.inboundSchema).optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
-            status: PatchOpportunitiesIdOpportunitiesStatus$.optional(),
-            ownerId: z.string().optional(),
-            customFields: z
-                .array(
-                    z.lazy(
-                        () => PatchOpportunitiesIdOpportunitiesRequestCustomFields$.inboundSchema
-                    )
-                )
-                .optional(),
-            tags: z.array(z.string()).optional(),
+            closedAt: z.number().optional(),
+            status: PatchOpportunitiesIdOpportunitiesRequestStatus$.optional(),
+            transactions: z.array(z.lazy(() => Transactions$.inboundSchema)).optional(),
+            branch: z.string().optional(),
+            notes: z.string().optional(),
+            interestRate: z.number().optional(),
+            overdraftLimit: z.number().optional(),
+            overdraftProtection: z.boolean().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.name === undefined ? null : { name: v.name }),
-                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.accountNumber === undefined ? null : { accountNumber: v.accountNumber }),
                 ...(v.accountType === undefined ? null : { accountType: v.accountType }),
-                ...(v.rating === undefined ? null : { rating: v.rating }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
-                ...(v.website === undefined ? null : { website: v.website }),
-                ...(v.billingAddress === undefined ? null : { billingAddress: v.billingAddress }),
-                ...(v.shippingAddress === undefined
-                    ? null
-                    : { shippingAddress: v.shippingAddress }),
-                ...(v.numberOfEmployees === undefined
-                    ? null
-                    : { numberOfEmployees: v.numberOfEmployees }),
-                ...(v.annualRevenue === undefined ? null : { annualRevenue: v.annualRevenue }),
+                ...(v.balance === undefined ? null : { balance: v.balance }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.owner === undefined ? null : { owner: v.owner }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.closedAt === undefined ? null : { closedAt: v.closedAt }),
                 ...(v.status === undefined ? null : { status: v.status }),
-                ...(v.ownerId === undefined ? null : { ownerId: v.ownerId }),
-                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
-                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.transactions === undefined ? null : { transactions: v.transactions }),
+                ...(v.branch === undefined ? null : { branch: v.branch }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.interestRate === undefined ? null : { interestRate: v.interestRate }),
+                ...(v.overdraftLimit === undefined ? null : { overdraftLimit: v.overdraftLimit }),
+                ...(v.overdraftProtection === undefined
+                    ? null
+                    : { overdraftProtection: v.overdraftProtection }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
 
     export type Outbound = {
         id?: string | undefined;
-        name?: string | undefined;
-        industry?: string | undefined;
+        accountNumber?: string | undefined;
         accountType?: AccountType | undefined;
-        rating?: Rating | undefined;
-        phone?: string | undefined;
-        email?: string | undefined;
-        website?: string | undefined;
-        billingAddress?: BillingAddress$.Outbound | undefined;
-        shippingAddress?: ShippingAddress$.Outbound | undefined;
-        numberOfEmployees?: number | undefined;
-        annualRevenue?: number | undefined;
+        balance?: number | undefined;
+        currency?: Currency | undefined;
+        owner?: PatchOpportunitiesIdOwner$.Outbound | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        status?: PatchOpportunitiesIdOpportunitiesStatus | undefined;
-        ownerId?: string | undefined;
-        customFields?:
-            | Array<PatchOpportunitiesIdOpportunitiesRequestCustomFields$.Outbound>
-            | undefined;
-        tags?: Array<string> | undefined;
+        closedAt?: number | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesRequestStatus | undefined;
+        transactions?: Array<Transactions$.Outbound> | undefined;
+        branch?: string | undefined;
+        notes?: string | undefined;
+        interestRate?: number | undefined;
+        overdraftLimit?: number | undefined;
+        overdraftProtection?: boolean | undefined;
+        active?: boolean | undefined;
+        deleted?: boolean | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOpportunitiesIdAccount> = z
         .object({
             id: z.string().optional(),
-            name: z.string().optional(),
-            industry: z.string().optional(),
+            accountNumber: z.string().optional(),
             accountType: AccountType$.optional(),
-            rating: Rating$.optional(),
-            phone: z.string().optional(),
-            email: z.string().optional(),
-            website: z.string().optional(),
-            billingAddress: z.lazy(() => BillingAddress$.outboundSchema).optional(),
-            shippingAddress: z.lazy(() => ShippingAddress$.outboundSchema).optional(),
-            numberOfEmployees: z.number().optional(),
-            annualRevenue: z.number().optional(),
+            balance: z.number().optional(),
+            currency: Currency$.optional(),
+            owner: z.lazy(() => PatchOpportunitiesIdOwner$.outboundSchema).optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
-            status: PatchOpportunitiesIdOpportunitiesStatus$.optional(),
-            ownerId: z.string().optional(),
-            customFields: z
-                .array(
-                    z.lazy(
-                        () => PatchOpportunitiesIdOpportunitiesRequestCustomFields$.outboundSchema
-                    )
-                )
-                .optional(),
-            tags: z.array(z.string()).optional(),
+            closedAt: z.number().optional(),
+            status: PatchOpportunitiesIdOpportunitiesRequestStatus$.optional(),
+            transactions: z.array(z.lazy(() => Transactions$.outboundSchema)).optional(),
+            branch: z.string().optional(),
+            notes: z.string().optional(),
+            interestRate: z.number().optional(),
+            overdraftLimit: z.number().optional(),
+            overdraftProtection: z.boolean().optional(),
+            active: z.boolean().optional(),
+            deleted: z.boolean().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
-                ...(v.name === undefined ? null : { name: v.name }),
-                ...(v.industry === undefined ? null : { industry: v.industry }),
+                ...(v.accountNumber === undefined ? null : { accountNumber: v.accountNumber }),
                 ...(v.accountType === undefined ? null : { accountType: v.accountType }),
-                ...(v.rating === undefined ? null : { rating: v.rating }),
-                ...(v.phone === undefined ? null : { phone: v.phone }),
-                ...(v.email === undefined ? null : { email: v.email }),
-                ...(v.website === undefined ? null : { website: v.website }),
-                ...(v.billingAddress === undefined ? null : { billingAddress: v.billingAddress }),
-                ...(v.shippingAddress === undefined
-                    ? null
-                    : { shippingAddress: v.shippingAddress }),
-                ...(v.numberOfEmployees === undefined
-                    ? null
-                    : { numberOfEmployees: v.numberOfEmployees }),
-                ...(v.annualRevenue === undefined ? null : { annualRevenue: v.annualRevenue }),
+                ...(v.balance === undefined ? null : { balance: v.balance }),
+                ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.owner === undefined ? null : { owner: v.owner }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.closedAt === undefined ? null : { closedAt: v.closedAt }),
                 ...(v.status === undefined ? null : { status: v.status }),
-                ...(v.ownerId === undefined ? null : { ownerId: v.ownerId }),
-                ...(v.customFields === undefined ? null : { customFields: v.customFields }),
-                ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.transactions === undefined ? null : { transactions: v.transactions }),
+                ...(v.branch === undefined ? null : { branch: v.branch }),
+                ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.interestRate === undefined ? null : { interestRate: v.interestRate }),
+                ...(v.overdraftLimit === undefined ? null : { overdraftLimit: v.overdraftLimit }),
+                ...(v.overdraftProtection === undefined
+                    ? null
+                    : { overdraftProtection: v.overdraftProtection }),
+                ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.deleted === undefined ? null : { deleted: v.deleted }),
             };
         });
 }
@@ -2230,16 +3183,22 @@ export namespace PatchOpportunitiesIdAddress$ {
 }
 
 /** @internal */
-export namespace PatchOpportunitiesIdAddresses$ {
+export namespace PatchOpportunitiesIdOpportunitiesAddresses$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<PatchOpportunitiesIdAddresses, z.ZodTypeDef, Inbound> =
-        z.object({});
+    export const inboundSchema: z.ZodType<
+        PatchOpportunitiesIdOpportunitiesAddresses,
+        z.ZodTypeDef,
+        Inbound
+    > = z.object({});
 
     export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOpportunitiesIdAddresses> =
-        z.object({});
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PatchOpportunitiesIdOpportunitiesAddresses
+    > = z.object({});
 }
 
 /** @internal */
@@ -2256,11 +3215,11 @@ export namespace PatchOpportunitiesIdNotes$ {
 }
 
 /** @internal */
-export namespace PatchOpportunitiesIdSocialProfiles$ {
+export namespace PatchOpportunitiesIdOpportunitiesSocialProfiles$ {
     export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        PatchOpportunitiesIdSocialProfiles,
+        PatchOpportunitiesIdOpportunitiesSocialProfiles,
         z.ZodTypeDef,
         Inbound
     > = z.object({});
@@ -2270,16 +3229,16 @@ export namespace PatchOpportunitiesIdSocialProfiles$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchOpportunitiesIdSocialProfiles
+        PatchOpportunitiesIdOpportunitiesSocialProfiles
     > = z.object({});
 }
 
 /** @internal */
-export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$ {
+export namespace PatchOpportunitiesIdOpportunitiesRequestCustomFields$ {
     export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields,
+        PatchOpportunitiesIdOpportunitiesRequestCustomFields,
         z.ZodTypeDef,
         Inbound
     > = z.object({});
@@ -2289,7 +3248,7 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields
+        PatchOpportunitiesIdOpportunitiesRequestCustomFields
     > = z.object({});
 }
 
@@ -2306,17 +3265,19 @@ export namespace PatchOpportunitiesIdContacts$ {
         defaultPhone?: string | undefined;
         phones?: Array<PatchOpportunitiesIdPhones$.Inbound> | undefined;
         address?: PatchOpportunitiesIdAddress$.Inbound | undefined;
-        addresses?: Array<PatchOpportunitiesIdAddresses$.Inbound> | undefined;
+        addresses?: Array<PatchOpportunitiesIdOpportunitiesAddresses$.Inbound> | undefined;
         birthday?: number | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PatchOpportunitiesIdNotes$.Inbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
-        socialProfiles?: Array<PatchOpportunitiesIdSocialProfiles$.Inbound> | undefined;
+        socialProfiles?:
+            | Array<PatchOpportunitiesIdOpportunitiesSocialProfiles$.Inbound>
+            | undefined;
         isActive?: boolean | undefined;
         customFields?:
-            | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.Inbound>
+            | Array<PatchOpportunitiesIdOpportunitiesRequestCustomFields$.Inbound>
             | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
@@ -2335,7 +3296,7 @@ export namespace PatchOpportunitiesIdContacts$ {
             phones: z.array(z.lazy(() => PatchOpportunitiesIdPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PatchOpportunitiesIdAddress$.inboundSchema).optional(),
             addresses: z
-                .array(z.lazy(() => PatchOpportunitiesIdAddresses$.inboundSchema))
+                .array(z.lazy(() => PatchOpportunitiesIdOpportunitiesAddresses$.inboundSchema))
                 .optional(),
             birthday: z.number().optional(),
             relationship: z.string().optional(),
@@ -2344,14 +3305,13 @@ export namespace PatchOpportunitiesIdContacts$ {
             tags: z.array(z.string()).optional(),
             websites: z.array(z.string()).optional(),
             socialProfiles: z
-                .array(z.lazy(() => PatchOpportunitiesIdSocialProfiles$.inboundSchema))
+                .array(z.lazy(() => PatchOpportunitiesIdOpportunitiesSocialProfiles$.inboundSchema))
                 .optional(),
             isActive: z.boolean().optional(),
             customFields: z
                 .array(
                     z.lazy(
-                        () =>
-                            PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.inboundSchema
+                        () => PatchOpportunitiesIdOpportunitiesRequestCustomFields$.inboundSchema
                     )
                 )
                 .optional(),
@@ -2396,17 +3356,19 @@ export namespace PatchOpportunitiesIdContacts$ {
         defaultPhone?: string | undefined;
         phones?: Array<PatchOpportunitiesIdPhones$.Outbound> | undefined;
         address?: PatchOpportunitiesIdAddress$.Outbound | undefined;
-        addresses?: Array<PatchOpportunitiesIdAddresses$.Outbound> | undefined;
+        addresses?: Array<PatchOpportunitiesIdOpportunitiesAddresses$.Outbound> | undefined;
         birthday?: number | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PatchOpportunitiesIdNotes$.Outbound | undefined;
         tags?: Array<string> | undefined;
         websites?: Array<string> | undefined;
-        socialProfiles?: Array<PatchOpportunitiesIdSocialProfiles$.Outbound> | undefined;
+        socialProfiles?:
+            | Array<PatchOpportunitiesIdOpportunitiesSocialProfiles$.Outbound>
+            | undefined;
         isActive?: boolean | undefined;
         customFields?:
-            | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.Outbound>
+            | Array<PatchOpportunitiesIdOpportunitiesRequestCustomFields$.Outbound>
             | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
@@ -2425,7 +3387,7 @@ export namespace PatchOpportunitiesIdContacts$ {
             phones: z.array(z.lazy(() => PatchOpportunitiesIdPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PatchOpportunitiesIdAddress$.outboundSchema).optional(),
             addresses: z
-                .array(z.lazy(() => PatchOpportunitiesIdAddresses$.outboundSchema))
+                .array(z.lazy(() => PatchOpportunitiesIdOpportunitiesAddresses$.outboundSchema))
                 .optional(),
             birthday: z.number().optional(),
             relationship: z.string().optional(),
@@ -2434,14 +3396,15 @@ export namespace PatchOpportunitiesIdContacts$ {
             tags: z.array(z.string()).optional(),
             websites: z.array(z.string()).optional(),
             socialProfiles: z
-                .array(z.lazy(() => PatchOpportunitiesIdSocialProfiles$.outboundSchema))
+                .array(
+                    z.lazy(() => PatchOpportunitiesIdOpportunitiesSocialProfiles$.outboundSchema)
+                )
                 .optional(),
             isActive: z.boolean().optional(),
             customFields: z
                 .array(
                     z.lazy(
-                        () =>
-                            PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.outboundSchema
+                        () => PatchOpportunitiesIdOpportunitiesRequestCustomFields$.outboundSchema
                     )
                 )
                 .optional(),
@@ -2739,11 +3702,11 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestGeoLocation$ {
 }
 
 /** @internal */
-export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields$ {
+export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$ {
     export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields,
+        PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields,
         z.ZodTypeDef,
         Inbound
     > = z.object({});
@@ -2753,12 +3716,12 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomF
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields
+        PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields
     > = z.object({});
 }
 
 /** @internal */
-export namespace PatchOpportunitiesIdOpportunitiesAddresses$ {
+export namespace PatchOpportunitiesIdOpportunitiesRequestAddresses$ {
     export type Inbound = {
         id?: string | undefined;
         contactId?: string | undefined;
@@ -2781,13 +3744,13 @@ export namespace PatchOpportunitiesIdOpportunitiesAddresses$ {
         type?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerType | undefined;
         geoLocation?: PatchOpportunitiesIdOpportunitiesRequestGeoLocation$.Inbound | undefined;
         customFields?:
-            | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields$.Inbound>
+            | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.Inbound>
             | undefined;
         subdivisionCode?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<
-        PatchOpportunitiesIdOpportunitiesAddresses,
+        PatchOpportunitiesIdOpportunitiesRequestAddresses,
         z.ZodTypeDef,
         Inbound
     > = z
@@ -2818,7 +3781,7 @@ export namespace PatchOpportunitiesIdOpportunitiesAddresses$ {
                 .array(
                     z.lazy(
                         () =>
-                            PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields$.inboundSchema
+                            PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.inboundSchema
                     )
                 )
                 .optional(),
@@ -2877,7 +3840,7 @@ export namespace PatchOpportunitiesIdOpportunitiesAddresses$ {
         type?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerType | undefined;
         geoLocation?: PatchOpportunitiesIdOpportunitiesRequestGeoLocation$.Outbound | undefined;
         customFields?:
-            | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields$.Outbound>
+            | Array<PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.Outbound>
             | undefined;
         subdivisionCode?: string | undefined;
     };
@@ -2885,7 +3848,7 @@ export namespace PatchOpportunitiesIdOpportunitiesAddresses$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchOpportunitiesIdOpportunitiesAddresses
+        PatchOpportunitiesIdOpportunitiesRequestAddresses
     > = z
         .object({
             id: z.string().optional(),
@@ -2914,7 +3877,7 @@ export namespace PatchOpportunitiesIdOpportunitiesAddresses$ {
                 .array(
                     z.lazy(
                         () =>
-                            PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerCustomFields$.outboundSchema
+                            PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields$.outboundSchema
                     )
                 )
                 .optional(),
@@ -3031,7 +3994,7 @@ export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerSocialLinks
     );
 
 /** @internal */
-export namespace PatchOpportunitiesIdAdditionalInfo$ {
+export namespace PatchOpportunitiesIdOpportunitiesAdditionalInfo$ {
     export type Inbound = {
         id?: string | undefined;
         key?: string | undefined;
@@ -3046,7 +4009,7 @@ export namespace PatchOpportunitiesIdAdditionalInfo$ {
     };
 
     export const inboundSchema: z.ZodType<
-        PatchOpportunitiesIdAdditionalInfo,
+        PatchOpportunitiesIdOpportunitiesAdditionalInfo,
         z.ZodTypeDef,
         Inbound
     > = z
@@ -3089,7 +4052,7 @@ export namespace PatchOpportunitiesIdAdditionalInfo$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchOpportunitiesIdAdditionalInfo
+        PatchOpportunitiesIdOpportunitiesAdditionalInfo
     > = z
         .object({
             id: z.string().optional(),
@@ -3124,7 +4087,7 @@ export namespace PatchOpportunitiesIdSocialLinks$ {
         url?: string | undefined;
         avatarUrl?: string | undefined;
         email?: string | undefined;
-        additionalInfo?: PatchOpportunitiesIdAdditionalInfo$.Inbound | undefined;
+        additionalInfo?: PatchOpportunitiesIdOpportunitiesAdditionalInfo$.Inbound | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         active?: boolean | undefined;
@@ -3141,7 +4104,7 @@ export namespace PatchOpportunitiesIdSocialLinks$ {
                 avatarUrl: z.string().optional(),
                 email: z.string().optional(),
                 additionalInfo: z
-                    .lazy(() => PatchOpportunitiesIdAdditionalInfo$.inboundSchema)
+                    .lazy(() => PatchOpportunitiesIdOpportunitiesAdditionalInfo$.inboundSchema)
                     .optional(),
                 createdAt: z.number().optional(),
                 updatedAt: z.number().optional(),
@@ -3173,7 +4136,7 @@ export namespace PatchOpportunitiesIdSocialLinks$ {
         url?: string | undefined;
         avatarUrl?: string | undefined;
         email?: string | undefined;
-        additionalInfo?: PatchOpportunitiesIdAdditionalInfo$.Outbound | undefined;
+        additionalInfo?: PatchOpportunitiesIdOpportunitiesAdditionalInfo$.Outbound | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
         active?: boolean | undefined;
@@ -3193,7 +4156,7 @@ export namespace PatchOpportunitiesIdSocialLinks$ {
             avatarUrl: z.string().optional(),
             email: z.string().optional(),
             additionalInfo: z
-                .lazy(() => PatchOpportunitiesIdAdditionalInfo$.outboundSchema)
+                .lazy(() => PatchOpportunitiesIdOpportunitiesAdditionalInfo$.outboundSchema)
                 .optional(),
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
@@ -3218,8 +4181,8 @@ export namespace PatchOpportunitiesIdSocialLinks$ {
 }
 
 /** @internal */
-export const PatchOpportunitiesIdOpportunitiesRequestStatus$ = z.nativeEnum(
-    PatchOpportunitiesIdOpportunitiesRequestStatus
+export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus$ = z.nativeEnum(
+    PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus
 );
 
 /** @internal */
@@ -3394,7 +4357,7 @@ export namespace PatchOpportunitiesIdPaymentMethods$ {
 }
 
 /** @internal */
-export namespace PatchOpportunitiesIdOwner$ {
+export namespace PatchOpportunitiesIdOpportunitiesOwner$ {
     export type Inbound = {
         id?: string | undefined;
         firstName?: string | undefined;
@@ -3412,18 +4375,22 @@ export namespace PatchOpportunitiesIdOwner$ {
         lastLogin?: number | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        addresses?: Array<PatchOpportunitiesIdOpportunitiesAddresses$.Inbound> | undefined;
+        addresses?: Array<PatchOpportunitiesIdOpportunitiesRequestAddresses$.Inbound> | undefined;
         roles?: Array<PatchOpportunitiesIdRoles> | undefined;
         preferences?: PatchOpportunitiesIdPreferences$.Inbound | undefined;
         bio?: string | undefined;
         website?: string | undefined;
         socialLinks?: PatchOpportunitiesIdSocialLinks$.Inbound | undefined;
-        status?: PatchOpportunitiesIdOpportunitiesRequestStatus | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus | undefined;
         sso?: Array<PatchOpportunitiesIdSso$.Inbound> | undefined;
         paymentMethods?: PatchOpportunitiesIdPaymentMethods$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchOpportunitiesIdOwner, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<
+        PatchOpportunitiesIdOpportunitiesOwner,
+        z.ZodTypeDef,
+        Inbound
+    > = z
         .object({
             id: z.string().optional(),
             firstName: z.string().optional(),
@@ -3444,14 +4411,16 @@ export namespace PatchOpportunitiesIdOwner$ {
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             addresses: z
-                .array(z.lazy(() => PatchOpportunitiesIdOpportunitiesAddresses$.inboundSchema))
+                .array(
+                    z.lazy(() => PatchOpportunitiesIdOpportunitiesRequestAddresses$.inboundSchema)
+                )
                 .optional(),
             roles: z.array(PatchOpportunitiesIdRoles$).optional(),
             preferences: z.lazy(() => PatchOpportunitiesIdPreferences$.inboundSchema).optional(),
             bio: z.string().optional(),
             website: z.string().optional(),
             socialLinks: z.lazy(() => PatchOpportunitiesIdSocialLinks$.inboundSchema).optional(),
-            status: PatchOpportunitiesIdOpportunitiesRequestStatus$.optional(),
+            status: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus$.optional(),
             sso: z.array(z.lazy(() => PatchOpportunitiesIdSso$.inboundSchema)).optional(),
             paymentMethods: z
                 .lazy(() => PatchOpportunitiesIdPaymentMethods$.inboundSchema)
@@ -3504,18 +4473,22 @@ export namespace PatchOpportunitiesIdOwner$ {
         lastLogin?: number | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        addresses?: Array<PatchOpportunitiesIdOpportunitiesAddresses$.Outbound> | undefined;
+        addresses?: Array<PatchOpportunitiesIdOpportunitiesRequestAddresses$.Outbound> | undefined;
         roles?: Array<PatchOpportunitiesIdRoles> | undefined;
         preferences?: PatchOpportunitiesIdPreferences$.Outbound | undefined;
         bio?: string | undefined;
         website?: string | undefined;
         socialLinks?: PatchOpportunitiesIdSocialLinks$.Outbound | undefined;
-        status?: PatchOpportunitiesIdOpportunitiesRequestStatus | undefined;
+        status?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus | undefined;
         sso?: Array<PatchOpportunitiesIdSso$.Outbound> | undefined;
         paymentMethods?: PatchOpportunitiesIdPaymentMethods$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchOpportunitiesIdOwner> = z
+    export const outboundSchema: z.ZodType<
+        Outbound,
+        z.ZodTypeDef,
+        PatchOpportunitiesIdOpportunitiesOwner
+    > = z
         .object({
             id: z.string().optional(),
             firstName: z.string().optional(),
@@ -3536,14 +4509,16 @@ export namespace PatchOpportunitiesIdOwner$ {
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             addresses: z
-                .array(z.lazy(() => PatchOpportunitiesIdOpportunitiesAddresses$.outboundSchema))
+                .array(
+                    z.lazy(() => PatchOpportunitiesIdOpportunitiesRequestAddresses$.outboundSchema)
+                )
                 .optional(),
             roles: z.array(PatchOpportunitiesIdRoles$).optional(),
             preferences: z.lazy(() => PatchOpportunitiesIdPreferences$.outboundSchema).optional(),
             bio: z.string().optional(),
             website: z.string().optional(),
             socialLinks: z.lazy(() => PatchOpportunitiesIdSocialLinks$.outboundSchema).optional(),
-            status: PatchOpportunitiesIdOpportunitiesRequestStatus$.optional(),
+            status: PatchOpportunitiesIdOpportunitiesRequestRequestBodyOwnerStatus$.optional(),
             sso: z.array(z.lazy(() => PatchOpportunitiesIdSso$.outboundSchema)).optional(),
             paymentMethods: z
                 .lazy(() => PatchOpportunitiesIdPaymentMethods$.outboundSchema)
@@ -3581,11 +4556,11 @@ export namespace PatchOpportunitiesIdOwner$ {
 }
 
 /** @internal */
-export namespace PatchOpportunitiesIdOpportunitiesMetadata$ {
+export namespace PatchOpportunitiesIdOpportunitiesRequestMetadata$ {
     export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        PatchOpportunitiesIdOpportunitiesMetadata,
+        PatchOpportunitiesIdOpportunitiesRequestMetadata,
         z.ZodTypeDef,
         Inbound
     > = z.object({});
@@ -3595,7 +4570,7 @@ export namespace PatchOpportunitiesIdOpportunitiesMetadata$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchOpportunitiesIdOpportunitiesMetadata
+        PatchOpportunitiesIdOpportunitiesRequestMetadata
     > = z.object({});
 }
 
@@ -3650,7 +4625,7 @@ export namespace PatchOpportunitiesIdAttachments$ {
         content?: string | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        metadata?: PatchOpportunitiesIdOpportunitiesMetadata$.Inbound | undefined;
+        metadata?: PatchOpportunitiesIdOpportunitiesRequestMetadata$.Inbound | undefined;
         associatedWith?: PatchOpportunitiesIdOpportunitiesAssociatedWith$.Inbound | undefined;
         permissions?: PatchOpportunitiesIdOpportunitiesPermissions$.Inbound | undefined;
     };
@@ -3669,7 +4644,7 @@ export namespace PatchOpportunitiesIdAttachments$ {
                 createdAt: z.number().optional(),
                 updatedAt: z.number().optional(),
                 metadata: z
-                    .lazy(() => PatchOpportunitiesIdOpportunitiesMetadata$.inboundSchema)
+                    .lazy(() => PatchOpportunitiesIdOpportunitiesRequestMetadata$.inboundSchema)
                     .optional(),
                 associatedWith: z
                     .lazy(() => PatchOpportunitiesIdOpportunitiesAssociatedWith$.inboundSchema)
@@ -3709,7 +4684,7 @@ export namespace PatchOpportunitiesIdAttachments$ {
         content?: string | undefined;
         createdAt?: number | undefined;
         updatedAt?: number | undefined;
-        metadata?: PatchOpportunitiesIdOpportunitiesMetadata$.Outbound | undefined;
+        metadata?: PatchOpportunitiesIdOpportunitiesRequestMetadata$.Outbound | undefined;
         associatedWith?: PatchOpportunitiesIdOpportunitiesAssociatedWith$.Outbound | undefined;
         permissions?: PatchOpportunitiesIdOpportunitiesPermissions$.Outbound | undefined;
     };
@@ -3731,7 +4706,7 @@ export namespace PatchOpportunitiesIdAttachments$ {
             createdAt: z.number().optional(),
             updatedAt: z.number().optional(),
             metadata: z
-                .lazy(() => PatchOpportunitiesIdOpportunitiesMetadata$.outboundSchema)
+                .lazy(() => PatchOpportunitiesIdOpportunitiesRequestMetadata$.outboundSchema)
                 .optional(),
             associatedWith: z
                 .lazy(() => PatchOpportunitiesIdOpportunitiesAssociatedWith$.outboundSchema)
@@ -3760,8 +4735,8 @@ export namespace PatchOpportunitiesIdAttachments$ {
 }
 
 /** @internal */
-export const PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType$ = z.nativeEnum(
-    PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType
+export const PatchOpportunitiesIdOpportunitiesFieldType$ = z.nativeEnum(
+    PatchOpportunitiesIdOpportunitiesFieldType
 );
 
 /** @internal */
@@ -3770,7 +4745,7 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType | undefined;
+        fieldType?: PatchOpportunitiesIdOpportunitiesFieldType | undefined;
     };
 
     export const inboundSchema: z.ZodType<
@@ -3782,7 +4757,7 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType$.optional(),
+            fieldType: PatchOpportunitiesIdOpportunitiesFieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -3797,7 +4772,7 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields
         id?: string | undefined;
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
-        fieldType?: PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType | undefined;
+        fieldType?: PatchOpportunitiesIdOpportunitiesFieldType | undefined;
     };
 
     export const outboundSchema: z.ZodType<
@@ -3809,7 +4784,7 @@ export namespace PatchOpportunitiesIdOpportunitiesRequestRequestBodyCustomFields
             id: z.string().optional(),
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
-            fieldType: PatchOpportunitiesIdOpportunitiesRequestRequestBodyFieldType$.optional(),
+            fieldType: PatchOpportunitiesIdOpportunitiesFieldType$.optional(),
         })
         .transform((v) => {
             return {
@@ -3831,20 +4806,20 @@ export namespace PatchOpportunitiesIdRequestBody$ {
         currency?: string | undefined;
         stage?: string | undefined;
         probability?: number | undefined;
-        closeDate?: number | undefined;
+        closeDate?: string | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
         leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         lostReason?: string | undefined;
         campaign?: PatchOpportunitiesIdCampaign$.Inbound | undefined;
         account?: PatchOpportunitiesIdAccount$.Inbound | undefined;
         contacts?: Array<PatchOpportunitiesIdContacts$.Inbound> | undefined;
-        owner?: PatchOpportunitiesIdOwner$.Inbound | undefined;
+        owner?: PatchOpportunitiesIdOpportunitiesOwner$.Inbound | undefined;
         attachments?: Array<PatchOpportunitiesIdAttachments$.Inbound> | undefined;
         notes?: Array<string> | undefined;
         customFields?:
@@ -3862,22 +4837,36 @@ export namespace PatchOpportunitiesIdRequestBody$ {
                 currency: z.string().optional(),
                 stage: z.string().optional(),
                 probability: z.number().optional(),
-                closeDate: z.number().optional(),
+                closeDate: z
+                    .string()
+                    .datetime({ offset: true })
+                    .transform((v) => new Date(v))
+                    .optional(),
                 type: z.string().optional(),
                 nextStep: z.string().optional(),
                 leadId: z.string().optional(),
                 leadSource: z.string().optional(),
                 isClosed: z.boolean().optional(),
                 isWon: z.boolean().optional(),
-                createdAt: z.number().optional(),
-                updatedAt: z.number().optional(),
+                createdAt: z
+                    .string()
+                    .datetime({ offset: true })
+                    .transform((v) => new Date(v))
+                    .optional(),
+                updatedAt: z
+                    .string()
+                    .datetime({ offset: true })
+                    .transform((v) => new Date(v))
+                    .optional(),
                 lostReason: z.string().optional(),
                 campaign: z.lazy(() => PatchOpportunitiesIdCampaign$.inboundSchema).optional(),
                 account: z.lazy(() => PatchOpportunitiesIdAccount$.inboundSchema).optional(),
                 contacts: z
                     .array(z.lazy(() => PatchOpportunitiesIdContacts$.inboundSchema))
                     .optional(),
-                owner: z.lazy(() => PatchOpportunitiesIdOwner$.inboundSchema).optional(),
+                owner: z
+                    .lazy(() => PatchOpportunitiesIdOpportunitiesOwner$.inboundSchema)
+                    .optional(),
                 attachments: z
                     .array(z.lazy(() => PatchOpportunitiesIdAttachments$.inboundSchema))
                     .optional(),
@@ -3928,20 +4917,20 @@ export namespace PatchOpportunitiesIdRequestBody$ {
         currency?: string | undefined;
         stage?: string | undefined;
         probability?: number | undefined;
-        closeDate?: number | undefined;
+        closeDate?: string | undefined;
         type?: string | undefined;
         nextStep?: string | undefined;
         leadId?: string | undefined;
         leadSource?: string | undefined;
         isClosed?: boolean | undefined;
         isWon?: boolean | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         lostReason?: string | undefined;
         campaign?: PatchOpportunitiesIdCampaign$.Outbound | undefined;
         account?: PatchOpportunitiesIdAccount$.Outbound | undefined;
         contacts?: Array<PatchOpportunitiesIdContacts$.Outbound> | undefined;
-        owner?: PatchOpportunitiesIdOwner$.Outbound | undefined;
+        owner?: PatchOpportunitiesIdOpportunitiesOwner$.Outbound | undefined;
         attachments?: Array<PatchOpportunitiesIdAttachments$.Outbound> | undefined;
         notes?: Array<string> | undefined;
         customFields?:
@@ -3962,22 +4951,31 @@ export namespace PatchOpportunitiesIdRequestBody$ {
             currency: z.string().optional(),
             stage: z.string().optional(),
             probability: z.number().optional(),
-            closeDate: z.number().optional(),
+            closeDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             type: z.string().optional(),
             nextStep: z.string().optional(),
             leadId: z.string().optional(),
             leadSource: z.string().optional(),
             isClosed: z.boolean().optional(),
             isWon: z.boolean().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             lostReason: z.string().optional(),
             campaign: z.lazy(() => PatchOpportunitiesIdCampaign$.outboundSchema).optional(),
             account: z.lazy(() => PatchOpportunitiesIdAccount$.outboundSchema).optional(),
             contacts: z
                 .array(z.lazy(() => PatchOpportunitiesIdContacts$.outboundSchema))
                 .optional(),
-            owner: z.lazy(() => PatchOpportunitiesIdOwner$.outboundSchema).optional(),
+            owner: z.lazy(() => PatchOpportunitiesIdOpportunitiesOwner$.outboundSchema).optional(),
             attachments: z
                 .array(z.lazy(() => PatchOpportunitiesIdAttachments$.outboundSchema))
                 .optional(),

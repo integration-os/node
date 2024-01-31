@@ -346,13 +346,13 @@ export type GetCandidatesUnified = {
     educations?: Array<GetCandidatesEducations> | undefined;
     workExperiences?: Array<GetCandidatesWorkExperiences> | undefined;
     references?: Array<GetCandidatesReferences> | undefined;
-    availability?: number | undefined;
+    availability?: Date | undefined;
     preferredWorkLocation?: string | undefined;
     status?: GetCandidatesStatus | undefined;
     customFields?: Array<GetCandidatesCustomFields> | undefined;
     notes?: Array<GetCandidatesNotes> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type GetCandidatesPassthrough = {};
@@ -1849,13 +1849,13 @@ export namespace GetCandidatesUnified$ {
         educations?: Array<GetCandidatesEducations$.Inbound> | undefined;
         workExperiences?: Array<GetCandidatesWorkExperiences$.Inbound> | undefined;
         references?: Array<GetCandidatesReferences$.Inbound> | undefined;
-        availability?: number | undefined;
+        availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
         status?: GetCandidatesStatus | undefined;
         customFields?: Array<GetCandidatesCustomFields$.Inbound> | undefined;
         notes?: Array<GetCandidatesNotes$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetCandidatesUnified, z.ZodTypeDef, Inbound> = z
@@ -1882,15 +1882,27 @@ export namespace GetCandidatesUnified$ {
                 .array(z.lazy(() => GetCandidatesWorkExperiences$.inboundSchema))
                 .optional(),
             references: z.array(z.lazy(() => GetCandidatesReferences$.inboundSchema)).optional(),
-            availability: z.number().optional(),
+            availability: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredWorkLocation: z.string().optional(),
             status: GetCandidatesStatus$.optional(),
             customFields: z
                 .array(z.lazy(() => GetCandidatesCustomFields$.inboundSchema))
                 .optional(),
             notes: z.array(z.lazy(() => GetCandidatesNotes$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -1945,13 +1957,13 @@ export namespace GetCandidatesUnified$ {
         educations?: Array<GetCandidatesEducations$.Outbound> | undefined;
         workExperiences?: Array<GetCandidatesWorkExperiences$.Outbound> | undefined;
         references?: Array<GetCandidatesReferences$.Outbound> | undefined;
-        availability?: number | undefined;
+        availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
         status?: GetCandidatesStatus | undefined;
         customFields?: Array<GetCandidatesCustomFields$.Outbound> | undefined;
         notes?: Array<GetCandidatesNotes$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCandidatesUnified> = z
@@ -1978,15 +1990,24 @@ export namespace GetCandidatesUnified$ {
                 .array(z.lazy(() => GetCandidatesWorkExperiences$.outboundSchema))
                 .optional(),
             references: z.array(z.lazy(() => GetCandidatesReferences$.outboundSchema)).optional(),
-            availability: z.number().optional(),
+            availability: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredWorkLocation: z.string().optional(),
             status: GetCandidatesStatus$.optional(),
             customFields: z
                 .array(z.lazy(() => GetCandidatesCustomFields$.outboundSchema))
                 .optional(),
             notes: z.array(z.lazy(() => GetCandidatesNotes$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {

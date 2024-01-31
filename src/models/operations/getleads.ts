@@ -246,8 +246,8 @@ export type GetLeadsUnified = {
     numberOfEmployees?: number | undefined;
     annualRevenue?: number | undefined;
     addresses?: Array<GetLeadsAddresses> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     preferredContactMethod?: GetLeadsPreferredContactMethod | undefined;
     socialProfiles?: Array<GetLeadsSocialProfiles> | undefined;
     customFields?: Array<GetLeadsCustomFields> | undefined;
@@ -1293,8 +1293,8 @@ export namespace GetLeadsUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<GetLeadsAddresses$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: GetLeadsPreferredContactMethod | undefined;
         socialProfiles?: Array<GetLeadsSocialProfiles$.Inbound> | undefined;
         customFields?: Array<GetLeadsCustomFields$.Inbound> | undefined;
@@ -1322,8 +1322,16 @@ export namespace GetLeadsUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => GetLeadsAddresses$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredContactMethod: GetLeadsPreferredContactMethod$.optional(),
             socialProfiles: z.array(z.lazy(() => GetLeadsSocialProfiles$.inboundSchema)).optional(),
             customFields: z.array(z.lazy(() => GetLeadsCustomFields$.inboundSchema)).optional(),
@@ -1383,8 +1391,8 @@ export namespace GetLeadsUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<GetLeadsAddresses$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: GetLeadsPreferredContactMethod | undefined;
         socialProfiles?: Array<GetLeadsSocialProfiles$.Outbound> | undefined;
         customFields?: Array<GetLeadsCustomFields$.Outbound> | undefined;
@@ -1412,8 +1420,14 @@ export namespace GetLeadsUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => GetLeadsAddresses$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredContactMethod: GetLeadsPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => GetLeadsSocialProfiles$.outboundSchema))

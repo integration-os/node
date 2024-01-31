@@ -545,7 +545,7 @@ export type GetContactsUnified = {
     phones?: Array<GetContactsPhones> | undefined;
     address?: GetContactsAddress | undefined;
     addresses?: Array<GetContactsAddresses> | undefined;
-    birthday?: number | undefined;
+    birthday?: Date | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: GetContactsNotes | undefined;
@@ -554,8 +554,8 @@ export type GetContactsUnified = {
     socialProfiles?: Array<GetContactsSocialProfiles> | undefined;
     isActive?: boolean | undefined;
     customFields?: Array<GetContactsCustomFields> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type GetContactsPassthrough = {};
@@ -3052,7 +3052,7 @@ export namespace GetContactsUnified$ {
         phones?: Array<GetContactsPhones$.Inbound> | undefined;
         address?: GetContactsAddress$.Inbound | undefined;
         addresses?: Array<GetContactsAddresses$.Inbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: GetContactsNotes$.Inbound | undefined;
@@ -3061,8 +3061,8 @@ export namespace GetContactsUnified$ {
         socialProfiles?: Array<GetContactsSocialProfiles$.Inbound> | undefined;
         isActive?: boolean | undefined;
         customFields?: Array<GetContactsCustomFields$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetContactsUnified, z.ZodTypeDef, Inbound> = z
@@ -3078,7 +3078,11 @@ export namespace GetContactsUnified$ {
             phones: z.array(z.lazy(() => GetContactsPhones$.inboundSchema)).optional(),
             address: z.lazy(() => GetContactsAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetContactsAddresses$.inboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => GetContactsNotes$.inboundSchema).optional(),
@@ -3089,8 +3093,16 @@ export namespace GetContactsUnified$ {
                 .optional(),
             isActive: z.boolean().optional(),
             customFields: z.array(z.lazy(() => GetContactsCustomFields$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -3131,7 +3143,7 @@ export namespace GetContactsUnified$ {
         phones?: Array<GetContactsPhones$.Outbound> | undefined;
         address?: GetContactsAddress$.Outbound | undefined;
         addresses?: Array<GetContactsAddresses$.Outbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: GetContactsNotes$.Outbound | undefined;
@@ -3140,8 +3152,8 @@ export namespace GetContactsUnified$ {
         socialProfiles?: Array<GetContactsSocialProfiles$.Outbound> | undefined;
         isActive?: boolean | undefined;
         customFields?: Array<GetContactsCustomFields$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsUnified> = z
@@ -3157,7 +3169,10 @@ export namespace GetContactsUnified$ {
             phones: z.array(z.lazy(() => GetContactsPhones$.outboundSchema)).optional(),
             address: z.lazy(() => GetContactsAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => GetContactsAddresses$.outboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => GetContactsNotes$.outboundSchema).optional(),
@@ -3168,8 +3183,14 @@ export namespace GetContactsUnified$ {
                 .optional(),
             isActive: z.boolean().optional(),
             customFields: z.array(z.lazy(() => GetContactsCustomFields$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {

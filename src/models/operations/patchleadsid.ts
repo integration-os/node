@@ -233,8 +233,8 @@ export type PatchLeadsIdRequestBody = {
     numberOfEmployees?: number | undefined;
     annualRevenue?: number | undefined;
     addresses?: Array<PatchLeadsIdAddresses> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     preferredContactMethod?: PatchLeadsIdPreferredContactMethod | undefined;
     socialProfiles?: Array<PatchLeadsIdSocialProfiles> | undefined;
     customFields?: Array<PatchLeadsIdLeadsRequestCustomFields> | undefined;
@@ -1255,8 +1255,8 @@ export namespace PatchLeadsIdRequestBody$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<PatchLeadsIdAddresses$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: PatchLeadsIdPreferredContactMethod | undefined;
         socialProfiles?: Array<PatchLeadsIdSocialProfiles$.Inbound> | undefined;
         customFields?: Array<PatchLeadsIdLeadsRequestCustomFields$.Inbound> | undefined;
@@ -1284,8 +1284,16 @@ export namespace PatchLeadsIdRequestBody$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => PatchLeadsIdAddresses$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredContactMethod: PatchLeadsIdPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => PatchLeadsIdSocialProfiles$.inboundSchema))
@@ -1349,8 +1357,8 @@ export namespace PatchLeadsIdRequestBody$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<PatchLeadsIdAddresses$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: PatchLeadsIdPreferredContactMethod | undefined;
         socialProfiles?: Array<PatchLeadsIdSocialProfiles$.Outbound> | undefined;
         customFields?: Array<PatchLeadsIdLeadsRequestCustomFields$.Outbound> | undefined;
@@ -1378,8 +1386,14 @@ export namespace PatchLeadsIdRequestBody$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => PatchLeadsIdAddresses$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredContactMethod: PatchLeadsIdPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => PatchLeadsIdSocialProfiles$.outboundSchema))

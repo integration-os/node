@@ -530,7 +530,7 @@ export type PatchContactsIdRequestBody = {
     phones?: Array<PatchContactsIdPhones> | undefined;
     address?: PatchContactsIdAddress | undefined;
     addresses?: Array<PatchContactsIdAddresses> | undefined;
-    birthday?: number | undefined;
+    birthday?: Date | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: PatchContactsIdNotes | undefined;
@@ -539,8 +539,8 @@ export type PatchContactsIdRequestBody = {
     socialProfiles?: Array<PatchContactsIdSocialProfiles> | undefined;
     isActive?: boolean | undefined;
     customFields?: Array<PatchContactsIdContactsRequestRequestBodyCustomFields> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PatchContactsIdRequest = {
@@ -3059,7 +3059,7 @@ export namespace PatchContactsIdRequestBody$ {
         phones?: Array<PatchContactsIdPhones$.Inbound> | undefined;
         address?: PatchContactsIdAddress$.Inbound | undefined;
         addresses?: Array<PatchContactsIdAddresses$.Inbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PatchContactsIdNotes$.Inbound | undefined;
@@ -3070,8 +3070,8 @@ export namespace PatchContactsIdRequestBody$ {
         customFields?:
             | Array<PatchContactsIdContactsRequestRequestBodyCustomFields$.Inbound>
             | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PatchContactsIdRequestBody, z.ZodTypeDef, Inbound> = z
@@ -3087,7 +3087,11 @@ export namespace PatchContactsIdRequestBody$ {
             phones: z.array(z.lazy(() => PatchContactsIdPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PatchContactsIdAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchContactsIdAddresses$.inboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PatchContactsIdNotes$.inboundSchema).optional(),
@@ -3104,8 +3108,16 @@ export namespace PatchContactsIdRequestBody$ {
                     )
                 )
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -3146,7 +3158,7 @@ export namespace PatchContactsIdRequestBody$ {
         phones?: Array<PatchContactsIdPhones$.Outbound> | undefined;
         address?: PatchContactsIdAddress$.Outbound | undefined;
         addresses?: Array<PatchContactsIdAddresses$.Outbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PatchContactsIdNotes$.Outbound | undefined;
@@ -3157,8 +3169,8 @@ export namespace PatchContactsIdRequestBody$ {
         customFields?:
             | Array<PatchContactsIdContactsRequestRequestBodyCustomFields$.Outbound>
             | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchContactsIdRequestBody> = z
@@ -3174,7 +3186,10 @@ export namespace PatchContactsIdRequestBody$ {
             phones: z.array(z.lazy(() => PatchContactsIdPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PatchContactsIdAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => PatchContactsIdAddresses$.outboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PatchContactsIdNotes$.outboundSchema).optional(),
@@ -3191,8 +3206,14 @@ export namespace PatchContactsIdRequestBody$ {
                     )
                 )
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {

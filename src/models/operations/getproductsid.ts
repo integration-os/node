@@ -342,9 +342,9 @@ export type GetProductsIdUnified = {
     isDownloadable?: boolean | undefined;
     downloadFiles?: Array<GetProductsIdDownloadFiles> | undefined;
     relatedProducts?: Array<string> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    publishedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    publishedAt?: Date | undefined;
     status?: GetProductsIdStatus | undefined;
     tax?: GetProductsIdTax | undefined;
     localizations?: Array<GetProductsIdLocalizations> | undefined;
@@ -2037,9 +2037,9 @@ export namespace GetProductsIdUnified$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<GetProductsIdDownloadFiles$.Inbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: GetProductsIdStatus | undefined;
         tax?: GetProductsIdTax$.Inbound | undefined;
         localizations?: Array<GetProductsIdLocalizations$.Inbound> | undefined;
@@ -2080,9 +2080,21 @@ export namespace GetProductsIdUnified$ {
                 .array(z.lazy(() => GetProductsIdDownloadFiles$.inboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            publishedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: GetProductsIdStatus$.optional(),
             tax: z.lazy(() => GetProductsIdTax$.inboundSchema).optional(),
             localizations: z
@@ -2165,9 +2177,9 @@ export namespace GetProductsIdUnified$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<GetProductsIdDownloadFiles$.Outbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: GetProductsIdStatus | undefined;
         tax?: GetProductsIdTax$.Outbound | undefined;
         localizations?: Array<GetProductsIdLocalizations$.Outbound> | undefined;
@@ -2208,9 +2220,18 @@ export namespace GetProductsIdUnified$ {
                 .array(z.lazy(() => GetProductsIdDownloadFiles$.outboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            publishedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: GetProductsIdStatus$.optional(),
             tax: z.lazy(() => GetProductsIdTax$.outboundSchema).optional(),
             localizations: z

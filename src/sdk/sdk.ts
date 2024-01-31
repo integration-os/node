@@ -22,13 +22,13 @@ import { Users } from "./users";
 export class IntegrationOS extends ClientSDK {
     private readonly options$: SDKOptions;
 
-    constructor(options: SDKOptions = {}) {
+    constructor(secret: string, options: SDKOptions = {}) {
         super({
             client: options.httpClient || new HTTPClient(),
             baseURL: serverURLFromOptions(options),
         });
 
-        this.options$ = options;
+        this.options$ = { ...options, secret };
         void this.options$;
     }
 

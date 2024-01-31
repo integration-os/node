@@ -10,8 +10,8 @@ export enum SecurityErrorCode {
 }
 
 export class SecurityError extends Error {
-    constructor(public code: SecurityErrorCode, message: string, options?: ErrorOptions) {
-        super(message, options);
+    constructor(public code: SecurityErrorCode, message: string) {
+        super(message);
         this.name = "SecurityError";
     }
 
@@ -53,8 +53,8 @@ type SecurityInputBearer = {
     fieldName: string;
 };
 
-type SecurityInputAPIKey = {
-    type: "apiKey:header" | "apiKey:query" | "apiKey:cookie";
+type SecurityInputsecret = {
+    type: "secret:header" | "secret:query" | "secret:cookie";
     value: string | null | undefined;
     fieldName: string;
 };
@@ -75,7 +75,7 @@ export type SecurityInput =
     | SecurityInputBasic
     | SecurityInputBasicPacked
     | SecurityInputBearer
-    | SecurityInputAPIKey
+    | SecurityInputsecret
     | SecurityInputOAuth2
     | SecurityInputOIDC;
 
@@ -100,13 +100,13 @@ export function resolveSecurity(...options: SecurityInput[][]): SecurityState | 
         const { type } = spec;
 
         switch (type) {
-            case "apiKey:header":
+            case "secret:header":
                 state.headers[spec.fieldName] = spec.value;
                 break;
-            case "apiKey:query":
+            case "secret:query":
                 state.queryParams[spec.fieldName] = spec.value;
                 break;
-            case "apiKey:cookie":
+            case "secret:cookie":
                 state.cookies[spec.fieldName] = spec.value;
                 break;
             case "http:basic":
@@ -159,6 +159,6 @@ function applyBearer(
 }
 export function resolveGlobalSecurity(security: Partial<components.Security> | null | undefined) {
     return resolveSecurity([
-        { value: security?.apiKey, fieldName: "X-INTEGRATIONOS-SECRET", type: "apiKey:header" },
+        { value: security?.secret, fieldName: "X-INTEGRATIONOS-SECRET", type: "secret:header" },
     ]);
 }

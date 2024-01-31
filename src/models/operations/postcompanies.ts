@@ -182,7 +182,7 @@ export type PostCompaniesRequestBody = {
     defaultPhone?: string | undefined;
     phones?: Array<PostCompaniesPhones> | undefined;
     website?: string | undefined;
-    foundedDate?: number | undefined;
+    foundedDate?: Date | undefined;
     numberOfEmployees?: number | undefined;
     revenue?: number | undefined;
     revenueCurrency?: string | undefined;
@@ -194,13 +194,13 @@ export type PostCompaniesRequestBody = {
     parentCompanyId?: string | undefined;
     additionalContacts?: Array<PostCompaniesAdditionalContacts> | undefined;
     incorporationCountry?: string | undefined;
-    incorporationDate?: number | undefined;
+    incorporationDate?: Date | undefined;
     taxId?: string | undefined;
     regulatoryStatus?: string | undefined;
     dunsNumber?: string | undefined;
     customFields?: Array<PostCompaniesCompaniesRequestCustomFields> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostCompaniesRequest = {
@@ -395,7 +395,7 @@ export type PostCompaniesUnified = {
     defaultPhone?: string | undefined;
     phones?: Array<PostCompaniesCompaniesResponsePhones> | undefined;
     website?: string | undefined;
-    foundedDate?: number | undefined;
+    foundedDate?: Date | undefined;
     numberOfEmployees?: number | undefined;
     revenue?: number | undefined;
     revenueCurrency?: string | undefined;
@@ -407,13 +407,13 @@ export type PostCompaniesUnified = {
     parentCompanyId?: string | undefined;
     additionalContacts?: Array<PostCompaniesCompaniesAdditionalContacts> | undefined;
     incorporationCountry?: string | undefined;
-    incorporationDate?: number | undefined;
+    incorporationDate?: Date | undefined;
     taxId?: string | undefined;
     regulatoryStatus?: string | undefined;
     dunsNumber?: string | undefined;
     customFields?: Array<PostCompaniesCompaniesResponseCustomFields> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostCompaniesPassthrough = {};
@@ -1330,7 +1330,7 @@ export namespace PostCompaniesRequestBody$ {
         defaultPhone?: string | undefined;
         phones?: Array<PostCompaniesPhones$.Inbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -1342,13 +1342,13 @@ export namespace PostCompaniesRequestBody$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesAdditionalContacts$.Inbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
         customFields?: Array<PostCompaniesCompaniesRequestCustomFields$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCompaniesRequestBody, z.ZodTypeDef, Inbound> = z
@@ -1364,7 +1364,11 @@ export namespace PostCompaniesRequestBody$ {
             defaultPhone: z.string().optional(),
             phones: z.array(z.lazy(() => PostCompaniesPhones$.inboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -1380,15 +1384,27 @@ export namespace PostCompaniesRequestBody$ {
                 .array(z.lazy(() => PostCompaniesAdditionalContacts$.inboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
             customFields: z
                 .array(z.lazy(() => PostCompaniesCompaniesRequestCustomFields$.inboundSchema))
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -1451,7 +1467,7 @@ export namespace PostCompaniesRequestBody$ {
         defaultPhone?: string | undefined;
         phones?: Array<PostCompaniesPhones$.Outbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -1463,13 +1479,13 @@ export namespace PostCompaniesRequestBody$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesAdditionalContacts$.Outbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
         customFields?: Array<PostCompaniesCompaniesRequestCustomFields$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesRequestBody> = z
@@ -1485,7 +1501,10 @@ export namespace PostCompaniesRequestBody$ {
             defaultPhone: z.string().optional(),
             phones: z.array(z.lazy(() => PostCompaniesPhones$.outboundSchema)).optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -1501,15 +1520,24 @@ export namespace PostCompaniesRequestBody$ {
                 .array(z.lazy(() => PostCompaniesAdditionalContacts$.outboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
             customFields: z
                 .array(z.lazy(() => PostCompaniesCompaniesRequestCustomFields$.outboundSchema))
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -2576,7 +2604,7 @@ export namespace PostCompaniesUnified$ {
         defaultPhone?: string | undefined;
         phones?: Array<PostCompaniesCompaniesResponsePhones$.Inbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -2588,13 +2616,13 @@ export namespace PostCompaniesUnified$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesCompaniesAdditionalContacts$.Inbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
         customFields?: Array<PostCompaniesCompaniesResponseCustomFields$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCompaniesUnified, z.ZodTypeDef, Inbound> = z
@@ -2614,7 +2642,11 @@ export namespace PostCompaniesUnified$ {
                 .array(z.lazy(() => PostCompaniesCompaniesResponsePhones$.inboundSchema))
                 .optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -2630,15 +2662,27 @@ export namespace PostCompaniesUnified$ {
                 .array(z.lazy(() => PostCompaniesCompaniesAdditionalContacts$.inboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
             customFields: z
                 .array(z.lazy(() => PostCompaniesCompaniesResponseCustomFields$.inboundSchema))
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -2701,7 +2745,7 @@ export namespace PostCompaniesUnified$ {
         defaultPhone?: string | undefined;
         phones?: Array<PostCompaniesCompaniesResponsePhones$.Outbound> | undefined;
         website?: string | undefined;
-        foundedDate?: number | undefined;
+        foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
         revenueCurrency?: string | undefined;
@@ -2713,13 +2757,13 @@ export namespace PostCompaniesUnified$ {
         parentCompanyId?: string | undefined;
         additionalContacts?: Array<PostCompaniesCompaniesAdditionalContacts$.Outbound> | undefined;
         incorporationCountry?: string | undefined;
-        incorporationDate?: number | undefined;
+        incorporationDate?: string | undefined;
         taxId?: string | undefined;
         regulatoryStatus?: string | undefined;
         dunsNumber?: string | undefined;
         customFields?: Array<PostCompaniesCompaniesResponseCustomFields$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCompaniesUnified> = z
@@ -2739,7 +2783,10 @@ export namespace PostCompaniesUnified$ {
                 .array(z.lazy(() => PostCompaniesCompaniesResponsePhones$.outboundSchema))
                 .optional(),
             website: z.string().optional(),
-            foundedDate: z.number().optional(),
+            foundedDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             numberOfEmployees: z.number().optional(),
             revenue: z.number().optional(),
             revenueCurrency: z.string().optional(),
@@ -2755,15 +2802,24 @@ export namespace PostCompaniesUnified$ {
                 .array(z.lazy(() => PostCompaniesCompaniesAdditionalContacts$.outboundSchema))
                 .optional(),
             incorporationCountry: z.string().optional(),
-            incorporationDate: z.number().optional(),
+            incorporationDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             taxId: z.string().optional(),
             regulatoryStatus: z.string().optional(),
             dunsNumber: z.string().optional(),
             customFields: z
                 .array(z.lazy(() => PostCompaniesCompaniesResponseCustomFields$.outboundSchema))
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {

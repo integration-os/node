@@ -909,9 +909,9 @@ export type PostTicketsRequestBody = {
     type?: PostTicketsType | undefined;
     assignee?: PostTicketsAssignee | undefined;
     reporter?: PostTicketsReporter | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    dueDate?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    dueDate?: Date | undefined;
     attachments?: Array<PostTicketsTicketsAttachments> | undefined;
     comments?: Array<PostTicketsComments> | undefined;
     notes?: Array<PostTicketsTicketsNotes> | undefined;
@@ -1863,9 +1863,9 @@ export type PostTicketsUnified = {
     type?: PostTicketsTicketsResponseType | undefined;
     assignee?: PostTicketsTicketsAssignee | undefined;
     reporter?: PostTicketsTicketsReporter | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    dueDate?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    dueDate?: Date | undefined;
     attachments?: Array<PostTicketsTicketsResponseAttachments> | undefined;
     comments?: Array<PostTicketsTicketsComments> | undefined;
     notes?: Array<PostTicketsTicketsResponseNotes> | undefined;
@@ -6132,9 +6132,9 @@ export namespace PostTicketsRequestBody$ {
         type?: PostTicketsType | undefined;
         assignee?: PostTicketsAssignee$.Inbound | undefined;
         reporter?: PostTicketsReporter$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<PostTicketsTicketsAttachments$.Inbound> | undefined;
         comments?: Array<PostTicketsComments$.Inbound> | undefined;
         notes?: Array<PostTicketsTicketsNotes$.Inbound> | undefined;
@@ -6154,9 +6154,21 @@ export namespace PostTicketsRequestBody$ {
             type: PostTicketsType$.optional(),
             assignee: z.lazy(() => PostTicketsAssignee$.inboundSchema).optional(),
             reporter: z.lazy(() => PostTicketsReporter$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             attachments: z
                 .array(z.lazy(() => PostTicketsTicketsAttachments$.inboundSchema))
                 .optional(),
@@ -6199,9 +6211,9 @@ export namespace PostTicketsRequestBody$ {
         type?: PostTicketsType | undefined;
         assignee?: PostTicketsAssignee$.Outbound | undefined;
         reporter?: PostTicketsReporter$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<PostTicketsTicketsAttachments$.Outbound> | undefined;
         comments?: Array<PostTicketsComments$.Outbound> | undefined;
         notes?: Array<PostTicketsTicketsNotes$.Outbound> | undefined;
@@ -6221,9 +6233,18 @@ export namespace PostTicketsRequestBody$ {
             type: PostTicketsType$.optional(),
             assignee: z.lazy(() => PostTicketsAssignee$.outboundSchema).optional(),
             reporter: z.lazy(() => PostTicketsReporter$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             attachments: z
                 .array(z.lazy(() => PostTicketsTicketsAttachments$.outboundSchema))
                 .optional(),
@@ -10996,9 +11017,9 @@ export namespace PostTicketsUnified$ {
         type?: PostTicketsTicketsResponseType | undefined;
         assignee?: PostTicketsTicketsAssignee$.Inbound | undefined;
         reporter?: PostTicketsTicketsReporter$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<PostTicketsTicketsResponseAttachments$.Inbound> | undefined;
         comments?: Array<PostTicketsTicketsComments$.Inbound> | undefined;
         notes?: Array<PostTicketsTicketsResponseNotes$.Inbound> | undefined;
@@ -11016,9 +11037,21 @@ export namespace PostTicketsUnified$ {
             type: PostTicketsTicketsResponseType$.optional(),
             assignee: z.lazy(() => PostTicketsTicketsAssignee$.inboundSchema).optional(),
             reporter: z.lazy(() => PostTicketsTicketsReporter$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             attachments: z
                 .array(z.lazy(() => PostTicketsTicketsResponseAttachments$.inboundSchema))
                 .optional(),
@@ -11059,9 +11092,9 @@ export namespace PostTicketsUnified$ {
         type?: PostTicketsTicketsResponseType | undefined;
         assignee?: PostTicketsTicketsAssignee$.Outbound | undefined;
         reporter?: PostTicketsTicketsReporter$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<PostTicketsTicketsResponseAttachments$.Outbound> | undefined;
         comments?: Array<PostTicketsTicketsComments$.Outbound> | undefined;
         notes?: Array<PostTicketsTicketsResponseNotes$.Outbound> | undefined;
@@ -11079,9 +11112,18 @@ export namespace PostTicketsUnified$ {
             type: PostTicketsTicketsResponseType$.optional(),
             assignee: z.lazy(() => PostTicketsTicketsAssignee$.outboundSchema).optional(),
             reporter: z.lazy(() => PostTicketsTicketsReporter$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             attachments: z
                 .array(z.lazy(() => PostTicketsTicketsResponseAttachments$.outboundSchema))
                 .optional(),

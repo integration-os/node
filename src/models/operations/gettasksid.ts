@@ -654,12 +654,12 @@ export type GetTasksIdUnified = {
     description?: string | undefined;
     status?: GetTasksIdStatus | undefined;
     priority?: GetTasksIdPriority | undefined;
-    dueDate?: number | undefined;
+    dueDate?: Date | undefined;
     dueTimezone?: string | undefined;
     assignee?: GetTasksIdAssignee | undefined;
     createdBy?: GetTasksIdCreatedBy | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     labels?: Array<string> | undefined;
     comments?: Array<GetTasksIdComments> | undefined;
     attachments?: Array<GetTasksIdAttachments> | undefined;
@@ -3590,12 +3590,12 @@ export namespace GetTasksIdUnified$ {
         description?: string | undefined;
         status?: GetTasksIdStatus | undefined;
         priority?: GetTasksIdPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: GetTasksIdAssignee$.Inbound | undefined;
         createdBy?: GetTasksIdCreatedBy$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<GetTasksIdComments$.Inbound> | undefined;
         attachments?: Array<GetTasksIdAttachments$.Inbound> | undefined;
@@ -3619,12 +3619,24 @@ export namespace GetTasksIdUnified$ {
             description: z.string().optional(),
             status: GetTasksIdStatus$.optional(),
             priority: GetTasksIdPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => GetTasksIdAssignee$.inboundSchema).optional(),
             createdBy: z.lazy(() => GetTasksIdCreatedBy$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => GetTasksIdComments$.inboundSchema)).optional(),
             attachments: z.array(z.lazy(() => GetTasksIdAttachments$.inboundSchema)).optional(),
@@ -3682,12 +3694,12 @@ export namespace GetTasksIdUnified$ {
         description?: string | undefined;
         status?: GetTasksIdStatus | undefined;
         priority?: GetTasksIdPriority | undefined;
-        dueDate?: number | undefined;
+        dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: GetTasksIdAssignee$.Outbound | undefined;
         createdBy?: GetTasksIdCreatedBy$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         labels?: Array<string> | undefined;
         comments?: Array<GetTasksIdComments$.Outbound> | undefined;
         attachments?: Array<GetTasksIdAttachments$.Outbound> | undefined;
@@ -3711,12 +3723,21 @@ export namespace GetTasksIdUnified$ {
             description: z.string().optional(),
             status: GetTasksIdStatus$.optional(),
             priority: GetTasksIdPriority$.optional(),
-            dueDate: z.number().optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             dueTimezone: z.string().optional(),
             assignee: z.lazy(() => GetTasksIdAssignee$.outboundSchema).optional(),
             createdBy: z.lazy(() => GetTasksIdCreatedBy$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             labels: z.array(z.string()).optional(),
             comments: z.array(z.lazy(() => GetTasksIdComments$.outboundSchema)).optional(),
             attachments: z.array(z.lazy(() => GetTasksIdAttachments$.outboundSchema)).optional(),

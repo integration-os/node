@@ -152,15 +152,15 @@ export type PostCustomersRequestBody = {
     lastName?: string | undefined;
     email?: string | undefined;
     phoneNumber?: string | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     addresses?: Array<PostCustomersAddresses> | undefined;
     defaultAddress?: PostCustomersDefaultAddress | undefined;
     company?: string | undefined;
     companyId?: string | undefined;
     currency?: string | undefined;
     notes?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     status?: PostCustomersStatus | undefined;
     customerSegment?: string | undefined;
     customerType?: PostCustomersCustomerType | undefined;
@@ -334,15 +334,15 @@ export type PostCustomersUnified = {
     lastName?: string | undefined;
     email?: string | undefined;
     phoneNumber?: string | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     addresses?: Array<PostCustomersCustomersAddresses> | undefined;
     defaultAddress?: PostCustomersCustomersDefaultAddress | undefined;
     company?: string | undefined;
     companyId?: string | undefined;
     currency?: string | undefined;
     notes?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     status?: PostCustomersCustomersStatus | undefined;
     customerSegment?: string | undefined;
     customerType?: PostCustomersCustomersCustomerType | undefined;
@@ -1056,15 +1056,15 @@ export namespace PostCustomersRequestBody$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<PostCustomersAddresses$.Inbound> | undefined;
         defaultAddress?: PostCustomersDefaultAddress$.Inbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: PostCustomersStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: PostCustomersCustomerType | undefined;
@@ -1086,15 +1086,27 @@ export namespace PostCustomersRequestBody$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => PostCustomersAddresses$.inboundSchema)).optional(),
             defaultAddress: z.lazy(() => PostCustomersDefaultAddress$.inboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: PostCustomersStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: PostCustomersCustomerType$.optional(),
@@ -1153,15 +1165,15 @@ export namespace PostCustomersRequestBody$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<PostCustomersAddresses$.Outbound> | undefined;
         defaultAddress?: PostCustomersDefaultAddress$.Outbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: PostCustomersStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: PostCustomersCustomerType | undefined;
@@ -1183,15 +1195,24 @@ export namespace PostCustomersRequestBody$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => PostCustomersAddresses$.outboundSchema)).optional(),
             defaultAddress: z.lazy(() => PostCustomersDefaultAddress$.outboundSchema).optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: PostCustomersStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: PostCustomersCustomerType$.optional(),
@@ -1981,15 +2002,15 @@ export namespace PostCustomersUnified$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<PostCustomersCustomersAddresses$.Inbound> | undefined;
         defaultAddress?: PostCustomersCustomersDefaultAddress$.Inbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: PostCustomersCustomersStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: PostCustomersCustomersCustomerType | undefined;
@@ -2011,7 +2032,11 @@ export namespace PostCustomersUnified$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z
                 .array(z.lazy(() => PostCustomersCustomersAddresses$.inboundSchema))
                 .optional(),
@@ -2022,8 +2047,16 @@ export namespace PostCustomersUnified$ {
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: PostCustomersCustomersStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: PostCustomersCustomersCustomerType$.optional(),
@@ -2082,15 +2115,15 @@ export namespace PostCustomersUnified$ {
         lastName?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         addresses?: Array<PostCustomersCustomersAddresses$.Outbound> | undefined;
         defaultAddress?: PostCustomersCustomersDefaultAddress$.Outbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
         currency?: string | undefined;
         notes?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         status?: PostCustomersCustomersStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: PostCustomersCustomersCustomerType | undefined;
@@ -2112,7 +2145,10 @@ export namespace PostCustomersUnified$ {
             lastName: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z
                 .array(z.lazy(() => PostCustomersCustomersAddresses$.outboundSchema))
                 .optional(),
@@ -2123,8 +2159,14 @@ export namespace PostCustomersUnified$ {
             companyId: z.string().optional(),
             currency: z.string().optional(),
             notes: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: PostCustomersCustomersStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: PostCustomersCustomersCustomerType$.optional(),

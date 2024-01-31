@@ -938,9 +938,9 @@ export type GetTicketsIdUnified = {
     type?: GetTicketsIdType | undefined;
     assignee?: GetTicketsIdAssignee | undefined;
     reporter?: GetTicketsIdReporter | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    dueDate?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    dueDate?: Date | undefined;
     attachments?: Array<GetTicketsIdAttachments> | undefined;
     comments?: Array<GetTicketsIdComments> | undefined;
     notes?: Array<GetTicketsIdNotes> | undefined;
@@ -5318,9 +5318,9 @@ export namespace GetTicketsIdUnified$ {
         type?: GetTicketsIdType | undefined;
         assignee?: GetTicketsIdAssignee$.Inbound | undefined;
         reporter?: GetTicketsIdReporter$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<GetTicketsIdAttachments$.Inbound> | undefined;
         comments?: Array<GetTicketsIdComments$.Inbound> | undefined;
         notes?: Array<GetTicketsIdNotes$.Inbound> | undefined;
@@ -5338,9 +5338,21 @@ export namespace GetTicketsIdUnified$ {
             type: GetTicketsIdType$.optional(),
             assignee: z.lazy(() => GetTicketsIdAssignee$.inboundSchema).optional(),
             reporter: z.lazy(() => GetTicketsIdReporter$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             attachments: z.array(z.lazy(() => GetTicketsIdAttachments$.inboundSchema)).optional(),
             comments: z.array(z.lazy(() => GetTicketsIdComments$.inboundSchema)).optional(),
             notes: z.array(z.lazy(() => GetTicketsIdNotes$.inboundSchema)).optional(),
@@ -5377,9 +5389,9 @@ export namespace GetTicketsIdUnified$ {
         type?: GetTicketsIdType | undefined;
         assignee?: GetTicketsIdAssignee$.Outbound | undefined;
         reporter?: GetTicketsIdReporter$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<GetTicketsIdAttachments$.Outbound> | undefined;
         comments?: Array<GetTicketsIdComments$.Outbound> | undefined;
         notes?: Array<GetTicketsIdNotes$.Outbound> | undefined;
@@ -5397,9 +5409,18 @@ export namespace GetTicketsIdUnified$ {
             type: GetTicketsIdType$.optional(),
             assignee: z.lazy(() => GetTicketsIdAssignee$.outboundSchema).optional(),
             reporter: z.lazy(() => GetTicketsIdReporter$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             attachments: z.array(z.lazy(() => GetTicketsIdAttachments$.outboundSchema)).optional(),
             comments: z.array(z.lazy(() => GetTicketsIdComments$.outboundSchema)).optional(),
             notes: z.array(z.lazy(() => GetTicketsIdNotes$.outboundSchema)).optional(),

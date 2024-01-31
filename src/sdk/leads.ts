@@ -59,10 +59,10 @@ export class Leads extends ClientSDK {
         );
 
         let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
         } else {
             security$ = {};
         }
@@ -71,7 +71,7 @@ export class Leads extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "get",
+                method: "GET",
                 path: path$,
                 headers: headers$,
                 body: body$,
@@ -91,7 +91,12 @@ export class Leads extends ClientSDK {
                 ...responseFields$,
                 object: responseBody,
             });
-            return result;
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -136,10 +141,10 @@ export class Leads extends ClientSDK {
         );
 
         let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
         } else {
             security$ = {};
         }
@@ -148,7 +153,7 @@ export class Leads extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "delete",
+                method: "DELETE",
                 path: path$,
                 headers: headers$,
                 body: body$,
@@ -168,7 +173,12 @@ export class Leads extends ClientSDK {
                 ...responseFields$,
                 object: responseBody,
             });
-            return result;
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -217,10 +227,10 @@ export class Leads extends ClientSDK {
         );
 
         let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
         } else {
             security$ = {};
         }
@@ -229,7 +239,7 @@ export class Leads extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "patch",
+                method: "PATCH",
                 path: path$,
                 headers: headers$,
                 body: body$,
@@ -249,7 +259,12 @@ export class Leads extends ClientSDK {
                 ...responseFields$,
                 object: responseBody,
             });
-            return result;
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -288,10 +303,10 @@ export class Leads extends ClientSDK {
         );
 
         let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
         } else {
             security$ = {};
         }
@@ -300,7 +315,7 @@ export class Leads extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "get",
+                method: "GET",
                 path: path$,
                 headers: headers$,
                 body: body$,
@@ -320,7 +335,12 @@ export class Leads extends ClientSDK {
                 ...responseFields$,
                 object: responseBody,
             });
-            return result;
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -363,10 +383,10 @@ export class Leads extends ClientSDK {
         );
 
         let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
         } else {
             security$ = {};
         }
@@ -375,7 +395,7 @@ export class Leads extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "post",
+                method: "POST",
                 path: path$,
                 headers: headers$,
                 body: body$,
@@ -395,7 +415,12 @@ export class Leads extends ClientSDK {
                 ...responseFields$,
                 object: responseBody,
             });
-            return result;
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -434,10 +459,10 @@ export class Leads extends ClientSDK {
         );
 
         let security$;
-        if (typeof this.options$.apiKey === "function") {
-            security$ = { apiKey: await this.options$.apiKey() };
-        } else if (this.options$.apiKey) {
-            security$ = { apiKey: this.options$.apiKey };
+        if (typeof this.options$.secret === "function") {
+            security$ = { secret: await this.options$.secret() };
+        } else if (this.options$.secret) {
+            security$ = { secret: this.options$.secret };
         } else {
             security$ = {};
         }
@@ -446,7 +471,7 @@ export class Leads extends ClientSDK {
         const response = await this.fetch$(
             {
                 security: securitySettings$,
-                method: "get",
+                method: "GET",
                 path: path$,
                 headers: headers$,
                 body: body$,
@@ -466,7 +491,12 @@ export class Leads extends ClientSDK {
                 ...responseFields$,
                 object: responseBody,
             });
-            return result;
+            return {
+                contentType: result.contentType,
+                statusCode: result.statusCode as any,
+                rawResponse: result.rawResponse,
+                ...result.object
+            };
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);

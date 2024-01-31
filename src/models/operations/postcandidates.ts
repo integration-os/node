@@ -333,13 +333,13 @@ export type PostCandidatesRequestBody = {
     educations?: Array<PostCandidatesEducations> | undefined;
     workExperiences?: Array<PostCandidatesWorkExperiences> | undefined;
     references?: Array<PostCandidatesReferences> | undefined;
-    availability?: number | undefined;
+    availability?: Date | undefined;
     preferredWorkLocation?: string | undefined;
     status?: PostCandidatesStatus | undefined;
     customFields?: Array<PostCandidatesCustomFields> | undefined;
     notes?: Array<PostCandidatesNotes> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostCandidatesRequest = {
@@ -685,13 +685,13 @@ export type PostCandidatesUnified = {
     educations?: Array<PostCandidatesCandidatesEducations> | undefined;
     workExperiences?: Array<PostCandidatesCandidatesWorkExperiences> | undefined;
     references?: Array<PostCandidatesCandidatesReferences> | undefined;
-    availability?: number | undefined;
+    availability?: Date | undefined;
     preferredWorkLocation?: string | undefined;
     status?: PostCandidatesCandidatesResponseStatus | undefined;
     customFields?: Array<PostCandidatesCandidatesCustomFields> | undefined;
     notes?: Array<PostCandidatesCandidatesNotes> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostCandidatesPassthrough = {};
@@ -2154,13 +2154,13 @@ export namespace PostCandidatesRequestBody$ {
         educations?: Array<PostCandidatesEducations$.Inbound> | undefined;
         workExperiences?: Array<PostCandidatesWorkExperiences$.Inbound> | undefined;
         references?: Array<PostCandidatesReferences$.Inbound> | undefined;
-        availability?: number | undefined;
+        availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
         status?: PostCandidatesStatus | undefined;
         customFields?: Array<PostCandidatesCustomFields$.Inbound> | undefined;
         notes?: Array<PostCandidatesNotes$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCandidatesRequestBody, z.ZodTypeDef, Inbound> = z
@@ -2187,15 +2187,27 @@ export namespace PostCandidatesRequestBody$ {
                 .array(z.lazy(() => PostCandidatesWorkExperiences$.inboundSchema))
                 .optional(),
             references: z.array(z.lazy(() => PostCandidatesReferences$.inboundSchema)).optional(),
-            availability: z.number().optional(),
+            availability: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredWorkLocation: z.string().optional(),
             status: PostCandidatesStatus$.optional(),
             customFields: z
                 .array(z.lazy(() => PostCandidatesCustomFields$.inboundSchema))
                 .optional(),
             notes: z.array(z.lazy(() => PostCandidatesNotes$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -2250,13 +2262,13 @@ export namespace PostCandidatesRequestBody$ {
         educations?: Array<PostCandidatesEducations$.Outbound> | undefined;
         workExperiences?: Array<PostCandidatesWorkExperiences$.Outbound> | undefined;
         references?: Array<PostCandidatesReferences$.Outbound> | undefined;
-        availability?: number | undefined;
+        availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
         status?: PostCandidatesStatus | undefined;
         customFields?: Array<PostCandidatesCustomFields$.Outbound> | undefined;
         notes?: Array<PostCandidatesNotes$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCandidatesRequestBody> = z
@@ -2283,15 +2295,24 @@ export namespace PostCandidatesRequestBody$ {
                 .array(z.lazy(() => PostCandidatesWorkExperiences$.outboundSchema))
                 .optional(),
             references: z.array(z.lazy(() => PostCandidatesReferences$.outboundSchema)).optional(),
-            availability: z.number().optional(),
+            availability: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredWorkLocation: z.string().optional(),
             status: PostCandidatesStatus$.optional(),
             customFields: z
                 .array(z.lazy(() => PostCandidatesCustomFields$.outboundSchema))
                 .optional(),
             notes: z.array(z.lazy(() => PostCandidatesNotes$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -3928,13 +3949,13 @@ export namespace PostCandidatesUnified$ {
         educations?: Array<PostCandidatesCandidatesEducations$.Inbound> | undefined;
         workExperiences?: Array<PostCandidatesCandidatesWorkExperiences$.Inbound> | undefined;
         references?: Array<PostCandidatesCandidatesReferences$.Inbound> | undefined;
-        availability?: number | undefined;
+        availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
         status?: PostCandidatesCandidatesResponseStatus | undefined;
         customFields?: Array<PostCandidatesCandidatesCustomFields$.Inbound> | undefined;
         notes?: Array<PostCandidatesCandidatesNotes$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostCandidatesUnified, z.ZodTypeDef, Inbound> = z
@@ -3969,15 +3990,27 @@ export namespace PostCandidatesUnified$ {
             references: z
                 .array(z.lazy(() => PostCandidatesCandidatesReferences$.inboundSchema))
                 .optional(),
-            availability: z.number().optional(),
+            availability: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredWorkLocation: z.string().optional(),
             status: PostCandidatesCandidatesResponseStatus$.optional(),
             customFields: z
                 .array(z.lazy(() => PostCandidatesCandidatesCustomFields$.inboundSchema))
                 .optional(),
             notes: z.array(z.lazy(() => PostCandidatesCandidatesNotes$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -4032,13 +4065,13 @@ export namespace PostCandidatesUnified$ {
         educations?: Array<PostCandidatesCandidatesEducations$.Outbound> | undefined;
         workExperiences?: Array<PostCandidatesCandidatesWorkExperiences$.Outbound> | undefined;
         references?: Array<PostCandidatesCandidatesReferences$.Outbound> | undefined;
-        availability?: number | undefined;
+        availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
         status?: PostCandidatesCandidatesResponseStatus | undefined;
         customFields?: Array<PostCandidatesCandidatesCustomFields$.Outbound> | undefined;
         notes?: Array<PostCandidatesCandidatesNotes$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostCandidatesUnified> = z
@@ -4073,15 +4106,24 @@ export namespace PostCandidatesUnified$ {
             references: z
                 .array(z.lazy(() => PostCandidatesCandidatesReferences$.outboundSchema))
                 .optional(),
-            availability: z.number().optional(),
+            availability: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredWorkLocation: z.string().optional(),
             status: PostCandidatesCandidatesResponseStatus$.optional(),
             customFields: z
                 .array(z.lazy(() => PostCandidatesCandidatesCustomFields$.outboundSchema))
                 .optional(),
             notes: z.array(z.lazy(() => PostCandidatesCandidatesNotes$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {

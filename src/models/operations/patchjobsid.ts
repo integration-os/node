@@ -298,7 +298,7 @@ export type PatchJobsIdRequestBody = {
     employmentType?: EmploymentType | undefined;
     location?: Location | undefined;
     remote?: boolean | undefined;
-    validUntil?: number | undefined;
+    validUntil?: Date | undefined;
     company?: Company | undefined;
     baseSalary?: BaseSalary | undefined;
     qualifications?: string | undefined;
@@ -313,8 +313,8 @@ export type PatchJobsIdRequestBody = {
     occupationalCategory?: string | undefined;
     incentiveCompensation?: string | undefined;
     jobBenefits?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     employmentUnit?: EmploymentUnit | undefined;
     jobImmediateStart?: boolean | undefined;
     jobFlexibleHours?: boolean | undefined;
@@ -323,9 +323,9 @@ export type PatchJobsIdRequestBody = {
     jobTrialPeriod?: string | undefined;
     workFromHome?: boolean | undefined;
     languagesSpoken?: Array<string> | undefined;
-    applicationDeadline?: number | undefined;
+    applicationDeadline?: Date | undefined;
     incentives?: string | undefined;
-    jobStartDate?: number | undefined;
+    jobStartDate?: Date | undefined;
     salaryCurrency?: string | undefined;
 };
 
@@ -1878,7 +1878,7 @@ export namespace PatchJobsIdRequestBody$ {
         employmentType?: EmploymentType | undefined;
         location?: Location$.Inbound | undefined;
         remote?: boolean | undefined;
-        validUntil?: number | undefined;
+        validUntil?: string | undefined;
         company?: Company$.Inbound | undefined;
         baseSalary?: BaseSalary$.Inbound | undefined;
         qualifications?: string | undefined;
@@ -1893,8 +1893,8 @@ export namespace PatchJobsIdRequestBody$ {
         occupationalCategory?: string | undefined;
         incentiveCompensation?: string | undefined;
         jobBenefits?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         employmentUnit?: EmploymentUnit$.Inbound | undefined;
         jobImmediateStart?: boolean | undefined;
         jobFlexibleHours?: boolean | undefined;
@@ -1903,9 +1903,9 @@ export namespace PatchJobsIdRequestBody$ {
         jobTrialPeriod?: string | undefined;
         workFromHome?: boolean | undefined;
         languagesSpoken?: Array<string> | undefined;
-        applicationDeadline?: number | undefined;
+        applicationDeadline?: string | undefined;
         incentives?: string | undefined;
-        jobStartDate?: number | undefined;
+        jobStartDate?: string | undefined;
         salaryCurrency?: string | undefined;
     };
 
@@ -1917,7 +1917,11 @@ export namespace PatchJobsIdRequestBody$ {
             employmentType: EmploymentType$.optional(),
             location: z.lazy(() => Location$.inboundSchema).optional(),
             remote: z.boolean().optional(),
-            validUntil: z.number().optional(),
+            validUntil: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             company: z.lazy(() => Company$.inboundSchema).optional(),
             baseSalary: z.lazy(() => BaseSalary$.inboundSchema).optional(),
             qualifications: z.string().optional(),
@@ -1932,8 +1936,16 @@ export namespace PatchJobsIdRequestBody$ {
             occupationalCategory: z.string().optional(),
             incentiveCompensation: z.string().optional(),
             jobBenefits: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             employmentUnit: z.lazy(() => EmploymentUnit$.inboundSchema).optional(),
             jobImmediateStart: z.boolean().optional(),
             jobFlexibleHours: z.boolean().optional(),
@@ -1942,9 +1954,17 @@ export namespace PatchJobsIdRequestBody$ {
             jobTrialPeriod: z.string().optional(),
             workFromHome: z.boolean().optional(),
             languagesSpoken: z.array(z.string()).optional(),
-            applicationDeadline: z.number().optional(),
+            applicationDeadline: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             incentives: z.string().optional(),
-            jobStartDate: z.number().optional(),
+            jobStartDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             salaryCurrency: z.string().optional(),
         })
         .transform((v) => {
@@ -2016,7 +2036,7 @@ export namespace PatchJobsIdRequestBody$ {
         employmentType?: EmploymentType | undefined;
         location?: Location$.Outbound | undefined;
         remote?: boolean | undefined;
-        validUntil?: number | undefined;
+        validUntil?: string | undefined;
         company?: Company$.Outbound | undefined;
         baseSalary?: BaseSalary$.Outbound | undefined;
         qualifications?: string | undefined;
@@ -2031,8 +2051,8 @@ export namespace PatchJobsIdRequestBody$ {
         occupationalCategory?: string | undefined;
         incentiveCompensation?: string | undefined;
         jobBenefits?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         employmentUnit?: EmploymentUnit$.Outbound | undefined;
         jobImmediateStart?: boolean | undefined;
         jobFlexibleHours?: boolean | undefined;
@@ -2041,9 +2061,9 @@ export namespace PatchJobsIdRequestBody$ {
         jobTrialPeriod?: string | undefined;
         workFromHome?: boolean | undefined;
         languagesSpoken?: Array<string> | undefined;
-        applicationDeadline?: number | undefined;
+        applicationDeadline?: string | undefined;
         incentives?: string | undefined;
-        jobStartDate?: number | undefined;
+        jobStartDate?: string | undefined;
         salaryCurrency?: string | undefined;
     };
 
@@ -2055,7 +2075,10 @@ export namespace PatchJobsIdRequestBody$ {
             employmentType: EmploymentType$.optional(),
             location: z.lazy(() => Location$.outboundSchema).optional(),
             remote: z.boolean().optional(),
-            validUntil: z.number().optional(),
+            validUntil: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             company: z.lazy(() => Company$.outboundSchema).optional(),
             baseSalary: z.lazy(() => BaseSalary$.outboundSchema).optional(),
             qualifications: z.string().optional(),
@@ -2070,8 +2093,14 @@ export namespace PatchJobsIdRequestBody$ {
             occupationalCategory: z.string().optional(),
             incentiveCompensation: z.string().optional(),
             jobBenefits: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             employmentUnit: z.lazy(() => EmploymentUnit$.outboundSchema).optional(),
             jobImmediateStart: z.boolean().optional(),
             jobFlexibleHours: z.boolean().optional(),
@@ -2080,9 +2109,15 @@ export namespace PatchJobsIdRequestBody$ {
             jobTrialPeriod: z.string().optional(),
             workFromHome: z.boolean().optional(),
             languagesSpoken: z.array(z.string()).optional(),
-            applicationDeadline: z.number().optional(),
+            applicationDeadline: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             incentives: z.string().optional(),
-            jobStartDate: z.number().optional(),
+            jobStartDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             salaryCurrency: z.string().optional(),
         })
         .transform((v) => {

@@ -232,12 +232,12 @@ export type GetUsersUnified = {
     profilePicture?: GetUsersProfilePicture | undefined;
     coverPhoto?: GetUsersCoverPhoto | undefined;
     gender?: GetUsersGender | undefined;
-    dateOfBirth?: number | undefined;
+    dateOfBirth?: Date | undefined;
     phoneNumber?: string | undefined;
     isActive?: boolean | undefined;
-    lastLogin?: number | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    lastLogin?: Date | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     addresses?: Array<GetUsersAddresses> | undefined;
     roles?: Array<GetUsersRoles> | undefined;
     preferences?: GetUsersPreferences | undefined;
@@ -1177,12 +1177,12 @@ export namespace GetUsersUnified$ {
         profilePicture?: GetUsersProfilePicture$.Inbound | undefined;
         coverPhoto?: GetUsersCoverPhoto$.Inbound | undefined;
         gender?: GetUsersGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<GetUsersAddresses$.Inbound> | undefined;
         roles?: Array<GetUsersRoles> | undefined;
         preferences?: GetUsersPreferences$.Inbound | undefined;
@@ -1206,12 +1206,28 @@ export namespace GetUsersUnified$ {
             profilePicture: z.lazy(() => GetUsersProfilePicture$.inboundSchema).optional(),
             coverPhoto: z.lazy(() => GetUsersCoverPhoto$.inboundSchema).optional(),
             gender: GetUsersGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             addresses: z.array(z.lazy(() => GetUsersAddresses$.inboundSchema)).optional(),
             roles: z.array(GetUsersRoles$).optional(),
             preferences: z.lazy(() => GetUsersPreferences$.inboundSchema).optional(),
@@ -1263,12 +1279,12 @@ export namespace GetUsersUnified$ {
         profilePicture?: GetUsersProfilePicture$.Outbound | undefined;
         coverPhoto?: GetUsersCoverPhoto$.Outbound | undefined;
         gender?: GetUsersGender | undefined;
-        dateOfBirth?: number | undefined;
+        dateOfBirth?: string | undefined;
         phoneNumber?: string | undefined;
         isActive?: boolean | undefined;
-        lastLogin?: number | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        lastLogin?: string | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         addresses?: Array<GetUsersAddresses$.Outbound> | undefined;
         roles?: Array<GetUsersRoles> | undefined;
         preferences?: GetUsersPreferences$.Outbound | undefined;
@@ -1292,12 +1308,24 @@ export namespace GetUsersUnified$ {
             profilePicture: z.lazy(() => GetUsersProfilePicture$.outboundSchema).optional(),
             coverPhoto: z.lazy(() => GetUsersCoverPhoto$.outboundSchema).optional(),
             gender: GetUsersGender$.optional(),
-            dateOfBirth: z.number().optional(),
+            dateOfBirth: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             phoneNumber: z.string().optional(),
             isActive: z.boolean().optional(),
-            lastLogin: z.number().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            lastLogin: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             addresses: z.array(z.lazy(() => GetUsersAddresses$.outboundSchema)).optional(),
             roles: z.array(GetUsersRoles$).optional(),
             preferences: z.lazy(() => GetUsersPreferences$.outboundSchema).optional(),

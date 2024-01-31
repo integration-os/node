@@ -358,10 +358,10 @@ export type GetNotesIdUnified = {
     id?: string | undefined;
     title?: string | undefined;
     content?: string | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    lastAccessed?: number | undefined;
-    reminder?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    lastAccessed?: Date | undefined;
+    reminder?: Date | undefined;
     color?: string | undefined;
     priority?: GetNotesIdPriority | undefined;
     author?: GetNotesIdAuthor | undefined;
@@ -1898,10 +1898,10 @@ export namespace GetNotesIdUnified$ {
         id?: string | undefined;
         title?: string | undefined;
         content?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        lastAccessed?: number | undefined;
-        reminder?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        lastAccessed?: string | undefined;
+        reminder?: string | undefined;
         color?: string | undefined;
         priority?: GetNotesIdPriority | undefined;
         author?: GetNotesIdAuthor$.Inbound | undefined;
@@ -1918,10 +1918,26 @@ export namespace GetNotesIdUnified$ {
             id: z.string().optional(),
             title: z.string().optional(),
             content: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            lastAccessed: z.number().optional(),
-            reminder: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            lastAccessed: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            reminder: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             color: z.string().optional(),
             priority: GetNotesIdPriority$.optional(),
             author: z.lazy(() => GetNotesIdAuthor$.inboundSchema).optional(),
@@ -1957,10 +1973,10 @@ export namespace GetNotesIdUnified$ {
         id?: string | undefined;
         title?: string | undefined;
         content?: string | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        lastAccessed?: number | undefined;
-        reminder?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        lastAccessed?: string | undefined;
+        reminder?: string | undefined;
         color?: string | undefined;
         priority?: GetNotesIdPriority | undefined;
         author?: GetNotesIdAuthor$.Outbound | undefined;
@@ -1977,10 +1993,22 @@ export namespace GetNotesIdUnified$ {
             id: z.string().optional(),
             title: z.string().optional(),
             content: z.string().optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            lastAccessed: z.number().optional(),
-            reminder: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            lastAccessed: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            reminder: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             color: z.string().optional(),
             priority: GetNotesIdPriority$.optional(),
             author: z.lazy(() => GetNotesIdAuthor$.outboundSchema).optional(),

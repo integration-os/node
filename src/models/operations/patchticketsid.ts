@@ -909,9 +909,9 @@ export type PatchTicketsIdRequestBody = {
     type?: PatchTicketsIdType | undefined;
     assignee?: PatchTicketsIdAssignee | undefined;
     reporter?: Reporter | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    dueDate?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    dueDate?: Date | undefined;
     attachments?: Array<PatchTicketsIdTicketsAttachments> | undefined;
     comments?: Array<PatchTicketsIdComments> | undefined;
     notes?: Array<PatchTicketsIdTicketsNotes> | undefined;
@@ -5281,9 +5281,9 @@ export namespace PatchTicketsIdRequestBody$ {
         type?: PatchTicketsIdType | undefined;
         assignee?: PatchTicketsIdAssignee$.Inbound | undefined;
         reporter?: Reporter$.Inbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<PatchTicketsIdTicketsAttachments$.Inbound> | undefined;
         comments?: Array<PatchTicketsIdComments$.Inbound> | undefined;
         notes?: Array<PatchTicketsIdTicketsNotes$.Inbound> | undefined;
@@ -5303,9 +5303,21 @@ export namespace PatchTicketsIdRequestBody$ {
             type: PatchTicketsIdType$.optional(),
             assignee: z.lazy(() => PatchTicketsIdAssignee$.inboundSchema).optional(),
             reporter: z.lazy(() => Reporter$.inboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            dueDate: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             attachments: z
                 .array(z.lazy(() => PatchTicketsIdTicketsAttachments$.inboundSchema))
                 .optional(),
@@ -5350,9 +5362,9 @@ export namespace PatchTicketsIdRequestBody$ {
         type?: PatchTicketsIdType | undefined;
         assignee?: PatchTicketsIdAssignee$.Outbound | undefined;
         reporter?: Reporter$.Outbound | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        dueDate?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        dueDate?: string | undefined;
         attachments?: Array<PatchTicketsIdTicketsAttachments$.Outbound> | undefined;
         comments?: Array<PatchTicketsIdComments$.Outbound> | undefined;
         notes?: Array<PatchTicketsIdTicketsNotes$.Outbound> | undefined;
@@ -5372,9 +5384,18 @@ export namespace PatchTicketsIdRequestBody$ {
             type: PatchTicketsIdType$.optional(),
             assignee: z.lazy(() => PatchTicketsIdAssignee$.outboundSchema).optional(),
             reporter: z.lazy(() => Reporter$.outboundSchema).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            dueDate: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            dueDate: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             attachments: z
                 .array(z.lazy(() => PatchTicketsIdTicketsAttachments$.outboundSchema))
                 .optional(),

@@ -325,9 +325,9 @@ export type PatchProductsIdRequestBody = {
     isDownloadable?: boolean | undefined;
     downloadFiles?: Array<DownloadFiles> | undefined;
     relatedProducts?: Array<string> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    publishedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    publishedAt?: Date | undefined;
     status?: PatchProductsIdProductsStatus | undefined;
     tax?: Tax | undefined;
     localizations?: Array<Localizations> | undefined;
@@ -1993,9 +1993,9 @@ export namespace PatchProductsIdRequestBody$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<DownloadFiles$.Inbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PatchProductsIdProductsStatus | undefined;
         tax?: Tax$.Inbound | undefined;
         localizations?: Array<Localizations$.Inbound> | undefined;
@@ -2032,9 +2032,21 @@ export namespace PatchProductsIdRequestBody$ {
             isDownloadable: z.boolean().optional(),
             downloadFiles: z.array(z.lazy(() => DownloadFiles$.inboundSchema)).optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            publishedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: PatchProductsIdProductsStatus$.optional(),
             tax: z.lazy(() => Tax$.inboundSchema).optional(),
             localizations: z.array(z.lazy(() => Localizations$.inboundSchema)).optional(),
@@ -2115,9 +2127,9 @@ export namespace PatchProductsIdRequestBody$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<DownloadFiles$.Outbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PatchProductsIdProductsStatus | undefined;
         tax?: Tax$.Outbound | undefined;
         localizations?: Array<Localizations$.Outbound> | undefined;
@@ -2154,9 +2166,18 @@ export namespace PatchProductsIdRequestBody$ {
             isDownloadable: z.boolean().optional(),
             downloadFiles: z.array(z.lazy(() => DownloadFiles$.outboundSchema)).optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            publishedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: PatchProductsIdProductsStatus$.optional(),
             tax: z.lazy(() => Tax$.outboundSchema).optional(),
             localizations: z.array(z.lazy(() => Localizations$.outboundSchema)).optional(),

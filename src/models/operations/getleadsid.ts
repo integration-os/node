@@ -250,8 +250,8 @@ export type GetLeadsIdUnified = {
     numberOfEmployees?: number | undefined;
     annualRevenue?: number | undefined;
     addresses?: Array<GetLeadsIdAddresses> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
     preferredContactMethod?: GetLeadsIdPreferredContactMethod | undefined;
     socialProfiles?: Array<GetLeadsIdSocialProfiles> | undefined;
     customFields?: Array<GetLeadsIdCustomFields> | undefined;
@@ -1306,8 +1306,8 @@ export namespace GetLeadsIdUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<GetLeadsIdAddresses$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: GetLeadsIdPreferredContactMethod | undefined;
         socialProfiles?: Array<GetLeadsIdSocialProfiles$.Inbound> | undefined;
         customFields?: Array<GetLeadsIdCustomFields$.Inbound> | undefined;
@@ -1335,8 +1335,16 @@ export namespace GetLeadsIdUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => GetLeadsIdAddresses$.inboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             preferredContactMethod: GetLeadsIdPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => GetLeadsIdSocialProfiles$.inboundSchema))
@@ -1398,8 +1406,8 @@ export namespace GetLeadsIdUnified$ {
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<GetLeadsIdAddresses$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
         preferredContactMethod?: GetLeadsIdPreferredContactMethod | undefined;
         socialProfiles?: Array<GetLeadsIdSocialProfiles$.Outbound> | undefined;
         customFields?: Array<GetLeadsIdCustomFields$.Outbound> | undefined;
@@ -1429,8 +1437,14 @@ export namespace GetLeadsIdUnified$ {
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
             addresses: z.array(z.lazy(() => GetLeadsIdAddresses$.outboundSchema)).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             preferredContactMethod: GetLeadsIdPreferredContactMethod$.optional(),
             socialProfiles: z
                 .array(z.lazy(() => GetLeadsIdSocialProfiles$.outboundSchema))

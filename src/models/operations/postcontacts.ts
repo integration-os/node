@@ -530,7 +530,7 @@ export type PostContactsRequestBody = {
     phones?: Array<PostContactsPhones> | undefined;
     address?: PostContactsAddress | undefined;
     addresses?: Array<PostContactsAddresses> | undefined;
-    birthday?: number | undefined;
+    birthday?: Date | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: PostContactsNotes | undefined;
@@ -539,8 +539,8 @@ export type PostContactsRequestBody = {
     socialProfiles?: Array<PostContactsSocialProfiles> | undefined;
     isActive?: boolean | undefined;
     customFields?: Array<PostContactsContactsRequestRequestBodyCustomFields> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostContactsRequest = {
@@ -1091,7 +1091,7 @@ export type PostContactsUnified = {
     phones?: Array<PostContactsContactsPhones> | undefined;
     address?: PostContactsContactsAddress | undefined;
     addresses?: Array<PostContactsContactsResponseAddresses> | undefined;
-    birthday?: number | undefined;
+    birthday?: Date | undefined;
     relationship?: string | undefined;
     note?: string | undefined;
     notes?: PostContactsContactsNotes | undefined;
@@ -1100,8 +1100,8 @@ export type PostContactsUnified = {
     socialProfiles?: Array<PostContactsContactsSocialProfiles> | undefined;
     isActive?: boolean | undefined;
     customFields?: Array<PostContactsContactsResponseCustomFields> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
 };
 
 export type PostContactsPassthrough = {};
@@ -3558,7 +3558,7 @@ export namespace PostContactsRequestBody$ {
         phones?: Array<PostContactsPhones$.Inbound> | undefined;
         address?: PostContactsAddress$.Inbound | undefined;
         addresses?: Array<PostContactsAddresses$.Inbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsNotes$.Inbound | undefined;
@@ -3569,8 +3569,8 @@ export namespace PostContactsRequestBody$ {
         customFields?:
             | Array<PostContactsContactsRequestRequestBodyCustomFields$.Inbound>
             | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostContactsRequestBody, z.ZodTypeDef, Inbound> = z
@@ -3586,7 +3586,11 @@ export namespace PostContactsRequestBody$ {
             phones: z.array(z.lazy(() => PostContactsPhones$.inboundSchema)).optional(),
             address: z.lazy(() => PostContactsAddress$.inboundSchema).optional(),
             addresses: z.array(z.lazy(() => PostContactsAddresses$.inboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsNotes$.inboundSchema).optional(),
@@ -3601,8 +3605,16 @@ export namespace PostContactsRequestBody$ {
                     z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.inboundSchema)
                 )
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -3643,7 +3655,7 @@ export namespace PostContactsRequestBody$ {
         phones?: Array<PostContactsPhones$.Outbound> | undefined;
         address?: PostContactsAddress$.Outbound | undefined;
         addresses?: Array<PostContactsAddresses$.Outbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsNotes$.Outbound | undefined;
@@ -3654,8 +3666,8 @@ export namespace PostContactsRequestBody$ {
         customFields?:
             | Array<PostContactsContactsRequestRequestBodyCustomFields$.Outbound>
             | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsRequestBody> = z
@@ -3671,7 +3683,10 @@ export namespace PostContactsRequestBody$ {
             phones: z.array(z.lazy(() => PostContactsPhones$.outboundSchema)).optional(),
             address: z.lazy(() => PostContactsAddress$.outboundSchema).optional(),
             addresses: z.array(z.lazy(() => PostContactsAddresses$.outboundSchema)).optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsNotes$.outboundSchema).optional(),
@@ -3686,8 +3701,14 @@ export namespace PostContactsRequestBody$ {
                     z.lazy(() => PostContactsContactsRequestRequestBodyCustomFields$.outboundSchema)
                 )
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -6439,7 +6460,7 @@ export namespace PostContactsUnified$ {
         phones?: Array<PostContactsContactsPhones$.Inbound> | undefined;
         address?: PostContactsContactsAddress$.Inbound | undefined;
         addresses?: Array<PostContactsContactsResponseAddresses$.Inbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsContactsNotes$.Inbound | undefined;
@@ -6448,8 +6469,8 @@ export namespace PostContactsUnified$ {
         socialProfiles?: Array<PostContactsContactsSocialProfiles$.Inbound> | undefined;
         isActive?: boolean | undefined;
         customFields?: Array<PostContactsContactsResponseCustomFields$.Inbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PostContactsUnified, z.ZodTypeDef, Inbound> = z
@@ -6467,7 +6488,11 @@ export namespace PostContactsUnified$ {
             addresses: z
                 .array(z.lazy(() => PostContactsContactsResponseAddresses$.inboundSchema))
                 .optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsContactsNotes$.inboundSchema).optional(),
@@ -6480,8 +6505,16 @@ export namespace PostContactsUnified$ {
             customFields: z
                 .array(z.lazy(() => PostContactsContactsResponseCustomFields$.inboundSchema))
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
         })
         .transform((v) => {
             return {
@@ -6522,7 +6555,7 @@ export namespace PostContactsUnified$ {
         phones?: Array<PostContactsContactsPhones$.Outbound> | undefined;
         address?: PostContactsContactsAddress$.Outbound | undefined;
         addresses?: Array<PostContactsContactsResponseAddresses$.Outbound> | undefined;
-        birthday?: number | undefined;
+        birthday?: string | undefined;
         relationship?: string | undefined;
         note?: string | undefined;
         notes?: PostContactsContactsNotes$.Outbound | undefined;
@@ -6531,8 +6564,8 @@ export namespace PostContactsUnified$ {
         socialProfiles?: Array<PostContactsContactsSocialProfiles$.Outbound> | undefined;
         isActive?: boolean | undefined;
         customFields?: Array<PostContactsContactsResponseCustomFields$.Outbound> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostContactsUnified> = z
@@ -6550,7 +6583,10 @@ export namespace PostContactsUnified$ {
             addresses: z
                 .array(z.lazy(() => PostContactsContactsResponseAddresses$.outboundSchema))
                 .optional(),
-            birthday: z.number().optional(),
+            birthday: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             relationship: z.string().optional(),
             note: z.string().optional(),
             notes: z.lazy(() => PostContactsContactsNotes$.outboundSchema).optional(),
@@ -6563,8 +6599,14 @@ export namespace PostContactsUnified$ {
             customFields: z
                 .array(z.lazy(() => PostContactsContactsResponseCustomFields$.outboundSchema))
                 .optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
         })
         .transform((v) => {
             return {

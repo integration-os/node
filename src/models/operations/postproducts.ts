@@ -325,9 +325,9 @@ export type PostProductsRequestBody = {
     isDownloadable?: boolean | undefined;
     downloadFiles?: Array<PostProductsDownloadFiles> | undefined;
     relatedProducts?: Array<string> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    publishedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    publishedAt?: Date | undefined;
     status?: PostProductsProductsStatus | undefined;
     tax?: PostProductsTax | undefined;
     localizations?: Array<PostProductsLocalizations> | undefined;
@@ -670,9 +670,9 @@ export type PostProductsUnified = {
     isDownloadable?: boolean | undefined;
     downloadFiles?: Array<PostProductsProductsDownloadFiles> | undefined;
     relatedProducts?: Array<string> | undefined;
-    createdAt?: number | undefined;
-    updatedAt?: number | undefined;
-    publishedAt?: number | undefined;
+    createdAt?: Date | undefined;
+    updatedAt?: Date | undefined;
+    publishedAt?: Date | undefined;
     status?: PostProductsProductsResponseStatus | undefined;
     tax?: PostProductsProductsTax | undefined;
     localizations?: Array<PostProductsProductsLocalizations> | undefined;
@@ -2319,9 +2319,9 @@ export namespace PostProductsRequestBody$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<PostProductsDownloadFiles$.Inbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PostProductsProductsStatus | undefined;
         tax?: PostProductsTax$.Inbound | undefined;
         localizations?: Array<PostProductsLocalizations$.Inbound> | undefined;
@@ -2362,9 +2362,21 @@ export namespace PostProductsRequestBody$ {
                 .array(z.lazy(() => PostProductsDownloadFiles$.inboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            publishedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: PostProductsProductsStatus$.optional(),
             tax: z.lazy(() => PostProductsTax$.inboundSchema).optional(),
             localizations: z
@@ -2447,9 +2459,9 @@ export namespace PostProductsRequestBody$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<PostProductsDownloadFiles$.Outbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PostProductsProductsStatus | undefined;
         tax?: PostProductsTax$.Outbound | undefined;
         localizations?: Array<PostProductsLocalizations$.Outbound> | undefined;
@@ -2490,9 +2502,18 @@ export namespace PostProductsRequestBody$ {
                 .array(z.lazy(() => PostProductsDownloadFiles$.outboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            publishedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: PostProductsProductsStatus$.optional(),
             tax: z.lazy(() => PostProductsTax$.outboundSchema).optional(),
             localizations: z
@@ -4296,9 +4317,9 @@ export namespace PostProductsUnified$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<PostProductsProductsDownloadFiles$.Inbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PostProductsProductsResponseStatus | undefined;
         tax?: PostProductsProductsTax$.Inbound | undefined;
         localizations?: Array<PostProductsProductsLocalizations$.Inbound> | undefined;
@@ -4341,9 +4362,21 @@ export namespace PostProductsUnified$ {
                 .array(z.lazy(() => PostProductsProductsDownloadFiles$.inboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            updatedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
+            publishedAt: z
+                .string()
+                .datetime({ offset: true })
+                .transform((v) => new Date(v))
+                .optional(),
             status: PostProductsProductsResponseStatus$.optional(),
             tax: z.lazy(() => PostProductsProductsTax$.inboundSchema).optional(),
             localizations: z
@@ -4426,9 +4459,9 @@ export namespace PostProductsUnified$ {
         isDownloadable?: boolean | undefined;
         downloadFiles?: Array<PostProductsProductsDownloadFiles$.Outbound> | undefined;
         relatedProducts?: Array<string> | undefined;
-        createdAt?: number | undefined;
-        updatedAt?: number | undefined;
-        publishedAt?: number | undefined;
+        createdAt?: string | undefined;
+        updatedAt?: string | undefined;
+        publishedAt?: string | undefined;
         status?: PostProductsProductsResponseStatus | undefined;
         tax?: PostProductsProductsTax$.Outbound | undefined;
         localizations?: Array<PostProductsProductsLocalizations$.Outbound> | undefined;
@@ -4473,9 +4506,18 @@ export namespace PostProductsUnified$ {
                 .array(z.lazy(() => PostProductsProductsDownloadFiles$.outboundSchema))
                 .optional(),
             relatedProducts: z.array(z.string()).optional(),
-            createdAt: z.number().optional(),
-            updatedAt: z.number().optional(),
-            publishedAt: z.number().optional(),
+            createdAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            updatedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
+            publishedAt: z
+                .date()
+                .transform((v) => v.toISOString())
+                .optional(),
             status: PostProductsProductsResponseStatus$.optional(),
             tax: z.lazy(() => PostProductsProductsTax$.outboundSchema).optional(),
             localizations: z
