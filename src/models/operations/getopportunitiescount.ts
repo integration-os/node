@@ -8,14 +8,8 @@ export type GetOpportunitiesCountRequest = {
     /**
      * The unique identifier of a Connected Account
      */
-    xIntegrationosConnectionKey: string;
+    connectionKey: string;
 };
-
-export enum GetOpportunitiesCountStatusCode {
-    TwoHundred = 200,
-    FourHundred = 400,
-    FiveHundred = 500,
-}
 
 export type GetOpportunitiesCountUnified = {
     count?: number | undefined;
@@ -26,7 +20,6 @@ export type GetOpportunitiesCountPassthrough = {};
 export type GetOpportunitiesCountCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
-    key?: string | undefined;
 };
 
 export type GetOpportunitiesCountMeta = {
@@ -34,19 +27,20 @@ export type GetOpportunitiesCountMeta = {
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
     rateLimitRemaining?: number | undefined;
-    cache?: GetOpportunitiesCountCache | undefined;
+    totalTransactions?: number | undefined;
+    hash?: string | undefined;
     transactionKey?: string | undefined;
     txn?: string | undefined;
+    commonModel?: string | undefined;
+    connectionKey?: string | undefined;
     platform?: string | undefined;
     platformVersion?: string | undefined;
     connectionDefinitionKey?: string | undefined;
     action?: string | undefined;
-    commonModel?: string | undefined;
     commonModelVersion?: string | undefined;
-    connectionKey?: string | undefined;
-    hash?: string | undefined;
+    key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    totalTransactions?: number | undefined;
+    cache?: GetOpportunitiesCountCache | undefined;
 };
 
 /**
@@ -54,7 +48,7 @@ export type GetOpportunitiesCountMeta = {
  */
 export type GetOpportunitiesCountResponseBody = {
     status?: string | undefined;
-    statusCode?: GetOpportunitiesCountStatusCode | undefined;
+    statusCode?: number | undefined;
     unified?: GetOpportunitiesCountUnified | undefined;
     passthrough?: GetOpportunitiesCountPassthrough | undefined;
     meta?: GetOpportunitiesCountMeta | undefined;
@@ -91,7 +85,7 @@ export namespace GetOpportunitiesCountRequest$ {
         })
         .transform((v) => {
             return {
-                xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
@@ -101,17 +95,14 @@ export namespace GetOpportunitiesCountRequest$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesCountRequest> = z
         .object({
-            xIntegrationosConnectionKey: z.string(),
+            connectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
+                "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
             };
         });
 }
-
-/** @internal */
-export const GetOpportunitiesCountStatusCode$ = z.nativeEnum(GetOpportunitiesCountStatusCode);
 
 /** @internal */
 export namespace GetOpportunitiesCountUnified$ {
@@ -165,40 +156,34 @@ export namespace GetOpportunitiesCountCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetOpportunitiesCountCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 
     export type Outbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesCountCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 }
@@ -210,19 +195,20 @@ export namespace GetOpportunitiesCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetOpportunitiesCountCache$.Inbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetOpportunitiesCountCache$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetOpportunitiesCountMeta, z.ZodTypeDef, Inbound> = z
@@ -231,19 +217,20 @@ export namespace GetOpportunitiesCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetOpportunitiesCountCache$.inboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetOpportunitiesCountCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -255,9 +242,14 @@ export namespace GetOpportunitiesCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -266,16 +258,12 @@ export namespace GetOpportunitiesCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 
@@ -284,19 +272,20 @@ export namespace GetOpportunitiesCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetOpportunitiesCountCache$.Outbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetOpportunitiesCountCache$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetOpportunitiesCountMeta> = z
@@ -305,19 +294,20 @@ export namespace GetOpportunitiesCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetOpportunitiesCountCache$.outboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetOpportunitiesCountCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -329,9 +319,14 @@ export namespace GetOpportunitiesCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -340,16 +335,12 @@ export namespace GetOpportunitiesCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 }
@@ -358,7 +349,7 @@ export namespace GetOpportunitiesCountMeta$ {
 export namespace GetOpportunitiesCountResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
-        statusCode?: GetOpportunitiesCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetOpportunitiesCountUnified$.Inbound | undefined;
         passthrough?: GetOpportunitiesCountPassthrough$.Inbound | undefined;
         meta?: GetOpportunitiesCountMeta$.Inbound | undefined;
@@ -371,10 +362,10 @@ export namespace GetOpportunitiesCountResponseBody$ {
     > = z
         .object({
             status: z.string().optional(),
-            statusCode: GetOpportunitiesCountStatusCode$.optional(),
-            unified: z.lazy(() => GetOpportunitiesCountUnified$.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetOpportunitiesCountPassthrough$.inboundSchema).optional(),
-            meta: z.lazy(() => GetOpportunitiesCountMeta$.inboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetOpportunitiesCountUnified$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetOpportunitiesCountPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetOpportunitiesCountMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -388,7 +379,7 @@ export namespace GetOpportunitiesCountResponseBody$ {
 
     export type Outbound = {
         status?: string | undefined;
-        statusCode?: GetOpportunitiesCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetOpportunitiesCountUnified$.Outbound | undefined;
         passthrough?: GetOpportunitiesCountPassthrough$.Outbound | undefined;
         meta?: GetOpportunitiesCountMeta$.Outbound | undefined;
@@ -401,10 +392,10 @@ export namespace GetOpportunitiesCountResponseBody$ {
     > = z
         .object({
             status: z.string().optional(),
-            statusCode: GetOpportunitiesCountStatusCode$.optional(),
-            unified: z.lazy(() => GetOpportunitiesCountUnified$.outboundSchema).optional(),
-            passthrough: z.lazy(() => GetOpportunitiesCountPassthrough$.outboundSchema).optional(),
-            meta: z.lazy(() => GetOpportunitiesCountMeta$.outboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetOpportunitiesCountUnified$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetOpportunitiesCountPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetOpportunitiesCountMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -431,7 +422,7 @@ export namespace GetOpportunitiesCountResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetOpportunitiesCountResponseBody$.inboundSchema).optional(),
+            object: z.lazy(() => GetOpportunitiesCountResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -457,7 +448,7 @@ export namespace GetOpportunitiesCountResponse$ {
                 rawResponse: z.instanceof(Response).transform(() => {
                     throw new Error("Response cannot be serialized");
                 }),
-                object: z.lazy(() => GetOpportunitiesCountResponseBody$.outboundSchema).optional(),
+                object: z.lazy(() => GetOpportunitiesCountResponseBody$?.outboundSchema).optional(),
             })
             .transform((v) => {
                 return {

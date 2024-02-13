@@ -1,6 +1,5 @@
-configVersion: 1.0.0
+configVersion: 2.0.0
 generation:
-  comments: {}
   sdkClassName: IntegrationOS
   maintainOpenAPIOrder: true
   usageSnippets:
@@ -8,15 +7,10 @@ generation:
   useClassNamesForArrayFields: true
   fixes:
     nameResolutionDec2023: true
-features:
-  typescript:
-    core: 3.3.12
-    flattening: 2.81.1
-    globalSecurity: 2.82.2
-    globalServerURLs: 2.82.1
-    nameOverrides: 2.81.1
+    parameterOrderingFeb2024: true
+    requestResponseComponentNamesFeb2024: false
 typescript:
-  version: 0.0.1
+  version: 0.1.0
   author: IntegrationOS
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
@@ -29,7 +23,7 @@ typescript:
       shared: models/components
       webhooks: models/webhooks
   inputModelSuffix: input
-  maxMethodParams: 4
+  maxMethodParams: 0
   outputModelSuffix: output
   packageName: '@integrationos/node'
   templateVersion: v2

@@ -8,14 +8,8 @@ export type GetTicketsCountRequest = {
     /**
      * The unique identifier of a Connected Account
      */
-    xIntegrationosConnectionKey: string;
+    connectionKey: string;
 };
-
-export enum GetTicketsCountStatusCode {
-    TwoHundred = 200,
-    FourHundred = 400,
-    FiveHundred = 500,
-}
 
 export type GetTicketsCountUnified = {
     count?: number | undefined;
@@ -26,7 +20,6 @@ export type GetTicketsCountPassthrough = {};
 export type GetTicketsCountCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
-    key?: string | undefined;
 };
 
 export type GetTicketsCountMeta = {
@@ -34,19 +27,20 @@ export type GetTicketsCountMeta = {
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
     rateLimitRemaining?: number | undefined;
-    cache?: GetTicketsCountCache | undefined;
+    totalTransactions?: number | undefined;
+    hash?: string | undefined;
     transactionKey?: string | undefined;
     txn?: string | undefined;
+    commonModel?: string | undefined;
+    connectionKey?: string | undefined;
     platform?: string | undefined;
     platformVersion?: string | undefined;
     connectionDefinitionKey?: string | undefined;
     action?: string | undefined;
-    commonModel?: string | undefined;
     commonModelVersion?: string | undefined;
-    connectionKey?: string | undefined;
-    hash?: string | undefined;
+    key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    totalTransactions?: number | undefined;
+    cache?: GetTicketsCountCache | undefined;
 };
 
 /**
@@ -54,7 +48,7 @@ export type GetTicketsCountMeta = {
  */
 export type GetTicketsCountResponseBody = {
     status?: string | undefined;
-    statusCode?: GetTicketsCountStatusCode | undefined;
+    statusCode?: number | undefined;
     unified?: GetTicketsCountUnified | undefined;
     passthrough?: GetTicketsCountPassthrough | undefined;
     meta?: GetTicketsCountMeta | undefined;
@@ -91,7 +85,7 @@ export namespace GetTicketsCountRequest$ {
         })
         .transform((v) => {
             return {
-                xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
@@ -101,17 +95,14 @@ export namespace GetTicketsCountRequest$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetTicketsCountRequest> = z
         .object({
-            xIntegrationosConnectionKey: z.string(),
+            connectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
+                "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
             };
         });
 }
-
-/** @internal */
-export const GetTicketsCountStatusCode$ = z.nativeEnum(GetTicketsCountStatusCode);
 
 /** @internal */
 export namespace GetTicketsCountUnified$ {
@@ -162,40 +153,34 @@ export namespace GetTicketsCountCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetTicketsCountCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 
     export type Outbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetTicketsCountCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 }
@@ -207,19 +192,20 @@ export namespace GetTicketsCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetTicketsCountCache$.Inbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetTicketsCountCache$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetTicketsCountMeta, z.ZodTypeDef, Inbound> = z
@@ -228,19 +214,20 @@ export namespace GetTicketsCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetTicketsCountCache$.inboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetTicketsCountCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -252,9 +239,14 @@ export namespace GetTicketsCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -263,16 +255,12 @@ export namespace GetTicketsCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 
@@ -281,19 +269,20 @@ export namespace GetTicketsCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetTicketsCountCache$.Outbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetTicketsCountCache$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetTicketsCountMeta> = z
@@ -302,19 +291,20 @@ export namespace GetTicketsCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetTicketsCountCache$.outboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetTicketsCountCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -326,9 +316,14 @@ export namespace GetTicketsCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -337,16 +332,12 @@ export namespace GetTicketsCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 }
@@ -355,7 +346,7 @@ export namespace GetTicketsCountMeta$ {
 export namespace GetTicketsCountResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
-        statusCode?: GetTicketsCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetTicketsCountUnified$.Inbound | undefined;
         passthrough?: GetTicketsCountPassthrough$.Inbound | undefined;
         meta?: GetTicketsCountMeta$.Inbound | undefined;
@@ -364,10 +355,10 @@ export namespace GetTicketsCountResponseBody$ {
     export const inboundSchema: z.ZodType<GetTicketsCountResponseBody, z.ZodTypeDef, Inbound> = z
         .object({
             status: z.string().optional(),
-            statusCode: GetTicketsCountStatusCode$.optional(),
-            unified: z.lazy(() => GetTicketsCountUnified$.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetTicketsCountPassthrough$.inboundSchema).optional(),
-            meta: z.lazy(() => GetTicketsCountMeta$.inboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetTicketsCountUnified$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetTicketsCountPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetTicketsCountMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -381,7 +372,7 @@ export namespace GetTicketsCountResponseBody$ {
 
     export type Outbound = {
         status?: string | undefined;
-        statusCode?: GetTicketsCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetTicketsCountUnified$.Outbound | undefined;
         passthrough?: GetTicketsCountPassthrough$.Outbound | undefined;
         meta?: GetTicketsCountMeta$.Outbound | undefined;
@@ -390,10 +381,10 @@ export namespace GetTicketsCountResponseBody$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetTicketsCountResponseBody> = z
         .object({
             status: z.string().optional(),
-            statusCode: GetTicketsCountStatusCode$.optional(),
-            unified: z.lazy(() => GetTicketsCountUnified$.outboundSchema).optional(),
-            passthrough: z.lazy(() => GetTicketsCountPassthrough$.outboundSchema).optional(),
-            meta: z.lazy(() => GetTicketsCountMeta$.outboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetTicketsCountUnified$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetTicketsCountPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetTicketsCountMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -420,7 +411,7 @@ export namespace GetTicketsCountResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetTicketsCountResponseBody$.inboundSchema).optional(),
+            object: z.lazy(() => GetTicketsCountResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -445,7 +436,7 @@ export namespace GetTicketsCountResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => GetTicketsCountResponseBody$.outboundSchema).optional(),
+            object: z.lazy(() => GetTicketsCountResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
