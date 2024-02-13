@@ -53,8 +53,8 @@ type SecurityInputBearer = {
     fieldName: string;
 };
 
-type SecurityInputsecret = {
-    type: "secret:header" | "secret:query" | "secret:cookie";
+type SecurityInputAPIKey = {
+    type: "apiKey:header" | "apiKey:query" | "apiKey:cookie";
     value: string | null | undefined;
     fieldName: string;
 };
@@ -75,7 +75,7 @@ export type SecurityInput =
     | SecurityInputBasic
     | SecurityInputBasicPacked
     | SecurityInputBearer
-    | SecurityInputsecret
+    | SecurityInputAPIKey
     | SecurityInputOAuth2
     | SecurityInputOIDC;
 
@@ -100,13 +100,13 @@ export function resolveSecurity(...options: SecurityInput[][]): SecurityState | 
         const { type } = spec;
 
         switch (type) {
-            case "secret:header":
+            case "apiKey:header":
                 state.headers[spec.fieldName] = spec.value;
                 break;
-            case "secret:query":
+            case "apiKey:query":
                 state.queryParams[spec.fieldName] = spec.value;
                 break;
-            case "secret:cookie":
+            case "apiKey:cookie":
                 state.cookies[spec.fieldName] = spec.value;
                 break;
             case "http:basic":
@@ -159,6 +159,6 @@ function applyBearer(
 }
 export function resolveGlobalSecurity(security: Partial<components.Security> | null | undefined) {
     return resolveSecurity([
-        { value: security?.secret, fieldName: "X-INTEGRATIONOS-SECRET", type: "secret:header" },
+        { value: security?.secret, fieldName: "X-INTEGRATIONOS-SECRET", type: "apiKey:header" },
     ]);
 }

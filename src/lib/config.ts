@@ -29,7 +29,7 @@ export type SDKOptions = {
     retryConfig?: RetryConfig;
 };
 
-export function serverURLFromOptions(options: SDKOptions): URL {
+export function serverURLFromOptions(options: SDKOptions): URL | null {
     let serverURL = options.serverURL;
 
     const params: Record<string, string> = {};
@@ -46,7 +46,7 @@ export function serverURLFromOptions(options: SDKOptions): URL {
 export const SDK_METADATA = Object.freeze({
     language: "typescript",
     openapiDocVersion: "1.0.0",
-    sdkVersion: "0.0.2",
-    genVersion: "2.239.4",
-    userAgent: "speakeasy-sdk/typescript 0.0.2 2.239.4 1.0.0 openapi",
+    sdkVersion: "0.1.0",
+    genVersion: "2.253.0",
+    userAgent: "speakeasy-sdk/typescript 0.1.0 2.253.0 1.0.0 @integrationos/node",
 });

@@ -28,19 +28,14 @@ export class Jobs extends ClientSDK {
      * Get a single jobs record
      */
     async get(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.GetJobsIdRequest,
         options?: RequestOptions
     ): Promise<operations.GetJobsIdResponse> {
-        const input$: operations.GetJobsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetJobsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetJobsIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -87,16 +82,11 @@ export class Jobs extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetJobsIdResponse$.inboundSchema.parse({
+            const result = operations.GetJobsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -110,19 +100,14 @@ export class Jobs extends ClientSDK {
      * Delete a single jobs record
      */
     async delete(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.DeleteJobsIdRequest,
         options?: RequestOptions
     ): Promise<operations.DeleteJobsIdResponse> {
-        const input$: operations.DeleteJobsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.DeleteJobsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.DeleteJobsIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -130,6 +115,15 @@ export class Jobs extends ClientSDK {
         };
 
         const path$ = this.templateURLComponent("/jobs/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -156,6 +150,7 @@ export class Jobs extends ClientSDK {
                 method: "DELETE",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -169,16 +164,11 @@ export class Jobs extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.DeleteJobsIdResponse$.inboundSchema.parse({
+            const result = operations.DeleteJobsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -192,30 +182,32 @@ export class Jobs extends ClientSDK {
      * Update a single jobs record
      */
     async update(
-        id: string,
-        xIntegrationosConnectionKey: string,
-        requestBody?: operations.PatchJobsIdRequestBody | undefined,
+        input: operations.PatchJobsIdRequest,
         options?: RequestOptions
     ): Promise<operations.PatchJobsIdResponse> {
-        const input$: operations.PatchJobsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PatchJobsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PatchJobsIdRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Jobs, { explode: true });
 
         const pathParams$ = {
             id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
         };
 
         const path$ = this.templateURLComponent("/jobs/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -242,6 +234,7 @@ export class Jobs extends ClientSDK {
                 method: "PATCH",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -255,16 +248,11 @@ export class Jobs extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PatchJobsIdResponse$.inboundSchema.parse({
+            const result = operations.PatchJobsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -278,20 +266,40 @@ export class Jobs extends ClientSDK {
      * Get all jobs records
      */
     async list(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetJobsRequest,
         options?: RequestOptions
     ): Promise<operations.GetJobsResponse> {
-        const input$: operations.GetJobsRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetJobsRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetJobsRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/jobs")();
+
+        const query$ = [
+            enc$.encodeForm("createdAfter", payload$.createdAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("createdBefore", payload$.createdBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("cursor", payload$.cursor, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("limit", payload$.limit, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("updatedAfter", payload$.updatedAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("updatedBefore", payload$.updatedBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -318,6 +326,7 @@ export class Jobs extends ClientSDK {
                 method: "GET",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -331,16 +340,11 @@ export class Jobs extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetJobsResponse$.inboundSchema.parse({
+            const result = operations.GetJobsResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -354,22 +358,17 @@ export class Jobs extends ClientSDK {
      * Create a single jobs record
      */
     async create(
-        xIntegrationosConnectionKey: string,
-        requestBody: operations.PostJobsRequestBody,
+        input: operations.PostJobsRequest,
         options?: RequestOptions
     ): Promise<operations.PostJobsResponse> {
-        const input$: operations.PostJobsRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PostJobsRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PostJobsRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Jobs, { explode: true });
 
         const path$ = this.templateURLComponent("/jobs")();
 
@@ -411,16 +410,11 @@ export class Jobs extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PostJobsResponse$.inboundSchema.parse({
+            const result = operations.PostJobsResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -434,17 +428,14 @@ export class Jobs extends ClientSDK {
      * Get the count of jobs records
      */
     async count(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetJobsCountRequest,
         options?: RequestOptions
     ): Promise<operations.GetJobsCountResponse> {
-        const input$: operations.GetJobsCountRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetJobsCountRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetJobsCountRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/jobs/count")();
@@ -487,16 +478,11 @@ export class Jobs extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetJobsCountResponse$.inboundSchema.parse({
+            const result = operations.GetJobsCountResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);

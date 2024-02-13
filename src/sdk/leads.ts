@@ -28,19 +28,14 @@ export class Leads extends ClientSDK {
      * Get a single leads record
      */
     async get(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.GetLeadsIdRequest,
         options?: RequestOptions
     ): Promise<operations.GetLeadsIdResponse> {
-        const input$: operations.GetLeadsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetLeadsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetLeadsIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -87,16 +82,11 @@ export class Leads extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetLeadsIdResponse$.inboundSchema.parse({
+            const result = operations.GetLeadsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -110,19 +100,14 @@ export class Leads extends ClientSDK {
      * Delete a single leads record
      */
     async delete(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.DeleteLeadsIdRequest,
         options?: RequestOptions
     ): Promise<operations.DeleteLeadsIdResponse> {
-        const input$: operations.DeleteLeadsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.DeleteLeadsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.DeleteLeadsIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -130,6 +115,15 @@ export class Leads extends ClientSDK {
         };
 
         const path$ = this.templateURLComponent("/leads/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -156,6 +150,7 @@ export class Leads extends ClientSDK {
                 method: "DELETE",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -169,16 +164,11 @@ export class Leads extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.DeleteLeadsIdResponse$.inboundSchema.parse({
+            const result = operations.DeleteLeadsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -192,30 +182,32 @@ export class Leads extends ClientSDK {
      * Update a single leads record
      */
     async update(
-        id: string,
-        xIntegrationosConnectionKey: string,
-        requestBody?: operations.PatchLeadsIdRequestBody | undefined,
+        input: operations.PatchLeadsIdRequest,
         options?: RequestOptions
     ): Promise<operations.PatchLeadsIdResponse> {
-        const input$: operations.PatchLeadsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PatchLeadsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PatchLeadsIdRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Leads, { explode: true });
 
         const pathParams$ = {
             id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
         };
 
         const path$ = this.templateURLComponent("/leads/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -242,6 +234,7 @@ export class Leads extends ClientSDK {
                 method: "PATCH",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -255,16 +248,11 @@ export class Leads extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PatchLeadsIdResponse$.inboundSchema.parse({
+            const result = operations.PatchLeadsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -278,20 +266,40 @@ export class Leads extends ClientSDK {
      * Get all leads records
      */
     async list(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetLeadsRequest,
         options?: RequestOptions
     ): Promise<operations.GetLeadsResponse> {
-        const input$: operations.GetLeadsRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetLeadsRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetLeadsRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/leads")();
+
+        const query$ = [
+            enc$.encodeForm("createdAfter", payload$.createdAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("createdBefore", payload$.createdBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("cursor", payload$.cursor, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("limit", payload$.limit, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("updatedAfter", payload$.updatedAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("updatedBefore", payload$.updatedBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -318,6 +326,7 @@ export class Leads extends ClientSDK {
                 method: "GET",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -331,16 +340,11 @@ export class Leads extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetLeadsResponse$.inboundSchema.parse({
+            const result = operations.GetLeadsResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -354,22 +358,17 @@ export class Leads extends ClientSDK {
      * Create a single leads record
      */
     async create(
-        xIntegrationosConnectionKey: string,
-        requestBody: operations.PostLeadsRequestBody,
+        input: operations.PostLeadsRequest,
         options?: RequestOptions
     ): Promise<operations.PostLeadsResponse> {
-        const input$: operations.PostLeadsRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PostLeadsRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PostLeadsRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Leads, { explode: true });
 
         const path$ = this.templateURLComponent("/leads")();
 
@@ -411,16 +410,11 @@ export class Leads extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PostLeadsResponse$.inboundSchema.parse({
+            const result = operations.PostLeadsResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -434,17 +428,14 @@ export class Leads extends ClientSDK {
      * Get the count of leads records
      */
     async count(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetLeadsCountRequest,
         options?: RequestOptions
     ): Promise<operations.GetLeadsCountResponse> {
-        const input$: operations.GetLeadsCountRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetLeadsCountRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetLeadsCountRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/leads/count")();
@@ -487,16 +478,11 @@ export class Leads extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetLeadsCountResponse$.inboundSchema.parse({
+            const result = operations.GetLeadsCountResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);

@@ -8,14 +8,8 @@ export type GetCompaniesCountRequest = {
     /**
      * The unique identifier of a Connected Account
      */
-    xIntegrationosConnectionKey: string;
+    connectionKey: string;
 };
-
-export enum GetCompaniesCountStatusCode {
-    TwoHundred = 200,
-    FourHundred = 400,
-    FiveHundred = 500,
-}
 
 export type GetCompaniesCountUnified = {
     count?: number | undefined;
@@ -26,7 +20,6 @@ export type GetCompaniesCountPassthrough = {};
 export type GetCompaniesCountCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
-    key?: string | undefined;
 };
 
 export type GetCompaniesCountMeta = {
@@ -34,19 +27,20 @@ export type GetCompaniesCountMeta = {
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
     rateLimitRemaining?: number | undefined;
-    cache?: GetCompaniesCountCache | undefined;
+    totalTransactions?: number | undefined;
+    hash?: string | undefined;
     transactionKey?: string | undefined;
     txn?: string | undefined;
+    commonModel?: string | undefined;
+    connectionKey?: string | undefined;
     platform?: string | undefined;
     platformVersion?: string | undefined;
     connectionDefinitionKey?: string | undefined;
     action?: string | undefined;
-    commonModel?: string | undefined;
     commonModelVersion?: string | undefined;
-    connectionKey?: string | undefined;
-    hash?: string | undefined;
+    key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    totalTransactions?: number | undefined;
+    cache?: GetCompaniesCountCache | undefined;
 };
 
 /**
@@ -54,7 +48,7 @@ export type GetCompaniesCountMeta = {
  */
 export type GetCompaniesCountResponseBody = {
     status?: string | undefined;
-    statusCode?: GetCompaniesCountStatusCode | undefined;
+    statusCode?: number | undefined;
     unified?: GetCompaniesCountUnified | undefined;
     passthrough?: GetCompaniesCountPassthrough | undefined;
     meta?: GetCompaniesCountMeta | undefined;
@@ -91,7 +85,7 @@ export namespace GetCompaniesCountRequest$ {
         })
         .transform((v) => {
             return {
-                xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
@@ -101,17 +95,14 @@ export namespace GetCompaniesCountRequest$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCompaniesCountRequest> = z
         .object({
-            xIntegrationosConnectionKey: z.string(),
+            connectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
+                "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
             };
         });
 }
-
-/** @internal */
-export const GetCompaniesCountStatusCode$ = z.nativeEnum(GetCompaniesCountStatusCode);
 
 /** @internal */
 export namespace GetCompaniesCountUnified$ {
@@ -162,40 +153,34 @@ export namespace GetCompaniesCountCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetCompaniesCountCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 
     export type Outbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCompaniesCountCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 }
@@ -207,19 +192,20 @@ export namespace GetCompaniesCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetCompaniesCountCache$.Inbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetCompaniesCountCache$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetCompaniesCountMeta, z.ZodTypeDef, Inbound> = z
@@ -228,19 +214,20 @@ export namespace GetCompaniesCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetCompaniesCountCache$.inboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetCompaniesCountCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -252,9 +239,14 @@ export namespace GetCompaniesCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -263,16 +255,12 @@ export namespace GetCompaniesCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 
@@ -281,19 +269,20 @@ export namespace GetCompaniesCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetCompaniesCountCache$.Outbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetCompaniesCountCache$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCompaniesCountMeta> = z
@@ -302,19 +291,20 @@ export namespace GetCompaniesCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetCompaniesCountCache$.outboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetCompaniesCountCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -326,9 +316,14 @@ export namespace GetCompaniesCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -337,16 +332,12 @@ export namespace GetCompaniesCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 }
@@ -355,7 +346,7 @@ export namespace GetCompaniesCountMeta$ {
 export namespace GetCompaniesCountResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
-        statusCode?: GetCompaniesCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetCompaniesCountUnified$.Inbound | undefined;
         passthrough?: GetCompaniesCountPassthrough$.Inbound | undefined;
         meta?: GetCompaniesCountMeta$.Inbound | undefined;
@@ -364,10 +355,10 @@ export namespace GetCompaniesCountResponseBody$ {
     export const inboundSchema: z.ZodType<GetCompaniesCountResponseBody, z.ZodTypeDef, Inbound> = z
         .object({
             status: z.string().optional(),
-            statusCode: GetCompaniesCountStatusCode$.optional(),
-            unified: z.lazy(() => GetCompaniesCountUnified$.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetCompaniesCountPassthrough$.inboundSchema).optional(),
-            meta: z.lazy(() => GetCompaniesCountMeta$.inboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetCompaniesCountUnified$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetCompaniesCountPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetCompaniesCountMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -381,7 +372,7 @@ export namespace GetCompaniesCountResponseBody$ {
 
     export type Outbound = {
         status?: string | undefined;
-        statusCode?: GetCompaniesCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetCompaniesCountUnified$.Outbound | undefined;
         passthrough?: GetCompaniesCountPassthrough$.Outbound | undefined;
         meta?: GetCompaniesCountMeta$.Outbound | undefined;
@@ -391,10 +382,10 @@ export namespace GetCompaniesCountResponseBody$ {
         z
             .object({
                 status: z.string().optional(),
-                statusCode: GetCompaniesCountStatusCode$.optional(),
-                unified: z.lazy(() => GetCompaniesCountUnified$.outboundSchema).optional(),
-                passthrough: z.lazy(() => GetCompaniesCountPassthrough$.outboundSchema).optional(),
-                meta: z.lazy(() => GetCompaniesCountMeta$.outboundSchema).optional(),
+                statusCode: z.number().int().optional(),
+                unified: z.lazy(() => GetCompaniesCountUnified$?.outboundSchema).optional(),
+                passthrough: z.lazy(() => GetCompaniesCountPassthrough$?.outboundSchema).optional(),
+                meta: z.lazy(() => GetCompaniesCountMeta$?.outboundSchema).optional(),
             })
             .transform((v) => {
                 return {
@@ -421,7 +412,7 @@ export namespace GetCompaniesCountResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetCompaniesCountResponseBody$.inboundSchema).optional(),
+            object: z.lazy(() => GetCompaniesCountResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -446,7 +437,7 @@ export namespace GetCompaniesCountResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => GetCompaniesCountResponseBody$.outboundSchema).optional(),
+            object: z.lazy(() => GetCompaniesCountResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

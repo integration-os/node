@@ -28,19 +28,14 @@ export class Contacts extends ClientSDK {
      * Get a single contacts record
      */
     async get(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.GetContactsIdRequest,
         options?: RequestOptions
     ): Promise<operations.GetContactsIdResponse> {
-        const input$: operations.GetContactsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetContactsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetContactsIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -87,16 +82,11 @@ export class Contacts extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetContactsIdResponse$.inboundSchema.parse({
+            const result = operations.GetContactsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -110,19 +100,14 @@ export class Contacts extends ClientSDK {
      * Delete a single contacts record
      */
     async delete(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.DeleteContactsIdRequest,
         options?: RequestOptions
     ): Promise<operations.DeleteContactsIdResponse> {
-        const input$: operations.DeleteContactsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.DeleteContactsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.DeleteContactsIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -130,6 +115,15 @@ export class Contacts extends ClientSDK {
         };
 
         const path$ = this.templateURLComponent("/contacts/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -156,6 +150,7 @@ export class Contacts extends ClientSDK {
                 method: "DELETE",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -169,16 +164,11 @@ export class Contacts extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.DeleteContactsIdResponse$.inboundSchema.parse({
+            const result = operations.DeleteContactsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -192,30 +182,32 @@ export class Contacts extends ClientSDK {
      * Update a single contacts record
      */
     async update(
-        id: string,
-        xIntegrationosConnectionKey: string,
-        requestBody?: operations.PatchContactsIdRequestBody | undefined,
+        input: operations.PatchContactsIdRequest,
         options?: RequestOptions
     ): Promise<operations.PatchContactsIdResponse> {
-        const input$: operations.PatchContactsIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PatchContactsIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PatchContactsIdRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Contacts, { explode: true });
 
         const pathParams$ = {
             id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
         };
 
         const path$ = this.templateURLComponent("/contacts/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -242,6 +234,7 @@ export class Contacts extends ClientSDK {
                 method: "PATCH",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -255,16 +248,11 @@ export class Contacts extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PatchContactsIdResponse$.inboundSchema.parse({
+            const result = operations.PatchContactsIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -278,20 +266,40 @@ export class Contacts extends ClientSDK {
      * Get all contacts records
      */
     async list(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetContactsRequest,
         options?: RequestOptions
     ): Promise<operations.GetContactsResponse> {
-        const input$: operations.GetContactsRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetContactsRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetContactsRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/contacts")();
+
+        const query$ = [
+            enc$.encodeForm("createdAfter", payload$.createdAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("createdBefore", payload$.createdBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("cursor", payload$.cursor, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("limit", payload$.limit, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("updatedAfter", payload$.updatedAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("updatedBefore", payload$.updatedBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -318,6 +326,7 @@ export class Contacts extends ClientSDK {
                 method: "GET",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -331,16 +340,11 @@ export class Contacts extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetContactsResponse$.inboundSchema.parse({
+            const result = operations.GetContactsResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -354,22 +358,17 @@ export class Contacts extends ClientSDK {
      * Create a single contacts record
      */
     async create(
-        xIntegrationosConnectionKey: string,
-        requestBody: operations.PostContactsRequestBody,
+        input: operations.PostContactsRequest,
         options?: RequestOptions
     ): Promise<operations.PostContactsResponse> {
-        const input$: operations.PostContactsRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PostContactsRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PostContactsRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Contacts, { explode: true });
 
         const path$ = this.templateURLComponent("/contacts")();
 
@@ -411,16 +410,11 @@ export class Contacts extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PostContactsResponse$.inboundSchema.parse({
+            const result = operations.PostContactsResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -434,17 +428,14 @@ export class Contacts extends ClientSDK {
      * Get the count of contacts records
      */
     async count(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetContactsCountRequest,
         options?: RequestOptions
     ): Promise<operations.GetContactsCountResponse> {
-        const input$: operations.GetContactsCountRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetContactsCountRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetContactsCountRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/contacts/count")();
@@ -487,16 +478,11 @@ export class Contacts extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetContactsCountResponse$.inboundSchema.parse({
+            const result = operations.GetContactsCountResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);

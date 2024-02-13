@@ -8,14 +8,8 @@ export type GetLeadsCountRequest = {
     /**
      * The unique identifier of a Connected Account
      */
-    xIntegrationosConnectionKey: string;
+    connectionKey: string;
 };
-
-export enum GetLeadsCountStatusCode {
-    TwoHundred = 200,
-    FourHundred = 400,
-    FiveHundred = 500,
-}
 
 export type GetLeadsCountUnified = {
     count?: number | undefined;
@@ -26,7 +20,6 @@ export type GetLeadsCountPassthrough = {};
 export type GetLeadsCountCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
-    key?: string | undefined;
 };
 
 export type GetLeadsCountMeta = {
@@ -34,19 +27,20 @@ export type GetLeadsCountMeta = {
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
     rateLimitRemaining?: number | undefined;
-    cache?: GetLeadsCountCache | undefined;
+    totalTransactions?: number | undefined;
+    hash?: string | undefined;
     transactionKey?: string | undefined;
     txn?: string | undefined;
+    commonModel?: string | undefined;
+    connectionKey?: string | undefined;
     platform?: string | undefined;
     platformVersion?: string | undefined;
     connectionDefinitionKey?: string | undefined;
     action?: string | undefined;
-    commonModel?: string | undefined;
     commonModelVersion?: string | undefined;
-    connectionKey?: string | undefined;
-    hash?: string | undefined;
+    key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    totalTransactions?: number | undefined;
+    cache?: GetLeadsCountCache | undefined;
 };
 
 /**
@@ -54,7 +48,7 @@ export type GetLeadsCountMeta = {
  */
 export type GetLeadsCountResponseBody = {
     status?: string | undefined;
-    statusCode?: GetLeadsCountStatusCode | undefined;
+    statusCode?: number | undefined;
     unified?: GetLeadsCountUnified | undefined;
     passthrough?: GetLeadsCountPassthrough | undefined;
     meta?: GetLeadsCountMeta | undefined;
@@ -91,7 +85,7 @@ export namespace GetLeadsCountRequest$ {
         })
         .transform((v) => {
             return {
-                xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
@@ -101,17 +95,14 @@ export namespace GetLeadsCountRequest$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsCountRequest> = z
         .object({
-            xIntegrationosConnectionKey: z.string(),
+            connectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
+                "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
             };
         });
 }
-
-/** @internal */
-export const GetLeadsCountStatusCode$ = z.nativeEnum(GetLeadsCountStatusCode);
 
 /** @internal */
 export namespace GetLeadsCountUnified$ {
@@ -162,40 +153,34 @@ export namespace GetLeadsCountCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetLeadsCountCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 
     export type Outbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsCountCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 }
@@ -207,19 +192,20 @@ export namespace GetLeadsCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetLeadsCountCache$.Inbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetLeadsCountCache$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetLeadsCountMeta, z.ZodTypeDef, Inbound> = z
@@ -228,19 +214,20 @@ export namespace GetLeadsCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetLeadsCountCache$.inboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetLeadsCountCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -252,9 +239,14 @@ export namespace GetLeadsCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -263,16 +255,12 @@ export namespace GetLeadsCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 
@@ -281,19 +269,20 @@ export namespace GetLeadsCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetLeadsCountCache$.Outbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetLeadsCountCache$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsCountMeta> = z
@@ -302,19 +291,20 @@ export namespace GetLeadsCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetLeadsCountCache$.outboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetLeadsCountCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -326,9 +316,14 @@ export namespace GetLeadsCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -337,16 +332,12 @@ export namespace GetLeadsCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 }
@@ -355,7 +346,7 @@ export namespace GetLeadsCountMeta$ {
 export namespace GetLeadsCountResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
-        statusCode?: GetLeadsCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetLeadsCountUnified$.Inbound | undefined;
         passthrough?: GetLeadsCountPassthrough$.Inbound | undefined;
         meta?: GetLeadsCountMeta$.Inbound | undefined;
@@ -364,10 +355,10 @@ export namespace GetLeadsCountResponseBody$ {
     export const inboundSchema: z.ZodType<GetLeadsCountResponseBody, z.ZodTypeDef, Inbound> = z
         .object({
             status: z.string().optional(),
-            statusCode: GetLeadsCountStatusCode$.optional(),
-            unified: z.lazy(() => GetLeadsCountUnified$.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetLeadsCountPassthrough$.inboundSchema).optional(),
-            meta: z.lazy(() => GetLeadsCountMeta$.inboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetLeadsCountUnified$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetLeadsCountPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetLeadsCountMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -381,7 +372,7 @@ export namespace GetLeadsCountResponseBody$ {
 
     export type Outbound = {
         status?: string | undefined;
-        statusCode?: GetLeadsCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetLeadsCountUnified$.Outbound | undefined;
         passthrough?: GetLeadsCountPassthrough$.Outbound | undefined;
         meta?: GetLeadsCountMeta$.Outbound | undefined;
@@ -390,10 +381,10 @@ export namespace GetLeadsCountResponseBody$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetLeadsCountResponseBody> = z
         .object({
             status: z.string().optional(),
-            statusCode: GetLeadsCountStatusCode$.optional(),
-            unified: z.lazy(() => GetLeadsCountUnified$.outboundSchema).optional(),
-            passthrough: z.lazy(() => GetLeadsCountPassthrough$.outboundSchema).optional(),
-            meta: z.lazy(() => GetLeadsCountMeta$.outboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetLeadsCountUnified$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetLeadsCountPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetLeadsCountMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -420,7 +411,7 @@ export namespace GetLeadsCountResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetLeadsCountResponseBody$.inboundSchema).optional(),
+            object: z.lazy(() => GetLeadsCountResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -445,7 +436,7 @@ export namespace GetLeadsCountResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => GetLeadsCountResponseBody$.outboundSchema).optional(),
+            object: z.lazy(() => GetLeadsCountResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

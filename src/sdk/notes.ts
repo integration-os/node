@@ -28,19 +28,14 @@ export class Notes extends ClientSDK {
      * Get a single notes record
      */
     async get(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.GetNotesIdRequest,
         options?: RequestOptions
     ): Promise<operations.GetNotesIdResponse> {
-        const input$: operations.GetNotesIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetNotesIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetNotesIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -87,16 +82,11 @@ export class Notes extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetNotesIdResponse$.inboundSchema.parse({
+            const result = operations.GetNotesIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -110,19 +100,14 @@ export class Notes extends ClientSDK {
      * Delete a single notes record
      */
     async delete(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.DeleteNotesIdRequest,
         options?: RequestOptions
     ): Promise<operations.DeleteNotesIdResponse> {
-        const input$: operations.DeleteNotesIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.DeleteNotesIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.DeleteNotesIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -130,6 +115,15 @@ export class Notes extends ClientSDK {
         };
 
         const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -156,6 +150,7 @@ export class Notes extends ClientSDK {
                 method: "DELETE",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -169,16 +164,11 @@ export class Notes extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.DeleteNotesIdResponse$.inboundSchema.parse({
+            const result = operations.DeleteNotesIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -192,30 +182,32 @@ export class Notes extends ClientSDK {
      * Update a single notes record
      */
     async update(
-        id: string,
-        xIntegrationosConnectionKey: string,
-        requestBody?: operations.PatchNotesIdRequestBody | undefined,
+        input: operations.PatchNotesIdRequest,
         options?: RequestOptions
     ): Promise<operations.PatchNotesIdResponse> {
-        const input$: operations.PatchNotesIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PatchNotesIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PatchNotesIdRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Notes, { explode: true });
 
         const pathParams$ = {
             id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
         };
 
         const path$ = this.templateURLComponent("/notes/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -242,6 +234,7 @@ export class Notes extends ClientSDK {
                 method: "PATCH",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -255,16 +248,11 @@ export class Notes extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PatchNotesIdResponse$.inboundSchema.parse({
+            const result = operations.PatchNotesIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -278,20 +266,40 @@ export class Notes extends ClientSDK {
      * Get all notes records
      */
     async list(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetNotesRequest,
         options?: RequestOptions
     ): Promise<operations.GetNotesResponse> {
-        const input$: operations.GetNotesRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetNotesRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetNotesRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/notes")();
+
+        const query$ = [
+            enc$.encodeForm("createdAfter", payload$.createdAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("createdBefore", payload$.createdBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("cursor", payload$.cursor, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("limit", payload$.limit, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("updatedAfter", payload$.updatedAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("updatedBefore", payload$.updatedBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -318,6 +326,7 @@ export class Notes extends ClientSDK {
                 method: "GET",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -331,16 +340,11 @@ export class Notes extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetNotesResponse$.inboundSchema.parse({
+            const result = operations.GetNotesResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -354,22 +358,17 @@ export class Notes extends ClientSDK {
      * Create a single notes record
      */
     async create(
-        xIntegrationosConnectionKey: string,
-        requestBody: operations.PostNotesRequestBody,
+        input: operations.PostNotesRequest,
         options?: RequestOptions
     ): Promise<operations.PostNotesResponse> {
-        const input$: operations.PostNotesRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PostNotesRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PostNotesRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Notes, { explode: true });
 
         const path$ = this.templateURLComponent("/notes")();
 
@@ -411,16 +410,11 @@ export class Notes extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PostNotesResponse$.inboundSchema.parse({
+            const result = operations.PostNotesResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -434,17 +428,14 @@ export class Notes extends ClientSDK {
      * Get the count of notes records
      */
     async count(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetNotesCountRequest,
         options?: RequestOptions
     ): Promise<operations.GetNotesCountResponse> {
-        const input$: operations.GetNotesCountRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetNotesCountRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetNotesCountRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/notes/count")();
@@ -487,16 +478,11 @@ export class Notes extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetNotesCountResponse$.inboundSchema.parse({
+            const result = operations.GetNotesCountResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);

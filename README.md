@@ -25,9 +25,12 @@ import { IntegrationOS } from '@integrationOS/node';
 
 const integrate = new IntegrationOS("sk_live_1234");
 
-const response = await integrate.customers.get("cus_OT3CLnirqcpjvw", "live::xero::acme-inc");
+const response = await integrate.customers.get({
+    connectionKey: "live::xero::acme-inc",
+    id: "cus_OT3CLnirqcpjvw"
+});
 
-console.log(response.unified);
+console.log(response.object.unified);
 ```
 
 ## Full Documentation

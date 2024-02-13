@@ -8,14 +8,8 @@ export type GetContactsCountRequest = {
     /**
      * The unique identifier of a Connected Account
      */
-    xIntegrationosConnectionKey: string;
+    connectionKey: string;
 };
-
-export enum GetContactsCountStatusCode {
-    TwoHundred = 200,
-    FourHundred = 400,
-    FiveHundred = 500,
-}
 
 export type GetContactsCountUnified = {
     count?: number | undefined;
@@ -26,7 +20,6 @@ export type GetContactsCountPassthrough = {};
 export type GetContactsCountCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
-    key?: string | undefined;
 };
 
 export type GetContactsCountMeta = {
@@ -34,19 +27,20 @@ export type GetContactsCountMeta = {
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
     rateLimitRemaining?: number | undefined;
-    cache?: GetContactsCountCache | undefined;
+    totalTransactions?: number | undefined;
+    hash?: string | undefined;
     transactionKey?: string | undefined;
     txn?: string | undefined;
+    commonModel?: string | undefined;
+    connectionKey?: string | undefined;
     platform?: string | undefined;
     platformVersion?: string | undefined;
     connectionDefinitionKey?: string | undefined;
     action?: string | undefined;
-    commonModel?: string | undefined;
     commonModelVersion?: string | undefined;
-    connectionKey?: string | undefined;
-    hash?: string | undefined;
+    key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    totalTransactions?: number | undefined;
+    cache?: GetContactsCountCache | undefined;
 };
 
 /**
@@ -54,7 +48,7 @@ export type GetContactsCountMeta = {
  */
 export type GetContactsCountResponseBody = {
     status?: string | undefined;
-    statusCode?: GetContactsCountStatusCode | undefined;
+    statusCode?: number | undefined;
     unified?: GetContactsCountUnified | undefined;
     passthrough?: GetContactsCountPassthrough | undefined;
     meta?: GetContactsCountMeta | undefined;
@@ -91,7 +85,7 @@ export namespace GetContactsCountRequest$ {
         })
         .transform((v) => {
             return {
-                xIntegrationosConnectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
             };
         });
 
@@ -101,17 +95,14 @@ export namespace GetContactsCountRequest$ {
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsCountRequest> = z
         .object({
-            xIntegrationosConnectionKey: z.string(),
+            connectionKey: z.string(),
         })
         .transform((v) => {
             return {
-                "X-INTEGRATIONOS-CONNECTION-KEY": v.xIntegrationosConnectionKey,
+                "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
             };
         });
 }
-
-/** @internal */
-export const GetContactsCountStatusCode$ = z.nativeEnum(GetContactsCountStatusCode);
 
 /** @internal */
 export namespace GetContactsCountUnified$ {
@@ -162,40 +153,34 @@ export namespace GetContactsCountCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetContactsCountCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 
     export type Outbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
-        key?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsCountCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
-            key: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.hit === undefined ? null : { hit: v.hit }),
                 ...(v.ttl === undefined ? null : { ttl: v.ttl }),
-                ...(v.key === undefined ? null : { key: v.key }),
             };
         });
 }
@@ -207,19 +192,20 @@ export namespace GetContactsCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetContactsCountCache$.Inbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetContactsCountCache$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetContactsCountMeta, z.ZodTypeDef, Inbound> = z
@@ -228,19 +214,20 @@ export namespace GetContactsCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetContactsCountCache$.inboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetContactsCountCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -252,9 +239,14 @@ export namespace GetContactsCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -263,16 +255,12 @@ export namespace GetContactsCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 
@@ -281,19 +269,20 @@ export namespace GetContactsCountMeta$ {
         latency?: number | undefined;
         platformRateLimitRemaining?: number | undefined;
         rateLimitRemaining?: number | undefined;
-        cache?: GetContactsCountCache$.Outbound | undefined;
+        totalTransactions?: number | undefined;
+        hash?: string | undefined;
         transactionKey?: string | undefined;
         txn?: string | undefined;
+        commonModel?: string | undefined;
+        connectionKey?: string | undefined;
         platform?: string | undefined;
         platformVersion?: string | undefined;
         connectionDefinitionKey?: string | undefined;
         action?: string | undefined;
-        commonModel?: string | undefined;
         commonModelVersion?: string | undefined;
-        connectionKey?: string | undefined;
-        hash?: string | undefined;
+        key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        totalTransactions?: number | undefined;
+        cache?: GetContactsCountCache$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsCountMeta> = z
@@ -302,19 +291,20 @@ export namespace GetContactsCountMeta$ {
             latency: z.number().int().optional(),
             platformRateLimitRemaining: z.number().int().optional(),
             rateLimitRemaining: z.number().int().optional(),
-            cache: z.lazy(() => GetContactsCountCache$.outboundSchema).optional(),
+            totalTransactions: z.number().int().optional(),
+            hash: z.string().optional(),
             transactionKey: z.string().optional(),
             txn: z.string().optional(),
+            commonModel: z.string().optional(),
+            connectionKey: z.string().optional(),
             platform: z.string().optional(),
             platformVersion: z.string().optional(),
             connectionDefinitionKey: z.string().optional(),
             action: z.string().optional(),
-            commonModel: z.string().optional(),
             commonModelVersion: z.string().optional(),
-            connectionKey: z.string().optional(),
-            hash: z.string().optional(),
+            key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            totalTransactions: z.number().int().optional(),
+            cache: z.lazy(() => GetContactsCountCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -326,9 +316,14 @@ export namespace GetContactsCountMeta$ {
                 ...(v.rateLimitRemaining === undefined
                     ? null
                     : { rateLimitRemaining: v.rateLimitRemaining }),
-                ...(v.cache === undefined ? null : { cache: v.cache }),
+                ...(v.totalTransactions === undefined
+                    ? null
+                    : { totalTransactions: v.totalTransactions }),
+                ...(v.hash === undefined ? null : { hash: v.hash }),
                 ...(v.transactionKey === undefined ? null : { transactionKey: v.transactionKey }),
                 ...(v.txn === undefined ? null : { txn: v.txn }),
+                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
+                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
                 ...(v.platform === undefined ? null : { platform: v.platform }),
                 ...(v.platformVersion === undefined
                     ? null
@@ -337,16 +332,12 @@ export namespace GetContactsCountMeta$ {
                     ? null
                     : { connectionDefinitionKey: v.connectionDefinitionKey }),
                 ...(v.action === undefined ? null : { action: v.action }),
-                ...(v.commonModel === undefined ? null : { commonModel: v.commonModel }),
                 ...(v.commonModelVersion === undefined
                     ? null
                     : { commonModelVersion: v.commonModelVersion }),
-                ...(v.connectionKey === undefined ? null : { connectionKey: v.connectionKey }),
-                ...(v.hash === undefined ? null : { hash: v.hash }),
+                ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.heartbeats === undefined ? null : { heartbeats: v.heartbeats }),
-                ...(v.totalTransactions === undefined
-                    ? null
-                    : { totalTransactions: v.totalTransactions }),
+                ...(v.cache === undefined ? null : { cache: v.cache }),
             };
         });
 }
@@ -355,7 +346,7 @@ export namespace GetContactsCountMeta$ {
 export namespace GetContactsCountResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
-        statusCode?: GetContactsCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetContactsCountUnified$.Inbound | undefined;
         passthrough?: GetContactsCountPassthrough$.Inbound | undefined;
         meta?: GetContactsCountMeta$.Inbound | undefined;
@@ -364,10 +355,10 @@ export namespace GetContactsCountResponseBody$ {
     export const inboundSchema: z.ZodType<GetContactsCountResponseBody, z.ZodTypeDef, Inbound> = z
         .object({
             status: z.string().optional(),
-            statusCode: GetContactsCountStatusCode$.optional(),
-            unified: z.lazy(() => GetContactsCountUnified$.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetContactsCountPassthrough$.inboundSchema).optional(),
-            meta: z.lazy(() => GetContactsCountMeta$.inboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetContactsCountUnified$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetContactsCountPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetContactsCountMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -381,7 +372,7 @@ export namespace GetContactsCountResponseBody$ {
 
     export type Outbound = {
         status?: string | undefined;
-        statusCode?: GetContactsCountStatusCode | undefined;
+        statusCode?: number | undefined;
         unified?: GetContactsCountUnified$.Outbound | undefined;
         passthrough?: GetContactsCountPassthrough$.Outbound | undefined;
         meta?: GetContactsCountMeta$.Outbound | undefined;
@@ -390,10 +381,10 @@ export namespace GetContactsCountResponseBody$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetContactsCountResponseBody> = z
         .object({
             status: z.string().optional(),
-            statusCode: GetContactsCountStatusCode$.optional(),
-            unified: z.lazy(() => GetContactsCountUnified$.outboundSchema).optional(),
-            passthrough: z.lazy(() => GetContactsCountPassthrough$.outboundSchema).optional(),
-            meta: z.lazy(() => GetContactsCountMeta$.outboundSchema).optional(),
+            statusCode: z.number().int().optional(),
+            unified: z.lazy(() => GetContactsCountUnified$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetContactsCountPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetContactsCountMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -420,7 +411,7 @@ export namespace GetContactsCountResponse$ {
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetContactsCountResponseBody$.inboundSchema).optional(),
+            object: z.lazy(() => GetContactsCountResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -445,7 +436,7 @@ export namespace GetContactsCountResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => GetContactsCountResponseBody$.outboundSchema).optional(),
+            object: z.lazy(() => GetContactsCountResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

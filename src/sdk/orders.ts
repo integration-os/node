@@ -28,19 +28,14 @@ export class Orders extends ClientSDK {
      * Get a single orders record
      */
     async get(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.GetOrdersIdRequest,
         options?: RequestOptions
     ): Promise<operations.GetOrdersIdResponse> {
-        const input$: operations.GetOrdersIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetOrdersIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetOrdersIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -87,16 +82,11 @@ export class Orders extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetOrdersIdResponse$.inboundSchema.parse({
+            const result = operations.GetOrdersIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -110,19 +100,14 @@ export class Orders extends ClientSDK {
      * Delete a single orders record
      */
     async delete(
-        id: string,
-        xIntegrationosConnectionKey: string,
+        input: operations.DeleteOrdersIdRequest,
         options?: RequestOptions
     ): Promise<operations.DeleteOrdersIdResponse> {
-        const input$: operations.DeleteOrdersIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.DeleteOrdersIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.DeleteOrdersIdRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const pathParams$ = {
@@ -130,6 +115,15 @@ export class Orders extends ClientSDK {
         };
 
         const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -156,6 +150,7 @@ export class Orders extends ClientSDK {
                 method: "DELETE",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -169,16 +164,11 @@ export class Orders extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.DeleteOrdersIdResponse$.inboundSchema.parse({
+            const result = operations.DeleteOrdersIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -192,30 +182,32 @@ export class Orders extends ClientSDK {
      * Update a single orders record
      */
     async update(
-        id: string,
-        xIntegrationosConnectionKey: string,
-        requestBody?: operations.PatchOrdersIdRequestBody | undefined,
+        input: operations.PatchOrdersIdRequest,
         options?: RequestOptions
     ): Promise<operations.PatchOrdersIdResponse> {
-        const input$: operations.PatchOrdersIdRequest = {
-            id: id,
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PatchOrdersIdRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PatchOrdersIdRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Orders, { explode: true });
 
         const pathParams$ = {
             id: enc$.encodeSimple("id", payload$.id, { explode: false, charEncoding: "percent" }),
         };
 
         const path$ = this.templateURLComponent("/orders/{id}")(pathParams$);
+
+        const query$ = [
+            enc$.encodeForm("modifyToken", payload$.modifyToken, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -242,6 +234,7 @@ export class Orders extends ClientSDK {
                 method: "PATCH",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -255,16 +248,11 @@ export class Orders extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PatchOrdersIdResponse$.inboundSchema.parse({
+            const result = operations.PatchOrdersIdResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -278,20 +266,40 @@ export class Orders extends ClientSDK {
      * Get all orders records
      */
     async list(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetOrdersRequest,
         options?: RequestOptions
     ): Promise<operations.GetOrdersResponse> {
-        const input$: operations.GetOrdersRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetOrdersRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetOrdersRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/orders")();
+
+        const query$ = [
+            enc$.encodeForm("createdAfter", payload$.createdAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("createdBefore", payload$.createdBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("cursor", payload$.cursor, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("limit", payload$.limit, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("updatedAfter", payload$.updatedAfter, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("updatedBefore", payload$.updatedBefore, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+        ]
+            .filter(Boolean)
+            .join("&");
 
         headers$.set(
             "X-INTEGRATIONOS-CONNECTION-KEY",
@@ -318,6 +326,7 @@ export class Orders extends ClientSDK {
                 method: "GET",
                 path: path$,
                 headers: headers$,
+                query: query$,
                 body: body$,
             },
             options
@@ -331,16 +340,11 @@ export class Orders extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetOrdersResponse$.inboundSchema.parse({
+            const result = operations.GetOrdersResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -354,22 +358,17 @@ export class Orders extends ClientSDK {
      * Create a single orders record
      */
     async create(
-        xIntegrationosConnectionKey: string,
-        requestBody: operations.PostOrdersRequestBody,
+        input: operations.PostOrdersRequest,
         options?: RequestOptions
     ): Promise<operations.PostOrdersResponse> {
-        const input$: operations.PostOrdersRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-            requestBody: requestBody,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Content-Type", "application/json");
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.PostOrdersRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.PostOrdersRequest$?.outboundSchema.parse(input);
 
-        const body$ = enc$.encodeJSON("body", payload$.RequestBody, { explode: true });
+        const body$ = enc$.encodeJSON("body", payload$.Orders, { explode: true });
 
         const path$ = this.templateURLComponent("/orders")();
 
@@ -411,16 +410,11 @@ export class Orders extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.PostOrdersResponse$.inboundSchema.parse({
+            const result = operations.PostOrdersResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
@@ -434,17 +428,14 @@ export class Orders extends ClientSDK {
      * Get the count of orders records
      */
     async count(
-        xIntegrationosConnectionKey: string,
+        input: operations.GetOrdersCountRequest,
         options?: RequestOptions
     ): Promise<operations.GetOrdersCountResponse> {
-        const input$: operations.GetOrdersCountRequest = {
-            xIntegrationosConnectionKey: xIntegrationosConnectionKey,
-        };
         const headers$ = new Headers();
         headers$.set("user-agent", SDK_METADATA.userAgent);
         headers$.set("Accept", "application/json");
 
-        const payload$ = operations.GetOrdersCountRequest$.outboundSchema.parse(input$);
+        const payload$ = operations.GetOrdersCountRequest$?.outboundSchema.parse(input);
         const body$ = null;
 
         const path$ = this.templateURLComponent("/orders/count")();
@@ -487,16 +478,11 @@ export class Orders extends ClientSDK {
 
         if (this.matchResponse(response, 200, "application/json")) {
             const responseBody = await response.json();
-            const result = operations.GetOrdersCountResponse$.inboundSchema.parse({
+            const result = operations.GetOrdersCountResponse$?.inboundSchema.parse({
                 ...responseFields$,
                 object: responseBody,
             });
-            return {
-                contentType: result.contentType,
-                statusCode: result.statusCode as any,
-                rawResponse: result.rawResponse,
-                ...result.object
-            };
+            return result;
         } else {
             const responseBody = await response.text();
             throw new errors.SDKError("Unexpected API response", response, responseBody);
