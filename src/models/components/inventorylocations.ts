@@ -26,6 +26,7 @@ export type InventoryLocations = {
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     deleted?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -45,6 +46,7 @@ export namespace InventoryLocations$ {
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<InventoryLocations, z.ZodTypeDef, Inbound> = z
@@ -68,6 +70,7 @@ export namespace InventoryLocations$ {
                 .transform((v) => new Date(v))
                 .optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -86,6 +89,7 @@ export namespace InventoryLocations$ {
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -101,6 +105,7 @@ export namespace InventoryLocations$ {
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, InventoryLocations> = z
@@ -122,6 +127,7 @@ export namespace InventoryLocations$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -140,6 +146,7 @@ export namespace InventoryLocations$ {
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

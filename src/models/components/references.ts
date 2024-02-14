@@ -11,6 +11,7 @@ export type References = {
     position?: string | undefined;
     email?: string | undefined;
     phoneNumber?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -22,6 +23,7 @@ export namespace References$ {
         position?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<References, z.ZodTypeDef, Inbound> = z
@@ -32,6 +34,7 @@ export namespace References$ {
             position: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -41,6 +44,7 @@ export namespace References$ {
                 ...(v.position === undefined ? null : { position: v.position }),
                 ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -51,6 +55,7 @@ export namespace References$ {
         position?: string | undefined;
         email?: string | undefined;
         phoneNumber?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, References> = z
@@ -61,6 +66,7 @@ export namespace References$ {
             position: z.string().optional(),
             email: z.string().optional(),
             phoneNumber: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -70,6 +76,7 @@ export namespace References$ {
                 ...(v.position === undefined ? null : { position: v.position }),
                 ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.phoneNumber === undefined ? null : { phoneNumber: v.phoneNumber }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -7,6 +7,7 @@ import { z } from "zod";
 export type KeyValues = {
     key?: string | undefined;
     value?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -14,34 +15,40 @@ export namespace KeyValues$ {
     export type Inbound = {
         key?: string | undefined;
         value?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<KeyValues, z.ZodTypeDef, Inbound> = z
         .object({
             key: z.string().optional(),
             value: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.value === undefined ? null : { value: v.value }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
     export type Outbound = {
         key?: string | undefined;
         value?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, KeyValues> = z
         .object({
             key: z.string().optional(),
             value: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.key === undefined ? null : { key: v.key }),
                 ...(v.value === undefined ? null : { value: v.value }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

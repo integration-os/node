@@ -35,6 +35,7 @@ export type Addresses = {
     geoLocation?: GeoCoordinates | undefined;
     customFields?: Array<CustomAttributes> | undefined;
     subdivisionCode?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -65,6 +66,7 @@ export namespace Addresses$ {
         geoLocation?: GeoCoordinates$.Inbound | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
         subdivisionCode?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Addresses, z.ZodTypeDef, Inbound> = z
@@ -91,6 +93,7 @@ export namespace Addresses$ {
             geoLocation: GeoCoordinates$?.inboundSchema.optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
             subdivisionCode: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -120,6 +123,7 @@ export namespace Addresses$ {
                 ...(v.subdivisionCode === undefined
                     ? null
                     : { subdivisionCode: v.subdivisionCode }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -146,6 +150,7 @@ export namespace Addresses$ {
         geoLocation?: GeoCoordinates$.Outbound | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
         subdivisionCode?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Addresses> = z
@@ -172,6 +177,7 @@ export namespace Addresses$ {
             geoLocation: GeoCoordinates$?.outboundSchema.optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
             subdivisionCode: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -201,6 +207,7 @@ export namespace Addresses$ {
                 ...(v.subdivisionCode === undefined
                     ? null
                     : { subdivisionCode: v.subdivisionCode }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

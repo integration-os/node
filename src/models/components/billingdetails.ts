@@ -199,6 +199,7 @@ export type BillingDetails = {
     currency?: BillingDetailsCurrency | undefined;
     language?: string | undefined;
     additionalAttributes?: Array<CustomAttributes> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -228,6 +229,7 @@ export namespace BillingDetails$ {
         currency?: BillingDetailsCurrency | undefined;
         language?: string | undefined;
         additionalAttributes?: Array<CustomAttributes$.Inbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<BillingDetails, z.ZodTypeDef, Inbound> = z
@@ -258,6 +260,7 @@ export namespace BillingDetails$ {
             currency: BillingDetailsCurrency$.optional(),
             language: z.string().optional(),
             additionalAttributes: z.array(CustomAttributes$?.inboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -283,6 +286,7 @@ export namespace BillingDetails$ {
                 ...(v.additionalAttributes === undefined
                     ? null
                     : { additionalAttributes: v.additionalAttributes }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -305,6 +309,7 @@ export namespace BillingDetails$ {
         currency?: BillingDetailsCurrency | undefined;
         language?: string | undefined;
         additionalAttributes?: Array<CustomAttributes$.Outbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, BillingDetails> = z
@@ -333,6 +338,7 @@ export namespace BillingDetails$ {
             currency: BillingDetailsCurrency$.optional(),
             language: z.string().optional(),
             additionalAttributes: z.array(CustomAttributes$?.outboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -358,6 +364,7 @@ export namespace BillingDetails$ {
                 ...(v.additionalAttributes === undefined
                     ? null
                     : { additionalAttributes: v.additionalAttributes }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

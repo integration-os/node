@@ -17,6 +17,7 @@ export type Salaries = {
     value?: number | undefined;
     currency?: string | undefined;
     paymentPeriod?: PaymentPeriod | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -28,6 +29,7 @@ export namespace Salaries$ {
         value?: number | undefined;
         currency?: string | undefined;
         paymentPeriod?: PaymentPeriod | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Salaries, z.ZodTypeDef, Inbound> = z
@@ -35,12 +37,14 @@ export namespace Salaries$ {
             value: z.number().optional(),
             currency: z.string().optional(),
             paymentPeriod: PaymentPeriod$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.value === undefined ? null : { value: v.value }),
                 ...(v.currency === undefined ? null : { currency: v.currency }),
                 ...(v.paymentPeriod === undefined ? null : { paymentPeriod: v.paymentPeriod }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -48,6 +52,7 @@ export namespace Salaries$ {
         value?: number | undefined;
         currency?: string | undefined;
         paymentPeriod?: PaymentPeriod | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Salaries> = z
@@ -55,12 +60,14 @@ export namespace Salaries$ {
             value: z.number().optional(),
             currency: z.string().optional(),
             paymentPeriod: PaymentPeriod$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.value === undefined ? null : { value: v.value }),
                 ...(v.currency === undefined ? null : { currency: v.currency }),
                 ...(v.paymentPeriod === undefined ? null : { paymentPeriod: v.paymentPeriod }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

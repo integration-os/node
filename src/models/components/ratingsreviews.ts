@@ -25,6 +25,7 @@ export type RatingsReviews = {
     metadata?: Metadata | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -46,6 +47,7 @@ export namespace RatingsReviews$ {
         metadata?: Metadata$.Inbound | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<RatingsReviews, z.ZodTypeDef, Inbound> = z
@@ -71,6 +73,7 @@ export namespace RatingsReviews$ {
             metadata: Metadata$?.inboundSchema.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -89,6 +92,7 @@ export namespace RatingsReviews$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -106,6 +110,7 @@ export namespace RatingsReviews$ {
         metadata?: Metadata$.Outbound | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, RatingsReviews> = z
@@ -129,6 +134,7 @@ export namespace RatingsReviews$ {
             metadata: Metadata$?.outboundSchema.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -147,6 +153,7 @@ export namespace RatingsReviews$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

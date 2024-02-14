@@ -219,6 +219,7 @@ export type Invoices = {
     exchangeRate?: number | undefined;
     header?: string | undefined;
     footer?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -260,6 +261,7 @@ export namespace Invoices$ {
         exchangeRate?: number | undefined;
         header?: string | undefined;
         footer?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Invoices, z.ZodTypeDef, Inbound> = z
@@ -310,6 +312,7 @@ export namespace Invoices$ {
             exchangeRate: z.number().optional(),
             header: z.string().optional(),
             footer: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -347,6 +350,7 @@ export namespace Invoices$ {
                 ...(v.exchangeRate === undefined ? null : { exchangeRate: v.exchangeRate }),
                 ...(v.header === undefined ? null : { header: v.header }),
                 ...(v.footer === undefined ? null : { footer: v.footer }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -381,6 +385,7 @@ export namespace Invoices$ {
         exchangeRate?: number | undefined;
         header?: string | undefined;
         footer?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Invoices> = z
@@ -427,6 +432,7 @@ export namespace Invoices$ {
             exchangeRate: z.number().optional(),
             header: z.string().optional(),
             footer: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -464,6 +470,7 @@ export namespace Invoices$ {
                 ...(v.exchangeRate === undefined ? null : { exchangeRate: v.exchangeRate }),
                 ...(v.header === undefined ? null : { header: v.header }),
                 ...(v.footer === undefined ? null : { footer: v.footer }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

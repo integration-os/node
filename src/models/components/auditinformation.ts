@@ -16,6 +16,7 @@ export type AuditInformation = {
     auditOpinion?: AuditOpinion | undefined;
     auditDate?: Date | undefined;
     notes?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -28,6 +29,7 @@ export namespace AuditInformation$ {
         auditOpinion?: AuditOpinion | undefined;
         auditDate?: string | undefined;
         notes?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<AuditInformation, z.ZodTypeDef, Inbound> = z
@@ -40,6 +42,7 @@ export namespace AuditInformation$ {
                 .transform((v) => new Date(v))
                 .optional(),
             notes: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -47,6 +50,7 @@ export namespace AuditInformation$ {
                 ...(v.auditOpinion === undefined ? null : { auditOpinion: v.auditOpinion }),
                 ...(v.auditDate === undefined ? null : { auditDate: v.auditDate }),
                 ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -55,6 +59,7 @@ export namespace AuditInformation$ {
         auditOpinion?: AuditOpinion | undefined;
         auditDate?: string | undefined;
         notes?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, AuditInformation> = z
@@ -66,6 +71,7 @@ export namespace AuditInformation$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             notes: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -73,6 +79,7 @@ export namespace AuditInformation$ {
                 ...(v.auditOpinion === undefined ? null : { auditOpinion: v.auditOpinion }),
                 ...(v.auditDate === undefined ? null : { auditDate: v.auditDate }),
                 ...(v.notes === undefined ? null : { notes: v.notes }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

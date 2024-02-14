@@ -34,7 +34,7 @@ export class IntegrationOS extends ClientSDK {
     constructor(secret: string, options: SDKOptions = {}) {
         super({
             client: options.httpClient || new HTTPClient(),
-            baseURL: serverURLFromOptions(options),
+            baseURL: serverURLFromOptions(options) as URL,
         });
 
         this.options$ = { secret, ...options };
@@ -46,34 +46,9 @@ export class IntegrationOS extends ClientSDK {
         return (this._customers ??= new Customers(this.options$));
     }
 
-    private _users?: Users;
-    get users() {
-        return (this._users ??= new Users(this.options$));
-    }
-
-    private _tasks?: Tasks;
-    get tasks() {
-        return (this._tasks ??= new Tasks(this.options$));
-    }
-
-    private _companies?: Companies;
-    get companies() {
-        return (this._companies ??= new Companies(this.options$));
-    }
-
-    private _notes?: Notes;
-    get notes() {
-        return (this._notes ??= new Notes(this.options$));
-    }
-
     private _orders?: Orders;
     get orders() {
         return (this._orders ??= new Orders(this.options$));
-    }
-
-    private _jobs?: Jobs;
-    get jobs() {
-        return (this._jobs ??= new Jobs(this.options$));
     }
 
     private _opportunities?: Opportunities;
@@ -81,9 +56,9 @@ export class IntegrationOS extends ClientSDK {
         return (this._opportunities ??= new Opportunities(this.options$));
     }
 
-    private _leads?: Leads;
-    get leads() {
-        return (this._leads ??= new Leads(this.options$));
+    private _notes?: Notes;
+    get notes() {
+        return (this._notes ??= new Notes(this.options$));
     }
 
     private _products?: Products;
@@ -91,14 +66,39 @@ export class IntegrationOS extends ClientSDK {
         return (this._products ??= new Products(this.options$));
     }
 
+    private _users?: Users;
+    get users() {
+        return (this._users ??= new Users(this.options$));
+    }
+
+    private _jobs?: Jobs;
+    get jobs() {
+        return (this._jobs ??= new Jobs(this.options$));
+    }
+
+    private _leads?: Leads;
+    get leads() {
+        return (this._leads ??= new Leads(this.options$));
+    }
+
     private _contacts?: Contacts;
     get contacts() {
         return (this._contacts ??= new Contacts(this.options$));
     }
 
+    private _incomeStatements?: IncomeStatements;
+    get incomeStatements() {
+        return (this._incomeStatements ??= new IncomeStatements(this.options$));
+    }
+
     private _tickets?: Tickets;
     get tickets() {
         return (this._tickets ??= new Tickets(this.options$));
+    }
+
+    private _candidates?: Candidates;
+    get candidates() {
+        return (this._candidates ??= new Candidates(this.options$));
     }
 
     private _balanceSheets?: BalanceSheets;
@@ -111,14 +111,9 @@ export class IntegrationOS extends ClientSDK {
         return (this._invoices ??= new Invoices(this.options$));
     }
 
-    private _incomeStatements?: IncomeStatements;
-    get incomeStatements() {
-        return (this._incomeStatements ??= new IncomeStatements(this.options$));
-    }
-
-    private _candidates?: Candidates;
-    get candidates() {
-        return (this._candidates ??= new Candidates(this.options$));
+    private _tasks?: Tasks;
+    get tasks() {
+        return (this._tasks ??= new Tasks(this.options$));
     }
 
     private _bills?: Bills;
@@ -126,9 +121,14 @@ export class IntegrationOS extends ClientSDK {
         return (this._bills ??= new Bills(this.options$));
     }
 
-    private _expenses?: Expenses;
-    get expenses() {
-        return (this._expenses ??= new Expenses(this.options$));
+    private _companies?: Companies;
+    get companies() {
+        return (this._companies ??= new Companies(this.options$));
+    }
+
+    private _payments?: Payments;
+    get payments() {
+        return (this._payments ??= new Payments(this.options$));
     }
 
     private _messages?: Messages;
@@ -146,8 +146,8 @@ export class IntegrationOS extends ClientSDK {
         return (this._accounts ??= new Accounts(this.options$));
     }
 
-    private _payments?: Payments;
-    get payments() {
-        return (this._payments ??= new Payments(this.options$));
+    private _expenses?: Expenses;
+    get expenses() {
+        return (this._expenses ??= new Expenses(this.options$));
     }
 }

@@ -66,6 +66,7 @@ export type Products = {
     status?: ProductsStatus | undefined;
     tax?: Taxes | undefined;
     localizations?: Array<Localizations> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -112,6 +113,7 @@ export namespace Products$ {
         status?: ProductsStatus | undefined;
         tax?: Taxes$.Inbound | undefined;
         localizations?: Array<Localizations$.Inbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Products, z.ZodTypeDef, Inbound> = z
@@ -163,6 +165,7 @@ export namespace Products$ {
             status: ProductsStatus$.optional(),
             tax: Taxes$?.inboundSchema.optional(),
             localizations: z.array(Localizations$?.inboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -211,6 +214,7 @@ export namespace Products$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.tax === undefined ? null : { tax: v.tax }),
                 ...(v.localizations === undefined ? null : { localizations: v.localizations }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -250,6 +254,7 @@ export namespace Products$ {
         status?: ProductsStatus | undefined;
         tax?: Taxes$.Outbound | undefined;
         localizations?: Array<Localizations$.Outbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Products> = z
@@ -298,6 +303,7 @@ export namespace Products$ {
             status: ProductsStatus$.optional(),
             tax: Taxes$?.outboundSchema.optional(),
             localizations: z.array(Localizations$?.outboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -346,6 +352,7 @@ export namespace Products$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.tax === undefined ? null : { tax: v.tax }),
                 ...(v.localizations === undefined ? null : { localizations: v.localizations }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

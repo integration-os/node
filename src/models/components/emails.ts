@@ -13,6 +13,7 @@ export enum EmailsType {
 export type Emails = {
     email?: string | undefined;
     type?: EmailsType | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -23,34 +24,40 @@ export namespace Emails$ {
     export type Inbound = {
         email?: string | undefined;
         type?: EmailsType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Emails, z.ZodTypeDef, Inbound> = z
         .object({
             email: z.string().optional(),
             type: EmailsType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
     export type Outbound = {
         email?: string | undefined;
         type?: EmailsType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Emails> = z
         .object({
             email: z.string().optional(),
             type: EmailsType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.email === undefined ? null : { email: v.email }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

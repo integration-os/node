@@ -53,6 +53,7 @@ export type Jobs = {
     incentives?: string | undefined;
     jobStartDate?: Date | undefined;
     salaryCurrency?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -96,6 +97,7 @@ export namespace Jobs$ {
         incentives?: string | undefined;
         jobStartDate?: string | undefined;
         salaryCurrency?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Jobs, z.ZodTypeDef, Inbound> = z
@@ -155,6 +157,7 @@ export namespace Jobs$ {
                 .transform((v) => new Date(v))
                 .optional(),
             salaryCurrency: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -215,6 +218,7 @@ export namespace Jobs$ {
                 ...(v.incentives === undefined ? null : { incentives: v.incentives }),
                 ...(v.jobStartDate === undefined ? null : { jobStartDate: v.jobStartDate }),
                 ...(v.salaryCurrency === undefined ? null : { salaryCurrency: v.salaryCurrency }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -254,6 +258,7 @@ export namespace Jobs$ {
         incentives?: string | undefined;
         jobStartDate?: string | undefined;
         salaryCurrency?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Jobs> = z
@@ -308,6 +313,7 @@ export namespace Jobs$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             salaryCurrency: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -368,6 +374,7 @@ export namespace Jobs$ {
                 ...(v.incentives === undefined ? null : { incentives: v.incentives }),
                 ...(v.jobStartDate === undefined ? null : { jobStartDate: v.jobStartDate }),
                 ...(v.salaryCurrency === undefined ? null : { salaryCurrency: v.salaryCurrency }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -7,6 +7,7 @@ import { z } from "zod";
 export type Prices = {
     amount?: number | undefined;
     currency?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -14,34 +15,40 @@ export namespace Prices$ {
     export type Inbound = {
         amount?: number | undefined;
         currency?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Prices, z.ZodTypeDef, Inbound> = z
         .object({
             amount: z.number().optional(),
             currency: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.amount === undefined ? null : { amount: v.amount }),
                 ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
     export type Outbound = {
         amount?: number | undefined;
         currency?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Prices> = z
         .object({
             amount: z.number().optional(),
             currency: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.amount === undefined ? null : { amount: v.amount }),
                 ...(v.currency === undefined ? null : { currency: v.currency }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

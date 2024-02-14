@@ -25,6 +25,7 @@ export type Permissions = {
     accessControlType?: AccessControlType | undefined;
     assigneeDetails?: UserOrGroup | undefined;
     identifierType?: IdentifierType | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -43,6 +44,7 @@ export namespace Permissions$ {
         accessControlType?: AccessControlType | undefined;
         assigneeDetails?: UserOrGroup$.Inbound | undefined;
         identifierType?: IdentifierType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Permissions, z.ZodTypeDef, Inbound> = z
@@ -54,6 +56,7 @@ export namespace Permissions$ {
             accessControlType: AccessControlType$.optional(),
             assigneeDetails: UserOrGroup$?.inboundSchema.optional(),
             identifierType: IdentifierType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -68,6 +71,7 @@ export namespace Permissions$ {
                     ? null
                     : { assigneeDetails: v.assigneeDetails }),
                 ...(v.identifierType === undefined ? null : { identifierType: v.identifierType }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -79,6 +83,7 @@ export namespace Permissions$ {
         accessControlType?: AccessControlType | undefined;
         assigneeDetails?: UserOrGroup$.Outbound | undefined;
         identifierType?: IdentifierType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Permissions> = z
@@ -90,6 +95,7 @@ export namespace Permissions$ {
             accessControlType: AccessControlType$.optional(),
             assigneeDetails: UserOrGroup$?.outboundSchema.optional(),
             identifierType: IdentifierType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -104,6 +110,7 @@ export namespace Permissions$ {
                     ? null
                     : { assigneeDetails: v.assigneeDetails }),
                 ...(v.identifierType === undefined ? null : { identifierType: v.identifierType }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

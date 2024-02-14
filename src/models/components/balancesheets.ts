@@ -221,6 +221,7 @@ export type BalanceSheets = {
     deleted?: boolean | undefined;
     accountSummary?: Array<KeyValues> | undefined;
     customFields?: Array<CustomAttributes> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -276,6 +277,7 @@ export namespace BalanceSheets$ {
         deleted?: boolean | undefined;
         accountSummary?: Array<KeyValues$.Inbound> | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<BalanceSheets, z.ZodTypeDef, Inbound> = z
@@ -339,6 +341,7 @@ export namespace BalanceSheets$ {
             deleted: z.boolean().optional(),
             accountSummary: z.array(KeyValues$?.inboundSchema).optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -437,6 +440,7 @@ export namespace BalanceSheets$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.accountSummary === undefined ? null : { accountSummary: v.accountSummary }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -488,6 +492,7 @@ export namespace BalanceSheets$ {
         deleted?: boolean | undefined;
         accountSummary?: Array<KeyValues$.Outbound> | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, BalanceSheets> = z
@@ -548,6 +553,7 @@ export namespace BalanceSheets$ {
             deleted: z.boolean().optional(),
             accountSummary: z.array(KeyValues$?.outboundSchema).optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -646,6 +652,7 @@ export namespace BalanceSheets$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.accountSummary === undefined ? null : { accountSummary: v.accountSummary }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

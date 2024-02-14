@@ -287,8 +287,19 @@ export class Payments extends ClientSDK {
                 explode: true,
                 charEncoding: "percent",
             }),
-            enc$.encodeForm("cursor", payload$.cursor, { explode: true, charEncoding: "percent" }),
             enc$.encodeForm("limit", payload$.limit, { explode: true, charEncoding: "percent" }),
+            enc$.encodeForm("nextCursor", payload$.nextCursor, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("pageSize", payload$.pageSize, {
+                explode: true,
+                charEncoding: "percent",
+            }),
+            enc$.encodeForm("previousCursor", payload$.previousCursor, {
+                explode: true,
+                charEncoding: "percent",
+            }),
             enc$.encodeForm("updatedAfter", payload$.updatedAfter, {
                 explode: true,
                 charEncoding: "percent",

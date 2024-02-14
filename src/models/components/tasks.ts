@@ -17,7 +17,7 @@ export enum TasksStatus {
     OnHold = "On Hold",
 }
 
-export enum Priority {
+export enum TasksPriority {
     Low = "Low",
     Medium = "Medium",
     High = "High",
@@ -29,7 +29,7 @@ export type Tasks = {
     title?: string | undefined;
     description?: string | undefined;
     status?: TasksStatus | undefined;
-    priority?: Priority | undefined;
+    priority?: TasksPriority | undefined;
     dueDate?: Date | undefined;
     dueTimezone?: string | undefined;
     assignee?: Users | undefined;
@@ -50,13 +50,14 @@ export type Tasks = {
     watchers?: Array<Users> | undefined;
     completionPercentage?: number | undefined;
     notifications?: Array<Notifications> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
 export const TasksStatus$ = z.nativeEnum(TasksStatus);
 
 /** @internal */
-export const Priority$ = z.nativeEnum(Priority);
+export const TasksPriority$ = z.nativeEnum(TasksPriority);
 
 /** @internal */
 export namespace Tasks$ {
@@ -65,7 +66,7 @@ export namespace Tasks$ {
         title?: string | undefined;
         description?: string | undefined;
         status?: TasksStatus | undefined;
-        priority?: Priority | undefined;
+        priority?: TasksPriority | undefined;
         dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: Users$.Inbound | undefined;
@@ -86,6 +87,7 @@ export namespace Tasks$ {
         watchers?: Array<Users$.Inbound> | undefined;
         completionPercentage?: number | undefined;
         notifications?: Array<Notifications$.Inbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Tasks, z.ZodTypeDef, Inbound> = z
@@ -94,7 +96,7 @@ export namespace Tasks$ {
             title: z.string().optional(),
             description: z.string().optional(),
             status: TasksStatus$.optional(),
-            priority: Priority$.optional(),
+            priority: TasksPriority$.optional(),
             dueDate: z
                 .string()
                 .datetime({ offset: true })
@@ -127,6 +129,7 @@ export namespace Tasks$ {
             watchers: z.array(Users$?.inboundSchema).optional(),
             completionPercentage: z.number().optional(),
             notifications: z.array(Notifications$?.inboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -161,6 +164,7 @@ export namespace Tasks$ {
                     ? null
                     : { completionPercentage: v.completionPercentage }),
                 ...(v.notifications === undefined ? null : { notifications: v.notifications }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -169,7 +173,7 @@ export namespace Tasks$ {
         title?: string | undefined;
         description?: string | undefined;
         status?: TasksStatus | undefined;
-        priority?: Priority | undefined;
+        priority?: TasksPriority | undefined;
         dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: Users$.Outbound | undefined;
@@ -190,6 +194,7 @@ export namespace Tasks$ {
         watchers?: Array<Users$.Outbound> | undefined;
         completionPercentage?: number | undefined;
         notifications?: Array<Notifications$.Outbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Tasks> = z
@@ -198,7 +203,7 @@ export namespace Tasks$ {
             title: z.string().optional(),
             description: z.string().optional(),
             status: TasksStatus$.optional(),
-            priority: Priority$.optional(),
+            priority: TasksPriority$.optional(),
             dueDate: z
                 .date()
                 .transform((v) => v.toISOString())
@@ -228,6 +233,7 @@ export namespace Tasks$ {
             watchers: z.array(Users$?.outboundSchema).optional(),
             completionPercentage: z.number().optional(),
             notifications: z.array(Notifications$?.outboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -262,6 +268,7 @@ export namespace Tasks$ {
                     ? null
                     : { completionPercentage: v.completionPercentage }),
                 ...(v.notifications === undefined ? null : { notifications: v.notifications }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -10,6 +10,7 @@ export type ShareholderEquityDetails = {
     retainedEarnings?: number | undefined;
     accumulatedOtherComprehensiveIncome?: number | undefined;
     treasuryStock?: number | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -20,6 +21,7 @@ export namespace ShareholderEquityDetails$ {
         retainedEarnings?: number | undefined;
         accumulatedOtherComprehensiveIncome?: number | undefined;
         treasuryStock?: number | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<ShareholderEquityDetails, z.ZodTypeDef, Inbound> = z
@@ -29,6 +31,7 @@ export namespace ShareholderEquityDetails$ {
             retainedEarnings: z.number().optional(),
             accumulatedOtherComprehensiveIncome: z.number().optional(),
             treasuryStock: z.number().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -44,6 +47,7 @@ export namespace ShareholderEquityDetails$ {
                               v.accumulatedOtherComprehensiveIncome,
                       }),
                 ...(v.treasuryStock === undefined ? null : { treasuryStock: v.treasuryStock }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -53,6 +57,7 @@ export namespace ShareholderEquityDetails$ {
         retainedEarnings?: number | undefined;
         accumulatedOtherComprehensiveIncome?: number | undefined;
         treasuryStock?: number | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ShareholderEquityDetails> = z
@@ -62,6 +67,7 @@ export namespace ShareholderEquityDetails$ {
             retainedEarnings: z.number().optional(),
             accumulatedOtherComprehensiveIncome: z.number().optional(),
             treasuryStock: z.number().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -77,6 +83,7 @@ export namespace ShareholderEquityDetails$ {
                               v.accumulatedOtherComprehensiveIncome,
                       }),
                 ...(v.treasuryStock === undefined ? null : { treasuryStock: v.treasuryStock }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

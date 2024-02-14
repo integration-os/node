@@ -191,6 +191,7 @@ export type InvoiceAdjustments = {
     active?: boolean | undefined;
     deleted?: boolean | undefined;
     metadata?: Metadata | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -213,6 +214,7 @@ export namespace InvoiceAdjustments$ {
         active?: boolean | undefined;
         deleted?: boolean | undefined;
         metadata?: Metadata$.Inbound | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<InvoiceAdjustments, z.ZodTypeDef, Inbound> = z
@@ -236,6 +238,7 @@ export namespace InvoiceAdjustments$ {
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
             metadata: Metadata$?.inboundSchema.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -252,6 +255,7 @@ export namespace InvoiceAdjustments$ {
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -267,6 +271,7 @@ export namespace InvoiceAdjustments$ {
         active?: boolean | undefined;
         deleted?: boolean | undefined;
         metadata?: Metadata$.Outbound | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, InvoiceAdjustments> = z
@@ -288,6 +293,7 @@ export namespace InvoiceAdjustments$ {
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
             metadata: Metadata$?.outboundSchema.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -304,6 +310,7 @@ export namespace InvoiceAdjustments$ {
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

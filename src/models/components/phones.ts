@@ -15,6 +15,7 @@ export type Phones = {
     country?: string | undefined;
     countryCode?: string | undefined;
     type?: PhonesType | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -27,6 +28,7 @@ export namespace Phones$ {
         country?: string | undefined;
         countryCode?: string | undefined;
         type?: PhonesType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Phones, z.ZodTypeDef, Inbound> = z
@@ -35,6 +37,7 @@ export namespace Phones$ {
             country: z.string().optional(),
             countryCode: z.string().optional(),
             type: PhonesType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -42,6 +45,7 @@ export namespace Phones$ {
                 ...(v.country === undefined ? null : { country: v.country }),
                 ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -50,6 +54,7 @@ export namespace Phones$ {
         country?: string | undefined;
         countryCode?: string | undefined;
         type?: PhonesType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Phones> = z
@@ -58,6 +63,7 @@ export namespace Phones$ {
             country: z.string().optional(),
             countryCode: z.string().optional(),
             type: PhonesType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -65,6 +71,7 @@ export namespace Phones$ {
                 ...(v.country === undefined ? null : { country: v.country }),
                 ...(v.countryCode === undefined ? null : { countryCode: v.countryCode }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

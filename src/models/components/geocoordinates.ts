@@ -13,6 +13,7 @@ export type GeoCoordinates = {
     heading?: number | undefined;
     speed?: number | undefined;
     timestamp?: Date | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -26,6 +27,7 @@ export namespace GeoCoordinates$ {
         heading?: number | undefined;
         speed?: number | undefined;
         timestamp?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GeoCoordinates, z.ZodTypeDef, Inbound> = z
@@ -42,6 +44,7 @@ export namespace GeoCoordinates$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -55,6 +58,7 @@ export namespace GeoCoordinates$ {
                 ...(v.heading === undefined ? null : { heading: v.heading }),
                 ...(v.speed === undefined ? null : { speed: v.speed }),
                 ...(v.timestamp === undefined ? null : { timestamp: v.timestamp }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -67,6 +71,7 @@ export namespace GeoCoordinates$ {
         heading?: number | undefined;
         speed?: number | undefined;
         timestamp?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GeoCoordinates> = z
@@ -82,6 +87,7 @@ export namespace GeoCoordinates$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -95,6 +101,7 @@ export namespace GeoCoordinates$ {
                 ...(v.heading === undefined ? null : { heading: v.heading }),
                 ...(v.speed === undefined ? null : { speed: v.speed }),
                 ...(v.timestamp === undefined ? null : { timestamp: v.timestamp }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

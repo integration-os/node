@@ -205,6 +205,7 @@ export type Payments = {
     refund?: Refunds | undefined;
     paymentProcessor?: string | undefined;
     webhookUrl?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -237,6 +238,7 @@ export namespace Payments$ {
         refund?: Refunds$.Inbound | undefined;
         paymentProcessor?: string | undefined;
         webhookUrl?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Payments, z.ZodTypeDef, Inbound> = z
@@ -270,6 +272,7 @@ export namespace Payments$ {
             refund: Refunds$?.inboundSchema.optional(),
             paymentProcessor: z.string().optional(),
             webhookUrl: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -300,6 +303,7 @@ export namespace Payments$ {
                     ? null
                     : { paymentProcessor: v.paymentProcessor }),
                 ...(v.webhookUrl === undefined ? null : { webhookUrl: v.webhookUrl }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -325,6 +329,7 @@ export namespace Payments$ {
         refund?: Refunds$.Outbound | undefined;
         paymentProcessor?: string | undefined;
         webhookUrl?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Payments> = z
@@ -356,6 +361,7 @@ export namespace Payments$ {
             refund: Refunds$?.outboundSchema.optional(),
             paymentProcessor: z.string().optional(),
             webhookUrl: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -386,6 +392,7 @@ export namespace Payments$ {
                     ? null
                     : { paymentProcessor: v.paymentProcessor }),
                 ...(v.webhookUrl === undefined ? null : { webhookUrl: v.webhookUrl }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -196,6 +196,7 @@ export type IncomeStatements = {
     accountSummary?: Array<KeyValues> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -224,6 +225,7 @@ export namespace IncomeStatements$ {
         accountSummary?: Array<KeyValues$.Inbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<IncomeStatements, z.ZodTypeDef, Inbound> = z
@@ -256,6 +258,7 @@ export namespace IncomeStatements$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -295,6 +298,7 @@ export namespace IncomeStatements$ {
                 ...(v.accountSummary === undefined ? null : { accountSummary: v.accountSummary }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -319,6 +323,7 @@ export namespace IncomeStatements$ {
         accountSummary?: Array<KeyValues$.Outbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, IncomeStatements> = z
@@ -349,6 +354,7 @@ export namespace IncomeStatements$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -388,6 +394,7 @@ export namespace IncomeStatements$ {
                 ...(v.accountSummary === undefined ? null : { accountSummary: v.accountSummary }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

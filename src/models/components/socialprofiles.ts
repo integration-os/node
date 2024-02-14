@@ -28,6 +28,7 @@ export type SocialProfiles = {
     updatedAt?: Date | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -47,6 +48,7 @@ export namespace SocialProfiles$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<SocialProfiles, z.ZodTypeDef, Inbound> = z
@@ -70,6 +72,7 @@ export namespace SocialProfiles$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -84,6 +87,7 @@ export namespace SocialProfiles$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -99,6 +103,7 @@ export namespace SocialProfiles$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, SocialProfiles> = z
@@ -120,6 +125,7 @@ export namespace SocialProfiles$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -134,6 +140,7 @@ export namespace SocialProfiles$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

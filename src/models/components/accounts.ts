@@ -138,6 +138,7 @@ export enum AccountType {
     ExpenseOfficeGeneralAdministrativeExpenses = "expense::office-general-administrative-expenses",
     ExpenseOtherBusinessExpenses = "expense::other-business-expenses",
     ExpenseOtherMiscellaneousServiceCost = "expense::other-miscellaneous-service-cost",
+    ExpensePenaltiesSettlements = "expense::penalties-settlements",
     ExpensePromotionalMeals = "expense::promotional-meals",
     ExpenseRentOrLeaseOfBuildings = "expense::rent-or-lease-of-buildings",
     ExpenseRepairMaintenance = "expense::repair-maintenance",
@@ -491,6 +492,7 @@ export type Accounts = {
     overdraftProtection?: boolean | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -526,6 +528,7 @@ export namespace Accounts$ {
         overdraftProtection?: boolean | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Accounts, z.ZodTypeDef, Inbound> = z
@@ -563,6 +566,7 @@ export namespace Accounts$ {
             overdraftProtection: z.boolean().optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -589,6 +593,7 @@ export namespace Accounts$ {
                     : { overdraftProtection: v.overdraftProtection }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -614,6 +619,7 @@ export namespace Accounts$ {
         overdraftProtection?: boolean | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Accounts> = z
@@ -648,6 +654,7 @@ export namespace Accounts$ {
             overdraftProtection: z.boolean().optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -674,6 +681,7 @@ export namespace Accounts$ {
                     : { overdraftProtection: v.overdraftProtection }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

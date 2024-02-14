@@ -56,6 +56,7 @@ export type Users = {
     status?: UsersStatus | undefined;
     sso?: Array<Sso> | undefined;
     paymentMethods?: PaymentMethods | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -95,6 +96,7 @@ export namespace Users$ {
         status?: UsersStatus | undefined;
         sso?: Array<Sso$.Inbound> | undefined;
         paymentMethods?: PaymentMethods$.Inbound | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Users, z.ZodTypeDef, Inbound> = z
@@ -140,6 +142,7 @@ export namespace Users$ {
             status: UsersStatus$.optional(),
             sso: z.array(Sso$?.inboundSchema).optional(),
             paymentMethods: PaymentMethods$?.inboundSchema.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -168,6 +171,7 @@ export namespace Users$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.sso === undefined ? null : { sso: v.sso }),
                 ...(v.paymentMethods === undefined ? null : { paymentMethods: v.paymentMethods }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -197,6 +201,7 @@ export namespace Users$ {
         status?: UsersStatus | undefined;
         sso?: Array<Sso$.Outbound> | undefined;
         paymentMethods?: PaymentMethods$.Outbound | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Users> = z
@@ -238,6 +243,7 @@ export namespace Users$ {
             status: UsersStatus$.optional(),
             sso: z.array(Sso$?.outboundSchema).optional(),
             paymentMethods: PaymentMethods$?.outboundSchema.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -266,6 +272,7 @@ export namespace Users$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.sso === undefined ? null : { sso: v.sso }),
                 ...(v.paymentMethods === undefined ? null : { paymentMethods: v.paymentMethods }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }
