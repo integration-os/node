@@ -8,6 +8,7 @@ export type ExpenseCategories = {
     id?: string | undefined;
     name?: string | undefined;
     description?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -16,6 +17,7 @@ export namespace ExpenseCategories$ {
         id?: string | undefined;
         name?: string | undefined;
         description?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<ExpenseCategories, z.ZodTypeDef, Inbound> = z
@@ -23,12 +25,14 @@ export namespace ExpenseCategories$ {
             id: z.string().optional(),
             name: z.string().optional(),
             description: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.name === undefined ? null : { name: v.name }),
                 ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -36,6 +40,7 @@ export namespace ExpenseCategories$ {
         id?: string | undefined;
         name?: string | undefined;
         description?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ExpenseCategories> = z
@@ -43,12 +48,14 @@ export namespace ExpenseCategories$ {
             id: z.string().optional(),
             name: z.string().optional(),
             description: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
                 ...(v.name === undefined ? null : { name: v.name }),
                 ...(v.description === undefined ? null : { description: v.description }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

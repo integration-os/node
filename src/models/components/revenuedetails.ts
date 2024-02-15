@@ -8,6 +8,7 @@ export type RevenueDetails = {
     salesRevenue?: number | undefined;
     serviceRevenue?: number | undefined;
     otherRevenue?: number | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -16,6 +17,7 @@ export namespace RevenueDetails$ {
         salesRevenue?: number | undefined;
         serviceRevenue?: number | undefined;
         otherRevenue?: number | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<RevenueDetails, z.ZodTypeDef, Inbound> = z
@@ -23,12 +25,14 @@ export namespace RevenueDetails$ {
             salesRevenue: z.number().optional(),
             serviceRevenue: z.number().optional(),
             otherRevenue: z.number().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.salesRevenue === undefined ? null : { salesRevenue: v.salesRevenue }),
                 ...(v.serviceRevenue === undefined ? null : { serviceRevenue: v.serviceRevenue }),
                 ...(v.otherRevenue === undefined ? null : { otherRevenue: v.otherRevenue }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -36,6 +40,7 @@ export namespace RevenueDetails$ {
         salesRevenue?: number | undefined;
         serviceRevenue?: number | undefined;
         otherRevenue?: number | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, RevenueDetails> = z
@@ -43,12 +48,14 @@ export namespace RevenueDetails$ {
             salesRevenue: z.number().optional(),
             serviceRevenue: z.number().optional(),
             otherRevenue: z.number().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.salesRevenue === undefined ? null : { salesRevenue: v.salesRevenue }),
                 ...(v.serviceRevenue === undefined ? null : { serviceRevenue: v.serviceRevenue }),
                 ...(v.otherRevenue === undefined ? null : { otherRevenue: v.otherRevenue }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

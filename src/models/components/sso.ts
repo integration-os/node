@@ -28,6 +28,7 @@ export type Sso = {
     updatedAt?: Date | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -49,6 +50,7 @@ export namespace Sso$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Sso, z.ZodTypeDef, Inbound> = z
@@ -78,6 +80,7 @@ export namespace Sso$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -94,6 +97,7 @@ export namespace Sso$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -111,6 +115,7 @@ export namespace Sso$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Sso> = z
@@ -137,6 +142,7 @@ export namespace Sso$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -153,6 +159,7 @@ export namespace Sso$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

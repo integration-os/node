@@ -28,6 +28,7 @@ export type Notifications = {
     deleted?: boolean | undefined;
     customFields?: Array<CustomAttributes> | undefined;
     attachments?: Array<Attachments> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -50,6 +51,7 @@ export namespace Notifications$ {
         deleted?: boolean | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
         attachments?: Array<Attachments$.Inbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Notifications, z.ZodTypeDef, Inbound> = z
@@ -76,6 +78,7 @@ export namespace Notifications$ {
             deleted: z.boolean().optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
             attachments: z.array(Attachments$?.inboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -93,6 +96,7 @@ export namespace Notifications$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -111,6 +115,7 @@ export namespace Notifications$ {
         deleted?: boolean | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
         attachments?: Array<Attachments$.Outbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Notifications> = z
@@ -135,6 +140,7 @@ export namespace Notifications$ {
             deleted: z.boolean().optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
             attachments: z.array(Attachments$?.outboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -152,6 +158,7 @@ export namespace Notifications$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

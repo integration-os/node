@@ -35,6 +35,7 @@ export type Opportunities = {
     attachments?: Array<Attachments> | undefined;
     notes?: Array<string> | undefined;
     customFields?: Array<CustomAttributes> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -64,6 +65,7 @@ export namespace Opportunities$ {
         attachments?: Array<Attachments$.Inbound> | undefined;
         notes?: Array<string> | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Opportunities, z.ZodTypeDef, Inbound> = z
@@ -104,6 +106,7 @@ export namespace Opportunities$ {
             attachments: z.array(Attachments$?.inboundSchema).optional(),
             notes: z.array(z.string()).optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -131,6 +134,7 @@ export namespace Opportunities$ {
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
                 ...(v.notes === undefined ? null : { notes: v.notes }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -159,6 +163,7 @@ export namespace Opportunities$ {
         attachments?: Array<Attachments$.Outbound> | undefined;
         notes?: Array<string> | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Opportunities> = z
@@ -196,6 +201,7 @@ export namespace Opportunities$ {
             attachments: z.array(Attachments$?.outboundSchema).optional(),
             notes: z.array(z.string()).optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -223,6 +229,7 @@ export namespace Opportunities$ {
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
                 ...(v.notes === undefined ? null : { notes: v.notes }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

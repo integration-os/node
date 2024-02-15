@@ -32,6 +32,7 @@ export type Chats = {
     lastMessage?: Messages | undefined;
     metadata?: string | undefined;
     lastReadMessageId?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -56,6 +57,7 @@ export namespace Chats$ {
         lastMessage?: Messages$.Inbound | undefined;
         metadata?: string | undefined;
         lastReadMessageId?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Chats, z.ZodTypeDef, Inbound> = z
@@ -81,6 +83,7 @@ export namespace Chats$ {
             lastMessage: Messages$?.inboundSchema.optional(),
             metadata: z.string().optional(),
             lastReadMessageId: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -99,6 +102,7 @@ export namespace Chats$ {
                 ...(v.lastReadMessageId === undefined
                     ? null
                     : { lastReadMessageId: v.lastReadMessageId }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -116,6 +120,7 @@ export namespace Chats$ {
         lastMessage?: Messages$.Outbound | undefined;
         metadata?: string | undefined;
         lastReadMessageId?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Chats> = z
@@ -139,6 +144,7 @@ export namespace Chats$ {
             lastMessage: Messages$?.outboundSchema.optional(),
             metadata: z.string().optional(),
             lastReadMessageId: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -157,6 +163,7 @@ export namespace Chats$ {
                 ...(v.lastReadMessageId === undefined
                     ? null
                     : { lastReadMessageId: v.lastReadMessageId }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -8,6 +8,7 @@ export type LeadSource = {
     sourceId?: string | undefined;
     sourceName?: string | undefined;
     details?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -16,6 +17,7 @@ export namespace LeadSource$ {
         sourceId?: string | undefined;
         sourceName?: string | undefined;
         details?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<LeadSource, z.ZodTypeDef, Inbound> = z
@@ -23,12 +25,14 @@ export namespace LeadSource$ {
             sourceId: z.string().optional(),
             sourceName: z.string().optional(),
             details: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.sourceId === undefined ? null : { sourceId: v.sourceId }),
                 ...(v.sourceName === undefined ? null : { sourceName: v.sourceName }),
                 ...(v.details === undefined ? null : { details: v.details }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -36,6 +40,7 @@ export namespace LeadSource$ {
         sourceId?: string | undefined;
         sourceName?: string | undefined;
         details?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, LeadSource> = z
@@ -43,12 +48,14 @@ export namespace LeadSource$ {
             sourceId: z.string().optional(),
             sourceName: z.string().optional(),
             details: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.sourceId === undefined ? null : { sourceId: v.sourceId }),
                 ...(v.sourceName === undefined ? null : { sourceName: v.sourceName }),
                 ...(v.details === undefined ? null : { details: v.details }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

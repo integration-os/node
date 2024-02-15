@@ -19,6 +19,7 @@ export type CustomAttributes = {
     fieldName?: string | undefined;
     fieldValue?: string | undefined;
     fieldType?: FieldType | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -31,6 +32,7 @@ export namespace CustomAttributes$ {
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
         fieldType?: FieldType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<CustomAttributes, z.ZodTypeDef, Inbound> = z
@@ -39,6 +41,7 @@ export namespace CustomAttributes$ {
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
             fieldType: FieldType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -46,6 +49,7 @@ export namespace CustomAttributes$ {
                 ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
                 ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
                 ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -54,6 +58,7 @@ export namespace CustomAttributes$ {
         fieldName?: string | undefined;
         fieldValue?: string | undefined;
         fieldType?: FieldType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, CustomAttributes> = z
@@ -62,6 +67,7 @@ export namespace CustomAttributes$ {
             fieldName: z.string().optional(),
             fieldValue: z.string().optional(),
             fieldType: FieldType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -69,6 +75,7 @@ export namespace CustomAttributes$ {
                 ...(v.fieldName === undefined ? null : { fieldName: v.fieldName }),
                 ...(v.fieldValue === undefined ? null : { fieldValue: v.fieldValue }),
                 ...(v.fieldType === undefined ? null : { fieldType: v.fieldType }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -22,6 +22,7 @@ export type Metadata = {
     updatedAt?: Date | undefined;
     entityId?: string | undefined;
     entityType?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -38,6 +39,7 @@ export namespace Metadata$ {
         updatedAt?: string | undefined;
         entityId?: string | undefined;
         entityType?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Metadata, z.ZodTypeDef, Inbound> = z
@@ -58,6 +60,7 @@ export namespace Metadata$ {
                 .optional(),
             entityId: z.string().optional(),
             entityType: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -69,6 +72,7 @@ export namespace Metadata$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.entityId === undefined ? null : { entityId: v.entityId }),
                 ...(v.entityType === undefined ? null : { entityType: v.entityType }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -81,6 +85,7 @@ export namespace Metadata$ {
         updatedAt?: string | undefined;
         entityId?: string | undefined;
         entityType?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Metadata> = z
@@ -99,6 +104,7 @@ export namespace Metadata$ {
                 .optional(),
             entityId: z.string().optional(),
             entityType: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -110,6 +116,7 @@ export namespace Metadata$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.entityId === undefined ? null : { entityId: v.entityId }),
                 ...(v.entityType === undefined ? null : { entityType: v.entityType }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

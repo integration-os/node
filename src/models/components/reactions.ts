@@ -20,6 +20,7 @@ export type Reactions = {
     chatId?: string | undefined;
     type?: ReactionsType | undefined;
     createdAt?: Date | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -33,6 +34,7 @@ export namespace Reactions$ {
         chatId?: string | undefined;
         type?: ReactionsType | undefined;
         createdAt?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Reactions, z.ZodTypeDef, Inbound> = z
@@ -46,6 +48,7 @@ export namespace Reactions$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -54,6 +57,7 @@ export namespace Reactions$ {
                 ...(v.chatId === undefined ? null : { chatId: v.chatId }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -63,6 +67,7 @@ export namespace Reactions$ {
         chatId?: string | undefined;
         type?: ReactionsType | undefined;
         createdAt?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Reactions> = z
@@ -75,6 +80,7 @@ export namespace Reactions$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -83,6 +89,7 @@ export namespace Reactions$ {
                 ...(v.chatId === undefined ? null : { chatId: v.chatId }),
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

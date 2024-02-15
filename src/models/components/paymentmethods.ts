@@ -17,6 +17,7 @@ export type PaymentMethods = {
     type?: PaymentMethodsType | undefined;
     details?: string | undefined;
     isDefault?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -29,6 +30,7 @@ export namespace PaymentMethods$ {
         type?: PaymentMethodsType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PaymentMethods, z.ZodTypeDef, Inbound> = z
@@ -37,6 +39,7 @@ export namespace PaymentMethods$ {
             type: PaymentMethodsType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -44,6 +47,7 @@ export namespace PaymentMethods$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.details === undefined ? null : { details: v.details }),
                 ...(v.isDefault === undefined ? null : { isDefault: v.isDefault }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -52,6 +56,7 @@ export namespace PaymentMethods$ {
         type?: PaymentMethodsType | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PaymentMethods> = z
@@ -60,6 +65,7 @@ export namespace PaymentMethods$ {
             type: PaymentMethodsType$.optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -67,6 +73,7 @@ export namespace PaymentMethods$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.details === undefined ? null : { details: v.details }),
                 ...(v.isDefault === undefined ? null : { isDefault: v.isDefault }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -53,6 +53,7 @@ export type Tickets = {
     notes?: Array<Notes> | undefined;
     tags?: Array<string> | undefined;
     customFields?: Array<CustomAttributes> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -83,6 +84,7 @@ export namespace Tickets$ {
         notes?: Array<Notes$.Inbound> | undefined;
         tags?: Array<string> | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Tickets, z.ZodTypeDef, Inbound> = z
@@ -115,6 +117,7 @@ export namespace Tickets$ {
             notes: z.array(Notes$?.inboundSchema).optional(),
             tags: z.array(z.string()).optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -134,6 +137,7 @@ export namespace Tickets$ {
                 ...(v.notes === undefined ? null : { notes: v.notes }),
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -154,6 +158,7 @@ export namespace Tickets$ {
         notes?: Array<Notes$.Outbound> | undefined;
         tags?: Array<string> | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Tickets> = z
@@ -183,6 +188,7 @@ export namespace Tickets$ {
             notes: z.array(Notes$?.outboundSchema).optional(),
             tags: z.array(z.string()).optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -202,6 +208,7 @@ export namespace Tickets$ {
                 ...(v.notes === undefined ? null : { notes: v.notes }),
                 ...(v.tags === undefined ? null : { tags: v.tags }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

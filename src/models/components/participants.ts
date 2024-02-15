@@ -30,6 +30,7 @@ export type Participants = {
     joinedAt?: Date | undefined;
     status?: ParticipantsStatus | undefined;
     type?: ParticipantsType | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -46,6 +47,7 @@ export namespace Participants$ {
         joinedAt?: string | undefined;
         status?: ParticipantsStatus | undefined;
         type?: ParticipantsType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Participants, z.ZodTypeDef, Inbound> = z
@@ -59,6 +61,7 @@ export namespace Participants$ {
                 .optional(),
             status: ParticipantsStatus$.optional(),
             type: ParticipantsType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -67,6 +70,7 @@ export namespace Participants$ {
                 ...(v.joinedAt === undefined ? null : { joinedAt: v.joinedAt }),
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -76,6 +80,7 @@ export namespace Participants$ {
         joinedAt?: string | undefined;
         status?: ParticipantsStatus | undefined;
         type?: ParticipantsType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Participants> = z
@@ -88,6 +93,7 @@ export namespace Participants$ {
                 .optional(),
             status: ParticipantsStatus$.optional(),
             type: ParticipantsType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -96,6 +102,7 @@ export namespace Participants$ {
                 ...(v.joinedAt === undefined ? null : { joinedAt: v.joinedAt }),
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -6,7 +6,7 @@ import { Attachments, Attachments$ } from "./attachments";
 import { Users, Users$ } from "./users";
 import { z } from "zod";
 
-export enum NotesPriority {
+export enum Priority {
     Low = "low",
     Medium = "medium",
     High = "high",
@@ -32,7 +32,7 @@ export type Notes = {
     lastAccessed?: Date | undefined;
     reminder?: Date | undefined;
     color?: string | undefined;
-    priority?: NotesPriority | undefined;
+    priority?: Priority | undefined;
     author?: Users | undefined;
     tags?: Array<string> | undefined;
     attachments?: Array<Attachments> | undefined;
@@ -40,10 +40,11 @@ export type Notes = {
     visibility?: Visibility | undefined;
     status?: NotesStatus | undefined;
     metadata?: Array<string> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
-export const NotesPriority$ = z.nativeEnum(NotesPriority);
+export const Priority$ = z.nativeEnum(Priority);
 
 /** @internal */
 export const Visibility$ = z.nativeEnum(Visibility);
@@ -62,7 +63,7 @@ export namespace Notes$ {
         lastAccessed?: string | undefined;
         reminder?: string | undefined;
         color?: string | undefined;
-        priority?: NotesPriority | undefined;
+        priority?: Priority | undefined;
         author?: Users$.Inbound | undefined;
         tags?: Array<string> | undefined;
         attachments?: Array<Attachments$.Inbound> | undefined;
@@ -70,6 +71,7 @@ export namespace Notes$ {
         visibility?: Visibility | undefined;
         status?: NotesStatus | undefined;
         metadata?: Array<string> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Notes, z.ZodTypeDef, Inbound> = z
@@ -98,7 +100,7 @@ export namespace Notes$ {
                 .transform((v) => new Date(v))
                 .optional(),
             color: z.string().optional(),
-            priority: NotesPriority$.optional(),
+            priority: Priority$.optional(),
             author: Users$?.inboundSchema.optional(),
             tags: z.array(z.string()).optional(),
             attachments: z.array(Attachments$?.inboundSchema).optional(),
@@ -106,6 +108,7 @@ export namespace Notes$ {
             visibility: Visibility$.optional(),
             status: NotesStatus$.optional(),
             metadata: z.array(z.string()).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -125,6 +128,7 @@ export namespace Notes$ {
                 ...(v.visibility === undefined ? null : { visibility: v.visibility }),
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -137,7 +141,7 @@ export namespace Notes$ {
         lastAccessed?: string | undefined;
         reminder?: string | undefined;
         color?: string | undefined;
-        priority?: NotesPriority | undefined;
+        priority?: Priority | undefined;
         author?: Users$.Outbound | undefined;
         tags?: Array<string> | undefined;
         attachments?: Array<Attachments$.Outbound> | undefined;
@@ -145,6 +149,7 @@ export namespace Notes$ {
         visibility?: Visibility | undefined;
         status?: NotesStatus | undefined;
         metadata?: Array<string> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Notes> = z
@@ -169,7 +174,7 @@ export namespace Notes$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             color: z.string().optional(),
-            priority: NotesPriority$.optional(),
+            priority: Priority$.optional(),
             author: Users$?.outboundSchema.optional(),
             tags: z.array(z.string()).optional(),
             attachments: z.array(Attachments$?.outboundSchema).optional(),
@@ -177,6 +182,7 @@ export namespace Notes$ {
             visibility: Visibility$.optional(),
             status: NotesStatus$.optional(),
             metadata: z.array(z.string()).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -196,6 +202,7 @@ export namespace Notes$ {
                 ...(v.visibility === undefined ? null : { visibility: v.visibility }),
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -11,7 +11,9 @@ export type GetBillsRequest = {
      */
     connectionKey: string;
     limit?: string | undefined;
-    cursor?: string | undefined;
+    nextCursor?: string | undefined;
+    previousCursor?: string | undefined;
+    pageSize?: string | undefined;
     createdAfter?: string | undefined;
     createdBefore?: string | undefined;
     updatedAfter?: string | undefined;
@@ -19,7 +21,9 @@ export type GetBillsRequest = {
 };
 
 export type GetBillsPagination = {
-    cursor?: string | undefined;
+    nextCursor?: string | undefined;
+    previousCursor?: string | undefined;
+    pageSize?: number | undefined;
     limit?: number | undefined;
 };
 
@@ -87,7 +91,9 @@ export namespace GetBillsRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         limit?: string | undefined;
-        cursor?: string | undefined;
+        nextCursor?: string | undefined;
+        previousCursor?: string | undefined;
+        pageSize?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
@@ -98,7 +104,9 @@ export namespace GetBillsRequest$ {
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
             limit: z.string().optional(),
-            cursor: z.string().optional(),
+            nextCursor: z.string().optional(),
+            previousCursor: z.string().optional(),
+            pageSize: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
@@ -108,7 +116,9 @@ export namespace GetBillsRequest$ {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
+                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
+                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
+                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
@@ -119,7 +129,9 @@ export namespace GetBillsRequest$ {
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
         limit?: string | undefined;
-        cursor?: string | undefined;
+        nextCursor?: string | undefined;
+        previousCursor?: string | undefined;
+        pageSize?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
@@ -130,7 +142,9 @@ export namespace GetBillsRequest$ {
         .object({
             connectionKey: z.string(),
             limit: z.string().optional(),
-            cursor: z.string().optional(),
+            nextCursor: z.string().optional(),
+            previousCursor: z.string().optional(),
+            pageSize: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
@@ -140,7 +154,9 @@ export namespace GetBillsRequest$ {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
+                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
+                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
+                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
@@ -152,35 +168,47 @@ export namespace GetBillsRequest$ {
 /** @internal */
 export namespace GetBillsPagination$ {
     export type Inbound = {
-        cursor?: string | undefined;
+        nextCursor?: string | undefined;
+        previousCursor?: string | undefined;
+        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetBillsPagination, z.ZodTypeDef, Inbound> = z
         .object({
-            cursor: z.string().optional(),
+            nextCursor: z.string().optional(),
+            previousCursor: z.string().optional(),
+            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
-                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
+                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
+                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
+                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
 
     export type Outbound = {
-        cursor?: string | undefined;
+        nextCursor?: string | undefined;
+        previousCursor?: string | undefined;
+        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBillsPagination> = z
         .object({
-            cursor: z.string().optional(),
+            nextCursor: z.string().optional(),
+            previousCursor: z.string().optional(),
+            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
-                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
+                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
+                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
+                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });

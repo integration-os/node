@@ -8,6 +8,7 @@ export type IncomeTaxExpenseDetails = {
     currentIncomeTax?: number | undefined;
     deferredIncomeTax?: number | undefined;
     taxAllowanceCredit?: number | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -16,6 +17,7 @@ export namespace IncomeTaxExpenseDetails$ {
         currentIncomeTax?: number | undefined;
         deferredIncomeTax?: number | undefined;
         taxAllowanceCredit?: number | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<IncomeTaxExpenseDetails, z.ZodTypeDef, Inbound> = z
@@ -23,6 +25,7 @@ export namespace IncomeTaxExpenseDetails$ {
             currentIncomeTax: z.number().optional(),
             deferredIncomeTax: z.number().optional(),
             taxAllowanceCredit: z.number().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -35,6 +38,7 @@ export namespace IncomeTaxExpenseDetails$ {
                 ...(v.taxAllowanceCredit === undefined
                     ? null
                     : { taxAllowanceCredit: v.taxAllowanceCredit }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -42,6 +46,7 @@ export namespace IncomeTaxExpenseDetails$ {
         currentIncomeTax?: number | undefined;
         deferredIncomeTax?: number | undefined;
         taxAllowanceCredit?: number | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, IncomeTaxExpenseDetails> = z
@@ -49,6 +54,7 @@ export namespace IncomeTaxExpenseDetails$ {
             currentIncomeTax: z.number().optional(),
             deferredIncomeTax: z.number().optional(),
             taxAllowanceCredit: z.number().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -61,6 +67,7 @@ export namespace IncomeTaxExpenseDetails$ {
                 ...(v.taxAllowanceCredit === undefined
                     ? null
                     : { taxAllowanceCredit: v.taxAllowanceCredit }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

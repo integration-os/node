@@ -224,6 +224,7 @@ export type InvoiceItems = {
     updatedAt?: Date | undefined;
     deletedAt?: Date | undefined;
     active?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -271,6 +272,7 @@ export namespace InvoiceItems$ {
         updatedAt?: string | undefined;
         deletedAt?: string | undefined;
         active?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<InvoiceItems, z.ZodTypeDef, Inbound> = z
@@ -324,6 +326,7 @@ export namespace InvoiceItems$ {
                 .transform((v) => new Date(v))
                 .optional(),
             active: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -366,6 +369,7 @@ export namespace InvoiceItems$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.deletedAt === undefined ? null : { deletedAt: v.deletedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -403,6 +407,7 @@ export namespace InvoiceItems$ {
         updatedAt?: string | undefined;
         deletedAt?: string | undefined;
         active?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, InvoiceItems> = z
@@ -452,6 +457,7 @@ export namespace InvoiceItems$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             active: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -494,6 +500,7 @@ export namespace InvoiceItems$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.deletedAt === undefined ? null : { deletedAt: v.deletedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

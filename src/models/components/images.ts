@@ -20,6 +20,7 @@ export type Images = {
     updatedAt?: Date | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -39,6 +40,7 @@ export namespace Images$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Images, z.ZodTypeDef, Inbound> = z
@@ -65,6 +67,7 @@ export namespace Images$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -82,6 +85,7 @@ export namespace Images$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -100,6 +104,7 @@ export namespace Images$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Images> = z
@@ -124,6 +129,7 @@ export namespace Images$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -141,6 +147,7 @@ export namespace Images$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

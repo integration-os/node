@@ -33,6 +33,7 @@ export type Contacts = {
     customFields?: Array<CustomAttributes> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -60,6 +61,7 @@ export namespace Contacts$ {
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Contacts, z.ZodTypeDef, Inbound> = z
@@ -98,6 +100,7 @@ export namespace Contacts$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -123,6 +126,7 @@ export namespace Contacts$ {
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -149,6 +153,7 @@ export namespace Contacts$ {
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Contacts> = z
@@ -184,6 +189,7 @@ export namespace Contacts$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -209,6 +215,7 @@ export namespace Contacts$ {
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

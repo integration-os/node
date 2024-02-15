@@ -51,6 +51,7 @@ export type Customers = {
     metadata?: string | undefined;
     socialProfiles?: Array<SocialProfiles> | undefined;
     source?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -91,6 +92,7 @@ export namespace Customers$ {
         metadata?: string | undefined;
         socialProfiles?: Array<SocialProfiles$.Inbound> | undefined;
         source?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Customers, z.ZodTypeDef, Inbound> = z
@@ -133,6 +135,7 @@ export namespace Customers$ {
             metadata: z.string().optional(),
             socialProfiles: z.array(SocialProfiles$?.inboundSchema).optional(),
             source: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -168,6 +171,7 @@ export namespace Customers$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
                 ...(v.source === undefined ? null : { source: v.source }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -198,6 +202,7 @@ export namespace Customers$ {
         metadata?: string | undefined;
         socialProfiles?: Array<SocialProfiles$.Outbound> | undefined;
         source?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Customers> = z
@@ -237,6 +242,7 @@ export namespace Customers$ {
             metadata: z.string().optional(),
             socialProfiles: z.array(SocialProfiles$?.outboundSchema).optional(),
             source: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -272,6 +278,7 @@ export namespace Customers$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.socialProfiles === undefined ? null : { socialProfiles: v.socialProfiles }),
                 ...(v.source === undefined ? null : { source: v.source }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

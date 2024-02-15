@@ -15,6 +15,7 @@ export type Entity = {
     entityId?: string | undefined;
     entityType?: EntityType | undefined;
     attributes?: Array<string> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -26,6 +27,7 @@ export namespace Entity$ {
         entityId?: string | undefined;
         entityType?: EntityType | undefined;
         attributes?: Array<string> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Entity, z.ZodTypeDef, Inbound> = z
@@ -33,12 +35,14 @@ export namespace Entity$ {
             entityId: z.string().optional(),
             entityType: EntityType$.optional(),
             attributes: z.array(z.string()).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.entityId === undefined ? null : { entityId: v.entityId }),
                 ...(v.entityType === undefined ? null : { entityType: v.entityType }),
                 ...(v.attributes === undefined ? null : { attributes: v.attributes }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -46,6 +50,7 @@ export namespace Entity$ {
         entityId?: string | undefined;
         entityType?: EntityType | undefined;
         attributes?: Array<string> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Entity> = z
@@ -53,12 +58,14 @@ export namespace Entity$ {
             entityId: z.string().optional(),
             entityType: EntityType$.optional(),
             attributes: z.array(z.string()).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.entityId === undefined ? null : { entityId: v.entityId }),
                 ...(v.entityType === undefined ? null : { entityType: v.entityType }),
                 ...(v.attributes === undefined ? null : { attributes: v.attributes }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

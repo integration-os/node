@@ -33,6 +33,7 @@ export type Disputes = {
     active?: boolean | undefined;
     deleted?: boolean | undefined;
     version?: string | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -58,6 +59,7 @@ export namespace Disputes$ {
         active?: boolean | undefined;
         deleted?: boolean | undefined;
         version?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Disputes, z.ZodTypeDef, Inbound> = z
@@ -87,6 +89,7 @@ export namespace Disputes$ {
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
             version: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -109,6 +112,7 @@ export namespace Disputes$ {
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.version === undefined ? null : { version: v.version }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -130,6 +134,7 @@ export namespace Disputes$ {
         active?: boolean | undefined;
         deleted?: boolean | undefined;
         version?: string | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Disputes> = z
@@ -157,6 +162,7 @@ export namespace Disputes$ {
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
             version: z.string().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -179,6 +185,7 @@ export namespace Disputes$ {
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.version === undefined ? null : { version: v.version }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

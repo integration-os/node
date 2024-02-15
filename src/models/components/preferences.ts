@@ -16,6 +16,7 @@ export type Preferences = {
     currency?: string | undefined;
     timeZone?: string | undefined;
     communications?: Communications | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -29,6 +30,7 @@ export namespace Preferences$ {
         currency?: string | undefined;
         timeZone?: string | undefined;
         communications?: Communications | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Preferences, z.ZodTypeDef, Inbound> = z
@@ -38,6 +40,7 @@ export namespace Preferences$ {
             currency: z.string().optional(),
             timeZone: z.string().optional(),
             communications: Communications$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -46,6 +49,7 @@ export namespace Preferences$ {
                 ...(v.currency === undefined ? null : { currency: v.currency }),
                 ...(v.timeZone === undefined ? null : { timeZone: v.timeZone }),
                 ...(v.communications === undefined ? null : { communications: v.communications }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -55,6 +59,7 @@ export namespace Preferences$ {
         currency?: string | undefined;
         timeZone?: string | undefined;
         communications?: Communications | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Preferences> = z
@@ -64,6 +69,7 @@ export namespace Preferences$ {
             currency: z.string().optional(),
             timeZone: z.string().optional(),
             communications: Communications$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -72,6 +78,7 @@ export namespace Preferences$ {
                 ...(v.currency === undefined ? null : { currency: v.currency }),
                 ...(v.timeZone === undefined ? null : { timeZone: v.timeZone }),
                 ...(v.communications === undefined ? null : { communications: v.communications }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

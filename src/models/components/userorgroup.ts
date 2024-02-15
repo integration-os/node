@@ -13,6 +13,7 @@ export type UserOrGroup = {
     identifier?: string | undefined;
     displayName?: string | undefined;
     type?: UserOrGroupType | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -24,6 +25,7 @@ export namespace UserOrGroup$ {
         identifier?: string | undefined;
         displayName?: string | undefined;
         type?: UserOrGroupType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<UserOrGroup, z.ZodTypeDef, Inbound> = z
@@ -31,12 +33,14 @@ export namespace UserOrGroup$ {
             identifier: z.string().optional(),
             displayName: z.string().optional(),
             type: UserOrGroupType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.identifier === undefined ? null : { identifier: v.identifier }),
                 ...(v.displayName === undefined ? null : { displayName: v.displayName }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -44,6 +48,7 @@ export namespace UserOrGroup$ {
         identifier?: string | undefined;
         displayName?: string | undefined;
         type?: UserOrGroupType | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, UserOrGroup> = z
@@ -51,12 +56,14 @@ export namespace UserOrGroup$ {
             identifier: z.string().optional(),
             displayName: z.string().optional(),
             type: UserOrGroupType$.optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.identifier === undefined ? null : { identifier: v.identifier }),
                 ...(v.displayName === undefined ? null : { displayName: v.displayName }),
                 ...(v.type === undefined ? null : { type: v.type }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

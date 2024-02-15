@@ -55,6 +55,7 @@ export type Orders = {
     trackingInfo?: string | undefined;
     items?: Array<Items> | undefined;
     tags?: Array<string> | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -87,6 +88,7 @@ export namespace Orders$ {
         trackingInfo?: string | undefined;
         items?: Array<Items$.Inbound> | undefined;
         tags?: Array<string> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Orders, z.ZodTypeDef, Inbound> = z
@@ -120,6 +122,7 @@ export namespace Orders$ {
             trackingInfo: z.string().optional(),
             items: z.array(Items$?.inboundSchema).optional(),
             tags: z.array(z.string()).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -146,6 +149,7 @@ export namespace Orders$ {
                 ...(v.trackingInfo === undefined ? null : { trackingInfo: v.trackingInfo }),
                 ...(v.items === undefined ? null : { items: v.items }),
                 ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -171,6 +175,7 @@ export namespace Orders$ {
         trackingInfo?: string | undefined;
         items?: Array<Items$.Outbound> | undefined;
         tags?: Array<string> | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Orders> = z
@@ -202,6 +207,7 @@ export namespace Orders$ {
             trackingInfo: z.string().optional(),
             items: z.array(Items$?.outboundSchema).optional(),
             tags: z.array(z.string()).optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -228,6 +234,7 @@ export namespace Orders$ {
                 ...(v.trackingInfo === undefined ? null : { trackingInfo: v.trackingInfo }),
                 ...(v.items === undefined ? null : { items: v.items }),
                 ...(v.tags === undefined ? null : { tags: v.tags }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

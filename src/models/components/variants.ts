@@ -32,6 +32,7 @@ export type Variants = {
     status?: VariantsStatus | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
+    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -59,6 +60,7 @@ export namespace Variants$ {
         status?: VariantsStatus | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Variants, z.ZodTypeDef, Inbound> = z
@@ -90,6 +92,7 @@ export namespace Variants$ {
             status: VariantsStatus$.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -116,6 +119,7 @@ export namespace Variants$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -139,6 +143,7 @@ export namespace Variants$ {
         status?: VariantsStatus | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
+        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Variants> = z
@@ -168,6 +173,7 @@ export namespace Variants$ {
             status: VariantsStatus$.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
+            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -194,6 +200,7 @@ export namespace Variants$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
+                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }
