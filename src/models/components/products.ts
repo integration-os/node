@@ -6,6 +6,7 @@ import { Attachments, Attachments$ } from "./attachments";
 import { Brands, Brands$ } from "./brands";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
 import { Dimensions, Dimensions$ } from "./dimensions";
+import { EntityLifecycleStatus, EntityLifecycleStatus$ } from "./entitylifecyclestatus";
 import { Images, Images$ } from "./images";
 import { InventoryLocations, InventoryLocations$ } from "./inventorylocations";
 import { KeyValues, KeyValues$ } from "./keyvalues";
@@ -20,14 +21,6 @@ export enum SkuValidation {
     GlobalUnique = "global_unique",
     LocalUnique = "local_unique",
     None = "none",
-}
-
-export enum ProductsStatus {
-    Active = "active",
-    Archived = "archived",
-    Preorder = "preorder",
-    Draft = "draft",
-    Deleted = "deleted",
 }
 
 export type Products = {
@@ -63,7 +56,7 @@ export type Products = {
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     publishedAt?: Date | undefined;
-    status?: ProductsStatus | undefined;
+    status?: EntityLifecycleStatus | undefined;
     tax?: Taxes | undefined;
     localizations?: Array<Localizations> | undefined;
     modifyToken?: string | undefined;
@@ -71,9 +64,6 @@ export type Products = {
 
 /** @internal */
 export const SkuValidation$ = z.nativeEnum(SkuValidation);
-
-/** @internal */
-export const ProductsStatus$ = z.nativeEnum(ProductsStatus);
 
 /** @internal */
 export namespace Products$ {
@@ -110,7 +100,7 @@ export namespace Products$ {
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         publishedAt?: string | undefined;
-        status?: ProductsStatus | undefined;
+        status?: EntityLifecycleStatus | undefined;
         tax?: Taxes$.Inbound | undefined;
         localizations?: Array<Localizations$.Inbound> | undefined;
         modifyToken?: string | undefined;
@@ -162,7 +152,7 @@ export namespace Products$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            status: ProductsStatus$.optional(),
+            status: EntityLifecycleStatus$.optional(),
             tax: Taxes$?.inboundSchema.optional(),
             localizations: z.array(Localizations$?.inboundSchema).optional(),
             modifyToken: z.string().optional(),
@@ -251,7 +241,7 @@ export namespace Products$ {
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         publishedAt?: string | undefined;
-        status?: ProductsStatus | undefined;
+        status?: EntityLifecycleStatus | undefined;
         tax?: Taxes$.Outbound | undefined;
         localizations?: Array<Localizations$.Outbound> | undefined;
         modifyToken?: string | undefined;
@@ -300,7 +290,7 @@ export namespace Products$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            status: ProductsStatus$.optional(),
+            status: EntityLifecycleStatus$.optional(),
             tax: Taxes$?.outboundSchema.optional(),
             localizations: z.array(Localizations$?.outboundSchema).optional(),
             modifyToken: z.string().optional(),

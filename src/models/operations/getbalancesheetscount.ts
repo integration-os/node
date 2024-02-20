@@ -4,25 +4,37 @@
 
 import { z } from "zod";
 
-export type GetBalancesheetsCountRequest = {
+export type GetBalanceSheetsCountRequest = {
     /**
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
+    /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
-export type GetBalancesheetsCountUnified = {
+export type GetBalanceSheetsCountUnified = {
     count?: number | undefined;
 };
 
-export type GetBalancesheetsCountPassthrough = {};
+export type GetBalanceSheetsCountPassthrough = {};
 
-export type GetBalancesheetsCountCache = {
+export type GetBalanceSheetsCountCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type GetBalancesheetsCountMeta = {
+export type GetBalanceSheetsCountMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -40,21 +52,21 @@ export type GetBalancesheetsCountMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: GetBalancesheetsCountCache | undefined;
+    cache?: GetBalanceSheetsCountCache | undefined;
 };
 
 /**
  * Successful response
  */
-export type GetBalancesheetsCountResponseBody = {
+export type GetBalanceSheetsCountResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
-    unified?: GetBalancesheetsCountUnified | undefined;
-    passthrough?: GetBalancesheetsCountPassthrough | undefined;
-    meta?: GetBalancesheetsCountMeta | undefined;
+    unified?: GetBalanceSheetsCountUnified | undefined;
+    passthrough?: GetBalanceSheetsCountPassthrough | undefined;
+    meta?: GetBalanceSheetsCountMeta | undefined;
 };
 
-export type GetBalancesheetsCountResponse = {
+export type GetBalanceSheetsCountResponse = {
     /**
      * HTTP response content type for this operation
      */
@@ -70,47 +82,82 @@ export type GetBalancesheetsCountResponse = {
     /**
      * Successful response
      */
-    object?: GetBalancesheetsCountResponseBody | undefined;
+    object?: GetBalanceSheetsCountResponseBody | undefined;
 };
 
 /** @internal */
-export namespace GetBalancesheetsCountRequest$ {
+export namespace GetBalanceSheetsCountRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsCountRequest, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsCountRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsCountRequest> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsCountRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
 
 /** @internal */
-export namespace GetBalancesheetsCountUnified$ {
+export namespace GetBalanceSheetsCountUnified$ {
     export type Inbound = {
         count?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsCountUnified, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsCountUnified, z.ZodTypeDef, Inbound> = z
         .object({
             count: z.number().int().optional(),
         })
@@ -124,7 +171,7 @@ export namespace GetBalancesheetsCountUnified$ {
         count?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsCountUnified> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsCountUnified> = z
         .object({
             count: z.number().int().optional(),
         })
@@ -136,10 +183,10 @@ export namespace GetBalancesheetsCountUnified$ {
 }
 
 /** @internal */
-export namespace GetBalancesheetsCountPassthrough$ {
+export namespace GetBalanceSheetsCountPassthrough$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsCountPassthrough, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<GetBalanceSheetsCountPassthrough, z.ZodTypeDef, Inbound> =
         z.object({});
 
     export type Outbound = {};
@@ -147,18 +194,18 @@ export namespace GetBalancesheetsCountPassthrough$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        GetBalancesheetsCountPassthrough
+        GetBalanceSheetsCountPassthrough
     > = z.object({});
 }
 
 /** @internal */
-export namespace GetBalancesheetsCountCache$ {
+export namespace GetBalanceSheetsCountCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsCountCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsCountCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -175,7 +222,7 @@ export namespace GetBalancesheetsCountCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsCountCache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsCountCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -189,7 +236,7 @@ export namespace GetBalancesheetsCountCache$ {
 }
 
 /** @internal */
-export namespace GetBalancesheetsCountMeta$ {
+export namespace GetBalanceSheetsCountMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -208,10 +255,10 @@ export namespace GetBalancesheetsCountMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetBalancesheetsCountCache$.Inbound | undefined;
+        cache?: GetBalanceSheetsCountCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsCountMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsCountMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -230,7 +277,7 @@ export namespace GetBalancesheetsCountMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetBalancesheetsCountCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => GetBalanceSheetsCountCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -285,10 +332,10 @@ export namespace GetBalancesheetsCountMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetBalancesheetsCountCache$.Outbound | undefined;
+        cache?: GetBalanceSheetsCountCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsCountMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsCountMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -307,7 +354,7 @@ export namespace GetBalancesheetsCountMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetBalancesheetsCountCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => GetBalanceSheetsCountCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -346,26 +393,26 @@ export namespace GetBalancesheetsCountMeta$ {
 }
 
 /** @internal */
-export namespace GetBalancesheetsCountResponseBody$ {
+export namespace GetBalanceSheetsCountResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: GetBalancesheetsCountUnified$.Inbound | undefined;
-        passthrough?: GetBalancesheetsCountPassthrough$.Inbound | undefined;
-        meta?: GetBalancesheetsCountMeta$.Inbound | undefined;
+        unified?: GetBalanceSheetsCountUnified$.Inbound | undefined;
+        passthrough?: GetBalanceSheetsCountPassthrough$.Inbound | undefined;
+        meta?: GetBalanceSheetsCountMeta$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<
-        GetBalancesheetsCountResponseBody,
+        GetBalanceSheetsCountResponseBody,
         z.ZodTypeDef,
         Inbound
     > = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => GetBalancesheetsCountUnified$?.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetBalancesheetsCountPassthrough$?.inboundSchema).optional(),
-            meta: z.lazy(() => GetBalancesheetsCountMeta$?.inboundSchema).optional(),
+            unified: z.lazy(() => GetBalanceSheetsCountUnified$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetBalanceSheetsCountPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetBalanceSheetsCountMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -380,22 +427,22 @@ export namespace GetBalancesheetsCountResponseBody$ {
     export type Outbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: GetBalancesheetsCountUnified$.Outbound | undefined;
-        passthrough?: GetBalancesheetsCountPassthrough$.Outbound | undefined;
-        meta?: GetBalancesheetsCountMeta$.Outbound | undefined;
+        unified?: GetBalanceSheetsCountUnified$.Outbound | undefined;
+        passthrough?: GetBalanceSheetsCountPassthrough$.Outbound | undefined;
+        meta?: GetBalanceSheetsCountMeta$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        GetBalancesheetsCountResponseBody
+        GetBalanceSheetsCountResponseBody
     > = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => GetBalancesheetsCountUnified$?.outboundSchema).optional(),
-            passthrough: z.lazy(() => GetBalancesheetsCountPassthrough$?.outboundSchema).optional(),
-            meta: z.lazy(() => GetBalancesheetsCountMeta$?.outboundSchema).optional(),
+            unified: z.lazy(() => GetBalanceSheetsCountUnified$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetBalanceSheetsCountPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetBalanceSheetsCountMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -409,20 +456,20 @@ export namespace GetBalancesheetsCountResponseBody$ {
 }
 
 /** @internal */
-export namespace GetBalancesheetsCountResponse$ {
+export namespace GetBalanceSheetsCountResponse$ {
     export type Inbound = {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: GetBalancesheetsCountResponseBody$.Inbound | undefined;
+        object?: GetBalanceSheetsCountResponseBody$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsCountResponse, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsCountResponse, z.ZodTypeDef, Inbound> = z
         .object({
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetBalancesheetsCountResponseBody$?.inboundSchema).optional(),
+            object: z.lazy(() => GetBalanceSheetsCountResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -437,10 +484,10 @@ export namespace GetBalancesheetsCountResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: GetBalancesheetsCountResponseBody$.Outbound | undefined;
+        object?: GetBalanceSheetsCountResponseBody$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsCountResponse> =
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsCountResponse> =
         z
             .object({
                 contentType: z.string(),
@@ -448,7 +495,7 @@ export namespace GetBalancesheetsCountResponse$ {
                 rawResponse: z.instanceof(Response).transform(() => {
                     throw new Error("Response cannot be serialized");
                 }),
-                object: z.lazy(() => GetBalancesheetsCountResponseBody$?.outboundSchema).optional(),
+                object: z.lazy(() => GetBalanceSheetsCountResponseBody$?.outboundSchema).optional(),
             })
             .transform((v) => {
                 return {

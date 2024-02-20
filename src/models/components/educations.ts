@@ -11,7 +11,6 @@ export type Educations = {
     startDate?: Date | undefined;
     endDate?: Date | undefined;
     gpa?: number | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -23,7 +22,6 @@ export namespace Educations$ {
         startDate?: string | undefined;
         endDate?: string | undefined;
         gpa?: number | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Educations, z.ZodTypeDef, Inbound> = z
@@ -42,7 +40,6 @@ export namespace Educations$ {
                 .transform((v) => new Date(v))
                 .optional(),
             gpa: z.number().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -52,7 +49,6 @@ export namespace Educations$ {
                 ...(v.startDate === undefined ? null : { startDate: v.startDate }),
                 ...(v.endDate === undefined ? null : { endDate: v.endDate }),
                 ...(v.gpa === undefined ? null : { gpa: v.gpa }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -63,7 +59,6 @@ export namespace Educations$ {
         startDate?: string | undefined;
         endDate?: string | undefined;
         gpa?: number | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Educations> = z
@@ -80,7 +75,6 @@ export namespace Educations$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             gpa: z.number().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -90,7 +84,6 @@ export namespace Educations$ {
                 ...(v.startDate === undefined ? null : { startDate: v.startDate }),
                 ...(v.endDate === undefined ? null : { endDate: v.endDate }),
                 ...(v.gpa === undefined ? null : { gpa: v.gpa }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

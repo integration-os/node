@@ -5,29 +5,41 @@
 import * as components from "../../models/components";
 import { z } from "zod";
 
-export type DeleteIncomestatementsIdRequest = {
+export type DeleteIncomeStatementsIdRequest = {
     /**
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
     /**
      * The modified token of the model
      */
     modifyToken?: string | undefined;
 };
 
-export type DeleteIncomestatementsIdPassthrough = {};
+export type DeleteIncomeStatementsIdPassthrough = {};
 
-export type DeleteIncomestatementsIdCache = {
+export type DeleteIncomeStatementsIdCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type DeleteIncomestatementsIdMeta = {
+export type DeleteIncomeStatementsIdMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -45,21 +57,21 @@ export type DeleteIncomestatementsIdMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: DeleteIncomestatementsIdCache | undefined;
+    cache?: DeleteIncomeStatementsIdCache | undefined;
 };
 
 /**
  * Successful response
  */
-export type DeleteIncomestatementsIdResponseBody = {
+export type DeleteIncomeStatementsIdResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
     unified?: components.IncomeStatements | undefined;
-    passthrough?: DeleteIncomestatementsIdPassthrough | undefined;
-    meta?: DeleteIncomestatementsIdMeta | undefined;
+    passthrough?: DeleteIncomeStatementsIdPassthrough | undefined;
+    meta?: DeleteIncomeStatementsIdMeta | undefined;
 };
 
-export type DeleteIncomestatementsIdResponse = {
+export type DeleteIncomeStatementsIdResponse = {
     /**
      * HTTP response content type for this operation
      */
@@ -75,63 +87,101 @@ export type DeleteIncomestatementsIdResponse = {
     /**
      * Successful response
      */
-    object?: DeleteIncomestatementsIdResponseBody | undefined;
+    object?: DeleteIncomeStatementsIdResponseBody | undefined;
 };
 
 /** @internal */
-export namespace DeleteIncomestatementsIdRequest$ {
+export namespace DeleteIncomeStatementsIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<DeleteIncomestatementsIdRequest, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<DeleteIncomeStatementsIdRequest, z.ZodTypeDef, Inbound> =
         z
             .object({
                 "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+                "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+                "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
                 id: z.string(),
+                passthroughForward: z.string().optional(),
                 modifyToken: z.string().optional(),
             })
             .transform((v) => {
                 return {
                     connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                    ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                        ? null
+                        : {
+                            xIntegrationosEnablePassthrough:
+                                v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"],
+                        }),
+                    ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                        ? null
+                        : {
+                            xIntegrationosPassthroughForward:
+                                v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                        }),
                     id: v.id,
+                    ...(v.passthroughForward === undefined
+                        ? null
+                        : { passthroughForward: v.passthroughForward }),
                     ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 };
             });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        DeleteIncomestatementsIdRequest
+        DeleteIncomeStatementsIdRequest
     > = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }
 
 /** @internal */
-export namespace DeleteIncomestatementsIdPassthrough$ {
+export namespace DeleteIncomeStatementsIdPassthrough$ {
     export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        DeleteIncomestatementsIdPassthrough,
+        DeleteIncomeStatementsIdPassthrough,
         z.ZodTypeDef,
         Inbound
     > = z.object({});
@@ -141,18 +191,18 @@ export namespace DeleteIncomestatementsIdPassthrough$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        DeleteIncomestatementsIdPassthrough
+        DeleteIncomeStatementsIdPassthrough
     > = z.object({});
 }
 
 /** @internal */
-export namespace DeleteIncomestatementsIdCache$ {
+export namespace DeleteIncomeStatementsIdCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<DeleteIncomestatementsIdCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<DeleteIncomeStatementsIdCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -169,7 +219,7 @@ export namespace DeleteIncomestatementsIdCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeleteIncomestatementsIdCache> =
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeleteIncomeStatementsIdCache> =
         z
             .object({
                 hit: z.boolean().optional(),
@@ -184,7 +234,7 @@ export namespace DeleteIncomestatementsIdCache$ {
 }
 
 /** @internal */
-export namespace DeleteIncomestatementsIdMeta$ {
+export namespace DeleteIncomeStatementsIdMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -203,10 +253,10 @@ export namespace DeleteIncomestatementsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: DeleteIncomestatementsIdCache$.Inbound | undefined;
+        cache?: DeleteIncomeStatementsIdCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<DeleteIncomestatementsIdMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<DeleteIncomeStatementsIdMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -225,7 +275,7 @@ export namespace DeleteIncomestatementsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => DeleteIncomestatementsIdCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => DeleteIncomeStatementsIdCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -280,10 +330,10 @@ export namespace DeleteIncomestatementsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: DeleteIncomestatementsIdCache$.Outbound | undefined;
+        cache?: DeleteIncomeStatementsIdCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeleteIncomestatementsIdMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, DeleteIncomeStatementsIdMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -302,7 +352,7 @@ export namespace DeleteIncomestatementsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => DeleteIncomestatementsIdCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => DeleteIncomeStatementsIdCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -341,17 +391,17 @@ export namespace DeleteIncomestatementsIdMeta$ {
 }
 
 /** @internal */
-export namespace DeleteIncomestatementsIdResponseBody$ {
+export namespace DeleteIncomeStatementsIdResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.IncomeStatements$.Inbound | undefined;
-        passthrough?: DeleteIncomestatementsIdPassthrough$.Inbound | undefined;
-        meta?: DeleteIncomestatementsIdMeta$.Inbound | undefined;
+        passthrough?: DeleteIncomeStatementsIdPassthrough$.Inbound | undefined;
+        meta?: DeleteIncomeStatementsIdMeta$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<
-        DeleteIncomestatementsIdResponseBody,
+        DeleteIncomeStatementsIdResponseBody,
         z.ZodTypeDef,
         Inbound
     > = z
@@ -360,9 +410,9 @@ export namespace DeleteIncomestatementsIdResponseBody$ {
             statusCode: z.number().int().optional(),
             unified: components.IncomeStatements$?.inboundSchema.optional(),
             passthrough: z
-                .lazy(() => DeleteIncomestatementsIdPassthrough$?.inboundSchema)
+                .lazy(() => DeleteIncomeStatementsIdPassthrough$?.inboundSchema)
                 .optional(),
-            meta: z.lazy(() => DeleteIncomestatementsIdMeta$?.inboundSchema).optional(),
+            meta: z.lazy(() => DeleteIncomeStatementsIdMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -378,23 +428,23 @@ export namespace DeleteIncomestatementsIdResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.IncomeStatements$.Outbound | undefined;
-        passthrough?: DeleteIncomestatementsIdPassthrough$.Outbound | undefined;
-        meta?: DeleteIncomestatementsIdMeta$.Outbound | undefined;
+        passthrough?: DeleteIncomeStatementsIdPassthrough$.Outbound | undefined;
+        meta?: DeleteIncomeStatementsIdMeta$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        DeleteIncomestatementsIdResponseBody
+        DeleteIncomeStatementsIdResponseBody
     > = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: components.IncomeStatements$?.outboundSchema.optional(),
             passthrough: z
-                .lazy(() => DeleteIncomestatementsIdPassthrough$?.outboundSchema)
+                .lazy(() => DeleteIncomeStatementsIdPassthrough$?.outboundSchema)
                 .optional(),
-            meta: z.lazy(() => DeleteIncomestatementsIdMeta$?.outboundSchema).optional(),
+            meta: z.lazy(() => DeleteIncomeStatementsIdMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -408,22 +458,22 @@ export namespace DeleteIncomestatementsIdResponseBody$ {
 }
 
 /** @internal */
-export namespace DeleteIncomestatementsIdResponse$ {
+export namespace DeleteIncomeStatementsIdResponse$ {
     export type Inbound = {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: DeleteIncomestatementsIdResponseBody$.Inbound | undefined;
+        object?: DeleteIncomeStatementsIdResponseBody$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<DeleteIncomestatementsIdResponse, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<DeleteIncomeStatementsIdResponse, z.ZodTypeDef, Inbound> =
         z
             .object({
                 ContentType: z.string(),
                 StatusCode: z.number().int(),
                 RawResponse: z.instanceof(Response),
                 object: z
-                    .lazy(() => DeleteIncomestatementsIdResponseBody$?.inboundSchema)
+                    .lazy(() => DeleteIncomeStatementsIdResponseBody$?.inboundSchema)
                     .optional(),
             })
             .transform((v) => {
@@ -439,13 +489,13 @@ export namespace DeleteIncomestatementsIdResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: DeleteIncomestatementsIdResponseBody$.Outbound | undefined;
+        object?: DeleteIncomeStatementsIdResponseBody$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        DeleteIncomestatementsIdResponse
+        DeleteIncomeStatementsIdResponse
     > = z
         .object({
             contentType: z.string(),
@@ -453,7 +503,7 @@ export namespace DeleteIncomestatementsIdResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => DeleteIncomestatementsIdResponseBody$?.outboundSchema).optional(),
+            object: z.lazy(() => DeleteIncomeStatementsIdResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

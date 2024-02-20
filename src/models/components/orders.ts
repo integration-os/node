@@ -3,48 +3,24 @@
  */
 
 import { Addresses, Addresses$ } from "./addresses";
+import { Currency, Currency$ } from "./currency";
 import { Items, Items$ } from "./items";
+import { OrderStatus, OrderStatus$ } from "./orderstatus";
+import { PaymentStatus, PaymentStatus$ } from "./paymentstatus";
 import { z } from "zod";
-
-export enum OrdersStatus {
-    Pending = "pending",
-    Processing = "processing",
-    Confirmed = "confirmed",
-    OnHold = "on-hold",
-    AwaitingPayment = "awaiting-payment",
-    AwaitingPickup = "awaiting-pickup",
-    AwaitingShipment = "awaiting-shipment",
-    Shipped = "shipped",
-    Delivered = "delivered",
-    Cancelled = "cancelled",
-    PartiallyRefunded = "partially-refunded",
-    Refunded = "refunded",
-    Returned = "returned",
-    Disputed = "disputed",
-    Failed = "failed",
-    Complete = "complete",
-}
-
-export enum PaymentStatus {
-    Paid = "paid",
-    Pending = "pending",
-    Refunded = "refunded",
-    PartiallyRefunded = "partially-refunded",
-    Failed = "failed",
-}
 
 export type Orders = {
     id?: string | undefined;
     customerID?: string | undefined;
     orderNumber?: string | undefined;
-    status?: OrdersStatus | undefined;
+    status?: OrderStatus | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     total?: number | undefined;
     subTotal?: number | undefined;
     tax?: number | undefined;
     shippingCost?: number | undefined;
-    currency?: string | undefined;
+    currency?: Currency | undefined;
     paymentStatus?: PaymentStatus | undefined;
     paymentMethods?: Array<string> | undefined;
     shippingMethod?: string | undefined;
@@ -59,25 +35,19 @@ export type Orders = {
 };
 
 /** @internal */
-export const OrdersStatus$ = z.nativeEnum(OrdersStatus);
-
-/** @internal */
-export const PaymentStatus$ = z.nativeEnum(PaymentStatus);
-
-/** @internal */
 export namespace Orders$ {
     export type Inbound = {
         id?: string | undefined;
         customerID?: string | undefined;
         orderNumber?: string | undefined;
-        status?: OrdersStatus | undefined;
+        status?: OrderStatus | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
         shippingCost?: number | undefined;
-        currency?: string | undefined;
+        currency?: Currency | undefined;
         paymentStatus?: PaymentStatus | undefined;
         paymentMethods?: Array<string> | undefined;
         shippingMethod?: string | undefined;
@@ -96,7 +66,7 @@ export namespace Orders$ {
             id: z.string().optional(),
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
-            status: OrdersStatus$.optional(),
+            status: OrderStatus$.optional(),
             createdAt: z
                 .string()
                 .datetime({ offset: true })
@@ -111,7 +81,7 @@ export namespace Orders$ {
             subTotal: z.number().optional(),
             tax: z.number().optional(),
             shippingCost: z.number().optional(),
-            currency: z.string().optional(),
+            currency: Currency$.optional(),
             paymentStatus: PaymentStatus$.optional(),
             paymentMethods: z.array(z.string()).optional(),
             shippingMethod: z.string().optional(),
@@ -157,14 +127,14 @@ export namespace Orders$ {
         id?: string | undefined;
         customerID?: string | undefined;
         orderNumber?: string | undefined;
-        status?: OrdersStatus | undefined;
+        status?: OrderStatus | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         total?: number | undefined;
         subTotal?: number | undefined;
         tax?: number | undefined;
         shippingCost?: number | undefined;
-        currency?: string | undefined;
+        currency?: Currency | undefined;
         paymentStatus?: PaymentStatus | undefined;
         paymentMethods?: Array<string> | undefined;
         shippingMethod?: string | undefined;
@@ -183,7 +153,7 @@ export namespace Orders$ {
             id: z.string().optional(),
             customerID: z.string().optional(),
             orderNumber: z.string().optional(),
-            status: OrdersStatus$.optional(),
+            status: OrderStatus$.optional(),
             createdAt: z
                 .date()
                 .transform((v) => v.toISOString())
@@ -196,7 +166,7 @@ export namespace Orders$ {
             subTotal: z.number().optional(),
             tax: z.number().optional(),
             shippingCost: z.number().optional(),
-            currency: z.string().optional(),
+            currency: Currency$.optional(),
             paymentStatus: PaymentStatus$.optional(),
             paymentMethods: z.array(z.string()).optional(),
             shippingMethod: z.string().optional(),

@@ -10,7 +10,6 @@ export type WorkExperiences = {
     startDate?: Date | undefined;
     endDate?: Date | undefined;
     description?: string | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -21,7 +20,6 @@ export namespace WorkExperiences$ {
         startDate?: string | undefined;
         endDate?: string | undefined;
         description?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<WorkExperiences, z.ZodTypeDef, Inbound> = z
@@ -39,7 +37,6 @@ export namespace WorkExperiences$ {
                 .transform((v) => new Date(v))
                 .optional(),
             description: z.string().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -48,7 +45,6 @@ export namespace WorkExperiences$ {
                 ...(v.startDate === undefined ? null : { startDate: v.startDate }),
                 ...(v.endDate === undefined ? null : { endDate: v.endDate }),
                 ...(v.description === undefined ? null : { description: v.description }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -58,7 +54,6 @@ export namespace WorkExperiences$ {
         startDate?: string | undefined;
         endDate?: string | undefined;
         description?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, WorkExperiences> = z
@@ -74,7 +69,6 @@ export namespace WorkExperiences$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             description: z.string().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -83,7 +77,6 @@ export namespace WorkExperiences$ {
                 ...(v.startDate === undefined ? null : { startDate: v.startDate }),
                 ...(v.endDate === undefined ? null : { endDate: v.endDate }),
                 ...(v.description === undefined ? null : { description: v.description }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

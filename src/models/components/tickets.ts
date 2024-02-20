@@ -6,43 +6,20 @@ import { Attachments, Attachments$ } from "./attachments";
 import { Comments, Comments$ } from "./comments";
 import { Contacts, Contacts$ } from "./contacts";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
+import { IssueLifecycleStatus, IssueLifecycleStatus$ } from "./issuelifecyclestatus";
 import { Notes, Notes$ } from "./notes";
+import { SupportQueryType, SupportQueryType$ } from "./supportquerytype";
+import { SupportTicketPriority, SupportTicketPriority$ } from "./supportticketpriority";
 import { Users, Users$ } from "./users";
 import { z } from "zod";
-
-export enum TicketsStatus {
-    Open = "open",
-    Pending = "pending",
-    Closed = "closed",
-    OnHold = "onHold",
-    Resolved = "resolved",
-    Cancelled = "cancelled",
-    InProgress = "inProgress",
-}
-
-export enum TicketsPriority {
-    Low = "low",
-    Medium = "medium",
-    High = "high",
-    Urgent = "urgent",
-}
-
-export enum TicketsType {
-    Question = "question",
-    Incident = "incident",
-    Problem = "problem",
-    Task = "task",
-    Bug = "bug",
-    FeatureRequest = "featureRequest",
-}
 
 export type Tickets = {
     id?: string | undefined;
     title?: string | undefined;
     description?: string | undefined;
-    status?: TicketsStatus | undefined;
-    priority?: TicketsPriority | undefined;
-    type?: TicketsType | undefined;
+    status?: IssueLifecycleStatus | undefined;
+    priority?: SupportTicketPriority | undefined;
+    type?: SupportQueryType | undefined;
     assignee?: Users | undefined;
     reporter?: Contacts | undefined;
     createdAt?: Date | undefined;
@@ -57,23 +34,14 @@ export type Tickets = {
 };
 
 /** @internal */
-export const TicketsStatus$ = z.nativeEnum(TicketsStatus);
-
-/** @internal */
-export const TicketsPriority$ = z.nativeEnum(TicketsPriority);
-
-/** @internal */
-export const TicketsType$ = z.nativeEnum(TicketsType);
-
-/** @internal */
 export namespace Tickets$ {
     export type Inbound = {
         id?: string | undefined;
         title?: string | undefined;
         description?: string | undefined;
-        status?: TicketsStatus | undefined;
-        priority?: TicketsPriority | undefined;
-        type?: TicketsType | undefined;
+        status?: IssueLifecycleStatus | undefined;
+        priority?: SupportTicketPriority | undefined;
+        type?: SupportQueryType | undefined;
         assignee?: Users$.Inbound | undefined;
         reporter?: Contacts$.Inbound | undefined;
         createdAt?: string | undefined;
@@ -92,9 +60,9 @@ export namespace Tickets$ {
             id: z.string().optional(),
             title: z.string().optional(),
             description: z.string().optional(),
-            status: TicketsStatus$.optional(),
-            priority: TicketsPriority$.optional(),
-            type: TicketsType$.optional(),
+            status: IssueLifecycleStatus$.optional(),
+            priority: SupportTicketPriority$.optional(),
+            type: SupportQueryType$.optional(),
             assignee: Users$?.inboundSchema.optional(),
             reporter: Contacts$?.inboundSchema.optional(),
             createdAt: z
@@ -145,9 +113,9 @@ export namespace Tickets$ {
         id?: string | undefined;
         title?: string | undefined;
         description?: string | undefined;
-        status?: TicketsStatus | undefined;
-        priority?: TicketsPriority | undefined;
-        type?: TicketsType | undefined;
+        status?: IssueLifecycleStatus | undefined;
+        priority?: SupportTicketPriority | undefined;
+        type?: SupportQueryType | undefined;
         assignee?: Users$.Outbound | undefined;
         reporter?: Contacts$.Outbound | undefined;
         createdAt?: string | undefined;
@@ -166,9 +134,9 @@ export namespace Tickets$ {
             id: z.string().optional(),
             title: z.string().optional(),
             description: z.string().optional(),
-            status: TicketsStatus$.optional(),
-            priority: TicketsPriority$.optional(),
-            type: TicketsType$.optional(),
+            status: IssueLifecycleStatus$.optional(),
+            priority: SupportTicketPriority$.optional(),
+            type: SupportQueryType$.optional(),
             assignee: Users$?.outboundSchema.optional(),
             reporter: Contacts$?.outboundSchema.optional(),
             createdAt: z

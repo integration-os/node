@@ -11,7 +11,6 @@ export type ProductOptions = {
     values?: Array<string> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -23,7 +22,6 @@ export namespace ProductOptions$ {
         values?: Array<string> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<ProductOptions, z.ZodTypeDef, Inbound> = z
@@ -42,7 +40,6 @@ export namespace ProductOptions$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -52,7 +49,6 @@ export namespace ProductOptions$ {
                 ...(v.values === undefined ? null : { values: v.values }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -63,7 +59,6 @@ export namespace ProductOptions$ {
         values?: Array<string> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, ProductOptions> = z
@@ -80,7 +75,6 @@ export namespace ProductOptions$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -90,7 +84,6 @@ export namespace ProductOptions$ {
                 ...(v.values === undefined ? null : { values: v.values }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

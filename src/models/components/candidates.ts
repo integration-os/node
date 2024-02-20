@@ -5,21 +5,16 @@
 import { Attachments, Attachments$ } from "./attachments";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
 import { Educations, Educations$ } from "./educations";
+import {
+    EmploymentAndCandidateStatus,
+    EmploymentAndCandidateStatus$,
+} from "./employmentandcandidatestatus";
 import { Images, Images$ } from "./images";
 import { Notes, Notes$ } from "./notes";
 import { References, References$ } from "./references";
 import { SocialProfiles, SocialProfiles$ } from "./socialprofiles";
 import { WorkExperiences, WorkExperiences$ } from "./workexperiences";
 import { z } from "zod";
-
-export enum CandidatesStatus {
-    New = "New",
-    InReview = "InReview",
-    Interviewing = "Interviewing",
-    OfferExtended = "OfferExtended",
-    Hired = "Hired",
-    NotSelected = "NotSelected",
-}
 
 export type Candidates = {
     id?: string | undefined;
@@ -42,16 +37,13 @@ export type Candidates = {
     references?: Array<References> | undefined;
     availability?: Date | undefined;
     preferredWorkLocation?: string | undefined;
-    status?: CandidatesStatus | undefined;
+    status?: EmploymentAndCandidateStatus | undefined;
     customFields?: Array<CustomAttributes> | undefined;
     notes?: Array<Notes> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const CandidatesStatus$ = z.nativeEnum(CandidatesStatus);
 
 /** @internal */
 export namespace Candidates$ {
@@ -76,7 +68,7 @@ export namespace Candidates$ {
         references?: Array<References$.Inbound> | undefined;
         availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
-        status?: CandidatesStatus | undefined;
+        status?: EmploymentAndCandidateStatus | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
         notes?: Array<Notes$.Inbound> | undefined;
         createdAt?: string | undefined;
@@ -110,7 +102,7 @@ export namespace Candidates$ {
                 .transform((v) => new Date(v))
                 .optional(),
             preferredWorkLocation: z.string().optional(),
-            status: CandidatesStatus$.optional(),
+            status: EmploymentAndCandidateStatus$.optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
             notes: z.array(Notes$?.inboundSchema).optional(),
             createdAt: z
@@ -181,7 +173,7 @@ export namespace Candidates$ {
         references?: Array<References$.Outbound> | undefined;
         availability?: string | undefined;
         preferredWorkLocation?: string | undefined;
-        status?: CandidatesStatus | undefined;
+        status?: EmploymentAndCandidateStatus | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
         notes?: Array<Notes$.Outbound> | undefined;
         createdAt?: string | undefined;
@@ -214,7 +206,7 @@ export namespace Candidates$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             preferredWorkLocation: z.string().optional(),
-            status: CandidatesStatus$.optional(),
+            status: EmploymentAndCandidateStatus$.optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
             notes: z.array(Notes$?.outboundSchema).optional(),
             createdAt: z

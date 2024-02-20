@@ -4,33 +4,22 @@
 
 import { Addresses, Addresses$ } from "./addresses";
 import { Contacts, Contacts$ } from "./contacts";
+import { InventoryStorageType, InventoryStorageType$ } from "./inventorystoragetype";
 import { z } from "zod";
-
-export enum InventoryLocationsType {
-    Warehouse = "WAREHOUSE",
-    RetailStore = "RETAIL_STORE",
-    DistributionCenter = "DISTRIBUTION_CENTER",
-    DropShipper = "DROP_SHIPPER",
-    Other = "OTHER",
-}
 
 export type InventoryLocations = {
     locationId?: string | undefined;
     name?: string | undefined;
     address?: Addresses | undefined;
     contactInformation?: Array<Contacts> | undefined;
-    type?: InventoryLocationsType | undefined;
+    type?: InventoryStorageType | undefined;
     quantity?: number | undefined;
     operationalHours?: string | undefined;
     isActive?: boolean | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     deleted?: boolean | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const InventoryLocationsType$ = z.nativeEnum(InventoryLocationsType);
 
 /** @internal */
 export namespace InventoryLocations$ {
@@ -39,14 +28,13 @@ export namespace InventoryLocations$ {
         name?: string | undefined;
         address?: Addresses$.Inbound | undefined;
         contactInformation?: Array<Contacts$.Inbound> | undefined;
-        type?: InventoryLocationsType | undefined;
+        type?: InventoryStorageType | undefined;
         quantity?: number | undefined;
         operationalHours?: string | undefined;
         isActive?: boolean | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<InventoryLocations, z.ZodTypeDef, Inbound> = z
@@ -55,7 +43,7 @@ export namespace InventoryLocations$ {
             name: z.string().optional(),
             address: Addresses$?.inboundSchema.optional(),
             contactInformation: z.array(Contacts$?.inboundSchema).optional(),
-            type: InventoryLocationsType$.optional(),
+            type: InventoryStorageType$.optional(),
             quantity: z.number().optional(),
             operationalHours: z.string().optional(),
             isActive: z.boolean().optional(),
@@ -70,7 +58,6 @@ export namespace InventoryLocations$ {
                 .transform((v) => new Date(v))
                 .optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -89,7 +76,6 @@ export namespace InventoryLocations$ {
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -98,14 +84,13 @@ export namespace InventoryLocations$ {
         name?: string | undefined;
         address?: Addresses$.Outbound | undefined;
         contactInformation?: Array<Contacts$.Outbound> | undefined;
-        type?: InventoryLocationsType | undefined;
+        type?: InventoryStorageType | undefined;
         quantity?: number | undefined;
         operationalHours?: string | undefined;
         isActive?: boolean | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, InventoryLocations> = z
@@ -114,7 +99,7 @@ export namespace InventoryLocations$ {
             name: z.string().optional(),
             address: Addresses$?.outboundSchema.optional(),
             contactInformation: z.array(Contacts$?.outboundSchema).optional(),
-            type: InventoryLocationsType$.optional(),
+            type: InventoryStorageType$.optional(),
             quantity: z.number().optional(),
             operationalHours: z.string().optional(),
             isActive: z.boolean().optional(),
@@ -127,7 +112,6 @@ export namespace InventoryLocations$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -146,7 +130,6 @@ export namespace InventoryLocations$ {
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

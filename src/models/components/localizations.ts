@@ -10,7 +10,6 @@ export type Localizations = {
     description?: string | undefined;
     metaTitle?: string | undefined;
     metaDescription?: string | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -21,7 +20,6 @@ export namespace Localizations$ {
         description?: string | undefined;
         metaTitle?: string | undefined;
         metaDescription?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Localizations, z.ZodTypeDef, Inbound> = z
@@ -31,7 +29,6 @@ export namespace Localizations$ {
             description: z.string().optional(),
             metaTitle: z.string().optional(),
             metaDescription: z.string().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -42,7 +39,6 @@ export namespace Localizations$ {
                 ...(v.metaDescription === undefined
                     ? null
                     : { metaDescription: v.metaDescription }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -52,7 +48,6 @@ export namespace Localizations$ {
         description?: string | undefined;
         metaTitle?: string | undefined;
         metaDescription?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Localizations> = z
@@ -62,7 +57,6 @@ export namespace Localizations$ {
             description: z.string().optional(),
             metaTitle: z.string().optional(),
             metaDescription: z.string().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -73,7 +67,6 @@ export namespace Localizations$ {
                 ...(v.metaDescription === undefined
                     ? null
                     : { metaDescription: v.metaDescription }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -8,6 +8,7 @@ import { PaymentMethods, PaymentMethods$ } from "./paymentmethods";
 import { Preferences, Preferences$ } from "./preferences";
 import { SocialProfiles, SocialProfiles$ } from "./socialprofiles";
 import { Sso, Sso$ } from "./sso";
+import { UserStatus, UserStatus$ } from "./userstatus";
 import { z } from "zod";
 
 export enum Gender {
@@ -21,13 +22,6 @@ export enum Roles {
     User = "User",
     Admin = "Admin",
     Moderator = "Moderator",
-}
-
-export enum UsersStatus {
-    Pending = "Pending",
-    Verified = "Verified",
-    Suspended = "Suspended",
-    Inactive = "Inactive",
 }
 
 export type Users = {
@@ -53,7 +47,7 @@ export type Users = {
     bio?: string | undefined;
     website?: string | undefined;
     socialProfiles?: Array<SocialProfiles> | undefined;
-    status?: UsersStatus | undefined;
+    status?: UserStatus | undefined;
     sso?: Array<Sso> | undefined;
     paymentMethods?: PaymentMethods | undefined;
     modifyToken?: string | undefined;
@@ -64,9 +58,6 @@ export const Gender$ = z.nativeEnum(Gender);
 
 /** @internal */
 export const Roles$ = z.nativeEnum(Roles);
-
-/** @internal */
-export const UsersStatus$ = z.nativeEnum(UsersStatus);
 
 /** @internal */
 export namespace Users$ {
@@ -93,7 +84,7 @@ export namespace Users$ {
         bio?: string | undefined;
         website?: string | undefined;
         socialProfiles?: Array<SocialProfiles$.Inbound> | undefined;
-        status?: UsersStatus | undefined;
+        status?: UserStatus | undefined;
         sso?: Array<Sso$.Inbound> | undefined;
         paymentMethods?: PaymentMethods$.Inbound | undefined;
         modifyToken?: string | undefined;
@@ -139,7 +130,7 @@ export namespace Users$ {
             bio: z.string().optional(),
             website: z.string().optional(),
             socialProfiles: z.array(SocialProfiles$?.inboundSchema).optional(),
-            status: UsersStatus$.optional(),
+            status: UserStatus$.optional(),
             sso: z.array(Sso$?.inboundSchema).optional(),
             paymentMethods: PaymentMethods$?.inboundSchema.optional(),
             modifyToken: z.string().optional(),
@@ -198,7 +189,7 @@ export namespace Users$ {
         bio?: string | undefined;
         website?: string | undefined;
         socialProfiles?: Array<SocialProfiles$.Outbound> | undefined;
-        status?: UsersStatus | undefined;
+        status?: UserStatus | undefined;
         sso?: Array<Sso$.Outbound> | undefined;
         paymentMethods?: PaymentMethods$.Outbound | undefined;
         modifyToken?: string | undefined;
@@ -240,7 +231,7 @@ export namespace Users$ {
             bio: z.string().optional(),
             website: z.string().optional(),
             socialProfiles: z.array(SocialProfiles$?.outboundSchema).optional(),
-            status: UsersStatus$.optional(),
+            status: UserStatus$.optional(),
             sso: z.array(Sso$?.outboundSchema).optional(),
             paymentMethods: PaymentMethods$?.outboundSchema.optional(),
             modifyToken: z.string().optional(),

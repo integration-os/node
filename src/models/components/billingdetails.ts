@@ -3,182 +3,11 @@
  */
 
 import { Addresses, Addresses$ } from "./addresses";
+import { Currency, Currency$ } from "./currency";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
 import { PaymentMethods, PaymentMethods$ } from "./paymentmethods";
+import { PaymentTerms, PaymentTerms$ } from "./paymentterms";
 import { z } from "zod";
-
-export enum BillingDetailsPaymentTerms {
-    Net30 = "net-30",
-    Net60 = "net-60",
-    DueOnReceipt = "due-on-receipt",
-    DueEndOfMonth = "due-end-of-month",
-}
-
-export enum BillingDetailsCurrency {
-    Aed = "AED",
-    Afn = "AFN",
-    All = "ALL",
-    Amd = "AMD",
-    Ang = "ANG",
-    Aoa = "AOA",
-    Ars = "ARS",
-    Aud = "AUD",
-    Awg = "AWG",
-    Azn = "AZN",
-    Bam = "BAM",
-    Bbd = "BBD",
-    Bdt = "BDT",
-    Bgn = "BGN",
-    Bhd = "BHD",
-    Bif = "BIF",
-    Bmd = "BMD",
-    Bnd = "BND",
-    Bob = "BOB",
-    Brl = "BRL",
-    Bsd = "BSD",
-    Btn = "BTN",
-    Bwp = "BWP",
-    Byn = "BYN",
-    Bzd = "BZD",
-    Cad = "CAD",
-    Cdf = "CDF",
-    Chf = "CHF",
-    Clp = "CLP",
-    Cny = "CNY",
-    Cop = "COP",
-    Crc = "CRC",
-    Cuc = "CUC",
-    Cup = "CUP",
-    Cve = "CVE",
-    Czk = "CZK",
-    Djf = "DJF",
-    Dkk = "DKK",
-    Dop = "DOP",
-    Dzd = "DZD",
-    Egp = "EGP",
-    Ern = "ERN",
-    Etb = "ETB",
-    Eur = "EUR",
-    Fjd = "FJD",
-    Fkp = "FKP",
-    Fok = "FOK",
-    Gbp = "GBP",
-    Gel = "GEL",
-    Ggp = "GGP",
-    Ghs = "GHS",
-    Gip = "GIP",
-    Gmd = "GMD",
-    Gnf = "GNF",
-    Gtq = "GTQ",
-    Gyd = "GYD",
-    Hkd = "HKD",
-    Hnl = "HNL",
-    Hrk = "HRK",
-    Htg = "HTG",
-    Huf = "HUF",
-    Idr = "IDR",
-    Ils = "ILS",
-    Imp = "IMP",
-    Inr = "INR",
-    Iqd = "IQD",
-    Irr = "IRR",
-    Isk = "ISK",
-    Jep = "JEP",
-    Jmd = "JMD",
-    Jod = "JOD",
-    Jpy = "JPY",
-    Kes = "KES",
-    Kgs = "KGS",
-    Khr = "KHR",
-    Kid = "KID",
-    Kmf = "KMF",
-    Kpw = "KPW",
-    Krw = "KRW",
-    Kwd = "KWD",
-    Kyd = "KYD",
-    Kzt = "KZT",
-    Lak = "LAK",
-    Lbp = "LBP",
-    Lkr = "LKR",
-    Lrd = "LRD",
-    Lsl = "LSL",
-    Lyd = "LYD",
-    Mad = "MAD",
-    Mdl = "MDL",
-    Mga = "MGA",
-    Mkd = "MKD",
-    Mmk = "MMK",
-    Mnt = "MNT",
-    Mop = "MOP",
-    Mru = "MRU",
-    Mur = "MUR",
-    Mvr = "MVR",
-    Mwk = "MWK",
-    Mxn = "MXN",
-    Myr = "MYR",
-    Mzn = "MZN",
-    Nad = "NAD",
-    Ngn = "NGN",
-    Nio = "NIO",
-    Nok = "NOK",
-    Npr = "NPR",
-    Nzd = "NZD",
-    Omr = "OMR",
-    Pab = "PAB",
-    Pen = "PEN",
-    Pgk = "PGK",
-    Php = "PHP",
-    Pkr = "PKR",
-    Pln = "PLN",
-    Pyg = "PYG",
-    Qar = "QAR",
-    Ron = "RON",
-    Rsd = "RSD",
-    Rub = "RUB",
-    Rwf = "RWF",
-    Sar = "SAR",
-    Sbd = "SBD",
-    Scr = "SCR",
-    Sdg = "SDG",
-    Sek = "SEK",
-    Sgd = "SGD",
-    Shp = "SHP",
-    Sll = "SLL",
-    Sos = "SOS",
-    Srd = "SRD",
-    Ssp = "SSP",
-    Stn = "STN",
-    Syp = "SYP",
-    Szl = "SZL",
-    Thb = "THB",
-    Tjs = "TJS",
-    Tmt = "TMT",
-    Tnd = "TND",
-    Top = "TOP",
-    Try = "TRY",
-    Ttd = "TTD",
-    Tvd = "TVD",
-    Twd = "TWD",
-    Tzs = "TZS",
-    Uah = "UAH",
-    Ugx = "UGX",
-    Usd = "USD",
-    Uyu = "UYU",
-    Uzs = "UZS",
-    Ves = "VES",
-    Vnd = "VND",
-    Vuv = "VUV",
-    Wst = "WST",
-    Xaf = "XAF",
-    Xcd = "XCD",
-    Xdr = "XDR",
-    Xof = "XOF",
-    Xpf = "XPF",
-    Yer = "YER",
-    Zar = "ZAR",
-    Zmw = "ZMW",
-    Zwl = "ZWL",
-}
 
 export type BillingDetails = {
     id?: string | undefined;
@@ -189,24 +18,17 @@ export type BillingDetails = {
     address?: Addresses | undefined;
     companyName?: string | undefined;
     vatId?: string | undefined;
-    paymentTerms?: BillingDetailsPaymentTerms | undefined;
+    paymentTerms?: PaymentTerms | undefined;
     note?: string | undefined;
     defaultPaymentMethod?: PaymentMethods | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
     active?: boolean | undefined;
     isDeleted?: boolean | undefined;
-    currency?: BillingDetailsCurrency | undefined;
+    currency?: Currency | undefined;
     language?: string | undefined;
     additionalAttributes?: Array<CustomAttributes> | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const BillingDetailsPaymentTerms$ = z.nativeEnum(BillingDetailsPaymentTerms);
-
-/** @internal */
-export const BillingDetailsCurrency$ = z.nativeEnum(BillingDetailsCurrency);
 
 /** @internal */
 export namespace BillingDetails$ {
@@ -219,17 +41,16 @@ export namespace BillingDetails$ {
         address?: Addresses$.Inbound | undefined;
         companyName?: string | undefined;
         vatId?: string | undefined;
-        paymentTerms?: BillingDetailsPaymentTerms | undefined;
+        paymentTerms?: PaymentTerms$.Inbound | undefined;
         note?: string | undefined;
         defaultPaymentMethod?: PaymentMethods$.Inbound | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         isDeleted?: boolean | undefined;
-        currency?: BillingDetailsCurrency | undefined;
+        currency?: Currency | undefined;
         language?: string | undefined;
         additionalAttributes?: Array<CustomAttributes$.Inbound> | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<BillingDetails, z.ZodTypeDef, Inbound> = z
@@ -242,7 +63,7 @@ export namespace BillingDetails$ {
             address: Addresses$?.inboundSchema.optional(),
             companyName: z.string().optional(),
             vatId: z.string().optional(),
-            paymentTerms: BillingDetailsPaymentTerms$.optional(),
+            paymentTerms: PaymentTerms$?.inboundSchema.optional(),
             note: z.string().optional(),
             defaultPaymentMethod: PaymentMethods$?.inboundSchema.optional(),
             createdAt: z
@@ -257,10 +78,9 @@ export namespace BillingDetails$ {
                 .optional(),
             active: z.boolean().optional(),
             isDeleted: z.boolean().optional(),
-            currency: BillingDetailsCurrency$.optional(),
+            currency: Currency$.optional(),
             language: z.string().optional(),
             additionalAttributes: z.array(CustomAttributes$?.inboundSchema).optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -286,7 +106,6 @@ export namespace BillingDetails$ {
                 ...(v.additionalAttributes === undefined
                     ? null
                     : { additionalAttributes: v.additionalAttributes }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -299,17 +118,16 @@ export namespace BillingDetails$ {
         address?: Addresses$.Outbound | undefined;
         companyName?: string | undefined;
         vatId?: string | undefined;
-        paymentTerms?: BillingDetailsPaymentTerms | undefined;
+        paymentTerms?: PaymentTerms$.Outbound | undefined;
         note?: string | undefined;
         defaultPaymentMethod?: PaymentMethods$.Outbound | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         isDeleted?: boolean | undefined;
-        currency?: BillingDetailsCurrency | undefined;
+        currency?: Currency | undefined;
         language?: string | undefined;
         additionalAttributes?: Array<CustomAttributes$.Outbound> | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, BillingDetails> = z
@@ -322,7 +140,7 @@ export namespace BillingDetails$ {
             address: Addresses$?.outboundSchema.optional(),
             companyName: z.string().optional(),
             vatId: z.string().optional(),
-            paymentTerms: BillingDetailsPaymentTerms$.optional(),
+            paymentTerms: PaymentTerms$?.outboundSchema.optional(),
             note: z.string().optional(),
             defaultPaymentMethod: PaymentMethods$?.outboundSchema.optional(),
             createdAt: z
@@ -335,10 +153,9 @@ export namespace BillingDetails$ {
                 .optional(),
             active: z.boolean().optional(),
             isDeleted: z.boolean().optional(),
-            currency: BillingDetailsCurrency$.optional(),
+            currency: Currency$.optional(),
             language: z.string().optional(),
             additionalAttributes: z.array(CustomAttributes$?.outboundSchema).optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -364,7 +181,6 @@ export namespace BillingDetails$ {
                 ...(v.additionalAttributes === undefined
                     ? null
                     : { additionalAttributes: v.additionalAttributes }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

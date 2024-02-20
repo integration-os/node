@@ -11,19 +11,31 @@ export type GetCustomersIdRequest = {
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
-export type Passthrough = {};
+export type GetCustomersIdPassthrough = {};
 
-export type Cache = {
+export type GetCustomersIdCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type Meta = {
+export type GetCustomersIdMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -41,7 +53,7 @@ export type Meta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: Cache | undefined;
+    cache?: GetCustomersIdCache | undefined;
 };
 
 /**
@@ -51,8 +63,8 @@ export type GetCustomersIdResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
     unified?: components.Customers | undefined;
-    passthrough?: Passthrough | undefined;
-    meta?: Meta | undefined;
+    passthrough?: GetCustomersIdPassthrough | undefined;
+    meta?: GetCustomersIdMeta | undefined;
 };
 
 export type GetCustomersIdResponse = {
@@ -78,58 +90,95 @@ export type GetCustomersIdResponse = {
 export namespace GetCustomersIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetCustomersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersIdRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
 
 /** @internal */
-export namespace Passthrough$ {
+export namespace GetCustomersIdPassthrough$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<Passthrough, z.ZodTypeDef, Inbound> = z.object({});
+    export const inboundSchema: z.ZodType<GetCustomersIdPassthrough, z.ZodTypeDef, Inbound> =
+        z.object({});
 
     export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Passthrough> = z.object({});
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersIdPassthrough> =
+        z.object({});
 }
 
 /** @internal */
-export namespace Cache$ {
+export namespace GetCustomersIdCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<Cache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetCustomersIdCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -146,7 +195,7 @@ export namespace Cache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Cache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersIdCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -160,7 +209,7 @@ export namespace Cache$ {
 }
 
 /** @internal */
-export namespace Meta$ {
+export namespace GetCustomersIdMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -179,10 +228,10 @@ export namespace Meta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: Cache$.Inbound | undefined;
+        cache?: GetCustomersIdCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<Meta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetCustomersIdMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -201,7 +250,7 @@ export namespace Meta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => Cache$?.inboundSchema).optional(),
+            cache: z.lazy(() => GetCustomersIdCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -256,10 +305,10 @@ export namespace Meta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: Cache$.Outbound | undefined;
+        cache?: GetCustomersIdCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Meta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersIdMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -278,7 +327,7 @@ export namespace Meta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => Cache$?.outboundSchema).optional(),
+            cache: z.lazy(() => GetCustomersIdCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -322,8 +371,8 @@ export namespace GetCustomersIdResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.Customers$.Inbound | undefined;
-        passthrough?: Passthrough$.Inbound | undefined;
-        meta?: Meta$.Inbound | undefined;
+        passthrough?: GetCustomersIdPassthrough$.Inbound | undefined;
+        meta?: GetCustomersIdMeta$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetCustomersIdResponseBody, z.ZodTypeDef, Inbound> = z
@@ -331,8 +380,8 @@ export namespace GetCustomersIdResponseBody$ {
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: components.Customers$?.inboundSchema.optional(),
-            passthrough: z.lazy(() => Passthrough$?.inboundSchema).optional(),
-            meta: z.lazy(() => Meta$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetCustomersIdPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetCustomersIdMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -348,8 +397,8 @@ export namespace GetCustomersIdResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.Customers$.Outbound | undefined;
-        passthrough?: Passthrough$.Outbound | undefined;
-        meta?: Meta$.Outbound | undefined;
+        passthrough?: GetCustomersIdPassthrough$.Outbound | undefined;
+        meta?: GetCustomersIdMeta$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersIdResponseBody> = z
@@ -357,8 +406,8 @@ export namespace GetCustomersIdResponseBody$ {
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: components.Customers$?.outboundSchema.optional(),
-            passthrough: z.lazy(() => Passthrough$?.outboundSchema).optional(),
-            meta: z.lazy(() => Meta$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetCustomersIdPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetCustomersIdMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

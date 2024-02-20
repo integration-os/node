@@ -5,36 +5,45 @@
 import * as components from "../../models/components";
 import { z } from "zod";
 
-export type GetBalancesheetsRequest = {
+export type GetBalanceSheetsRequest = {
     /**
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
+    /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
     limit?: string | undefined;
-    nextCursor?: string | undefined;
-    previousCursor?: string | undefined;
-    pageSize?: string | undefined;
+    cursor?: string | undefined;
     createdAfter?: string | undefined;
     createdBefore?: string | undefined;
     updatedAfter?: string | undefined;
     updatedBefore?: string | undefined;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
-export type GetBalancesheetsPagination = {
+export type GetBalanceSheetsPagination = {
     nextCursor?: string | undefined;
     previousCursor?: string | undefined;
-    pageSize?: number | undefined;
     limit?: number | undefined;
 };
 
-export type GetBalancesheetsPassthrough = {};
+export type GetBalanceSheetsPassthrough = {};
 
-export type GetBalancesheetsCache = {
+export type GetBalanceSheetsCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type GetBalancesheetsMeta = {
+export type GetBalanceSheetsMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -52,22 +61,22 @@ export type GetBalancesheetsMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: GetBalancesheetsCache | undefined;
+    cache?: GetBalanceSheetsCache | undefined;
 };
 
 /**
  * Successful response
  */
-export type GetBalancesheetsResponseBody = {
+export type GetBalanceSheetsResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
     unified?: Array<components.BalanceSheets> | undefined;
-    pagination?: GetBalancesheetsPagination | undefined;
-    passthrough?: GetBalancesheetsPassthrough | undefined;
-    meta?: GetBalancesheetsMeta | undefined;
+    pagination?: GetBalanceSheetsPagination | undefined;
+    passthrough?: GetBalanceSheetsPassthrough | undefined;
+    meta?: GetBalanceSheetsMeta | undefined;
 };
 
-export type GetBalancesheetsResponse = {
+export type GetBalanceSheetsResponse = {
     /**
      * HTTP response content type for this operation
      */
@@ -83,109 +92,129 @@ export type GetBalancesheetsResponse = {
     /**
      * Successful response
      */
-    object?: GetBalancesheetsResponseBody | undefined;
+    object?: GetBalanceSheetsResponseBody | undefined;
 };
 
 /** @internal */
-export namespace GetBalancesheetsRequest$ {
+export namespace GetBalanceSheetsRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsRequest, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsRequest> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
 
 /** @internal */
-export namespace GetBalancesheetsPagination$ {
+export namespace GetBalanceSheetsPagination$ {
     export type Inbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsPagination, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsPagination, z.ZodTypeDef, Inbound> = z
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
@@ -193,48 +222,45 @@ export namespace GetBalancesheetsPagination$ {
     export type Outbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsPagination> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsPagination> = z
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
 }
 
 /** @internal */
-export namespace GetBalancesheetsPassthrough$ {
+export namespace GetBalanceSheetsPassthrough$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsPassthrough, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<GetBalanceSheetsPassthrough, z.ZodTypeDef, Inbound> =
         z.object({});
 
     export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsPassthrough> =
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsPassthrough> =
         z.object({});
 }
 
 /** @internal */
-export namespace GetBalancesheetsCache$ {
+export namespace GetBalanceSheetsCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -251,7 +277,7 @@ export namespace GetBalancesheetsCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsCache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -265,7 +291,7 @@ export namespace GetBalancesheetsCache$ {
 }
 
 /** @internal */
-export namespace GetBalancesheetsMeta$ {
+export namespace GetBalanceSheetsMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -284,10 +310,10 @@ export namespace GetBalancesheetsMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetBalancesheetsCache$.Inbound | undefined;
+        cache?: GetBalanceSheetsCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -306,7 +332,7 @@ export namespace GetBalancesheetsMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetBalancesheetsCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => GetBalanceSheetsCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -361,10 +387,10 @@ export namespace GetBalancesheetsMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetBalancesheetsCache$.Outbound | undefined;
+        cache?: GetBalanceSheetsCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -383,7 +409,7 @@ export namespace GetBalancesheetsMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetBalancesheetsCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => GetBalanceSheetsCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -422,24 +448,24 @@ export namespace GetBalancesheetsMeta$ {
 }
 
 /** @internal */
-export namespace GetBalancesheetsResponseBody$ {
+export namespace GetBalanceSheetsResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: Array<components.BalanceSheets$.Inbound> | undefined;
-        pagination?: GetBalancesheetsPagination$.Inbound | undefined;
-        passthrough?: GetBalancesheetsPassthrough$.Inbound | undefined;
-        meta?: GetBalancesheetsMeta$.Inbound | undefined;
+        pagination?: GetBalanceSheetsPagination$.Inbound | undefined;
+        passthrough?: GetBalanceSheetsPassthrough$.Inbound | undefined;
+        meta?: GetBalanceSheetsMeta$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsResponseBody, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsResponseBody, z.ZodTypeDef, Inbound> = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: z.array(components.BalanceSheets$?.inboundSchema).optional(),
-            pagination: z.lazy(() => GetBalancesheetsPagination$?.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetBalancesheetsPassthrough$?.inboundSchema).optional(),
-            meta: z.lazy(() => GetBalancesheetsMeta$?.inboundSchema).optional(),
+            pagination: z.lazy(() => GetBalanceSheetsPagination$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetBalanceSheetsPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetBalanceSheetsMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -456,19 +482,19 @@ export namespace GetBalancesheetsResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: Array<components.BalanceSheets$.Outbound> | undefined;
-        pagination?: GetBalancesheetsPagination$.Outbound | undefined;
-        passthrough?: GetBalancesheetsPassthrough$.Outbound | undefined;
-        meta?: GetBalancesheetsMeta$.Outbound | undefined;
+        pagination?: GetBalanceSheetsPagination$.Outbound | undefined;
+        passthrough?: GetBalanceSheetsPassthrough$.Outbound | undefined;
+        meta?: GetBalanceSheetsMeta$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsResponseBody> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsResponseBody> = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: z.array(components.BalanceSheets$?.outboundSchema).optional(),
-            pagination: z.lazy(() => GetBalancesheetsPagination$?.outboundSchema).optional(),
-            passthrough: z.lazy(() => GetBalancesheetsPassthrough$?.outboundSchema).optional(),
-            meta: z.lazy(() => GetBalancesheetsMeta$?.outboundSchema).optional(),
+            pagination: z.lazy(() => GetBalanceSheetsPagination$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetBalanceSheetsPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetBalanceSheetsMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -483,20 +509,20 @@ export namespace GetBalancesheetsResponseBody$ {
 }
 
 /** @internal */
-export namespace GetBalancesheetsResponse$ {
+export namespace GetBalanceSheetsResponse$ {
     export type Inbound = {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: GetBalancesheetsResponseBody$.Inbound | undefined;
+        object?: GetBalanceSheetsResponseBody$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetBalancesheetsResponse, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetBalanceSheetsResponse, z.ZodTypeDef, Inbound> = z
         .object({
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetBalancesheetsResponseBody$?.inboundSchema).optional(),
+            object: z.lazy(() => GetBalanceSheetsResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -511,17 +537,17 @@ export namespace GetBalancesheetsResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: GetBalancesheetsResponseBody$.Outbound | undefined;
+        object?: GetBalanceSheetsResponseBody$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalancesheetsResponse> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetBalanceSheetsResponse> = z
         .object({
             contentType: z.string(),
             statusCode: z.number().int(),
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => GetBalancesheetsResponseBody$?.outboundSchema).optional(),
+            object: z.lazy(() => GetBalanceSheetsResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

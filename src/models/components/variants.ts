@@ -3,14 +3,8 @@
  */
 
 import { Dimensions, Dimensions$ } from "./dimensions";
+import { ItemAvailabilityStatus, ItemAvailabilityStatus$ } from "./itemavailabilitystatus";
 import { z } from "zod";
-
-export enum VariantsStatus {
-    Active = "ACTIVE",
-    Inactive = "INACTIVE",
-    OutOfStock = "OUT_OF_STOCK",
-    Discontinued = "DISCONTINUED",
-}
 
 export type Variants = {
     id?: string | undefined;
@@ -29,14 +23,10 @@ export type Variants = {
     dimensions?: Dimensions | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    status?: VariantsStatus | undefined;
+    status?: ItemAvailabilityStatus | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const VariantsStatus$ = z.nativeEnum(VariantsStatus);
 
 /** @internal */
 export namespace Variants$ {
@@ -57,10 +47,9 @@ export namespace Variants$ {
         dimensions?: Dimensions$.Inbound | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        status?: VariantsStatus | undefined;
+        status?: ItemAvailabilityStatus | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Variants, z.ZodTypeDef, Inbound> = z
@@ -89,10 +78,9 @@ export namespace Variants$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            status: VariantsStatus$.optional(),
+            status: ItemAvailabilityStatus$.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -119,7 +107,6 @@ export namespace Variants$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -140,10 +127,9 @@ export namespace Variants$ {
         dimensions?: Dimensions$.Outbound | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        status?: VariantsStatus | undefined;
+        status?: ItemAvailabilityStatus | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Variants> = z
@@ -170,10 +156,9 @@ export namespace Variants$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            status: VariantsStatus$.optional(),
+            status: ItemAvailabilityStatus$.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -200,7 +185,6 @@ export namespace Variants$ {
                 ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

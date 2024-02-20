@@ -3,33 +3,16 @@
  */
 
 import { Addresses, Addresses$ } from "./addresses";
+import { CommunicationMethod, CommunicationMethod$ } from "./communicationmethod";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
 import { Emails, Emails$ } from "./emails";
+import { LeadLifecycleStatus, LeadLifecycleStatus$ } from "./leadlifecyclestatus";
 import { LeadSource, LeadSource$ } from "./leadsource";
 import { Notes, Notes$ } from "./notes";
 import { Opportunities, Opportunities$ } from "./opportunities";
 import { Phones, Phones$ } from "./phones";
 import { SocialProfiles, SocialProfiles$ } from "./socialprofiles";
 import { z } from "zod";
-
-export enum LeadStatus {
-    New = "New",
-    Open = "Open",
-    InProcess = "InProcess",
-    Converted = "Converted",
-    Unqualified = "Unqualified",
-    AttemptedToContact = "AttemptedToContact",
-    Connected = "Connected",
-    BadTiming = "BadTiming",
-}
-
-export enum LeadsPreferredContactMethod {
-    Email = "Email",
-    Phone = "Phone",
-    Text = "Text",
-    Mail = "Mail",
-    InPerson = "InPerson",
-}
 
 export type Leads = {
     id?: string | undefined;
@@ -46,25 +29,19 @@ export type Leads = {
     jobTitle?: string | undefined;
     website?: string | undefined;
     leadSource?: LeadSource | undefined;
-    leadStatus?: LeadStatus | undefined;
+    leadStatus?: LeadLifecycleStatus | undefined;
     industry?: string | undefined;
     numberOfEmployees?: number | undefined;
     annualRevenue?: number | undefined;
     addresses?: Array<Addresses> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    preferredContactMethod?: LeadsPreferredContactMethod | undefined;
+    preferredContactMethod?: CommunicationMethod | undefined;
     socialProfiles?: Array<SocialProfiles> | undefined;
     customFields?: Array<CustomAttributes> | undefined;
     notes?: Array<Notes> | undefined;
     modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const LeadStatus$ = z.nativeEnum(LeadStatus);
-
-/** @internal */
-export const LeadsPreferredContactMethod$ = z.nativeEnum(LeadsPreferredContactMethod);
 
 /** @internal */
 export namespace Leads$ {
@@ -83,14 +60,14 @@ export namespace Leads$ {
         jobTitle?: string | undefined;
         website?: string | undefined;
         leadSource?: LeadSource$.Inbound | undefined;
-        leadStatus?: LeadStatus | undefined;
+        leadStatus?: LeadLifecycleStatus | undefined;
         industry?: string | undefined;
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<Addresses$.Inbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        preferredContactMethod?: LeadsPreferredContactMethod | undefined;
+        preferredContactMethod?: CommunicationMethod | undefined;
         socialProfiles?: Array<SocialProfiles$.Inbound> | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
         notes?: Array<Notes$.Inbound> | undefined;
@@ -113,7 +90,7 @@ export namespace Leads$ {
             jobTitle: z.string().optional(),
             website: z.string().optional(),
             leadSource: LeadSource$?.inboundSchema.optional(),
-            leadStatus: LeadStatus$.optional(),
+            leadStatus: LeadLifecycleStatus$.optional(),
             industry: z.string().optional(),
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
@@ -128,7 +105,7 @@ export namespace Leads$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            preferredContactMethod: LeadsPreferredContactMethod$.optional(),
+            preferredContactMethod: CommunicationMethod$.optional(),
             socialProfiles: z.array(SocialProfiles$?.inboundSchema).optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
             notes: z.array(Notes$?.inboundSchema).optional(),
@@ -184,14 +161,14 @@ export namespace Leads$ {
         jobTitle?: string | undefined;
         website?: string | undefined;
         leadSource?: LeadSource$.Outbound | undefined;
-        leadStatus?: LeadStatus | undefined;
+        leadStatus?: LeadLifecycleStatus | undefined;
         industry?: string | undefined;
         numberOfEmployees?: number | undefined;
         annualRevenue?: number | undefined;
         addresses?: Array<Addresses$.Outbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        preferredContactMethod?: LeadsPreferredContactMethod | undefined;
+        preferredContactMethod?: CommunicationMethod | undefined;
         socialProfiles?: Array<SocialProfiles$.Outbound> | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
         notes?: Array<Notes$.Outbound> | undefined;
@@ -214,7 +191,7 @@ export namespace Leads$ {
             jobTitle: z.string().optional(),
             website: z.string().optional(),
             leadSource: LeadSource$?.outboundSchema.optional(),
-            leadStatus: LeadStatus$.optional(),
+            leadStatus: LeadLifecycleStatus$.optional(),
             industry: z.string().optional(),
             numberOfEmployees: z.number().optional(),
             annualRevenue: z.number().optional(),
@@ -227,7 +204,7 @@ export namespace Leads$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            preferredContactMethod: LeadsPreferredContactMethod$.optional(),
+            preferredContactMethod: CommunicationMethod$.optional(),
             socialProfiles: z.array(SocialProfiles$?.outboundSchema).optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
             notes: z.array(Notes$?.outboundSchema).optional(),

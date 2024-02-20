@@ -3,25 +3,10 @@
  */
 
 import { Attachments, Attachments$ } from "./attachments";
+import { ContentVisibility, ContentVisibility$ } from "./contentvisibility";
+import { PriorityLevel, PriorityLevel$ } from "./prioritylevel";
 import { Users, Users$ } from "./users";
 import { z } from "zod";
-
-export enum Priority {
-    Low = "low",
-    Medium = "medium",
-    High = "high",
-}
-
-export enum Visibility {
-    Private = "private",
-    Public = "public",
-    Shared = "shared",
-}
-
-export enum NotesStatus {
-    Active = "active",
-    Archived = "archived",
-}
 
 export type Notes = {
     id?: string | undefined;
@@ -32,25 +17,15 @@ export type Notes = {
     lastAccessed?: Date | undefined;
     reminder?: Date | undefined;
     color?: string | undefined;
-    priority?: Priority | undefined;
+    priority?: PriorityLevel | undefined;
     author?: Users | undefined;
     tags?: Array<string> | undefined;
     attachments?: Array<Attachments> | undefined;
     sharedWith?: Array<Users> | undefined;
-    visibility?: Visibility | undefined;
-    status?: NotesStatus | undefined;
+    visibility?: ContentVisibility | undefined;
     metadata?: Array<string> | undefined;
     modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const Priority$ = z.nativeEnum(Priority);
-
-/** @internal */
-export const Visibility$ = z.nativeEnum(Visibility);
-
-/** @internal */
-export const NotesStatus$ = z.nativeEnum(NotesStatus);
 
 /** @internal */
 export namespace Notes$ {
@@ -63,13 +38,12 @@ export namespace Notes$ {
         lastAccessed?: string | undefined;
         reminder?: string | undefined;
         color?: string | undefined;
-        priority?: Priority | undefined;
+        priority?: PriorityLevel | undefined;
         author?: Users$.Inbound | undefined;
         tags?: Array<string> | undefined;
         attachments?: Array<Attachments$.Inbound> | undefined;
         sharedWith?: Array<Users$.Inbound> | undefined;
-        visibility?: Visibility | undefined;
-        status?: NotesStatus | undefined;
+        visibility?: ContentVisibility | undefined;
         metadata?: Array<string> | undefined;
         modifyToken?: string | undefined;
     };
@@ -100,13 +74,12 @@ export namespace Notes$ {
                 .transform((v) => new Date(v))
                 .optional(),
             color: z.string().optional(),
-            priority: Priority$.optional(),
+            priority: PriorityLevel$.optional(),
             author: Users$?.inboundSchema.optional(),
             tags: z.array(z.string()).optional(),
             attachments: z.array(Attachments$?.inboundSchema).optional(),
             sharedWith: z.array(Users$?.inboundSchema).optional(),
-            visibility: Visibility$.optional(),
-            status: NotesStatus$.optional(),
+            visibility: ContentVisibility$.optional(),
             metadata: z.array(z.string()).optional(),
             modifyToken: z.string().optional(),
         })
@@ -126,7 +99,6 @@ export namespace Notes$ {
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
                 ...(v.sharedWith === undefined ? null : { sharedWith: v.sharedWith }),
                 ...(v.visibility === undefined ? null : { visibility: v.visibility }),
-                ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
@@ -141,13 +113,12 @@ export namespace Notes$ {
         lastAccessed?: string | undefined;
         reminder?: string | undefined;
         color?: string | undefined;
-        priority?: Priority | undefined;
+        priority?: PriorityLevel | undefined;
         author?: Users$.Outbound | undefined;
         tags?: Array<string> | undefined;
         attachments?: Array<Attachments$.Outbound> | undefined;
         sharedWith?: Array<Users$.Outbound> | undefined;
-        visibility?: Visibility | undefined;
-        status?: NotesStatus | undefined;
+        visibility?: ContentVisibility | undefined;
         metadata?: Array<string> | undefined;
         modifyToken?: string | undefined;
     };
@@ -174,13 +145,12 @@ export namespace Notes$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             color: z.string().optional(),
-            priority: Priority$.optional(),
+            priority: PriorityLevel$.optional(),
             author: Users$?.outboundSchema.optional(),
             tags: z.array(z.string()).optional(),
             attachments: z.array(Attachments$?.outboundSchema).optional(),
             sharedWith: z.array(Users$?.outboundSchema).optional(),
-            visibility: Visibility$.optional(),
-            status: NotesStatus$.optional(),
+            visibility: ContentVisibility$.optional(),
             metadata: z.array(z.string()).optional(),
             modifyToken: z.string().optional(),
         })
@@ -200,7 +170,6 @@ export namespace Notes$ {
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
                 ...(v.sharedWith === undefined ? null : { sharedWith: v.sharedWith }),
                 ...(v.visibility === undefined ? null : { visibility: v.visibility }),
-                ...(v.status === undefined ? null : { status: v.status }),
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };

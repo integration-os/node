@@ -3,12 +3,8 @@
  */
 
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
+import { ItemEntityStatus, ItemEntityStatus$ } from "./itementitystatus";
 import { z } from "zod";
-
-export enum BrandsStatus {
-    Active = "active",
-    Inactive = "inactive",
-}
 
 export type Brands = {
     id?: string | undefined;
@@ -18,15 +14,11 @@ export type Brands = {
     website?: string | undefined;
     established?: Date | undefined;
     country?: string | undefined;
-    status?: BrandsStatus | undefined;
+    status?: ItemEntityStatus | undefined;
     customFields?: Array<CustomAttributes> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const BrandsStatus$ = z.nativeEnum(BrandsStatus);
 
 /** @internal */
 export namespace Brands$ {
@@ -38,11 +30,10 @@ export namespace Brands$ {
         website?: string | undefined;
         established?: string | undefined;
         country?: string | undefined;
-        status?: BrandsStatus | undefined;
+        status?: ItemEntityStatus | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Brands, z.ZodTypeDef, Inbound> = z
@@ -58,7 +49,7 @@ export namespace Brands$ {
                 .transform((v) => new Date(v))
                 .optional(),
             country: z.string().optional(),
-            status: BrandsStatus$.optional(),
+            status: ItemEntityStatus$.optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
             createdAt: z
                 .string()
@@ -70,7 +61,6 @@ export namespace Brands$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -85,7 +75,6 @@ export namespace Brands$ {
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -97,11 +86,10 @@ export namespace Brands$ {
         website?: string | undefined;
         established?: string | undefined;
         country?: string | undefined;
-        status?: BrandsStatus | undefined;
+        status?: ItemEntityStatus | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Brands> = z
@@ -116,7 +104,7 @@ export namespace Brands$ {
                 .transform((v) => v.toISOString())
                 .optional(),
             country: z.string().optional(),
-            status: BrandsStatus$.optional(),
+            status: ItemEntityStatus$.optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
             createdAt: z
                 .date()
@@ -126,7 +114,6 @@ export namespace Brands$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -141,7 +128,6 @@ export namespace Brands$ {
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.createdAt === undefined ? null : { createdAt: v.createdAt }),
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

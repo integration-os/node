@@ -5,22 +5,16 @@
 import { Addresses, Addresses$ } from "./addresses";
 import { Attachments, Attachments$ } from "./attachments";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
+import { ExpenseApprovalStatus, ExpenseApprovalStatus$ } from "./expenseapprovalstatus";
 import { ExpenseCategories, ExpenseCategories$ } from "./expensecategories";
 import { Items, Items$ } from "./items";
 import { PaymentMethods, PaymentMethods$ } from "./paymentmethods";
 import { Taxes, Taxes$ } from "./taxes";
 import { z } from "zod";
 
-export enum ExpensesStatus {
-    New = "new",
-    Pending = "pending",
-    Approved = "approved",
-    Denied = "denied",
-    Reimbursed = "reimbursed",
-}
-
 export type Expenses = {
     id?: string | undefined;
+    accountId?: string | undefined;
     amount?: number | undefined;
     currencyCode?: string | undefined;
     dateIncurred?: Date | undefined;
@@ -29,7 +23,7 @@ export type Expenses = {
     merchant?: string | undefined;
     receiptUrls?: Array<string> | undefined;
     paymentMethod?: PaymentMethods | undefined;
-    status?: ExpensesStatus | undefined;
+    status?: ExpenseApprovalStatus | undefined;
     tax?: Array<Taxes> | undefined;
     note?: string | undefined;
     lineItems?: Array<Items> | undefined;
@@ -48,12 +42,10 @@ export type Expenses = {
 };
 
 /** @internal */
-export const ExpensesStatus$ = z.nativeEnum(ExpensesStatus);
-
-/** @internal */
 export namespace Expenses$ {
     export type Inbound = {
         id?: string | undefined;
+        accountId?: string | undefined;
         amount?: number | undefined;
         currencyCode?: string | undefined;
         dateIncurred?: string | undefined;
@@ -62,7 +54,7 @@ export namespace Expenses$ {
         merchant?: string | undefined;
         receiptUrls?: Array<string> | undefined;
         paymentMethod?: PaymentMethods$.Inbound | undefined;
-        status?: ExpensesStatus | undefined;
+        status?: ExpenseApprovalStatus | undefined;
         tax?: Array<Taxes$.Inbound> | undefined;
         note?: string | undefined;
         lineItems?: Array<Items$.Inbound> | undefined;
@@ -83,6 +75,7 @@ export namespace Expenses$ {
     export const inboundSchema: z.ZodType<Expenses, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
+            accountId: z.string().optional(),
             amount: z.number().optional(),
             currencyCode: z.string().optional(),
             dateIncurred: z
@@ -95,7 +88,7 @@ export namespace Expenses$ {
             merchant: z.string().optional(),
             receiptUrls: z.array(z.string()).optional(),
             paymentMethod: PaymentMethods$?.inboundSchema.optional(),
-            status: ExpensesStatus$.optional(),
+            status: ExpenseApprovalStatus$.optional(),
             tax: z.array(Taxes$?.inboundSchema).optional(),
             note: z.string().optional(),
             lineItems: z.array(Items$?.inboundSchema).optional(),
@@ -123,6 +116,7 @@ export namespace Expenses$ {
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
                 ...(v.amount === undefined ? null : { amount: v.amount }),
                 ...(v.currencyCode === undefined ? null : { currencyCode: v.currencyCode }),
                 ...(v.dateIncurred === undefined ? null : { dateIncurred: v.dateIncurred }),
@@ -156,6 +150,7 @@ export namespace Expenses$ {
 
     export type Outbound = {
         id?: string | undefined;
+        accountId?: string | undefined;
         amount?: number | undefined;
         currencyCode?: string | undefined;
         dateIncurred?: string | undefined;
@@ -164,7 +159,7 @@ export namespace Expenses$ {
         merchant?: string | undefined;
         receiptUrls?: Array<string> | undefined;
         paymentMethod?: PaymentMethods$.Outbound | undefined;
-        status?: ExpensesStatus | undefined;
+        status?: ExpenseApprovalStatus | undefined;
         tax?: Array<Taxes$.Outbound> | undefined;
         note?: string | undefined;
         lineItems?: Array<Items$.Outbound> | undefined;
@@ -185,6 +180,7 @@ export namespace Expenses$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Expenses> = z
         .object({
             id: z.string().optional(),
+            accountId: z.string().optional(),
             amount: z.number().optional(),
             currencyCode: z.string().optional(),
             dateIncurred: z
@@ -196,7 +192,7 @@ export namespace Expenses$ {
             merchant: z.string().optional(),
             receiptUrls: z.array(z.string()).optional(),
             paymentMethod: PaymentMethods$?.outboundSchema.optional(),
-            status: ExpensesStatus$.optional(),
+            status: ExpenseApprovalStatus$.optional(),
             tax: z.array(Taxes$?.outboundSchema).optional(),
             note: z.string().optional(),
             lineItems: z.array(Items$?.outboundSchema).optional(),
@@ -222,6 +218,7 @@ export namespace Expenses$ {
         .transform((v) => {
             return {
                 ...(v.id === undefined ? null : { id: v.id }),
+                ...(v.accountId === undefined ? null : { accountId: v.accountId }),
                 ...(v.amount === undefined ? null : { amount: v.amount }),
                 ...(v.currencyCode === undefined ? null : { currencyCode: v.currencyCode }),
                 ...(v.dateIncurred === undefined ? null : { dateIncurred: v.dateIncurred }),

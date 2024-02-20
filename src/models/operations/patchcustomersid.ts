@@ -11,9 +11,21 @@ export type PatchCustomersIdRequest = {
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
     /**
      * The modified token of the model
      */
@@ -21,9 +33,7 @@ export type PatchCustomersIdRequest = {
     customers?: components.Customers | undefined;
 };
 
-export type Unified = {
-    count?: number | undefined;
-};
+export type PatchCustomersIdUnified = {};
 
 export type PatchCustomersIdPassthrough = {};
 
@@ -59,7 +69,7 @@ export type PatchCustomersIdMeta = {
 export type PatchCustomersIdResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
-    unified?: Unified | undefined;
+    unified?: PatchCustomersIdUnified | undefined;
     passthrough?: PatchCustomersIdPassthrough | undefined;
     meta?: PatchCustomersIdMeta | undefined;
 };
@@ -87,7 +97,10 @@ export type PatchCustomersIdResponse = {
 export namespace PatchCustomersIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         Customers?: components.Customers$.Inbound | undefined;
     };
@@ -95,14 +108,29 @@ export namespace PatchCustomersIdRequest$ {
     export const inboundSchema: z.ZodType<PatchCustomersIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             Customers: components.Customers$?.inboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.Customers === undefined ? null : { customers: v.Customers }),
             };
@@ -110,7 +138,10 @@ export namespace PatchCustomersIdRequest$ {
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         Customers?: components.Customers$.Outbound | undefined;
     };
@@ -118,14 +149,28 @@ export namespace PatchCustomersIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCustomersIdRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             customers: components.Customers$?.outboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.customers === undefined ? null : { Customers: v.customers }),
             };
@@ -133,34 +178,16 @@ export namespace PatchCustomersIdRequest$ {
 }
 
 /** @internal */
-export namespace Unified$ {
-    export type Inbound = {
-        count?: number | undefined;
-    };
+export namespace PatchCustomersIdUnified$ {
+    export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<Unified, z.ZodTypeDef, Inbound> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const inboundSchema: z.ZodType<PatchCustomersIdUnified, z.ZodTypeDef, Inbound> =
+        z.object({});
 
-    export type Outbound = {
-        count?: number | undefined;
-    };
+    export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Unified> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchCustomersIdUnified> =
+        z.object({});
 }
 
 /** @internal */
@@ -375,7 +402,7 @@ export namespace PatchCustomersIdResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: Unified$.Inbound | undefined;
+        unified?: PatchCustomersIdUnified$.Inbound | undefined;
         passthrough?: PatchCustomersIdPassthrough$.Inbound | undefined;
         meta?: PatchCustomersIdMeta$.Inbound | undefined;
     };
@@ -384,7 +411,7 @@ export namespace PatchCustomersIdResponseBody$ {
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => Unified$?.inboundSchema).optional(),
+            unified: z.lazy(() => PatchCustomersIdUnified$?.inboundSchema).optional(),
             passthrough: z.lazy(() => PatchCustomersIdPassthrough$?.inboundSchema).optional(),
             meta: z.lazy(() => PatchCustomersIdMeta$?.inboundSchema).optional(),
         })
@@ -401,7 +428,7 @@ export namespace PatchCustomersIdResponseBody$ {
     export type Outbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: Unified$.Outbound | undefined;
+        unified?: PatchCustomersIdUnified$.Outbound | undefined;
         passthrough?: PatchCustomersIdPassthrough$.Outbound | undefined;
         meta?: PatchCustomersIdMeta$.Outbound | undefined;
     };
@@ -410,7 +437,7 @@ export namespace PatchCustomersIdResponseBody$ {
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => Unified$?.outboundSchema).optional(),
+            unified: z.lazy(() => PatchCustomersIdUnified$?.outboundSchema).optional(),
             passthrough: z.lazy(() => PatchCustomersIdPassthrough$?.outboundSchema).optional(),
             meta: z.lazy(() => PatchCustomersIdMeta$?.outboundSchema).optional(),
         })

@@ -3,22 +3,16 @@
  */
 
 import { Attachments, Attachments$ } from "./attachments";
+import { BillingStatus, BillingStatus$ } from "./billingstatus";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
 import { Customers, Customers$ } from "./customers";
 import { Items, Items$ } from "./items";
 import { Vendors, Vendors$ } from "./vendors";
 import { z } from "zod";
 
-export enum BillsStatus {
-    Paid = "paid",
-    Unpaid = "unpaid",
-    Pending = "pending",
-    Overdue = "overdue",
-}
-
 export type Bills = {
     id?: string | undefined;
-    status?: BillsStatus | undefined;
+    status?: BillingStatus | undefined;
     issueDate?: Date | undefined;
     dueDate?: Date | undefined;
     currencyCode?: string | undefined;
@@ -40,13 +34,10 @@ export type Bills = {
 };
 
 /** @internal */
-export const BillsStatus$ = z.nativeEnum(BillsStatus);
-
-/** @internal */
 export namespace Bills$ {
     export type Inbound = {
         id?: string | undefined;
-        status?: BillsStatus | undefined;
+        status?: BillingStatus | undefined;
         issueDate?: string | undefined;
         dueDate?: string | undefined;
         currencyCode?: string | undefined;
@@ -70,7 +61,7 @@ export namespace Bills$ {
     export const inboundSchema: z.ZodType<Bills, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            status: BillsStatus$.optional(),
+            status: BillingStatus$.optional(),
             issueDate: z
                 .string()
                 .datetime({ offset: true })
@@ -135,7 +126,7 @@ export namespace Bills$ {
 
     export type Outbound = {
         id?: string | undefined;
-        status?: BillsStatus | undefined;
+        status?: BillingStatus | undefined;
         issueDate?: string | undefined;
         dueDate?: string | undefined;
         currencyCode?: string | undefined;
@@ -159,7 +150,7 @@ export namespace Bills$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Bills> = z
         .object({
             id: z.string().optional(),
-            status: BillsStatus$.optional(),
+            status: BillingStatus$.optional(),
             issueDate: z
                 .date()
                 .transform((v) => v.toISOString())

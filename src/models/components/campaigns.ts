@@ -3,30 +3,16 @@
  */
 
 import { Attachments, Attachments$ } from "./attachments";
+import { CampaignStatus, CampaignStatus$ } from "./campaignstatus";
+import { CampaignType, CampaignType$ } from "./campaigntype";
 import { PerformanceMetrics, PerformanceMetrics$ } from "./performancemetrics";
 import { z } from "zod";
-
-export enum CampaignsType {
-    Email = "Email",
-    SocialMedia = "Social Media",
-    SearchEngine = "Search Engine",
-    Display = "Display",
-    Other = "Other",
-}
-
-export enum CampaignsStatus {
-    Planned = "Planned",
-    Active = "Active",
-    Paused = "Paused",
-    Completed = "Completed",
-    Cancelled = "Cancelled",
-}
 
 export type Campaigns = {
     id?: string | undefined;
     name?: string | undefined;
-    type?: CampaignsType | undefined;
-    status?: CampaignsStatus | undefined;
+    type?: CampaignType | undefined;
+    status?: CampaignStatus | undefined;
     startDate?: Date | undefined;
     endDate?: Date | undefined;
     budget?: number | undefined;
@@ -39,22 +25,15 @@ export type Campaigns = {
     updatedAt?: Date | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const CampaignsType$ = z.nativeEnum(CampaignsType);
-
-/** @internal */
-export const CampaignsStatus$ = z.nativeEnum(CampaignsStatus);
 
 /** @internal */
 export namespace Campaigns$ {
     export type Inbound = {
         id?: string | undefined;
         name?: string | undefined;
-        type?: CampaignsType | undefined;
-        status?: CampaignsStatus | undefined;
+        type?: CampaignType | undefined;
+        status?: CampaignStatus | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
         budget?: number | undefined;
@@ -67,15 +46,14 @@ export namespace Campaigns$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Campaigns, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
             name: z.string().optional(),
-            type: CampaignsType$.optional(),
-            status: CampaignsStatus$.optional(),
+            type: CampaignType$.optional(),
+            status: CampaignStatus$.optional(),
             startDate: z
                 .string()
                 .datetime({ offset: true })
@@ -104,7 +82,6 @@ export namespace Campaigns$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -126,15 +103,14 @@ export namespace Campaigns$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
     export type Outbound = {
         id?: string | undefined;
         name?: string | undefined;
-        type?: CampaignsType | undefined;
-        status?: CampaignsStatus | undefined;
+        type?: CampaignType | undefined;
+        status?: CampaignStatus | undefined;
         startDate?: string | undefined;
         endDate?: string | undefined;
         budget?: number | undefined;
@@ -147,15 +123,14 @@ export namespace Campaigns$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Campaigns> = z
         .object({
             id: z.string().optional(),
             name: z.string().optional(),
-            type: CampaignsType$.optional(),
-            status: CampaignsStatus$.optional(),
+            type: CampaignType$.optional(),
+            status: CampaignStatus$.optional(),
             startDate: z
                 .date()
                 .transform((v) => v.toISOString())
@@ -180,7 +155,6 @@ export namespace Campaigns$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -202,7 +176,6 @@ export namespace Campaigns$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -22,6 +22,7 @@ export type Companies = {
     defaultPhone?: string | undefined;
     phones?: Array<Phones> | undefined;
     website?: string | undefined;
+    domain?: string | undefined;
     foundedDate?: Date | undefined;
     numberOfEmployees?: number | undefined;
     revenue?: number | undefined;
@@ -58,6 +59,7 @@ export namespace Companies$ {
         defaultPhone?: string | undefined;
         phones?: Array<Phones$.Inbound> | undefined;
         website?: string | undefined;
+        domain?: string | undefined;
         foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
@@ -93,6 +95,7 @@ export namespace Companies$ {
             defaultPhone: z.string().optional(),
             phones: z.array(Phones$?.inboundSchema).optional(),
             website: z.string().optional(),
+            domain: z.string().optional(),
             foundedDate: z
                 .string()
                 .datetime({ offset: true })
@@ -143,6 +146,7 @@ export namespace Companies$ {
                 ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.domain === undefined ? null : { domain: v.domain }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
                     ? null
@@ -192,6 +196,7 @@ export namespace Companies$ {
         defaultPhone?: string | undefined;
         phones?: Array<Phones$.Outbound> | undefined;
         website?: string | undefined;
+        domain?: string | undefined;
         foundedDate?: string | undefined;
         numberOfEmployees?: number | undefined;
         revenue?: number | undefined;
@@ -227,6 +232,7 @@ export namespace Companies$ {
             defaultPhone: z.string().optional(),
             phones: z.array(Phones$?.outboundSchema).optional(),
             website: z.string().optional(),
+            domain: z.string().optional(),
             foundedDate: z
                 .date()
                 .transform((v) => v.toISOString())
@@ -273,6 +279,7 @@ export namespace Companies$ {
                 ...(v.defaultPhone === undefined ? null : { defaultPhone: v.defaultPhone }),
                 ...(v.phones === undefined ? null : { phones: v.phones }),
                 ...(v.website === undefined ? null : { website: v.website }),
+                ...(v.domain === undefined ? null : { domain: v.domain }),
                 ...(v.foundedDate === undefined ? null : { foundedDate: v.foundedDate }),
                 ...(v.numberOfEmployees === undefined
                     ? null

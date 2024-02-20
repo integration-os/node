@@ -3,21 +3,11 @@
  */
 
 import { Metadata, Metadata$ } from "./metadata";
+import { SocialPlatform, SocialPlatform$ } from "./socialplatform";
 import { z } from "zod";
 
-export enum SocialProfilesType {
-    Facebook = "facebook",
-    Twitter = "twitter",
-    Linkedin = "linkedin",
-    Instagram = "instagram",
-    Tiktok = "tiktok",
-    Pinterest = "pinterest",
-    Youtube = "youtube",
-    Other = "other",
-}
-
 export type SocialProfiles = {
-    type?: SocialProfilesType | undefined;
+    type?: SocialPlatform | undefined;
     username?: string | undefined;
     displayName?: string | undefined;
     url?: string | undefined;
@@ -28,16 +18,12 @@ export type SocialProfiles = {
     updatedAt?: Date | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const SocialProfilesType$ = z.nativeEnum(SocialProfilesType);
 
 /** @internal */
 export namespace SocialProfiles$ {
     export type Inbound = {
-        type?: SocialProfilesType | undefined;
+        type?: SocialPlatform | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -48,12 +34,11 @@ export namespace SocialProfiles$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<SocialProfiles, z.ZodTypeDef, Inbound> = z
         .object({
-            type: SocialProfilesType$.optional(),
+            type: SocialPlatform$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -72,7 +57,6 @@ export namespace SocialProfiles$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -87,12 +71,11 @@ export namespace SocialProfiles$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
     export type Outbound = {
-        type?: SocialProfilesType | undefined;
+        type?: SocialPlatform | undefined;
         username?: string | undefined;
         displayName?: string | undefined;
         url?: string | undefined;
@@ -103,12 +86,11 @@ export namespace SocialProfiles$ {
         updatedAt?: string | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, SocialProfiles> = z
         .object({
-            type: SocialProfilesType$.optional(),
+            type: SocialPlatform$.optional(),
             username: z.string().optional(),
             displayName: z.string().optional(),
             url: z.string().optional(),
@@ -125,7 +107,6 @@ export namespace SocialProfiles$ {
                 .optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -140,7 +121,6 @@ export namespace SocialProfiles$ {
                 ...(v.updatedAt === undefined ? null : { updatedAt: v.updatedAt }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

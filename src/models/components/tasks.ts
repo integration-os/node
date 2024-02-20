@@ -6,30 +6,17 @@ import { Attachments, Attachments$ } from "./attachments";
 import { Comments, Comments$ } from "./comments";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
 import { Notifications, Notifications$ } from "./notifications";
+import { PriorityLevel, PriorityLevel$ } from "./prioritylevel";
+import { TaskStatus, TaskStatus$ } from "./taskstatus";
 import { Users, Users$ } from "./users";
 import { z } from "zod";
-
-export enum TasksStatus {
-    Todo = "Todo",
-    InProgress = "In Progress",
-    Done = "Done",
-    Blocked = "Blocked",
-    OnHold = "On Hold",
-}
-
-export enum TasksPriority {
-    Low = "Low",
-    Medium = "Medium",
-    High = "High",
-    Urgent = "Urgent",
-}
 
 export type Tasks = {
     id?: string | undefined;
     title?: string | undefined;
     description?: string | undefined;
-    status?: TasksStatus | undefined;
-    priority?: TasksPriority | undefined;
+    status?: TaskStatus | undefined;
+    priority?: PriorityLevel | undefined;
     dueDate?: Date | undefined;
     dueTimezone?: string | undefined;
     assignee?: Users | undefined;
@@ -54,19 +41,13 @@ export type Tasks = {
 };
 
 /** @internal */
-export const TasksStatus$ = z.nativeEnum(TasksStatus);
-
-/** @internal */
-export const TasksPriority$ = z.nativeEnum(TasksPriority);
-
-/** @internal */
 export namespace Tasks$ {
     export type Inbound = {
         id?: string | undefined;
         title?: string | undefined;
         description?: string | undefined;
-        status?: TasksStatus | undefined;
-        priority?: TasksPriority | undefined;
+        status?: TaskStatus | undefined;
+        priority?: PriorityLevel | undefined;
         dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: Users$.Inbound | undefined;
@@ -95,8 +76,8 @@ export namespace Tasks$ {
             id: z.string().optional(),
             title: z.string().optional(),
             description: z.string().optional(),
-            status: TasksStatus$.optional(),
-            priority: TasksPriority$.optional(),
+            status: TaskStatus$.optional(),
+            priority: PriorityLevel$.optional(),
             dueDate: z
                 .string()
                 .datetime({ offset: true })
@@ -172,8 +153,8 @@ export namespace Tasks$ {
         id?: string | undefined;
         title?: string | undefined;
         description?: string | undefined;
-        status?: TasksStatus | undefined;
-        priority?: TasksPriority | undefined;
+        status?: TaskStatus | undefined;
+        priority?: PriorityLevel | undefined;
         dueDate?: string | undefined;
         dueTimezone?: string | undefined;
         assignee?: Users$.Outbound | undefined;
@@ -202,8 +183,8 @@ export namespace Tasks$ {
             id: z.string().optional(),
             title: z.string().optional(),
             description: z.string().optional(),
-            status: TasksStatus$.optional(),
-            priority: TasksPriority$.optional(),
+            status: TaskStatus$.optional(),
+            priority: PriorityLevel$.optional(),
             dueDate: z
                 .date()
                 .transform((v) => v.toISOString())

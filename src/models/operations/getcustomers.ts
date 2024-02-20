@@ -10,20 +10,29 @@ export type GetCustomersRequest = {
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
+    /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
     limit?: string | undefined;
-    nextCursor?: string | undefined;
-    previousCursor?: string | undefined;
-    pageSize?: string | undefined;
+    cursor?: string | undefined;
     createdAfter?: string | undefined;
     createdBefore?: string | undefined;
     updatedAfter?: string | undefined;
     updatedBefore?: string | undefined;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
-export type Pagination = {
+export type GetCustomersPagination = {
     nextCursor?: string | undefined;
     previousCursor?: string | undefined;
-    pageSize?: number | undefined;
     limit?: number | undefined;
 };
 
@@ -62,7 +71,7 @@ export type GetCustomersResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
     unified?: Array<components.Customers> | undefined;
-    pagination?: Pagination | undefined;
+    pagination?: GetCustomersPagination | undefined;
     passthrough?: GetCustomersPassthrough | undefined;
     meta?: GetCustomersMeta | undefined;
 };
@@ -90,102 +99,122 @@ export type GetCustomersResponse = {
 export namespace GetCustomersRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetCustomersRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
 
 /** @internal */
-export namespace Pagination$ {
+export namespace GetCustomersPagination$ {
     export type Inbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<Pagination, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetCustomersPagination, z.ZodTypeDef, Inbound> = z
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
@@ -193,22 +222,19 @@ export namespace Pagination$ {
     export type Outbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Pagination> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetCustomersPagination> = z
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
@@ -427,7 +453,7 @@ export namespace GetCustomersResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: Array<components.Customers$.Inbound> | undefined;
-        pagination?: Pagination$.Inbound | undefined;
+        pagination?: GetCustomersPagination$.Inbound | undefined;
         passthrough?: GetCustomersPassthrough$.Inbound | undefined;
         meta?: GetCustomersMeta$.Inbound | undefined;
     };
@@ -437,7 +463,7 @@ export namespace GetCustomersResponseBody$ {
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: z.array(components.Customers$?.inboundSchema).optional(),
-            pagination: z.lazy(() => Pagination$?.inboundSchema).optional(),
+            pagination: z.lazy(() => GetCustomersPagination$?.inboundSchema).optional(),
             passthrough: z.lazy(() => GetCustomersPassthrough$?.inboundSchema).optional(),
             meta: z.lazy(() => GetCustomersMeta$?.inboundSchema).optional(),
         })
@@ -456,7 +482,7 @@ export namespace GetCustomersResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: Array<components.Customers$.Outbound> | undefined;
-        pagination?: Pagination$.Outbound | undefined;
+        pagination?: GetCustomersPagination$.Outbound | undefined;
         passthrough?: GetCustomersPassthrough$.Outbound | undefined;
         meta?: GetCustomersMeta$.Outbound | undefined;
     };
@@ -466,7 +492,7 @@ export namespace GetCustomersResponseBody$ {
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: z.array(components.Customers$?.outboundSchema).optional(),
-            pagination: z.lazy(() => Pagination$?.outboundSchema).optional(),
+            pagination: z.lazy(() => GetCustomersPagination$?.outboundSchema).optional(),
             passthrough: z.lazy(() => GetCustomersPassthrough$?.outboundSchema).optional(),
             meta: z.lazy(() => GetCustomersMeta$?.outboundSchema).optional(),
         })
