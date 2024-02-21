@@ -21,7 +21,6 @@ export type Attachments = {
     metadata?: Metadata | undefined;
     associatedWith?: Entity | undefined;
     permissions?: Permissions | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -40,7 +39,6 @@ export namespace Attachments$ {
         metadata?: Metadata$.Inbound | undefined;
         associatedWith?: Entity$.Inbound | undefined;
         permissions?: Permissions$.Inbound | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Attachments, z.ZodTypeDef, Inbound> = z
@@ -66,7 +64,6 @@ export namespace Attachments$ {
             metadata: Metadata$?.inboundSchema.optional(),
             associatedWith: Entity$?.inboundSchema.optional(),
             permissions: Permissions$?.inboundSchema.optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -83,7 +80,6 @@ export namespace Attachments$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.associatedWith === undefined ? null : { associatedWith: v.associatedWith }),
                 ...(v.permissions === undefined ? null : { permissions: v.permissions }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -101,7 +97,6 @@ export namespace Attachments$ {
         metadata?: Metadata$.Outbound | undefined;
         associatedWith?: Entity$.Outbound | undefined;
         permissions?: Permissions$.Outbound | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Attachments> = z
@@ -125,7 +120,6 @@ export namespace Attachments$ {
             metadata: Metadata$?.outboundSchema.optional(),
             associatedWith: Entity$?.outboundSchema.optional(),
             permissions: Permissions$?.outboundSchema.optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -142,7 +136,6 @@ export namespace Attachments$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.associatedWith === undefined ? null : { associatedWith: v.associatedWith }),
                 ...(v.permissions === undefined ? null : { permissions: v.permissions }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -32,7 +32,6 @@ export type Evidence = {
     shippingTrackingNumber?: string | undefined;
     uncategorizedFile?: string | undefined;
     uncategorizedText?: string | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -65,7 +64,6 @@ export namespace Evidence$ {
         shippingTrackingNumber?: string | undefined;
         uncategorizedFile?: string | undefined;
         uncategorizedText?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Evidence, z.ZodTypeDef, Inbound> = z
@@ -105,7 +103,6 @@ export namespace Evidence$ {
             shippingTrackingNumber: z.string().optional(),
             uncategorizedFile: z.string().optional(),
             uncategorizedText: z.string().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -178,7 +175,6 @@ export namespace Evidence$ {
                 ...(v.uncategorizedText === undefined
                     ? null
                     : { uncategorizedText: v.uncategorizedText }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -210,7 +206,6 @@ export namespace Evidence$ {
         shippingTrackingNumber?: string | undefined;
         uncategorizedFile?: string | undefined;
         uncategorizedText?: string | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Evidence> = z
@@ -248,7 +243,6 @@ export namespace Evidence$ {
             shippingTrackingNumber: z.string().optional(),
             uncategorizedFile: z.string().optional(),
             uncategorizedText: z.string().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -321,7 +315,6 @@ export namespace Evidence$ {
                 ...(v.uncategorizedText === undefined
                     ? null
                     : { uncategorizedText: v.uncategorizedText }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

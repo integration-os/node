@@ -11,9 +11,21 @@ export type PatchMessagesIdRequest = {
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
     /**
      * The modified token of the model
      */
@@ -21,9 +33,7 @@ export type PatchMessagesIdRequest = {
     messages?: components.Messages | undefined;
 };
 
-export type PatchMessagesIdUnified = {
-    count?: number | undefined;
-};
+export type PatchMessagesIdUnified = {};
 
 export type PatchMessagesIdPassthrough = {};
 
@@ -87,7 +97,10 @@ export type PatchMessagesIdResponse = {
 export namespace PatchMessagesIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         Messages?: components.Messages$.Inbound | undefined;
     };
@@ -95,14 +108,29 @@ export namespace PatchMessagesIdRequest$ {
     export const inboundSchema: z.ZodType<PatchMessagesIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             Messages: components.Messages$?.inboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.Messages === undefined ? null : { messages: v.Messages }),
             };
@@ -110,7 +138,10 @@ export namespace PatchMessagesIdRequest$ {
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         Messages?: components.Messages$.Outbound | undefined;
     };
@@ -118,14 +149,28 @@ export namespace PatchMessagesIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchMessagesIdRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             messages: components.Messages$?.outboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.messages === undefined ? null : { Messages: v.messages }),
             };
@@ -134,33 +179,16 @@ export namespace PatchMessagesIdRequest$ {
 
 /** @internal */
 export namespace PatchMessagesIdUnified$ {
-    export type Inbound = {
-        count?: number | undefined;
-    };
+    export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<PatchMessagesIdUnified, z.ZodTypeDef, Inbound> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const inboundSchema: z.ZodType<PatchMessagesIdUnified, z.ZodTypeDef, Inbound> = z.object(
+        {}
+    );
 
-    export type Outbound = {
-        count?: number | undefined;
-    };
+    export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchMessagesIdUnified> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchMessagesIdUnified> =
+        z.object({});
 }
 
 /** @internal */

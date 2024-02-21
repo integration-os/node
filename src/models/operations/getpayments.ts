@@ -10,20 +10,29 @@ export type GetPaymentsRequest = {
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
+    /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
     limit?: string | undefined;
-    nextCursor?: string | undefined;
-    previousCursor?: string | undefined;
-    pageSize?: string | undefined;
+    cursor?: string | undefined;
     createdAfter?: string | undefined;
     createdBefore?: string | undefined;
     updatedAfter?: string | undefined;
     updatedBefore?: string | undefined;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
 export type GetPaymentsPagination = {
     nextCursor?: string | undefined;
     previousCursor?: string | undefined;
-    pageSize?: number | undefined;
     limit?: number | undefined;
 };
 
@@ -90,77 +99,100 @@ export type GetPaymentsResponse = {
 export namespace GetPaymentsRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetPaymentsRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetPaymentsRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
@@ -170,7 +202,6 @@ export namespace GetPaymentsPagination$ {
     export type Inbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
@@ -178,14 +209,12 @@ export namespace GetPaymentsPagination$ {
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
@@ -193,7 +222,6 @@ export namespace GetPaymentsPagination$ {
     export type Outbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
@@ -201,14 +229,12 @@ export namespace GetPaymentsPagination$ {
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });

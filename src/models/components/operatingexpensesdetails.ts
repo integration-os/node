@@ -8,7 +8,6 @@ export type OperatingExpensesDetails = {
     researchAndDevelopmentExpenses?: number | undefined;
     salesGeneralAndAdministrativeExpenses?: number | undefined;
     otherOperatingExpenses?: number | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -17,7 +16,6 @@ export namespace OperatingExpensesDetails$ {
         researchAndDevelopmentExpenses?: number | undefined;
         salesGeneralAndAdministrativeExpenses?: number | undefined;
         otherOperatingExpenses?: number | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<OperatingExpensesDetails, z.ZodTypeDef, Inbound> = z
@@ -25,7 +23,6 @@ export namespace OperatingExpensesDetails$ {
             researchAndDevelopmentExpenses: z.number().optional(),
             salesGeneralAndAdministrativeExpenses: z.number().optional(),
             otherOperatingExpenses: z.number().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -41,7 +38,6 @@ export namespace OperatingExpensesDetails$ {
                 ...(v.otherOperatingExpenses === undefined
                     ? null
                     : { otherOperatingExpenses: v.otherOperatingExpenses }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -49,7 +45,6 @@ export namespace OperatingExpensesDetails$ {
         researchAndDevelopmentExpenses?: number | undefined;
         salesGeneralAndAdministrativeExpenses?: number | undefined;
         otherOperatingExpenses?: number | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, OperatingExpensesDetails> = z
@@ -57,7 +52,6 @@ export namespace OperatingExpensesDetails$ {
             researchAndDevelopmentExpenses: z.number().optional(),
             salesGeneralAndAdministrativeExpenses: z.number().optional(),
             otherOperatingExpenses: z.number().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -73,7 +67,6 @@ export namespace OperatingExpensesDetails$ {
                 ...(v.otherOperatingExpenses === undefined
                     ? null
                     : { otherOperatingExpenses: v.otherOperatingExpenses }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

@@ -11,9 +11,21 @@ export type PatchJobsIdRequest = {
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
     /**
      * The modified token of the model
      */
@@ -21,9 +33,7 @@ export type PatchJobsIdRequest = {
     jobs?: components.Jobs | undefined;
 };
 
-export type PatchJobsIdUnified = {
-    count?: number | undefined;
-};
+export type PatchJobsIdUnified = {};
 
 export type PatchJobsIdPassthrough = {};
 
@@ -87,7 +97,10 @@ export type PatchJobsIdResponse = {
 export namespace PatchJobsIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         Jobs?: components.Jobs$.Inbound | undefined;
     };
@@ -95,14 +108,29 @@ export namespace PatchJobsIdRequest$ {
     export const inboundSchema: z.ZodType<PatchJobsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             Jobs: components.Jobs$?.inboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.Jobs === undefined ? null : { jobs: v.Jobs }),
             };
@@ -110,7 +138,10 @@ export namespace PatchJobsIdRequest$ {
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         Jobs?: components.Jobs$.Outbound | undefined;
     };
@@ -118,14 +149,28 @@ export namespace PatchJobsIdRequest$ {
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchJobsIdRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             jobs: components.Jobs$?.outboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.jobs === undefined ? null : { Jobs: v.jobs }),
             };
@@ -134,33 +179,15 @@ export namespace PatchJobsIdRequest$ {
 
 /** @internal */
 export namespace PatchJobsIdUnified$ {
-    export type Inbound = {
-        count?: number | undefined;
-    };
+    export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<PatchJobsIdUnified, z.ZodTypeDef, Inbound> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const inboundSchema: z.ZodType<PatchJobsIdUnified, z.ZodTypeDef, Inbound> = z.object({});
 
-    export type Outbound = {
-        count?: number | undefined;
-    };
+    export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchJobsIdUnified> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchJobsIdUnified> = z.object(
+        {}
+    );
 }
 
 /** @internal */

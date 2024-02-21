@@ -4,42 +4,28 @@
 
 import { z } from "zod";
 
-export enum PaymentMethodsType {
-    CreditCard = "CreditCard",
-    PayPal = "PayPal",
-    BankTransfer = "BankTransfer",
-    CryptoCurrency = "CryptoCurrency",
-    Cash = "Cash",
-}
-
 export type PaymentMethods = {
     id?: string | undefined;
-    type?: PaymentMethodsType | undefined;
+    type?: PaymentMethods | undefined;
     details?: string | undefined;
     isDefault?: boolean | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const PaymentMethodsType$ = z.nativeEnum(PaymentMethodsType);
 
 /** @internal */
 export namespace PaymentMethods$ {
     export type Inbound = {
         id?: string | undefined;
-        type?: PaymentMethodsType | undefined;
+        type?: PaymentMethods$.Inbound | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PaymentMethods, z.ZodTypeDef, Inbound> = z
         .object({
             id: z.string().optional(),
-            type: PaymentMethodsType$.optional(),
+            type: z.lazy(() => PaymentMethods$?.inboundSchema).optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -47,25 +33,22 @@ export namespace PaymentMethods$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.details === undefined ? null : { details: v.details }),
                 ...(v.isDefault === undefined ? null : { isDefault: v.isDefault }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
     export type Outbound = {
         id?: string | undefined;
-        type?: PaymentMethodsType | undefined;
+        type?: PaymentMethods$.Outbound | undefined;
         details?: string | undefined;
         isDefault?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PaymentMethods> = z
         .object({
             id: z.string().optional(),
-            type: PaymentMethodsType$.optional(),
+            type: z.lazy(() => PaymentMethods$?.outboundSchema).optional(),
             details: z.string().optional(),
             isDefault: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -73,7 +56,6 @@ export namespace PaymentMethods$ {
                 ...(v.type === undefined ? null : { type: v.type }),
                 ...(v.details === undefined ? null : { details: v.details }),
                 ...(v.isDefault === undefined ? null : { isDefault: v.isDefault }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

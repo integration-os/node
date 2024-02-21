@@ -10,31 +10,40 @@ export type GetAccountsRequest = {
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
+    /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
     limit?: string | undefined;
-    nextCursor?: string | undefined;
-    previousCursor?: string | undefined;
-    pageSize?: string | undefined;
+    cursor?: string | undefined;
     createdAfter?: string | undefined;
     createdBefore?: string | undefined;
     updatedAfter?: string | undefined;
     updatedBefore?: string | undefined;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
-export type GetAccountsPagination = {
+export type Pagination = {
     nextCursor?: string | undefined;
     previousCursor?: string | undefined;
-    pageSize?: number | undefined;
     limit?: number | undefined;
 };
 
-export type GetAccountsPassthrough = {};
+export type Passthrough = {};
 
-export type GetAccountsCache = {
+export type Cache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type GetAccountsMeta = {
+export type Meta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -52,7 +61,7 @@ export type GetAccountsMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: GetAccountsCache | undefined;
+    cache?: Cache | undefined;
 };
 
 /**
@@ -62,9 +71,9 @@ export type GetAccountsResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
     unified?: Array<components.Accounts> | undefined;
-    pagination?: GetAccountsPagination | undefined;
-    passthrough?: GetAccountsPassthrough | undefined;
-    meta?: GetAccountsMeta | undefined;
+    pagination?: Pagination | undefined;
+    passthrough?: Passthrough | undefined;
+    meta?: Meta | undefined;
 };
 
 export type GetAccountsResponse = {
@@ -90,102 +99,122 @@ export type GetAccountsResponse = {
 export namespace GetAccountsRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetAccountsRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         limit?: string | undefined;
-        nextCursor?: string | undefined;
-        previousCursor?: string | undefined;
-        pageSize?: string | undefined;
+        cursor?: string | undefined;
         createdAfter?: string | undefined;
         createdBefore?: string | undefined;
         updatedAfter?: string | undefined;
         updatedBefore?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             limit: z.string().optional(),
-            nextCursor: z.string().optional(),
-            previousCursor: z.string().optional(),
-            pageSize: z.string().optional(),
+            cursor: z.string().optional(),
             createdAfter: z.string().optional(),
             createdBefore: z.string().optional(),
             updatedAfter: z.string().optional(),
             updatedBefore: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
-                ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
-                ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
+                ...(v.cursor === undefined ? null : { cursor: v.cursor }),
                 ...(v.createdAfter === undefined ? null : { createdAfter: v.createdAfter }),
                 ...(v.createdBefore === undefined ? null : { createdBefore: v.createdBefore }),
                 ...(v.updatedAfter === undefined ? null : { updatedAfter: v.updatedAfter }),
                 ...(v.updatedBefore === undefined ? null : { updatedBefore: v.updatedBefore }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
 
 /** @internal */
-export namespace GetAccountsPagination$ {
+export namespace Pagination$ {
     export type Inbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetAccountsPagination, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<Pagination, z.ZodTypeDef, Inbound> = z
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
@@ -193,49 +222,43 @@ export namespace GetAccountsPagination$ {
     export type Outbound = {
         nextCursor?: string | undefined;
         previousCursor?: string | undefined;
-        pageSize?: number | undefined;
         limit?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsPagination> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Pagination> = z
         .object({
             nextCursor: z.string().optional(),
             previousCursor: z.string().optional(),
-            pageSize: z.number().int().optional(),
             limit: z.number().int().optional(),
         })
         .transform((v) => {
             return {
                 ...(v.nextCursor === undefined ? null : { nextCursor: v.nextCursor }),
                 ...(v.previousCursor === undefined ? null : { previousCursor: v.previousCursor }),
-                ...(v.pageSize === undefined ? null : { pageSize: v.pageSize }),
                 ...(v.limit === undefined ? null : { limit: v.limit }),
             };
         });
 }
 
 /** @internal */
-export namespace GetAccountsPassthrough$ {
+export namespace Passthrough$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<GetAccountsPassthrough, z.ZodTypeDef, Inbound> = z.object(
-        {}
-    );
+    export const inboundSchema: z.ZodType<Passthrough, z.ZodTypeDef, Inbound> = z.object({});
 
     export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsPassthrough> =
-        z.object({});
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Passthrough> = z.object({});
 }
 
 /** @internal */
-export namespace GetAccountsCache$ {
+export namespace Cache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetAccountsCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<Cache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -252,7 +275,7 @@ export namespace GetAccountsCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsCache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Cache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -266,7 +289,7 @@ export namespace GetAccountsCache$ {
 }
 
 /** @internal */
-export namespace GetAccountsMeta$ {
+export namespace Meta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -285,10 +308,10 @@ export namespace GetAccountsMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetAccountsCache$.Inbound | undefined;
+        cache?: Cache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetAccountsMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<Meta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -307,7 +330,7 @@ export namespace GetAccountsMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetAccountsCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => Cache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -362,10 +385,10 @@ export namespace GetAccountsMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetAccountsCache$.Outbound | undefined;
+        cache?: Cache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Meta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -384,7 +407,7 @@ export namespace GetAccountsMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetAccountsCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => Cache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -428,9 +451,9 @@ export namespace GetAccountsResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: Array<components.Accounts$.Inbound> | undefined;
-        pagination?: GetAccountsPagination$.Inbound | undefined;
-        passthrough?: GetAccountsPassthrough$.Inbound | undefined;
-        meta?: GetAccountsMeta$.Inbound | undefined;
+        pagination?: Pagination$.Inbound | undefined;
+        passthrough?: Passthrough$.Inbound | undefined;
+        meta?: Meta$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetAccountsResponseBody, z.ZodTypeDef, Inbound> = z
@@ -438,9 +461,9 @@ export namespace GetAccountsResponseBody$ {
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: z.array(components.Accounts$?.inboundSchema).optional(),
-            pagination: z.lazy(() => GetAccountsPagination$?.inboundSchema).optional(),
-            passthrough: z.lazy(() => GetAccountsPassthrough$?.inboundSchema).optional(),
-            meta: z.lazy(() => GetAccountsMeta$?.inboundSchema).optional(),
+            pagination: z.lazy(() => Pagination$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => Passthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => Meta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -457,9 +480,9 @@ export namespace GetAccountsResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: Array<components.Accounts$.Outbound> | undefined;
-        pagination?: GetAccountsPagination$.Outbound | undefined;
-        passthrough?: GetAccountsPassthrough$.Outbound | undefined;
-        meta?: GetAccountsMeta$.Outbound | undefined;
+        pagination?: Pagination$.Outbound | undefined;
+        passthrough?: Passthrough$.Outbound | undefined;
+        meta?: Meta$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsResponseBody> = z
@@ -467,9 +490,9 @@ export namespace GetAccountsResponseBody$ {
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: z.array(components.Accounts$?.outboundSchema).optional(),
-            pagination: z.lazy(() => GetAccountsPagination$?.outboundSchema).optional(),
-            passthrough: z.lazy(() => GetAccountsPassthrough$?.outboundSchema).optional(),
-            meta: z.lazy(() => GetAccountsMeta$?.outboundSchema).optional(),
+            pagination: z.lazy(() => Pagination$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => Passthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => Meta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

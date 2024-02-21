@@ -3,13 +3,8 @@
  */
 
 import { Metadata, Metadata$ } from "./metadata";
+import { ReviewApprovalStatus, ReviewApprovalStatus$ } from "./reviewapprovalstatus";
 import { z } from "zod";
-
-export enum RatingsReviewsStatus {
-    Pending = "PENDING",
-    Approved = "APPROVED",
-    Rejected = "REJECTED",
-}
 
 export type RatingsReviews = {
     id?: string | undefined;
@@ -21,15 +16,11 @@ export type RatingsReviews = {
     updatedAt?: Date | undefined;
     verifiedPurchase?: boolean | undefined;
     locale?: string | undefined;
-    status?: RatingsReviewsStatus | undefined;
+    status?: ReviewApprovalStatus | undefined;
     metadata?: Metadata | undefined;
     active?: boolean | undefined;
     deleted?: boolean | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const RatingsReviewsStatus$ = z.nativeEnum(RatingsReviewsStatus);
 
 /** @internal */
 export namespace RatingsReviews$ {
@@ -43,11 +34,10 @@ export namespace RatingsReviews$ {
         updatedAt?: string | undefined;
         verifiedPurchase?: boolean | undefined;
         locale?: string | undefined;
-        status?: RatingsReviewsStatus | undefined;
+        status?: ReviewApprovalStatus | undefined;
         metadata?: Metadata$.Inbound | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<RatingsReviews, z.ZodTypeDef, Inbound> = z
@@ -69,11 +59,10 @@ export namespace RatingsReviews$ {
                 .optional(),
             verifiedPurchase: z.boolean().optional(),
             locale: z.string().optional(),
-            status: RatingsReviewsStatus$.optional(),
+            status: ReviewApprovalStatus$.optional(),
             metadata: Metadata$?.inboundSchema.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -92,7 +81,6 @@ export namespace RatingsReviews$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -106,11 +94,10 @@ export namespace RatingsReviews$ {
         updatedAt?: string | undefined;
         verifiedPurchase?: boolean | undefined;
         locale?: string | undefined;
-        status?: RatingsReviewsStatus | undefined;
+        status?: ReviewApprovalStatus | undefined;
         metadata?: Metadata$.Outbound | undefined;
         active?: boolean | undefined;
         deleted?: boolean | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, RatingsReviews> = z
@@ -130,11 +117,10 @@ export namespace RatingsReviews$ {
                 .optional(),
             verifiedPurchase: z.boolean().optional(),
             locale: z.string().optional(),
-            status: RatingsReviewsStatus$.optional(),
+            status: ReviewApprovalStatus$.optional(),
             metadata: Metadata$?.outboundSchema.optional(),
             active: z.boolean().optional(),
             deleted: z.boolean().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -153,7 +139,6 @@ export namespace RatingsReviews$ {
                 ...(v.metadata === undefined ? null : { metadata: v.metadata }),
                 ...(v.active === undefined ? null : { active: v.active }),
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

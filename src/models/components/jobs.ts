@@ -4,18 +4,10 @@
 
 import { Addresses, Addresses$ } from "./addresses";
 import { Companies, Companies$ } from "./companies";
+import { EmploymentType, EmploymentType$ } from "./employmenttype";
 import { EmploymentUnits, EmploymentUnits$ } from "./employmentunits";
 import { Salaries, Salaries$ } from "./salaries";
 import { z } from "zod";
-
-export enum EmploymentType {
-    FullTime = "full-time",
-    PartTime = "part-time",
-    Contract = "contract",
-    Temporary = "temporary",
-    Volunteer = "volunteer",
-    Internship = "internship",
-}
 
 export type Jobs = {
     id?: string | undefined;
@@ -55,9 +47,6 @@ export type Jobs = {
     salaryCurrency?: string | undefined;
     modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const EmploymentType$ = z.nativeEnum(EmploymentType);
 
 /** @internal */
 export namespace Jobs$ {

@@ -5,15 +5,27 @@
 import * as components from "../../models/components";
 import { z } from "zod";
 
-export type PatchBalancesheetsIdRequest = {
+export type PatchBalanceSheetsIdRequest = {
     /**
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
     /**
      * The modified token of the model
      */
@@ -21,18 +33,16 @@ export type PatchBalancesheetsIdRequest = {
     balanceSheets?: components.BalanceSheets | undefined;
 };
 
-export type PatchBalancesheetsIdUnified = {
-    count?: number | undefined;
-};
+export type PatchBalanceSheetsIdUnified = {};
 
-export type PatchBalancesheetsIdPassthrough = {};
+export type PatchBalanceSheetsIdPassthrough = {};
 
-export type PatchBalancesheetsIdCache = {
+export type PatchBalanceSheetsIdCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type PatchBalancesheetsIdMeta = {
+export type PatchBalanceSheetsIdMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -50,21 +60,21 @@ export type PatchBalancesheetsIdMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: PatchBalancesheetsIdCache | undefined;
+    cache?: PatchBalanceSheetsIdCache | undefined;
 };
 
 /**
  * Successful response
  */
-export type PatchBalancesheetsIdResponseBody = {
+export type PatchBalanceSheetsIdResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
-    unified?: PatchBalancesheetsIdUnified | undefined;
-    passthrough?: PatchBalancesheetsIdPassthrough | undefined;
-    meta?: PatchBalancesheetsIdMeta | undefined;
+    unified?: PatchBalanceSheetsIdUnified | undefined;
+    passthrough?: PatchBalanceSheetsIdPassthrough | undefined;
+    meta?: PatchBalanceSheetsIdMeta | undefined;
 };
 
-export type PatchBalancesheetsIdResponse = {
+export type PatchBalanceSheetsIdResponse = {
     /**
      * HTTP response content type for this operation
      */
@@ -80,29 +90,47 @@ export type PatchBalancesheetsIdResponse = {
     /**
      * Successful response
      */
-    object?: PatchBalancesheetsIdResponseBody | undefined;
+    object?: PatchBalanceSheetsIdResponseBody | undefined;
 };
 
 /** @internal */
-export namespace PatchBalancesheetsIdRequest$ {
+export namespace PatchBalanceSheetsIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         BalanceSheets?: components.BalanceSheets$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchBalancesheetsIdRequest, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchBalanceSheetsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             BalanceSheets: components.BalanceSheets$?.inboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.BalanceSheets === undefined ? null : { balanceSheets: v.BalanceSheets }),
             };
@@ -110,22 +138,39 @@ export namespace PatchBalancesheetsIdRequest$ {
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         BalanceSheets?: components.BalanceSheets$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalancesheetsIdRequest> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalanceSheetsIdRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             balanceSheets: components.BalanceSheets$?.outboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.balanceSheets === undefined ? null : { BalanceSheets: v.balanceSheets }),
             };
@@ -133,41 +178,23 @@ export namespace PatchBalancesheetsIdRequest$ {
 }
 
 /** @internal */
-export namespace PatchBalancesheetsIdUnified$ {
-    export type Inbound = {
-        count?: number | undefined;
-    };
+export namespace PatchBalanceSheetsIdUnified$ {
+    export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<PatchBalancesheetsIdUnified, z.ZodTypeDef, Inbound> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const inboundSchema: z.ZodType<PatchBalanceSheetsIdUnified, z.ZodTypeDef, Inbound> =
+        z.object({});
 
-    export type Outbound = {
-        count?: number | undefined;
-    };
+    export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalancesheetsIdUnified> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalanceSheetsIdUnified> =
+        z.object({});
 }
 
 /** @internal */
-export namespace PatchBalancesheetsIdPassthrough$ {
+export namespace PatchBalanceSheetsIdPassthrough$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<PatchBalancesheetsIdPassthrough, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<PatchBalanceSheetsIdPassthrough, z.ZodTypeDef, Inbound> =
         z.object({});
 
     export type Outbound = {};
@@ -175,18 +202,18 @@ export namespace PatchBalancesheetsIdPassthrough$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchBalancesheetsIdPassthrough
+        PatchBalanceSheetsIdPassthrough
     > = z.object({});
 }
 
 /** @internal */
-export namespace PatchBalancesheetsIdCache$ {
+export namespace PatchBalanceSheetsIdCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchBalancesheetsIdCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchBalanceSheetsIdCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -203,7 +230,7 @@ export namespace PatchBalancesheetsIdCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalancesheetsIdCache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalanceSheetsIdCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -217,7 +244,7 @@ export namespace PatchBalancesheetsIdCache$ {
 }
 
 /** @internal */
-export namespace PatchBalancesheetsIdMeta$ {
+export namespace PatchBalanceSheetsIdMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -236,10 +263,10 @@ export namespace PatchBalancesheetsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: PatchBalancesheetsIdCache$.Inbound | undefined;
+        cache?: PatchBalanceSheetsIdCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchBalancesheetsIdMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchBalanceSheetsIdMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -258,7 +285,7 @@ export namespace PatchBalancesheetsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => PatchBalancesheetsIdCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => PatchBalanceSheetsIdCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -313,10 +340,10 @@ export namespace PatchBalancesheetsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: PatchBalancesheetsIdCache$.Outbound | undefined;
+        cache?: PatchBalanceSheetsIdCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalancesheetsIdMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalanceSheetsIdMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -335,7 +362,7 @@ export namespace PatchBalancesheetsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => PatchBalancesheetsIdCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => PatchBalanceSheetsIdCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -374,25 +401,25 @@ export namespace PatchBalancesheetsIdMeta$ {
 }
 
 /** @internal */
-export namespace PatchBalancesheetsIdResponseBody$ {
+export namespace PatchBalanceSheetsIdResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: PatchBalancesheetsIdUnified$.Inbound | undefined;
-        passthrough?: PatchBalancesheetsIdPassthrough$.Inbound | undefined;
-        meta?: PatchBalancesheetsIdMeta$.Inbound | undefined;
+        unified?: PatchBalanceSheetsIdUnified$.Inbound | undefined;
+        passthrough?: PatchBalanceSheetsIdPassthrough$.Inbound | undefined;
+        meta?: PatchBalanceSheetsIdMeta$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchBalancesheetsIdResponseBody, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<PatchBalanceSheetsIdResponseBody, z.ZodTypeDef, Inbound> =
         z
             .object({
                 status: z.string().optional(),
                 statusCode: z.number().int().optional(),
-                unified: z.lazy(() => PatchBalancesheetsIdUnified$?.inboundSchema).optional(),
+                unified: z.lazy(() => PatchBalanceSheetsIdUnified$?.inboundSchema).optional(),
                 passthrough: z
-                    .lazy(() => PatchBalancesheetsIdPassthrough$?.inboundSchema)
+                    .lazy(() => PatchBalanceSheetsIdPassthrough$?.inboundSchema)
                     .optional(),
-                meta: z.lazy(() => PatchBalancesheetsIdMeta$?.inboundSchema).optional(),
+                meta: z.lazy(() => PatchBalanceSheetsIdMeta$?.inboundSchema).optional(),
             })
             .transform((v) => {
                 return {
@@ -407,22 +434,22 @@ export namespace PatchBalancesheetsIdResponseBody$ {
     export type Outbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: PatchBalancesheetsIdUnified$.Outbound | undefined;
-        passthrough?: PatchBalancesheetsIdPassthrough$.Outbound | undefined;
-        meta?: PatchBalancesheetsIdMeta$.Outbound | undefined;
+        unified?: PatchBalanceSheetsIdUnified$.Outbound | undefined;
+        passthrough?: PatchBalanceSheetsIdPassthrough$.Outbound | undefined;
+        meta?: PatchBalanceSheetsIdMeta$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchBalancesheetsIdResponseBody
+        PatchBalanceSheetsIdResponseBody
     > = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => PatchBalancesheetsIdUnified$?.outboundSchema).optional(),
-            passthrough: z.lazy(() => PatchBalancesheetsIdPassthrough$?.outboundSchema).optional(),
-            meta: z.lazy(() => PatchBalancesheetsIdMeta$?.outboundSchema).optional(),
+            unified: z.lazy(() => PatchBalanceSheetsIdUnified$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => PatchBalanceSheetsIdPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => PatchBalanceSheetsIdMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -436,20 +463,20 @@ export namespace PatchBalancesheetsIdResponseBody$ {
 }
 
 /** @internal */
-export namespace PatchBalancesheetsIdResponse$ {
+export namespace PatchBalanceSheetsIdResponse$ {
     export type Inbound = {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: PatchBalancesheetsIdResponseBody$.Inbound | undefined;
+        object?: PatchBalanceSheetsIdResponseBody$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchBalancesheetsIdResponse, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchBalanceSheetsIdResponse, z.ZodTypeDef, Inbound> = z
         .object({
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => PatchBalancesheetsIdResponseBody$?.inboundSchema).optional(),
+            object: z.lazy(() => PatchBalanceSheetsIdResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -464,17 +491,17 @@ export namespace PatchBalancesheetsIdResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: PatchBalancesheetsIdResponseBody$.Outbound | undefined;
+        object?: PatchBalanceSheetsIdResponseBody$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalancesheetsIdResponse> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchBalanceSheetsIdResponse> = z
         .object({
             contentType: z.string(),
             statusCode: z.number().int(),
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => PatchBalancesheetsIdResponseBody$?.outboundSchema).optional(),
+            object: z.lazy(() => PatchBalanceSheetsIdResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

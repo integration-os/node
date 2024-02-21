@@ -4,14 +4,9 @@
 
 import { Attachments, Attachments$ } from "./attachments";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
+import { PriorityLevel, PriorityLevel$ } from "./prioritylevel";
 import { Users, Users$ } from "./users";
 import { z } from "zod";
-
-export enum NotificationsPriority {
-    High = "HIGH",
-    Medium = "MEDIUM",
-    Low = "LOW",
-}
 
 export type Notifications = {
     notificationId?: string | undefined;
@@ -20,7 +15,7 @@ export type Notifications = {
     message?: string | undefined;
     recipient?: Users | undefined;
     status?: string | undefined;
-    priority?: NotificationsPriority | undefined;
+    priority?: PriorityLevel | undefined;
     channel?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -28,11 +23,7 @@ export type Notifications = {
     deleted?: boolean | undefined;
     customFields?: Array<CustomAttributes> | undefined;
     attachments?: Array<Attachments> | undefined;
-    modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const NotificationsPriority$ = z.nativeEnum(NotificationsPriority);
 
 /** @internal */
 export namespace Notifications$ {
@@ -43,7 +34,7 @@ export namespace Notifications$ {
         message?: string | undefined;
         recipient?: Users$.Inbound | undefined;
         status?: string | undefined;
-        priority?: NotificationsPriority | undefined;
+        priority?: PriorityLevel | undefined;
         channel?: string | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
@@ -51,7 +42,6 @@ export namespace Notifications$ {
         deleted?: boolean | undefined;
         customFields?: Array<CustomAttributes$.Inbound> | undefined;
         attachments?: Array<Attachments$.Inbound> | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<Notifications, z.ZodTypeDef, Inbound> = z
@@ -62,7 +52,7 @@ export namespace Notifications$ {
             message: z.string().optional(),
             recipient: Users$?.inboundSchema.optional(),
             status: z.string().optional(),
-            priority: NotificationsPriority$.optional(),
+            priority: PriorityLevel$.optional(),
             channel: z.string().optional(),
             createdAt: z
                 .string()
@@ -78,7 +68,6 @@ export namespace Notifications$ {
             deleted: z.boolean().optional(),
             customFields: z.array(CustomAttributes$?.inboundSchema).optional(),
             attachments: z.array(Attachments$?.inboundSchema).optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -96,7 +85,6 @@ export namespace Notifications$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -107,7 +95,7 @@ export namespace Notifications$ {
         message?: string | undefined;
         recipient?: Users$.Outbound | undefined;
         status?: string | undefined;
-        priority?: NotificationsPriority | undefined;
+        priority?: PriorityLevel | undefined;
         channel?: string | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
@@ -115,7 +103,6 @@ export namespace Notifications$ {
         deleted?: boolean | undefined;
         customFields?: Array<CustomAttributes$.Outbound> | undefined;
         attachments?: Array<Attachments$.Outbound> | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Notifications> = z
@@ -126,7 +113,7 @@ export namespace Notifications$ {
             message: z.string().optional(),
             recipient: Users$?.outboundSchema.optional(),
             status: z.string().optional(),
-            priority: NotificationsPriority$.optional(),
+            priority: PriorityLevel$.optional(),
             channel: z.string().optional(),
             createdAt: z
                 .date()
@@ -140,7 +127,6 @@ export namespace Notifications$ {
             deleted: z.boolean().optional(),
             customFields: z.array(CustomAttributes$?.outboundSchema).optional(),
             attachments: z.array(Attachments$?.outboundSchema).optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -158,7 +144,6 @@ export namespace Notifications$ {
                 ...(v.deleted === undefined ? null : { deleted: v.deleted }),
                 ...(v.customFields === undefined ? null : { customFields: v.customFields }),
                 ...(v.attachments === undefined ? null : { attachments: v.attachments }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

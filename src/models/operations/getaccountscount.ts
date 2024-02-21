@@ -9,9 +9,21 @@ export type GetAccountsCountRequest = {
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
+    /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
-export type GetAccountsCountUnified = {
+export type Unified = {
     count?: number | undefined;
 };
 
@@ -49,7 +61,7 @@ export type GetAccountsCountMeta = {
 export type GetAccountsCountResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
-    unified?: GetAccountsCountUnified | undefined;
+    unified?: Unified | undefined;
     passthrough?: GetAccountsCountPassthrough | undefined;
     meta?: GetAccountsCountMeta | undefined;
 };
@@ -77,40 +89,75 @@ export type GetAccountsCountResponse = {
 export namespace GetAccountsCountRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<GetAccountsCountRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
+        passthroughForward?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsCountRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
 
 /** @internal */
-export namespace GetAccountsCountUnified$ {
+export namespace Unified$ {
     export type Inbound = {
         count?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetAccountsCountUnified, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<Unified, z.ZodTypeDef, Inbound> = z
         .object({
             count: z.number().int().optional(),
         })
@@ -124,7 +171,7 @@ export namespace GetAccountsCountUnified$ {
         count?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetAccountsCountUnified> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, Unified> = z
         .object({
             count: z.number().int().optional(),
         })
@@ -347,7 +394,7 @@ export namespace GetAccountsCountResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: GetAccountsCountUnified$.Inbound | undefined;
+        unified?: Unified$.Inbound | undefined;
         passthrough?: GetAccountsCountPassthrough$.Inbound | undefined;
         meta?: GetAccountsCountMeta$.Inbound | undefined;
     };
@@ -356,7 +403,7 @@ export namespace GetAccountsCountResponseBody$ {
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => GetAccountsCountUnified$?.inboundSchema).optional(),
+            unified: z.lazy(() => Unified$?.inboundSchema).optional(),
             passthrough: z.lazy(() => GetAccountsCountPassthrough$?.inboundSchema).optional(),
             meta: z.lazy(() => GetAccountsCountMeta$?.inboundSchema).optional(),
         })
@@ -373,7 +420,7 @@ export namespace GetAccountsCountResponseBody$ {
     export type Outbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: GetAccountsCountUnified$.Outbound | undefined;
+        unified?: Unified$.Outbound | undefined;
         passthrough?: GetAccountsCountPassthrough$.Outbound | undefined;
         meta?: GetAccountsCountMeta$.Outbound | undefined;
     };
@@ -382,7 +429,7 @@ export namespace GetAccountsCountResponseBody$ {
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => GetAccountsCountUnified$?.outboundSchema).optional(),
+            unified: z.lazy(() => Unified$?.outboundSchema).optional(),
             passthrough: z.lazy(() => GetAccountsCountPassthrough$?.outboundSchema).optional(),
             meta: z.lazy(() => GetAccountsCountMeta$?.outboundSchema).optional(),
         })

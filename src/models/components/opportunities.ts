@@ -6,6 +6,7 @@ import { Accounts, Accounts$ } from "./accounts";
 import { Attachments, Attachments$ } from "./attachments";
 import { Campaigns, Campaigns$ } from "./campaigns";
 import { Contacts, Contacts$ } from "./contacts";
+import { Currency, Currency$ } from "./currency";
 import { CustomAttributes, CustomAttributes$ } from "./customattributes";
 import { Users, Users$ } from "./users";
 import { z } from "zod";
@@ -15,7 +16,7 @@ export type Opportunities = {
     title?: string | undefined;
     description?: string | undefined;
     amount?: number | undefined;
-    currency?: string | undefined;
+    currency?: Currency | undefined;
     stage?: string | undefined;
     probability?: number | undefined;
     closeDate?: Date | undefined;
@@ -45,7 +46,7 @@ export namespace Opportunities$ {
         title?: string | undefined;
         description?: string | undefined;
         amount?: number | undefined;
-        currency?: string | undefined;
+        currency?: Currency | undefined;
         stage?: string | undefined;
         probability?: number | undefined;
         closeDate?: string | undefined;
@@ -74,7 +75,7 @@ export namespace Opportunities$ {
             title: z.string().optional(),
             description: z.string().optional(),
             amount: z.number().optional(),
-            currency: z.string().optional(),
+            currency: Currency$.optional(),
             stage: z.string().optional(),
             probability: z.number().optional(),
             closeDate: z
@@ -143,7 +144,7 @@ export namespace Opportunities$ {
         title?: string | undefined;
         description?: string | undefined;
         amount?: number | undefined;
-        currency?: string | undefined;
+        currency?: Currency | undefined;
         stage?: string | undefined;
         probability?: number | undefined;
         closeDate?: string | undefined;
@@ -172,7 +173,7 @@ export namespace Opportunities$ {
             title: z.string().optional(),
             description: z.string().optional(),
             amount: z.number().optional(),
-            currency: z.string().optional(),
+            currency: Currency$.optional(),
             stage: z.string().optional(),
             probability: z.number().optional(),
             closeDate: z

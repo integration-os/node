@@ -13,7 +13,6 @@ export type PerformanceMetrics = {
     costPerClick?: number | undefined;
     costPerConversion?: number | undefined;
     conversionRate?: number | undefined;
-    modifyToken?: string | undefined;
 };
 
 /** @internal */
@@ -27,7 +26,6 @@ export namespace PerformanceMetrics$ {
         costPerClick?: number | undefined;
         costPerConversion?: number | undefined;
         conversionRate?: number | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const inboundSchema: z.ZodType<PerformanceMetrics, z.ZodTypeDef, Inbound> = z
@@ -40,7 +38,6 @@ export namespace PerformanceMetrics$ {
             costPerClick: z.number().optional(),
             costPerConversion: z.number().optional(),
             conversionRate: z.number().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -56,7 +53,6 @@ export namespace PerformanceMetrics$ {
                     ? null
                     : { costPerConversion: v.costPerConversion }),
                 ...(v.conversionRate === undefined ? null : { conversionRate: v.conversionRate }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 
@@ -69,7 +65,6 @@ export namespace PerformanceMetrics$ {
         costPerClick?: number | undefined;
         costPerConversion?: number | undefined;
         conversionRate?: number | undefined;
-        modifyToken?: string | undefined;
     };
 
     export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PerformanceMetrics> = z
@@ -82,7 +77,6 @@ export namespace PerformanceMetrics$ {
             costPerClick: z.number().optional(),
             costPerConversion: z.number().optional(),
             conversionRate: z.number().optional(),
-            modifyToken: z.string().optional(),
         })
         .transform((v) => {
             return {
@@ -98,7 +92,6 @@ export namespace PerformanceMetrics$ {
                     ? null
                     : { costPerConversion: v.costPerConversion }),
                 ...(v.conversionRate === undefined ? null : { conversionRate: v.conversionRate }),
-                ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
             };
         });
 }

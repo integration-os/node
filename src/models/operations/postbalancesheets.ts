@@ -5,22 +5,34 @@
 import * as components from "../../models/components";
 import { z } from "zod";
 
-export type PostBalancesheetsRequest = {
+export type PostBalanceSheetsRequest = {
     /**
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
+    /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
     balanceSheets: components.BalanceSheets;
 };
 
-export type PostBalancesheetsPassthrough = {};
+export type PostBalanceSheetsPassthrough = {};
 
-export type PostBalancesheetsCache = {
+export type PostBalanceSheetsCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type PostBalancesheetsMeta = {
+export type PostBalanceSheetsMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -38,21 +50,21 @@ export type PostBalancesheetsMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: PostBalancesheetsCache | undefined;
+    cache?: PostBalanceSheetsCache | undefined;
 };
 
 /**
  * Successful response
  */
-export type PostBalancesheetsResponseBody = {
+export type PostBalanceSheetsResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
     unified?: components.BalanceSheets | undefined;
-    passthrough?: PostBalancesheetsPassthrough | undefined;
-    meta?: PostBalancesheetsMeta | undefined;
+    passthrough?: PostBalanceSheetsPassthrough | undefined;
+    meta?: PostBalanceSheetsMeta | undefined;
 };
 
-export type PostBalancesheetsResponse = {
+export type PostBalanceSheetsResponse = {
     /**
      * HTTP response content type for this operation
      */
@@ -68,67 +80,102 @@ export type PostBalancesheetsResponse = {
     /**
      * Successful response
      */
-    object?: PostBalancesheetsResponseBody | undefined;
+    object?: PostBalanceSheetsResponseBody | undefined;
 };
 
 /** @internal */
-export namespace PostBalancesheetsRequest$ {
+export namespace PostBalanceSheetsRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
+        passthroughForward?: string | undefined;
         BalanceSheets: components.BalanceSheets$.Inbound;
     };
 
-    export const inboundSchema: z.ZodType<PostBalancesheetsRequest, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PostBalanceSheetsRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
+            passthroughForward: z.string().optional(),
             BalanceSheets: components.BalanceSheets$?.inboundSchema,
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 balanceSheets: v.BalanceSheets,
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
+        passthroughForward?: string | undefined;
         BalanceSheets: components.BalanceSheets$.Outbound;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalancesheetsRequest> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalanceSheetsRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
+            passthroughForward: z.string().optional(),
             balanceSheets: components.BalanceSheets$?.outboundSchema,
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 BalanceSheets: v.balanceSheets,
             };
         });
 }
 
 /** @internal */
-export namespace PostBalancesheetsPassthrough$ {
+export namespace PostBalanceSheetsPassthrough$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<PostBalancesheetsPassthrough, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<PostBalanceSheetsPassthrough, z.ZodTypeDef, Inbound> =
         z.object({});
 
     export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalancesheetsPassthrough> =
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalanceSheetsPassthrough> =
         z.object({});
 }
 
 /** @internal */
-export namespace PostBalancesheetsCache$ {
+export namespace PostBalanceSheetsCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PostBalancesheetsCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PostBalanceSheetsCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -145,7 +192,7 @@ export namespace PostBalancesheetsCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalancesheetsCache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalanceSheetsCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -159,7 +206,7 @@ export namespace PostBalancesheetsCache$ {
 }
 
 /** @internal */
-export namespace PostBalancesheetsMeta$ {
+export namespace PostBalanceSheetsMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -178,10 +225,10 @@ export namespace PostBalancesheetsMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: PostBalancesheetsCache$.Inbound | undefined;
+        cache?: PostBalanceSheetsCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PostBalancesheetsMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PostBalanceSheetsMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -200,7 +247,7 @@ export namespace PostBalancesheetsMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => PostBalancesheetsCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => PostBalanceSheetsCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -255,10 +302,10 @@ export namespace PostBalancesheetsMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: PostBalancesheetsCache$.Outbound | undefined;
+        cache?: PostBalanceSheetsCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalancesheetsMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalanceSheetsMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -277,7 +324,7 @@ export namespace PostBalancesheetsMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => PostBalancesheetsCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => PostBalanceSheetsCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -316,22 +363,22 @@ export namespace PostBalancesheetsMeta$ {
 }
 
 /** @internal */
-export namespace PostBalancesheetsResponseBody$ {
+export namespace PostBalanceSheetsResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.BalanceSheets$.Inbound | undefined;
-        passthrough?: PostBalancesheetsPassthrough$.Inbound | undefined;
-        meta?: PostBalancesheetsMeta$.Inbound | undefined;
+        passthrough?: PostBalanceSheetsPassthrough$.Inbound | undefined;
+        meta?: PostBalanceSheetsMeta$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PostBalancesheetsResponseBody, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PostBalanceSheetsResponseBody, z.ZodTypeDef, Inbound> = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: components.BalanceSheets$?.inboundSchema.optional(),
-            passthrough: z.lazy(() => PostBalancesheetsPassthrough$?.inboundSchema).optional(),
-            meta: z.lazy(() => PostBalancesheetsMeta$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => PostBalanceSheetsPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => PostBalanceSheetsMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -347,18 +394,18 @@ export namespace PostBalancesheetsResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.BalanceSheets$.Outbound | undefined;
-        passthrough?: PostBalancesheetsPassthrough$.Outbound | undefined;
-        meta?: PostBalancesheetsMeta$.Outbound | undefined;
+        passthrough?: PostBalanceSheetsPassthrough$.Outbound | undefined;
+        meta?: PostBalanceSheetsMeta$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalancesheetsResponseBody> =
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalanceSheetsResponseBody> =
         z
             .object({
                 status: z.string().optional(),
                 statusCode: z.number().int().optional(),
                 unified: components.BalanceSheets$?.outboundSchema.optional(),
-                passthrough: z.lazy(() => PostBalancesheetsPassthrough$?.outboundSchema).optional(),
-                meta: z.lazy(() => PostBalancesheetsMeta$?.outboundSchema).optional(),
+                passthrough: z.lazy(() => PostBalanceSheetsPassthrough$?.outboundSchema).optional(),
+                meta: z.lazy(() => PostBalanceSheetsMeta$?.outboundSchema).optional(),
             })
             .transform((v) => {
                 return {
@@ -372,20 +419,20 @@ export namespace PostBalancesheetsResponseBody$ {
 }
 
 /** @internal */
-export namespace PostBalancesheetsResponse$ {
+export namespace PostBalanceSheetsResponse$ {
     export type Inbound = {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: PostBalancesheetsResponseBody$.Inbound | undefined;
+        object?: PostBalanceSheetsResponseBody$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PostBalancesheetsResponse, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PostBalanceSheetsResponse, z.ZodTypeDef, Inbound> = z
         .object({
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => PostBalancesheetsResponseBody$?.inboundSchema).optional(),
+            object: z.lazy(() => PostBalanceSheetsResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -400,17 +447,17 @@ export namespace PostBalancesheetsResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: PostBalancesheetsResponseBody$.Outbound | undefined;
+        object?: PostBalanceSheetsResponseBody$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalancesheetsResponse> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PostBalanceSheetsResponse> = z
         .object({
             contentType: z.string(),
             statusCode: z.number().int(),
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => PostBalancesheetsResponseBody$?.outboundSchema).optional(),
+            object: z.lazy(() => PostBalanceSheetsResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {

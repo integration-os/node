@@ -5,25 +5,37 @@
 import * as components from "../../models/components";
 import { z } from "zod";
 
-export type GetIncomestatementsIdRequest = {
+export type GetIncomeStatementsIdRequest = {
     /**
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
 };
 
-export type GetIncomestatementsIdPassthrough = {};
+export type GetIncomeStatementsIdPassthrough = {};
 
-export type GetIncomestatementsIdCache = {
+export type GetIncomeStatementsIdCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type GetIncomestatementsIdMeta = {
+export type GetIncomeStatementsIdMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -41,21 +53,21 @@ export type GetIncomestatementsIdMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: GetIncomestatementsIdCache | undefined;
+    cache?: GetIncomeStatementsIdCache | undefined;
 };
 
 /**
  * Successful response
  */
-export type GetIncomestatementsIdResponseBody = {
+export type GetIncomeStatementsIdResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
     unified?: components.IncomeStatements | undefined;
-    passthrough?: GetIncomestatementsIdPassthrough | undefined;
-    meta?: GetIncomestatementsIdMeta | undefined;
+    passthrough?: GetIncomeStatementsIdPassthrough | undefined;
+    meta?: GetIncomeStatementsIdMeta | undefined;
 };
 
-export type GetIncomestatementsIdResponse = {
+export type GetIncomeStatementsIdResponse = {
     /**
      * HTTP response content type for this operation
      */
@@ -71,51 +83,86 @@ export type GetIncomestatementsIdResponse = {
     /**
      * Successful response
      */
-    object?: GetIncomestatementsIdResponseBody | undefined;
+    object?: GetIncomeStatementsIdResponseBody | undefined;
 };
 
 /** @internal */
-export namespace GetIncomestatementsIdRequest$ {
+export namespace GetIncomeStatementsIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetIncomestatementsIdRequest, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetIncomeStatementsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomestatementsIdRequest> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomeStatementsIdRequest> = z
         .object({
             connectionKey: z.string(),
+            xIntegrationosEnablePassthrough: z.string().optional(),
+            xIntegrationosPassthroughForward: z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
         })
         .transform((v) => {
             return {
                 "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                ...(v.xIntegrationosEnablePassthrough === undefined
+                    ? null
+                    : { "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": v.xIntegrationosEnablePassthrough }),
+                ...(v.xIntegrationosPassthroughForward === undefined
+                    ? null
+                    : {
+                        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": v.xIntegrationosPassthroughForward,
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
             };
         });
 }
 
 /** @internal */
-export namespace GetIncomestatementsIdPassthrough$ {
+export namespace GetIncomeStatementsIdPassthrough$ {
     export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<GetIncomestatementsIdPassthrough, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<GetIncomeStatementsIdPassthrough, z.ZodTypeDef, Inbound> =
         z.object({});
 
     export type Outbound = {};
@@ -123,18 +170,18 @@ export namespace GetIncomestatementsIdPassthrough$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        GetIncomestatementsIdPassthrough
+        GetIncomeStatementsIdPassthrough
     > = z.object({});
 }
 
 /** @internal */
-export namespace GetIncomestatementsIdCache$ {
+export namespace GetIncomeStatementsIdCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetIncomestatementsIdCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetIncomeStatementsIdCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -151,7 +198,7 @@ export namespace GetIncomestatementsIdCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomestatementsIdCache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomeStatementsIdCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -165,7 +212,7 @@ export namespace GetIncomestatementsIdCache$ {
 }
 
 /** @internal */
-export namespace GetIncomestatementsIdMeta$ {
+export namespace GetIncomeStatementsIdMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -184,10 +231,10 @@ export namespace GetIncomestatementsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetIncomestatementsIdCache$.Inbound | undefined;
+        cache?: GetIncomeStatementsIdCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetIncomestatementsIdMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetIncomeStatementsIdMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -206,7 +253,7 @@ export namespace GetIncomestatementsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetIncomestatementsIdCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => GetIncomeStatementsIdCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -261,10 +308,10 @@ export namespace GetIncomestatementsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: GetIncomestatementsIdCache$.Outbound | undefined;
+        cache?: GetIncomeStatementsIdCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomestatementsIdMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomeStatementsIdMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -283,7 +330,7 @@ export namespace GetIncomestatementsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => GetIncomestatementsIdCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => GetIncomeStatementsIdCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -322,17 +369,17 @@ export namespace GetIncomestatementsIdMeta$ {
 }
 
 /** @internal */
-export namespace GetIncomestatementsIdResponseBody$ {
+export namespace GetIncomeStatementsIdResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.IncomeStatements$.Inbound | undefined;
-        passthrough?: GetIncomestatementsIdPassthrough$.Inbound | undefined;
-        meta?: GetIncomestatementsIdMeta$.Inbound | undefined;
+        passthrough?: GetIncomeStatementsIdPassthrough$.Inbound | undefined;
+        meta?: GetIncomeStatementsIdMeta$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<
-        GetIncomestatementsIdResponseBody,
+        GetIncomeStatementsIdResponseBody,
         z.ZodTypeDef,
         Inbound
     > = z
@@ -340,8 +387,8 @@ export namespace GetIncomestatementsIdResponseBody$ {
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: components.IncomeStatements$?.inboundSchema.optional(),
-            passthrough: z.lazy(() => GetIncomestatementsIdPassthrough$?.inboundSchema).optional(),
-            meta: z.lazy(() => GetIncomestatementsIdMeta$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => GetIncomeStatementsIdPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => GetIncomeStatementsIdMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -357,21 +404,21 @@ export namespace GetIncomestatementsIdResponseBody$ {
         status?: string | undefined;
         statusCode?: number | undefined;
         unified?: components.IncomeStatements$.Outbound | undefined;
-        passthrough?: GetIncomestatementsIdPassthrough$.Outbound | undefined;
-        meta?: GetIncomestatementsIdMeta$.Outbound | undefined;
+        passthrough?: GetIncomeStatementsIdPassthrough$.Outbound | undefined;
+        meta?: GetIncomeStatementsIdMeta$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        GetIncomestatementsIdResponseBody
+        GetIncomeStatementsIdResponseBody
     > = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
             unified: components.IncomeStatements$?.outboundSchema.optional(),
-            passthrough: z.lazy(() => GetIncomestatementsIdPassthrough$?.outboundSchema).optional(),
-            meta: z.lazy(() => GetIncomestatementsIdMeta$?.outboundSchema).optional(),
+            passthrough: z.lazy(() => GetIncomeStatementsIdPassthrough$?.outboundSchema).optional(),
+            meta: z.lazy(() => GetIncomeStatementsIdMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -385,20 +432,20 @@ export namespace GetIncomestatementsIdResponseBody$ {
 }
 
 /** @internal */
-export namespace GetIncomestatementsIdResponse$ {
+export namespace GetIncomeStatementsIdResponse$ {
     export type Inbound = {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: GetIncomestatementsIdResponseBody$.Inbound | undefined;
+        object?: GetIncomeStatementsIdResponseBody$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<GetIncomestatementsIdResponse, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<GetIncomeStatementsIdResponse, z.ZodTypeDef, Inbound> = z
         .object({
             ContentType: z.string(),
             StatusCode: z.number().int(),
             RawResponse: z.instanceof(Response),
-            object: z.lazy(() => GetIncomestatementsIdResponseBody$?.inboundSchema).optional(),
+            object: z.lazy(() => GetIncomeStatementsIdResponseBody$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -413,10 +460,10 @@ export namespace GetIncomestatementsIdResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: GetIncomestatementsIdResponseBody$.Outbound | undefined;
+        object?: GetIncomeStatementsIdResponseBody$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomestatementsIdResponse> =
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, GetIncomeStatementsIdResponse> =
         z
             .object({
                 contentType: z.string(),
@@ -424,7 +471,7 @@ export namespace GetIncomestatementsIdResponse$ {
                 rawResponse: z.instanceof(Response).transform(() => {
                     throw new Error("Response cannot be serialized");
                 }),
-                object: z.lazy(() => GetIncomestatementsIdResponseBody$?.outboundSchema).optional(),
+                object: z.lazy(() => GetIncomeStatementsIdResponseBody$?.outboundSchema).optional(),
             })
             .transform((v) => {
                 return {

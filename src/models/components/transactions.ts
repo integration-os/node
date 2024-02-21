@@ -4,203 +4,21 @@
 
 import { BillingDetails, BillingDetails$ } from "./billingdetails";
 import { Contacts, Contacts$ } from "./contacts";
+import { Currency, Currency$ } from "./currency";
 import { Customers, Customers$ } from "./customers";
 import { Disputes, Disputes$ } from "./disputes";
+import {
+    FinancialTransactionStatus,
+    FinancialTransactionStatus$,
+} from "./financialtransactionstatus";
+import { FinancialTransactionType, FinancialTransactionType$ } from "./financialtransactiontype";
 import { Items, Items$ } from "./items";
 import { Metadata, Metadata$ } from "./metadata";
 import { PaymentMethods, PaymentMethods$ } from "./paymentmethods";
 import { Refunds, Refunds$ } from "./refunds";
 import { ShippingDetails, ShippingDetails$ } from "./shippingdetails";
+import { TransactionType, TransactionType$ } from "./transactiontype";
 import { z } from "zod";
-
-export enum TransactionsType {
-    Deposit = "deposit",
-    Withdrawal = "withdrawal",
-    Transfer = "transfer",
-    Fee = "fee",
-    Refund = "refund",
-}
-
-export enum TransactionsCurrency {
-    Aed = "AED",
-    Afn = "AFN",
-    All = "ALL",
-    Amd = "AMD",
-    Ang = "ANG",
-    Aoa = "AOA",
-    Ars = "ARS",
-    Aud = "AUD",
-    Awg = "AWG",
-    Azn = "AZN",
-    Bam = "BAM",
-    Bbd = "BBD",
-    Bdt = "BDT",
-    Bgn = "BGN",
-    Bhd = "BHD",
-    Bif = "BIF",
-    Bmd = "BMD",
-    Bnd = "BND",
-    Bob = "BOB",
-    Brl = "BRL",
-    Bsd = "BSD",
-    Btn = "BTN",
-    Bwp = "BWP",
-    Byn = "BYN",
-    Bzd = "BZD",
-    Cad = "CAD",
-    Cdf = "CDF",
-    Chf = "CHF",
-    Clp = "CLP",
-    Cny = "CNY",
-    Cop = "COP",
-    Crc = "CRC",
-    Cuc = "CUC",
-    Cup = "CUP",
-    Cve = "CVE",
-    Czk = "CZK",
-    Djf = "DJF",
-    Dkk = "DKK",
-    Dop = "DOP",
-    Dzd = "DZD",
-    Egp = "EGP",
-    Ern = "ERN",
-    Etb = "ETB",
-    Eur = "EUR",
-    Fjd = "FJD",
-    Fkp = "FKP",
-    Fok = "FOK",
-    Gbp = "GBP",
-    Gel = "GEL",
-    Ggp = "GGP",
-    Ghs = "GHS",
-    Gip = "GIP",
-    Gmd = "GMD",
-    Gnf = "GNF",
-    Gtq = "GTQ",
-    Gyd = "GYD",
-    Hkd = "HKD",
-    Hnl = "HNL",
-    Hrk = "HRK",
-    Htg = "HTG",
-    Huf = "HUF",
-    Idr = "IDR",
-    Ils = "ILS",
-    Imp = "IMP",
-    Inr = "INR",
-    Iqd = "IQD",
-    Irr = "IRR",
-    Isk = "ISK",
-    Jep = "JEP",
-    Jmd = "JMD",
-    Jod = "JOD",
-    Jpy = "JPY",
-    Kes = "KES",
-    Kgs = "KGS",
-    Khr = "KHR",
-    Kid = "KID",
-    Kmf = "KMF",
-    Kpw = "KPW",
-    Krw = "KRW",
-    Kwd = "KWD",
-    Kyd = "KYD",
-    Kzt = "KZT",
-    Lak = "LAK",
-    Lbp = "LBP",
-    Lkr = "LKR",
-    Lrd = "LRD",
-    Lsl = "LSL",
-    Lyd = "LYD",
-    Mad = "MAD",
-    Mdl = "MDL",
-    Mga = "MGA",
-    Mkd = "MKD",
-    Mmk = "MMK",
-    Mnt = "MNT",
-    Mop = "MOP",
-    Mru = "MRU",
-    Mur = "MUR",
-    Mvr = "MVR",
-    Mwk = "MWK",
-    Mxn = "MXN",
-    Myr = "MYR",
-    Mzn = "MZN",
-    Nad = "NAD",
-    Ngn = "NGN",
-    Nio = "NIO",
-    Nok = "NOK",
-    Npr = "NPR",
-    Nzd = "NZD",
-    Omr = "OMR",
-    Pab = "PAB",
-    Pen = "PEN",
-    Pgk = "PGK",
-    Php = "PHP",
-    Pkr = "PKR",
-    Pln = "PLN",
-    Pyg = "PYG",
-    Qar = "QAR",
-    Ron = "RON",
-    Rsd = "RSD",
-    Rub = "RUB",
-    Rwf = "RWF",
-    Sar = "SAR",
-    Sbd = "SBD",
-    Scr = "SCR",
-    Sdg = "SDG",
-    Sek = "SEK",
-    Sgd = "SGD",
-    Shp = "SHP",
-    Sll = "SLL",
-    Sos = "SOS",
-    Srd = "SRD",
-    Ssp = "SSP",
-    Stn = "STN",
-    Syp = "SYP",
-    Szl = "SZL",
-    Thb = "THB",
-    Tjs = "TJS",
-    Tmt = "TMT",
-    Tnd = "TND",
-    Top = "TOP",
-    Try = "TRY",
-    Ttd = "TTD",
-    Tvd = "TVD",
-    Twd = "TWD",
-    Tzs = "TZS",
-    Uah = "UAH",
-    Ugx = "UGX",
-    Usd = "USD",
-    Uyu = "UYU",
-    Uzs = "UZS",
-    Ves = "VES",
-    Vnd = "VND",
-    Vuv = "VUV",
-    Wst = "WST",
-    Xaf = "XAF",
-    Xcd = "XCD",
-    Xdr = "XDR",
-    Xof = "XOF",
-    Xpf = "XPF",
-    Yer = "YER",
-    Zar = "ZAR",
-    Zmw = "ZMW",
-    Zwl = "ZWL",
-}
-
-export enum TransactionCategory {
-    Payment = "payment",
-    Transfer = "transfer",
-    Withdrawal = "withdrawal",
-    Deposit = "deposit",
-    Fee = "fee",
-}
-
-export enum TransactionsStatus {
-    Pending = "pending",
-    Cleared = "cleared",
-    Cancelled = "cancelled",
-    Failed = "failed",
-}
 
 export enum TransactionMethod {
     Online = "online",
@@ -221,17 +39,17 @@ export type Transactions = {
     paymentMethod?: PaymentMethods | undefined;
     amount?: number | undefined;
     taxAmount?: number | undefined;
-    type?: TransactionsType | undefined;
+    type?: FinancialTransactionType | undefined;
     date?: Date | undefined;
-    currency?: TransactionsCurrency | undefined;
+    currency?: Currency | undefined;
     recipient?: Customers | undefined;
     sender?: Customers | undefined;
     description?: string | undefined;
     checkNumber?: string | undefined;
-    transactionCategory?: TransactionCategory | undefined;
+    transactionCategory?: TransactionType | undefined;
     items?: Array<Items> | undefined;
     tags?: Array<string> | undefined;
-    status?: TransactionsStatus | undefined;
+    status?: FinancialTransactionStatus | undefined;
     transactionMethod?: TransactionMethod | undefined;
     refund?: Refunds | undefined;
     dispute?: Disputes | undefined;
@@ -248,18 +66,6 @@ export type Transactions = {
 };
 
 /** @internal */
-export const TransactionsType$ = z.nativeEnum(TransactionsType);
-
-/** @internal */
-export const TransactionsCurrency$ = z.nativeEnum(TransactionsCurrency);
-
-/** @internal */
-export const TransactionCategory$ = z.nativeEnum(TransactionCategory);
-
-/** @internal */
-export const TransactionsStatus$ = z.nativeEnum(TransactionsStatus);
-
-/** @internal */
 export const TransactionMethod$ = z.nativeEnum(TransactionMethod);
 
 /** @internal */
@@ -274,17 +80,17 @@ export namespace Transactions$ {
         paymentMethod?: PaymentMethods$.Inbound | undefined;
         amount?: number | undefined;
         taxAmount?: number | undefined;
-        type?: TransactionsType | undefined;
+        type?: FinancialTransactionType | undefined;
         date?: string | undefined;
-        currency?: TransactionsCurrency | undefined;
+        currency?: Currency | undefined;
         recipient?: Customers$.Inbound | undefined;
         sender?: Customers$.Inbound | undefined;
         description?: string | undefined;
         checkNumber?: string | undefined;
-        transactionCategory?: TransactionCategory | undefined;
+        transactionCategory?: TransactionType | undefined;
         items?: Array<Items$.Inbound> | undefined;
         tags?: Array<string> | undefined;
-        status?: TransactionsStatus | undefined;
+        status?: FinancialTransactionStatus | undefined;
         transactionMethod?: TransactionMethod | undefined;
         refund?: Refunds$.Inbound | undefined;
         dispute?: Disputes$.Inbound | undefined;
@@ -311,21 +117,21 @@ export namespace Transactions$ {
             paymentMethod: PaymentMethods$?.inboundSchema.optional(),
             amount: z.number().optional(),
             taxAmount: z.number().optional(),
-            type: TransactionsType$.optional(),
+            type: FinancialTransactionType$.optional(),
             date: z
                 .string()
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            currency: TransactionsCurrency$.optional(),
+            currency: Currency$.optional(),
             recipient: Customers$?.inboundSchema.optional(),
             sender: Customers$?.inboundSchema.optional(),
             description: z.string().optional(),
             checkNumber: z.string().optional(),
-            transactionCategory: TransactionCategory$.optional(),
+            transactionCategory: TransactionType$.optional(),
             items: z.array(Items$?.inboundSchema).optional(),
             tags: z.array(z.string()).optional(),
-            status: TransactionsStatus$.optional(),
+            status: FinancialTransactionStatus$.optional(),
             transactionMethod: TransactionMethod$.optional(),
             refund: Refunds$?.inboundSchema.optional(),
             dispute: Disputes$?.inboundSchema.optional(),
@@ -400,17 +206,17 @@ export namespace Transactions$ {
         paymentMethod?: PaymentMethods$.Outbound | undefined;
         amount?: number | undefined;
         taxAmount?: number | undefined;
-        type?: TransactionsType | undefined;
+        type?: FinancialTransactionType | undefined;
         date?: string | undefined;
-        currency?: TransactionsCurrency | undefined;
+        currency?: Currency | undefined;
         recipient?: Customers$.Outbound | undefined;
         sender?: Customers$.Outbound | undefined;
         description?: string | undefined;
         checkNumber?: string | undefined;
-        transactionCategory?: TransactionCategory | undefined;
+        transactionCategory?: TransactionType | undefined;
         items?: Array<Items$.Outbound> | undefined;
         tags?: Array<string> | undefined;
-        status?: TransactionsStatus | undefined;
+        status?: FinancialTransactionStatus | undefined;
         transactionMethod?: TransactionMethod | undefined;
         refund?: Refunds$.Outbound | undefined;
         dispute?: Disputes$.Outbound | undefined;
@@ -437,20 +243,20 @@ export namespace Transactions$ {
             paymentMethod: PaymentMethods$?.outboundSchema.optional(),
             amount: z.number().optional(),
             taxAmount: z.number().optional(),
-            type: TransactionsType$.optional(),
+            type: FinancialTransactionType$.optional(),
             date: z
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            currency: TransactionsCurrency$.optional(),
+            currency: Currency$.optional(),
             recipient: Customers$?.outboundSchema.optional(),
             sender: Customers$?.outboundSchema.optional(),
             description: z.string().optional(),
             checkNumber: z.string().optional(),
-            transactionCategory: TransactionCategory$.optional(),
+            transactionCategory: TransactionType$.optional(),
             items: z.array(Items$?.outboundSchema).optional(),
             tags: z.array(z.string()).optional(),
-            status: TransactionsStatus$.optional(),
+            status: FinancialTransactionStatus$.optional(),
             transactionMethod: TransactionMethod$.optional(),
             refund: Refunds$?.outboundSchema.optional(),
             dispute: Disputes$?.outboundSchema.optional(),

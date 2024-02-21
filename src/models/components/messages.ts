@@ -3,38 +3,13 @@
  */
 
 import { Attachments, Attachments$ } from "./attachments";
+import { MessageContentType, MessageContentType$ } from "./messagecontenttype";
+import { MessageDeliveryStatus, MessageDeliveryStatus$ } from "./messagedeliverystatus";
+import { MessageReadStatus, MessageReadStatus$ } from "./messagereadstatus";
 import { Metadata, Metadata$ } from "./metadata";
+import { PriorityLevel, PriorityLevel$ } from "./prioritylevel";
 import { Reactions, Reactions$ } from "./reactions";
 import { z } from "zod";
-
-export enum ReadStatus {
-    Sent = "sent",
-    Delivered = "delivered",
-    Read = "read",
-}
-
-export enum MessagesType {
-    Text = "text",
-    Image = "image",
-    Video = "video",
-    File = "file",
-    Location = "location",
-    Sticker = "sticker",
-    Contact = "contact",
-}
-
-export enum DeliveryStatus {
-    Sent = "sent",
-    Delivered = "delivered",
-    Read = "read",
-    Failed = "failed",
-}
-
-export enum MessagesPriority {
-    Normal = "normal",
-    High = "high",
-    Urgent = "urgent",
-}
 
 export type Messages = {
     id?: string | undefined;
@@ -42,15 +17,15 @@ export type Messages = {
     receiverId?: string | undefined;
     content?: string | undefined;
     timestamp?: Date | undefined;
-    readStatus?: ReadStatus | undefined;
+    readStatus?: MessageReadStatus | undefined;
     attachments?: Array<Attachments> | undefined;
     replyToMessageId?: string | undefined;
-    type?: MessagesType | undefined;
+    type?: MessageContentType | undefined;
     threadId?: string | undefined;
     chatId?: string | undefined;
     metadata?: Array<Metadata> | undefined;
-    deliveryStatus?: DeliveryStatus | undefined;
-    priority?: MessagesPriority | undefined;
+    deliveryStatus?: MessageDeliveryStatus | undefined;
+    priority?: PriorityLevel | undefined;
     reactions?: Array<Reactions> | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
@@ -60,18 +35,6 @@ export type Messages = {
 };
 
 /** @internal */
-export const ReadStatus$ = z.nativeEnum(ReadStatus);
-
-/** @internal */
-export const MessagesType$ = z.nativeEnum(MessagesType);
-
-/** @internal */
-export const DeliveryStatus$ = z.nativeEnum(DeliveryStatus);
-
-/** @internal */
-export const MessagesPriority$ = z.nativeEnum(MessagesPriority);
-
-/** @internal */
 export namespace Messages$ {
     export type Inbound = {
         id?: string | undefined;
@@ -79,15 +42,15 @@ export namespace Messages$ {
         receiverId?: string | undefined;
         content?: string | undefined;
         timestamp?: string | undefined;
-        readStatus?: ReadStatus | undefined;
+        readStatus?: MessageReadStatus | undefined;
         attachments?: Array<Attachments$.Inbound> | undefined;
         replyToMessageId?: string | undefined;
-        type?: MessagesType | undefined;
+        type?: MessageContentType | undefined;
         threadId?: string | undefined;
         chatId?: string | undefined;
         metadata?: Array<Metadata$.Inbound> | undefined;
-        deliveryStatus?: DeliveryStatus | undefined;
-        priority?: MessagesPriority | undefined;
+        deliveryStatus?: MessageDeliveryStatus | undefined;
+        priority?: PriorityLevel | undefined;
         reactions?: Array<Reactions$.Inbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
@@ -107,15 +70,15 @@ export namespace Messages$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            readStatus: ReadStatus$.optional(),
+            readStatus: MessageReadStatus$.optional(),
             attachments: z.array(Attachments$?.inboundSchema).optional(),
             replyToMessageId: z.string().optional(),
-            type: MessagesType$.optional(),
+            type: MessageContentType$.optional(),
             threadId: z.string().optional(),
             chatId: z.string().optional(),
             metadata: z.array(Metadata$?.inboundSchema).optional(),
-            deliveryStatus: DeliveryStatus$.optional(),
-            priority: MessagesPriority$.optional(),
+            deliveryStatus: MessageDeliveryStatus$.optional(),
+            priority: PriorityLevel$.optional(),
             reactions: z.array(Reactions$?.inboundSchema).optional(),
             createdAt: z
                 .string()
@@ -164,15 +127,15 @@ export namespace Messages$ {
         receiverId?: string | undefined;
         content?: string | undefined;
         timestamp?: string | undefined;
-        readStatus?: ReadStatus | undefined;
+        readStatus?: MessageReadStatus | undefined;
         attachments?: Array<Attachments$.Outbound> | undefined;
         replyToMessageId?: string | undefined;
-        type?: MessagesType | undefined;
+        type?: MessageContentType | undefined;
         threadId?: string | undefined;
         chatId?: string | undefined;
         metadata?: Array<Metadata$.Outbound> | undefined;
-        deliveryStatus?: DeliveryStatus | undefined;
-        priority?: MessagesPriority | undefined;
+        deliveryStatus?: MessageDeliveryStatus | undefined;
+        priority?: PriorityLevel | undefined;
         reactions?: Array<Reactions$.Outbound> | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
@@ -191,15 +154,15 @@ export namespace Messages$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            readStatus: ReadStatus$.optional(),
+            readStatus: MessageReadStatus$.optional(),
             attachments: z.array(Attachments$?.outboundSchema).optional(),
             replyToMessageId: z.string().optional(),
-            type: MessagesType$.optional(),
+            type: MessageContentType$.optional(),
             threadId: z.string().optional(),
             chatId: z.string().optional(),
             metadata: z.array(Metadata$?.outboundSchema).optional(),
-            deliveryStatus: DeliveryStatus$.optional(),
-            priority: MessagesPriority$.optional(),
+            deliveryStatus: MessageDeliveryStatus$.optional(),
+            priority: PriorityLevel$.optional(),
             reactions: z.array(Reactions$?.outboundSchema).optional(),
             createdAt: z
                 .date()

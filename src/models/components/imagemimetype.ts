@@ -4,13 +4,16 @@
 
 import { z } from "zod";
 
-export enum MimeType {
+export enum ImageMimeType {
     ImageJpeg = "image/jpeg",
     ImagePng = "image/png",
     ImageGif = "image/gif",
     ImageSvgPlusXml = "image/svg+xml",
     ImageWebp = "image/webp",
+    ImageBmp = "image/bmp",
+    ImageTiff = "image/tiff",
+    ImageHeic = "image/heic",
 }
 
 /** @internal */
-export const MimeType$ = z.nativeEnum(MimeType);
+export const ImageMimeType$ = z.nativeEnum(ImageMimeType);

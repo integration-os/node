@@ -3,26 +3,12 @@
  */
 
 import { Addresses, Addresses$ } from "./addresses";
+import { CommunicationMethod, CommunicationMethod$ } from "./communicationmethod";
+import { Currency, Currency$ } from "./currency";
+import { CustomerStatus, CustomerStatus$ } from "./customerstatus";
+import { CustomerType, CustomerType$ } from "./customertype";
 import { SocialProfiles, SocialProfiles$ } from "./socialprofiles";
 import { z } from "zod";
-
-export enum Status {
-    Active = "active",
-    Inactive = "inactive",
-    Archived = "archived",
-}
-
-export enum CustomerType {
-    Retail = "retail",
-    Wholesale = "wholesale",
-}
-
-export enum PreferredContactMethod {
-    Email = "email",
-    Phone = "phone",
-    Mail = "mail",
-    Sms = "sms",
-}
 
 export type Customers = {
     id?: string | undefined;
@@ -38,30 +24,21 @@ export type Customers = {
     defaultAddress?: Addresses | undefined;
     company?: string | undefined;
     companyId?: string | undefined;
-    currency?: string | undefined;
+    currency?: Currency | undefined;
     notes?: string | undefined;
     createdAt?: Date | undefined;
     updatedAt?: Date | undefined;
-    status?: Status | undefined;
+    status?: CustomerStatus | undefined;
     customerSegment?: string | undefined;
     customerType?: CustomerType | undefined;
     loyaltyProgramMembership?: string | undefined;
-    preferredContactMethod?: PreferredContactMethod | undefined;
+    preferredContactMethod?: CommunicationMethod | undefined;
     tags?: Array<string> | undefined;
     metadata?: string | undefined;
     socialProfiles?: Array<SocialProfiles> | undefined;
     source?: string | undefined;
     modifyToken?: string | undefined;
 };
-
-/** @internal */
-export const Status$ = z.nativeEnum(Status);
-
-/** @internal */
-export const CustomerType$ = z.nativeEnum(CustomerType);
-
-/** @internal */
-export const PreferredContactMethod$ = z.nativeEnum(PreferredContactMethod);
 
 /** @internal */
 export namespace Customers$ {
@@ -79,15 +56,15 @@ export namespace Customers$ {
         defaultAddress?: Addresses$.Inbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
-        currency?: string | undefined;
+        currency?: Currency | undefined;
         notes?: string | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        status?: Status | undefined;
+        status?: CustomerStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: CustomerType | undefined;
         loyaltyProgramMembership?: string | undefined;
-        preferredContactMethod?: PreferredContactMethod | undefined;
+        preferredContactMethod?: CommunicationMethod | undefined;
         tags?: Array<string> | undefined;
         metadata?: string | undefined;
         socialProfiles?: Array<SocialProfiles$.Inbound> | undefined;
@@ -114,7 +91,7 @@ export namespace Customers$ {
             defaultAddress: Addresses$?.inboundSchema.optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
-            currency: z.string().optional(),
+            currency: Currency$.optional(),
             notes: z.string().optional(),
             createdAt: z
                 .string()
@@ -126,11 +103,11 @@ export namespace Customers$ {
                 .datetime({ offset: true })
                 .transform((v) => new Date(v))
                 .optional(),
-            status: Status$.optional(),
+            status: CustomerStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: CustomerType$.optional(),
             loyaltyProgramMembership: z.string().optional(),
-            preferredContactMethod: PreferredContactMethod$.optional(),
+            preferredContactMethod: CommunicationMethod$.optional(),
             tags: z.array(z.string()).optional(),
             metadata: z.string().optional(),
             socialProfiles: z.array(SocialProfiles$?.inboundSchema).optional(),
@@ -189,15 +166,15 @@ export namespace Customers$ {
         defaultAddress?: Addresses$.Outbound | undefined;
         company?: string | undefined;
         companyId?: string | undefined;
-        currency?: string | undefined;
+        currency?: Currency | undefined;
         notes?: string | undefined;
         createdAt?: string | undefined;
         updatedAt?: string | undefined;
-        status?: Status | undefined;
+        status?: CustomerStatus | undefined;
         customerSegment?: string | undefined;
         customerType?: CustomerType | undefined;
         loyaltyProgramMembership?: string | undefined;
-        preferredContactMethod?: PreferredContactMethod | undefined;
+        preferredContactMethod?: CommunicationMethod | undefined;
         tags?: Array<string> | undefined;
         metadata?: string | undefined;
         socialProfiles?: Array<SocialProfiles$.Outbound> | undefined;
@@ -223,7 +200,7 @@ export namespace Customers$ {
             defaultAddress: Addresses$?.outboundSchema.optional(),
             company: z.string().optional(),
             companyId: z.string().optional(),
-            currency: z.string().optional(),
+            currency: Currency$.optional(),
             notes: z.string().optional(),
             createdAt: z
                 .date()
@@ -233,11 +210,11 @@ export namespace Customers$ {
                 .date()
                 .transform((v) => v.toISOString())
                 .optional(),
-            status: Status$.optional(),
+            status: CustomerStatus$.optional(),
             customerSegment: z.string().optional(),
             customerType: CustomerType$.optional(),
             loyaltyProgramMembership: z.string().optional(),
-            preferredContactMethod: PreferredContactMethod$.optional(),
+            preferredContactMethod: CommunicationMethod$.optional(),
             tags: z.array(z.string()).optional(),
             metadata: z.string().optional(),
             socialProfiles: z.array(SocialProfiles$?.outboundSchema).optional(),

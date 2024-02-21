@@ -5,15 +5,27 @@
 import * as components from "../../models/components";
 import { z } from "zod";
 
-export type PatchIncomestatementsIdRequest = {
+export type PatchIncomeStatementsIdRequest = {
     /**
      * The unique identifier of a Connected Account
      */
     connectionKey: string;
     /**
+     * Set to true to receive the exact API response from the connection platform in the passthrough object
+     */
+    xIntegrationosEnablePassthrough?: string | undefined;
+    /**
+     * A string of all headers to forward in the request to the 3rd-party platform
+     */
+    xIntegrationosPassthroughForward?: string | undefined;
+    /**
      * The id of the model
      */
     id: string;
+    /**
+     * A string of all query parameters to forward in the request to the 3rd-party platform
+     */
+    passthroughForward?: string | undefined;
     /**
      * The modified token of the model
      */
@@ -21,18 +33,16 @@ export type PatchIncomestatementsIdRequest = {
     incomeStatements?: components.IncomeStatements | undefined;
 };
 
-export type PatchIncomestatementsIdUnified = {
-    count?: number | undefined;
-};
+export type PatchIncomeStatementsIdUnified = {};
 
-export type PatchIncomestatementsIdPassthrough = {};
+export type PatchIncomeStatementsIdPassthrough = {};
 
-export type PatchIncomestatementsIdCache = {
+export type PatchIncomeStatementsIdCache = {
     hit?: boolean | undefined;
     ttl?: number | undefined;
 };
 
-export type PatchIncomestatementsIdMeta = {
+export type PatchIncomeStatementsIdMeta = {
     timestamp?: number | undefined;
     latency?: number | undefined;
     platformRateLimitRemaining?: number | undefined;
@@ -50,21 +60,21 @@ export type PatchIncomestatementsIdMeta = {
     commonModelVersion?: string | undefined;
     key?: string | undefined;
     heartbeats?: Array<string> | undefined;
-    cache?: PatchIncomestatementsIdCache | undefined;
+    cache?: PatchIncomeStatementsIdCache | undefined;
 };
 
 /**
  * Successful response
  */
-export type PatchIncomestatementsIdResponseBody = {
+export type PatchIncomeStatementsIdResponseBody = {
     status?: string | undefined;
     statusCode?: number | undefined;
-    unified?: PatchIncomestatementsIdUnified | undefined;
-    passthrough?: PatchIncomestatementsIdPassthrough | undefined;
-    meta?: PatchIncomestatementsIdMeta | undefined;
+    unified?: PatchIncomeStatementsIdUnified | undefined;
+    passthrough?: PatchIncomeStatementsIdPassthrough | undefined;
+    meta?: PatchIncomeStatementsIdMeta | undefined;
 };
 
-export type PatchIncomestatementsIdResponse = {
+export type PatchIncomeStatementsIdResponse = {
     /**
      * HTTP response content type for this operation
      */
@@ -80,29 +90,47 @@ export type PatchIncomestatementsIdResponse = {
     /**
      * Successful response
      */
-    object?: PatchIncomestatementsIdResponseBody | undefined;
+    object?: PatchIncomeStatementsIdResponseBody | undefined;
 };
 
 /** @internal */
-export namespace PatchIncomestatementsIdRequest$ {
+export namespace PatchIncomeStatementsIdRequest$ {
     export type Inbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         IncomeStatements?: components.IncomeStatements$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchIncomestatementsIdRequest, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchIncomeStatementsIdRequest, z.ZodTypeDef, Inbound> = z
         .object({
             "X-INTEGRATIONOS-CONNECTION-KEY": z.string(),
+            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH": z.string().optional(),
+            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD": z.string().optional(),
             id: z.string(),
+            passthroughForward: z.string().optional(),
             modifyToken: z.string().optional(),
             IncomeStatements: components.IncomeStatements$?.inboundSchema.optional(),
         })
         .transform((v) => {
             return {
                 connectionKey: v["X-INTEGRATIONOS-CONNECTION-KEY"],
+                ...(v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] === undefined
+                    ? null
+                    : { xIntegrationosEnablePassthrough: v["X-INTEGRATIONOS-ENABLE-PASSTHROUGH"] }),
+                ...(v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"] === undefined
+                    ? null
+                    : {
+                        xIntegrationosPassthroughForward:
+                            v["X-INTEGRATIONOS-PASSTHROUGH-FORWARD"],
+                    }),
                 id: v.id,
+                ...(v.passthroughForward === undefined
+                    ? null
+                    : { passthroughForward: v.passthroughForward }),
                 ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                 ...(v.IncomeStatements === undefined
                     ? null
@@ -112,23 +140,44 @@ export namespace PatchIncomestatementsIdRequest$ {
 
     export type Outbound = {
         "X-INTEGRATIONOS-CONNECTION-KEY": string;
+        "X-INTEGRATIONOS-ENABLE-PASSTHROUGH"?: string | undefined;
+        "X-INTEGRATIONOS-PASSTHROUGH-FORWARD"?: string | undefined;
         id: string;
+        passthroughForward?: string | undefined;
         modifyToken?: string | undefined;
         IncomeStatements?: components.IncomeStatements$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomestatementsIdRequest> =
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomeStatementsIdRequest> =
         z
             .object({
                 connectionKey: z.string(),
+                xIntegrationosEnablePassthrough: z.string().optional(),
+                xIntegrationosPassthroughForward: z.string().optional(),
                 id: z.string(),
+                passthroughForward: z.string().optional(),
                 modifyToken: z.string().optional(),
                 incomeStatements: components.IncomeStatements$?.outboundSchema.optional(),
             })
             .transform((v) => {
                 return {
                     "X-INTEGRATIONOS-CONNECTION-KEY": v.connectionKey,
+                    ...(v.xIntegrationosEnablePassthrough === undefined
+                        ? null
+                        : {
+                            "X-INTEGRATIONOS-ENABLE-PASSTHROUGH":
+                                v.xIntegrationosEnablePassthrough,
+                        }),
+                    ...(v.xIntegrationosPassthroughForward === undefined
+                        ? null
+                        : {
+                            "X-INTEGRATIONOS-PASSTHROUGH-FORWARD":
+                                v.xIntegrationosPassthroughForward,
+                        }),
                     id: v.id,
+                    ...(v.passthroughForward === undefined
+                        ? null
+                        : { passthroughForward: v.passthroughForward }),
                     ...(v.modifyToken === undefined ? null : { modifyToken: v.modifyToken }),
                     ...(v.incomeStatements === undefined
                         ? null
@@ -138,43 +187,24 @@ export namespace PatchIncomestatementsIdRequest$ {
 }
 
 /** @internal */
-export namespace PatchIncomestatementsIdUnified$ {
-    export type Inbound = {
-        count?: number | undefined;
-    };
+export namespace PatchIncomeStatementsIdUnified$ {
+    export type Inbound = {};
 
-    export const inboundSchema: z.ZodType<PatchIncomestatementsIdUnified, z.ZodTypeDef, Inbound> = z
-        .object({
-            count: z.number().int().optional(),
-        })
-        .transform((v) => {
-            return {
-                ...(v.count === undefined ? null : { count: v.count }),
-            };
-        });
+    export const inboundSchema: z.ZodType<PatchIncomeStatementsIdUnified, z.ZodTypeDef, Inbound> =
+        z.object({});
 
-    export type Outbound = {
-        count?: number | undefined;
-    };
+    export type Outbound = {};
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomestatementsIdUnified> =
-        z
-            .object({
-                count: z.number().int().optional(),
-            })
-            .transform((v) => {
-                return {
-                    ...(v.count === undefined ? null : { count: v.count }),
-                };
-            });
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomeStatementsIdUnified> =
+        z.object({});
 }
 
 /** @internal */
-export namespace PatchIncomestatementsIdPassthrough$ {
+export namespace PatchIncomeStatementsIdPassthrough$ {
     export type Inbound = {};
 
     export const inboundSchema: z.ZodType<
-        PatchIncomestatementsIdPassthrough,
+        PatchIncomeStatementsIdPassthrough,
         z.ZodTypeDef,
         Inbound
     > = z.object({});
@@ -184,18 +214,18 @@ export namespace PatchIncomestatementsIdPassthrough$ {
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchIncomestatementsIdPassthrough
+        PatchIncomeStatementsIdPassthrough
     > = z.object({});
 }
 
 /** @internal */
-export namespace PatchIncomestatementsIdCache$ {
+export namespace PatchIncomeStatementsIdCache$ {
     export type Inbound = {
         hit?: boolean | undefined;
         ttl?: number | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchIncomestatementsIdCache, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchIncomeStatementsIdCache, z.ZodTypeDef, Inbound> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -212,7 +242,7 @@ export namespace PatchIncomestatementsIdCache$ {
         ttl?: number | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomestatementsIdCache> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomeStatementsIdCache> = z
         .object({
             hit: z.boolean().optional(),
             ttl: z.number().int().optional(),
@@ -226,7 +256,7 @@ export namespace PatchIncomestatementsIdCache$ {
 }
 
 /** @internal */
-export namespace PatchIncomestatementsIdMeta$ {
+export namespace PatchIncomeStatementsIdMeta$ {
     export type Inbound = {
         timestamp?: number | undefined;
         latency?: number | undefined;
@@ -245,10 +275,10 @@ export namespace PatchIncomestatementsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: PatchIncomestatementsIdCache$.Inbound | undefined;
+        cache?: PatchIncomeStatementsIdCache$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchIncomestatementsIdMeta, z.ZodTypeDef, Inbound> = z
+    export const inboundSchema: z.ZodType<PatchIncomeStatementsIdMeta, z.ZodTypeDef, Inbound> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -267,7 +297,7 @@ export namespace PatchIncomestatementsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => PatchIncomestatementsIdCache$?.inboundSchema).optional(),
+            cache: z.lazy(() => PatchIncomeStatementsIdCache$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -322,10 +352,10 @@ export namespace PatchIncomestatementsIdMeta$ {
         commonModelVersion?: string | undefined;
         key?: string | undefined;
         heartbeats?: Array<string> | undefined;
-        cache?: PatchIncomestatementsIdCache$.Outbound | undefined;
+        cache?: PatchIncomeStatementsIdCache$.Outbound | undefined;
     };
 
-    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomestatementsIdMeta> = z
+    export const outboundSchema: z.ZodType<Outbound, z.ZodTypeDef, PatchIncomeStatementsIdMeta> = z
         .object({
             timestamp: z.number().int().optional(),
             latency: z.number().int().optional(),
@@ -344,7 +374,7 @@ export namespace PatchIncomestatementsIdMeta$ {
             commonModelVersion: z.string().optional(),
             key: z.string().optional(),
             heartbeats: z.array(z.string()).optional(),
-            cache: z.lazy(() => PatchIncomestatementsIdCache$?.outboundSchema).optional(),
+            cache: z.lazy(() => PatchIncomeStatementsIdCache$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -383,26 +413,26 @@ export namespace PatchIncomestatementsIdMeta$ {
 }
 
 /** @internal */
-export namespace PatchIncomestatementsIdResponseBody$ {
+export namespace PatchIncomeStatementsIdResponseBody$ {
     export type Inbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: PatchIncomestatementsIdUnified$.Inbound | undefined;
-        passthrough?: PatchIncomestatementsIdPassthrough$.Inbound | undefined;
-        meta?: PatchIncomestatementsIdMeta$.Inbound | undefined;
+        unified?: PatchIncomeStatementsIdUnified$.Inbound | undefined;
+        passthrough?: PatchIncomeStatementsIdPassthrough$.Inbound | undefined;
+        meta?: PatchIncomeStatementsIdMeta$.Inbound | undefined;
     };
 
     export const inboundSchema: z.ZodType<
-        PatchIncomestatementsIdResponseBody,
+        PatchIncomeStatementsIdResponseBody,
         z.ZodTypeDef,
         Inbound
     > = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => PatchIncomestatementsIdUnified$?.inboundSchema).optional(),
-            passthrough: z.lazy(() => PatchIncomestatementsIdPassthrough$?.inboundSchema).optional(),
-            meta: z.lazy(() => PatchIncomestatementsIdMeta$?.inboundSchema).optional(),
+            unified: z.lazy(() => PatchIncomeStatementsIdUnified$?.inboundSchema).optional(),
+            passthrough: z.lazy(() => PatchIncomeStatementsIdPassthrough$?.inboundSchema).optional(),
+            meta: z.lazy(() => PatchIncomeStatementsIdMeta$?.inboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -417,24 +447,24 @@ export namespace PatchIncomestatementsIdResponseBody$ {
     export type Outbound = {
         status?: string | undefined;
         statusCode?: number | undefined;
-        unified?: PatchIncomestatementsIdUnified$.Outbound | undefined;
-        passthrough?: PatchIncomestatementsIdPassthrough$.Outbound | undefined;
-        meta?: PatchIncomestatementsIdMeta$.Outbound | undefined;
+        unified?: PatchIncomeStatementsIdUnified$.Outbound | undefined;
+        passthrough?: PatchIncomeStatementsIdPassthrough$.Outbound | undefined;
+        meta?: PatchIncomeStatementsIdMeta$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchIncomestatementsIdResponseBody
+        PatchIncomeStatementsIdResponseBody
     > = z
         .object({
             status: z.string().optional(),
             statusCode: z.number().int().optional(),
-            unified: z.lazy(() => PatchIncomestatementsIdUnified$?.outboundSchema).optional(),
+            unified: z.lazy(() => PatchIncomeStatementsIdUnified$?.outboundSchema).optional(),
             passthrough: z
-                .lazy(() => PatchIncomestatementsIdPassthrough$?.outboundSchema)
+                .lazy(() => PatchIncomeStatementsIdPassthrough$?.outboundSchema)
                 .optional(),
-            meta: z.lazy(() => PatchIncomestatementsIdMeta$?.outboundSchema).optional(),
+            meta: z.lazy(() => PatchIncomeStatementsIdMeta$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
@@ -448,21 +478,21 @@ export namespace PatchIncomestatementsIdResponseBody$ {
 }
 
 /** @internal */
-export namespace PatchIncomestatementsIdResponse$ {
+export namespace PatchIncomeStatementsIdResponse$ {
     export type Inbound = {
         ContentType: string;
         StatusCode: number;
         RawResponse: Response;
-        object?: PatchIncomestatementsIdResponseBody$.Inbound | undefined;
+        object?: PatchIncomeStatementsIdResponseBody$.Inbound | undefined;
     };
 
-    export const inboundSchema: z.ZodType<PatchIncomestatementsIdResponse, z.ZodTypeDef, Inbound> =
+    export const inboundSchema: z.ZodType<PatchIncomeStatementsIdResponse, z.ZodTypeDef, Inbound> =
         z
             .object({
                 ContentType: z.string(),
                 StatusCode: z.number().int(),
                 RawResponse: z.instanceof(Response),
-                object: z.lazy(() => PatchIncomestatementsIdResponseBody$?.inboundSchema).optional(),
+                object: z.lazy(() => PatchIncomeStatementsIdResponseBody$?.inboundSchema).optional(),
             })
             .transform((v) => {
                 return {
@@ -477,13 +507,13 @@ export namespace PatchIncomestatementsIdResponse$ {
         ContentType: string;
         StatusCode: number;
         RawResponse: never;
-        object?: PatchIncomestatementsIdResponseBody$.Outbound | undefined;
+        object?: PatchIncomeStatementsIdResponseBody$.Outbound | undefined;
     };
 
     export const outboundSchema: z.ZodType<
         Outbound,
         z.ZodTypeDef,
-        PatchIncomestatementsIdResponse
+        PatchIncomeStatementsIdResponse
     > = z
         .object({
             contentType: z.string(),
@@ -491,7 +521,7 @@ export namespace PatchIncomestatementsIdResponse$ {
             rawResponse: z.instanceof(Response).transform(() => {
                 throw new Error("Response cannot be serialized");
             }),
-            object: z.lazy(() => PatchIncomestatementsIdResponseBody$?.outboundSchema).optional(),
+            object: z.lazy(() => PatchIncomeStatementsIdResponseBody$?.outboundSchema).optional(),
         })
         .transform((v) => {
             return {
