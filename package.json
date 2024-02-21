@@ -1,7 +1,7 @@
 {
   "type": "commonjs",
   "name": "@integrationos/node",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "@integrationos",
   "publishConfig": {
     "access": "public"

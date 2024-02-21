@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 34bfe423-2b72-457a-8a34-3bcb777a08d2
 management:
-  docChecksum: 991d9982235535f149276ee1fb7b23f1
+  docChecksum: b2a2b911de1664a43a7e8f070c2c326e
   docVersion: 1.0.0
   speakeasyVersion: internal
   generationVersion: 2.263.3
-  releaseVersion: 0.4.2
-  configChecksum: 54d5746ccd7a4d452731ed04cee580ef
+  releaseVersion: 0.4.3
+  configChecksum: b34b0772c576c9611ca826c4e2bee064
 features:
   typescript:
     core: 3.5.1
@@ -240,6 +240,7 @@ generatedFiles:
   - src/models/components/datatype.ts
   - src/models/components/currency.ts
   - src/models/components/paymentmethods.ts
+  - src/models/components/paymentmethod.ts
   - src/models/components/paymentterms.ts
   - src/models/components/paymentterm.ts
   - src/models/components/addresses.ts
@@ -1483,6 +1484,7 @@ generatedFiles:
   - docs/models/components/datatype.md
   - docs/models/components/currency.md
   - docs/models/components/paymentmethods.md
+  - docs/models/components/paymentmethod.md
   - docs/models/components/paymentterms.md
   - docs/models/components/paymentterm.md
   - docs/models/components/addresses.md

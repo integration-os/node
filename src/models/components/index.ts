@@ -98,6 +98,7 @@ export * from "./orderstatus";
 export * from "./participantengagementstatus";
 export * from "./participants";
 export * from "./participanttype";
+export * from "./paymentmethod";
 export * from "./paymentmethods";
 export * from "./payments";
 export * from "./paymentstatus";
