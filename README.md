@@ -1,6 +1,6 @@
 # IntegrationOS Node.js Library
 
-The IntegrationOS library for Node.js provides convenient access to the IntegrationOS API from applications written in server-side JavaScript.
+The [IntegrationOS library for Node.js](https://www.npmjs.com/package/@integrationos/node) provides convenient access to the IntegrationOS API from applications written in server-side JavaScript.
 
 ## Install
 
@@ -25,12 +25,11 @@ import { IntegrationOS } from '@integrationOS/node';
 
 const integrate = new IntegrationOS("sk_live_1234");
 
-const response = await integrate.customers.get({
-    connectionKey: "live::xero::acme-inc",
-    id: "cus_OT3CLnirqcpjvw"
-});
+const response = await integrate
+    .customers("live::shopify::org_1234")
+    .get("cus_OT3CLnirqcpjvw");
 
-console.log(response.object.unified);
+console.log(response);
 ```
 
 ## Full Documentation
